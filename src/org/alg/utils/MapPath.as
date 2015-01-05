@@ -3,7 +3,7 @@ package org.alg.utils
 
 	public class MapPath 
 	{
-		private static const ROOT_URL:String = "http://127.0.0.1/game/asset/";
+		public static const ROOT_URL:String = "http://127.0.0.1/game/asset/";
 		//取一块
 		public static function getMapURL(id:uint, name:String, suff:String = ".jpg"):String
 		{

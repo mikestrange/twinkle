@@ -38,9 +38,9 @@ package
 	
 	[SWF(frameRate = "60", width = "500", height = "400")]
 	
-	public class Main extends BoneSprite
+	public class Twinkle extends BoneSprite
 	{
-		public function Main():void 
+		public function Twinkle():void 
 		{
 			if (stage) showEvent();
 			else addEventListener(Event.ADDED_TO_STAGE, showEvent);
