@@ -1,5 +1,6 @@
 package org.web.sdk.system 
 {
+	import org.web.sdk.log.Log;
 	import org.web.sdk.system.com.*;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.inter.*;
@@ -105,7 +106,7 @@ package org.web.sdk.system
 				_controHash.put(name, controller);
 				addMessageFromController(controller);	//先添加命令
 				controller.launch(getMessage());
-				trace('#添加模块->', controller,', 感兴趣事件->',controller.getSecretlyNotices());
+				Log.log(this).debug('#添加模块->', controller,', 感兴趣事件->',controller.getSecretlyNotices());
 				return true;
 			}
 			return false;
@@ -155,7 +156,7 @@ package org.web.sdk.system
 		{
 			var cont:IController = _controHash.remove(name);
 			if (cont) {
-				trace('#删除模块->', cont);
+				Log.log(this).debug('#删除模块->', cont);
 				removeMessageFromController(cont);	//先删除命令
 				cont.free();						//释放
 			}
@@ -196,7 +197,7 @@ package org.web.sdk.system
 		 * */
 		public function launch(notice:IMessage):void 
 		{
-			trace("#启动天网");
+			Log.log(this).debug("#启动天网");
 			if (_isLaunch) return;
 			_isLaunch = true;
 			_message = notice == null ? EternalMessage.gets() : notice;
@@ -209,7 +210,7 @@ package org.web.sdk.system
 		 * */
 		public function free():void 
 		{
-			trace("#释放天网");
+			Log.log(this).debug("#释放天网");
 			if (!_isLaunch) return;
 			_isLaunch = false;
 			//移除自身命令监听

@@ -51,9 +51,8 @@ package org.alg.astar
 			var node:Node = new Node(x, y);
 			node.setType(type);
 			_mapList[node.id] = node;
-			//trace(node);
 		}
-	
+		
 		//快速取
 		public function getNode(x:int, y:int):Node
 		{

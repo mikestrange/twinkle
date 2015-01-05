@@ -4,7 +4,7 @@ package org.web.sdk.gpu.actions
 	import flash.utils.getTimer;
 	import org.web.sdk.display.core.Texture;
 	import org.web.sdk.display.engine.IStepper;
-	import org.web.sdk.display.engine.Phoebus;
+	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.gpu.core.GpuDisplayObject;
 	import org.web.sdk.gpu.core.CreateTexture;
 	import org.web.sdk.gpu.actions.texture.ActionTexture;

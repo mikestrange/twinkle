@@ -6,6 +6,7 @@
 package org.web.sdk.load 
 {
 	import org.web.sdk.load.loads.*;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
 	import org.web.apk.beyond_challenge;
 	
@@ -295,7 +296,7 @@ package org.web.sdk.load
 					if (flder.removeRespond(mark) == NONE) removeMark(url);
 				}
 			}
-			trace('##delete url=', url, ',mark=', mark);
+			Log.log(this).debug('##delete url=', url, ',mark=', mark);
 		}
 		
 		/*
@@ -304,7 +305,7 @@ package org.web.sdk.load
 		public function clearWait():void
 		{
 			hashWait.eachKey(removeMark);
-			trace('##clear wait loads');
+			Log.log(this).debug('##clear wait loads');
 		}
 		
 		/*
@@ -317,7 +318,7 @@ package org.web.sdk.load
 			}else {
 				hashLoad.eachKey(addLoadToWait);
 			}
-			trace('##stop loading ->share=', share);
+			Log.log(this).debug('##stop loading ->share=', share);
 		}
 		
 		//暂停被添加到等待列表

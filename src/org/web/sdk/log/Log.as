@@ -18,7 +18,7 @@ package org.web.sdk.log
 		public static const COLORS:Array = ['#000000', DEBUG_COLOR, INFO_COLOR, WARN_COLOR, ERROR_COLOR];
 		public static const LITE_TEXT:Array = ['[right]', '[debug]' , '[info]', '[warn]', '[error]'];
 		//
-		private static const DEFAULT_NAME:String = "[ NONE ]";			//默认日志属性
+		private static const DEFAULT_NAME:String = "NONE";			//默认日志属性
 		//保存为日志文件
 		private static var pureLogs:Vector.<LogData> = new Vector.<LogData>;
 		private static const LOG_LENG:int = 10000;
@@ -27,6 +27,9 @@ package org.web.sdk.log
 		//
 		public static const HTML:String = 'html';
 		public static const TEXT:String = 'text';
+		//这里可以用正则
+		private static var print_name:String = "null";
+		
 		
 		//[log object]
 		private var className:String;
@@ -53,18 +56,24 @@ package org.web.sdk.log
 		
 		protected function output(value:int, args:Array):void
 		{
-			var chat:String;
-			if (className == null) chat = DEFAULT_NAME;
-			else chat = "[ " + this.className + " ] ";
+			var chat:String = "[ " + this.className + " ] ";
 			//next
             for (var i:int = 0; i < args.length; i++) {
 				if (i == args.length - 1) chat += args[i] + "";
 				else chat += args[i] + " , ";
 			}
 			//输出
-			trace(chat);
-			//是否保存日子，直接文本保存
-			if (SHARE_LOG) addLog(new LogData(value, chat, TimeUtil.getTime()));
+			var bool:Boolean = false;
+			if (print_name == null) {
+				bool = true;
+			}else {
+				if (print_name == this.className) bool = true;
+			}
+			if (bool) {
+				trace(chat);
+				//是否保存日子，直接文本保存
+				if (SHARE_LOG) addLog(new LogData(value, chat, TimeUtil.getTime()));
+			}
 		}
 		
 		private static function addLog(info:LogData):void
@@ -113,11 +122,15 @@ package org.web.sdk.log
 		public static function log(target:Object = null):Log
 		{
 			if (null == _log) _log = new Log;
-			_log.className = null;
 			if (target) _log.className = NameUtil.getClassName(target);
+			else _log.className = DEFAULT_NAME;
             return _log;
 		}
 		
+		public static function setprint(value:String = null):void
+		{
+			print_name = value;
+		}
 		//ends
 	}
 }

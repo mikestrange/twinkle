@@ -1,5 +1,6 @@
 package org.web.sdk.net.socket 
 {
+	import org.web.sdk.log.Log;
 	import org.web.sdk.net.socket.base.FtpRead;
 	import org.web.sdk.net.socket.inter.IRequest;
 	import org.web.sdk.net.socket.inter.ISocketRespond;
@@ -52,7 +53,7 @@ package org.web.sdk.net.socket
 			var key:String = match(cmd);
 			//添加回执
 			if (respondName) {
-				trace("#添加回执: cmd=", cmd, respondName);
+				Log.log(this).debug("#添加回执: cmd=", cmd, respondName);
 				if (SocketModule.hash_respond.isKey(key)) throw Error(key + ' 已经注册过的ISocketRespond' + NameUtil.getClassName(this));
 				cmdRespondList.push(key);
 				SocketModule.hash_respond.put(key, respondName);

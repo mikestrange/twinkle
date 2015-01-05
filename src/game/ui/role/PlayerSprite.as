@@ -18,7 +18,7 @@ package game.ui.role
 	import org.web.sdk.display.core.TextEditor;
 	import org.web.sdk.display.core.Texture;
 	import org.web.sdk.display.engine.IStepper;
-	import org.web.sdk.display.engine.Phoebus;
+	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.gpu.core.GpuDisplayObject;
 	import org.web.sdk.net.socket.ServerSocket;
@@ -63,7 +63,7 @@ package game.ui.role
 			_action = new PlayerAction("playerAction");
 			_action.load(_data.url);
 			this.addChild(_action);
-			//
+			//名称
 			_texture = new Texture(EditorTexture.draw(_data.usn));
 			this.addChild(_texture);
 			//绘制一个基点
@@ -181,7 +181,7 @@ package game.ui.role
 		/* INTERFACE org.web.sdk.display.engine.IStepper */
 		public function run():void 
 		{
-			Phoebus.run(this);
+			SunEngine.run(this);
 		}
 		
 		public function step(event:Object):void 
@@ -192,17 +192,11 @@ package game.ui.role
 			_texture.y = -_action.height - _texture.height;
 		}
 		
-		public function cut(type:String = null):void 
+		public function die():void 
 		{
-			Phoebus.cut(this);
-			kill();
+			SunEngine.cut(this);
 		}
 		
-		//替代了释放
-		public function kill():void 
-		{
-			
-		}
 		//ends
 	}
 

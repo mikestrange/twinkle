@@ -3,6 +3,7 @@ package org.web.sdk.net.socket
 	import flash.utils.getTimer;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.net.socket.base.*;
 	import org.web.apk.beyond_challenge;
 	import org.web.sdk.net.socket.inter.IAssigned;
@@ -94,7 +95,7 @@ package org.web.sdk.net.socket
 		protected function action(cmd:int, ftp:RespondEvented):void
 		{
 			var respond:ISocketRespond = SocketModule.createRespond(cmd);
-			trace("->服务端推送命令:" + cmd, ',handler:', respond);
+			Log.log(this).debug("->服务端推送命令:" + cmd, ',handler:', respond);
 			if (respond) respond.action(cmd, ftp);
 		}
 		

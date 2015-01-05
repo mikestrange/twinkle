@@ -2,7 +2,7 @@ package game.ui.eff
 {
 	import game.ui.core.GreatTexture;
 	import org.web.sdk.display.engine.IStepper;
-	import org.web.sdk.display.engine.Phoebus;
+	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.gpu.actions.ActionMovie;
 	import org.web.sdk.gpu.actions.texture.ActionTexture;
 	import org.web.sdk.gpu.core.CreateTexture;
@@ -43,7 +43,7 @@ package game.ui.eff
 		public function run():void 
 		{
 			restore();
-			Phoebus.run(this);
+			SunEngine.run(this);
 		}
 		
 		public function step(event:Object):void 
@@ -68,7 +68,7 @@ package game.ui.eff
 		
 		public function cut(type:String = null):void 
 		{
-			Phoebus.cut(this);
+			SunEngine.cut(this);
 			this.kill();
 		}
 		

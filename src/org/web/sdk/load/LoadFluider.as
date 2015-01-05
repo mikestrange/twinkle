@@ -7,6 +7,7 @@ package org.web.sdk.load
 {
 	import flash.utils.Dictionary;
 	import org.web.apk.beyond_challenge;
+	import org.web.sdk.log.Log;
 	
 	use namespace beyond_challenge;
 	//下载流体
@@ -116,7 +117,7 @@ package org.web.sdk.load
 				//在这里下载就已经结束,无论失败还是成功
 				bool = true;
 				_isstart = false;
-				trace('#加载完成->url:', _url, ',context:' + _context, ",type:" + eventType);
+				Log.log(this).debug('#加载完成->url:', _url, ',context:' + _context, ",type:" + eventType);
 			}
 			//派发下载所需要的回执
 			invokes(target, eventType);
@@ -137,7 +138,7 @@ package org.web.sdk.load
 				try {
 					_loader.close();
 				}catch (e:Error) {
-					trace('#关闭下载出错:下载已经完成或者下载未开始', _url);
+					Log.log(this).debug('#关闭下载出错:下载已经完成或者下载未开始', _url);
 				}
 			}
 		}

@@ -4,6 +4,7 @@ package org.web.sdk.display.core.house
 	import org.web.sdk.display.core.BoneSprite;
 	import org.web.sdk.display.inters.ILayer;
 	import org.web.sdk.display.inters.IVision;
+	import org.web.sdk.log.Log;
 	
 	//单你在某个图层下面添加的时候也能成立
 	internal class SoleVision extends BoneSprite implements IVision 
@@ -50,7 +51,7 @@ package org.web.sdk.display.core.house
 		public function addLayer(layer:ILayer, floor:int = -1):Boolean
 		{
 			if (isByName(layer.getName())) return false;
-			trace("#[" + this + "]添加图层->", layer.getName());
+			Log.log(this).debug("#[" + this + "]添加图层->", layer.getName());
 			this.addChildDoName(layer as DisplayObject, layer.getName(), floor);
 			return true;
 		}
@@ -64,7 +65,7 @@ package org.web.sdk.display.core.house
 		//移除图层
 		public function removeLayer(layerName:String):ILayer 
 		{
-			trace("#[" + this + "]移除图层->", layerName);
+			Log.log(this).debug("#[" + this + "]移除图层->", layerName);
 			return removeChildByName(layerName) as ILayer;
 		}
 		

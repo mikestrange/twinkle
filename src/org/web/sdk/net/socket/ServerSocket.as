@@ -4,6 +4,7 @@ package org.web.sdk.net.socket
 	import flash.events.*;
 	import flash.net.*;
 	import flash.utils.*;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.net.socket.inter.*;
 	import org.web.sdk.system.EternalMessage;
 	
@@ -69,7 +70,7 @@ package org.web.sdk.net.socket
 			try {
 				close();
 			}catch (e:IOError) { 
-				trace("->socket关闭错误或端口未打开,非系统错误!");
+				Log.log(this).debug("->socket关闭错误或端口未打开,非系统错误!");
 			}finally {
 				remove();
 			}
@@ -77,13 +78,13 @@ package org.web.sdk.net.socket
 		
 		protected function onSecurity(e:SecurityErrorEvent):void
 		{
-			trace("#Error:安全沙箱错误")
+			Log.log(this).debug("#Error:安全沙箱错误")
 		}
 		
 		//连接错误
 		protected function onError(e:IOErrorEvent):void
 		{
-			trace("#Error:socket连接失败!", this);
+			Log.log(this).debug("#Error:socket连接失败!", this);
 		}
 		
 		//连接和关闭
@@ -96,10 +97,10 @@ package org.web.sdk.net.socket
 			{
 				case Event.CONNECT:
 					if (_onLink is Function) _onLink(this);
-					trace("->socket打开连接");
+					Log.log(this).debug("->socket打开连接");
 					break;
 				case Event.CLOSE:
-					trace("->socket关闭连接,你已和服务器断开连接！");	
+					Log.log(this).debug("->socket关闭连接,你已和服务器断开连接！");	
 					break;
 			}
 		}
@@ -122,7 +123,7 @@ package org.web.sdk.net.socket
 		public function callFinal(byte:ByteArray):void
 		{
 			if (!connected) return;
-			//trace("发送字段：", byte.length);
+			//Log.log(this).debug("发送字段：", byte.length);
 			writes(byte);
 			flush();
 		}
@@ -130,7 +131,7 @@ package org.web.sdk.net.socket
 		//通知调用,公开信
 		public function sendNoticeRequest(request:IRequest, message:Object = null):void
 		{
-			trace('->client 请求cmd: ' + request.getCmd());
+			Log.log(this).debug('->client 请求cmd: ' + request.getCmd());
 			request.sendRequest(message, this);
 		}
 		

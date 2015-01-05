@@ -11,7 +11,7 @@ package game.utils
 		
 		public static function getEffByType(type:int = -1):String
 		{
-			return MapPath.ROOT_URL + "eff/001_player.swf";
+			return MapPath.ROOT_URL + "eff/" + type+".swf";
 		}
 		
 		

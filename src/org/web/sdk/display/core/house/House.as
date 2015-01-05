@@ -4,6 +4,7 @@ package org.web.sdk.display.core.house
 	import flash.display.DisplayObjectContainer;
 	import org.web.sdk.display.inters.ILayer;
 	import org.web.sdk.display.inters.IVision;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.system.EternalMessage;
 	
 	final public class House
@@ -26,14 +27,14 @@ package org.web.sdk.display.core.house
 		//添加的时候全局通知
 		internal function addVision(vision:IVision):void
 		{
-			trace(this, 'add ->LLVision', vision);
+			Log.log(this).debug(this, 'add ->LLVision', vision);
 			EternalMessage.sendMessage(ADD_VISION, this, vision);
 		}
 		
 		//全局通知移除
 		internal function removeVision(vision:IVision):void
 		{
-			trace(this, 'remove->', vision);
+			Log.log(this).debug(this, 'remove->', vision);
 			EternalMessage.sendMessage(REMOVE_VISION, this, vision);
 		}
 		

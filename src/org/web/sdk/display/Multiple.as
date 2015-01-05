@@ -7,6 +7,7 @@ package org.web.sdk.display
 	import org.web.sdk.display.core.BoneSprite;
 	import org.web.sdk.display.inters.IBitmap;
 	import org.web.sdk.display.inters.ISprite;
+	import org.web.sdk.log.Log;
 	
 	public class Multiple 
 	{
@@ -58,7 +59,7 @@ package org.web.sdk.display
 				try {
 					connent.connect("deleteName_King");
 				}catch (e:Error) {
-					trace('#Error:强制清理');
+					Log.log().debug('#Error:强制清理');
 				}
 			}
         }

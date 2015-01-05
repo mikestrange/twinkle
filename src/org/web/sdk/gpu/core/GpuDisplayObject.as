@@ -3,7 +3,7 @@ package org.web.sdk.gpu.core
 	import flash.display.BitmapData;
 	import org.web.sdk.display.core.Texture;
 	import org.web.sdk.display.engine.IStepper;
-	import org.web.sdk.display.engine.Phoebus;
+	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.gpu.core.TextureConductor;
 	import org.web.sdk.gpu.interfaces.IMplantation;
 	

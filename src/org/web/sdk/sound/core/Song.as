@@ -7,6 +7,7 @@ package org.web.sdk.sound.core
 	import flash.media.SoundChannel;
 	import flash.media.Sound;
 	import flash.net.URLRequest;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.sound.SoundManager;
 	
 	public class Song extends EventDispatcher implements ISound 
@@ -49,7 +50,7 @@ package org.web.sdk.sound.core
 			_sound.removeEventListener(IOErrorEvent.IO_ERROR, onError);
 			_sound.removeEventListener(Event.COMPLETE, complete);
 			_isload = true;
-			trace('#下载音频完成:', _name);
+			Log.log(this).debug('#下载音频完成:', _name);
 			this.dispatchEvent(new Event(COMPLETE));
 		}
 		
@@ -58,7 +59,7 @@ package org.web.sdk.sound.core
 			_sound.removeEventListener(IOErrorEvent.IO_ERROR, onError);
 			_sound.removeEventListener(Event.COMPLETE, complete);
 			_isload = true;
-			trace('#下载音频出错:', _name);
+			Log.log(this).debug('#下载音频出错:', _name);
 			this.dispatchEvent(new Event(ERROR));
 		}
 		

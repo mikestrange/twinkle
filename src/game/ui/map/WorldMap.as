@@ -164,13 +164,6 @@ package game.ui.map
 				player.update(i, "测试" + i, dx, dy);
 				stop(player);
 			}*/
-			
-			var action:EffectAction = new EffectAction("eff", 2, new EffectAction("eff", 0, null, true));
-			action.load("1000.swf");
-			action.run();
-			var po:Point = actor.localToGlobal(new Point);
-			action.moveTo(po.x, po.y);
-			FrameWork.stage.addChild(action);
 		}
 		
 		public function sendSelf(e:Object = null):void

@@ -1,5 +1,6 @@
 package org.web.sdk.net.socket.core 
 {
+	import org.web.sdk.log.Log;
 	import org.web.sdk.net.socket.inter.*;
 	import org.web.sdk.net.socket.RespondEvented;
 	import org.web.sdk.system.EternalMessage;
@@ -12,7 +13,7 @@ package org.web.sdk.net.socket.core
 		//处理服务器的回执
 		public function action(cmd:uint, event:RespondEvented = null):void
 		{
-			trace("->server :cmd" + cmd, this);
+			Log.log(this).debug("->server :cmd" + cmd, this);
 		}
 		
 		public function getMessage():Object

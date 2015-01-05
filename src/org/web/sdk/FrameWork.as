@@ -6,6 +6,7 @@ package org.web.sdk
 	import flash.events.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.load.loads.*;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.pool.*;
 	import org.web.sdk.load.*;
 	import org.web.sdk.system.key.*;
@@ -42,16 +43,16 @@ package org.web.sdk
 		//是否启动引擎
 		public static function setEngine(value:Boolean):void
 		{
-			if (value) Phoebus.open();
-			else Phoebus.close();
+			if (value) SunEngine.open();
+			else SunEngine.close();
 		}
 		
 		//是否启用键盘
 		public static function setKeyboard(value:Boolean):void
 		{
 			KeyManager.gets(value);
-			if (value) trace('#启动键盘');
-			else trace('#关闭按键支持')
+			if (value) Log.log().debug('#启动键盘');
+			else Log.log().debug('#关闭按键支持')
 		}
 		
 		public static function get winWidth():Number 
