@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<language path="语言包"/>
+	<res version="0.0.0.1" text="初始化需要加载的文件">
+		<ui name="" url=""/>
+	</res>
+	<root_path text="所有路径">
+		<item id="" path="" type="" text=""/>
+	</root_path>
+</data>
