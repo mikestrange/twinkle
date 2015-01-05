@@ -1,7 +1,7 @@
-package org.web.sdk.useful 
+package org.web.sdk.utils.point.test 
 {
 	import org.web.sdk.display.core.BoneSprite;
-	import org.web.sdk.useful.utils.Vector2D;
+	import org.web.sdk.utils.point.Vector2D;
 	
 	public class Vehicle extends BoneSprite 
 	{

@@ -1,4 +1,4 @@
-package org.web.sdk.useful.td
+package org.web.sdk.utils.point
 {
 	public class Point3D
 	{
