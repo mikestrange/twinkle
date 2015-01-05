@@ -1,0 +1,208 @@
+package org.max 
+{
+	import alternativa.engine3d.controllers.SimpleObjectController;
+	import alternativa.engine3d.core.Camera3D;
+	import alternativa.engine3d.core.Object3D;
+	import alternativa.engine3d.core.Resource;
+	import alternativa.engine3d.core.View;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Stage;
+	import flash.display.Stage3D;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.display3D.Context3DRenderMode;
+	import flash.events.ContextMenuEvent;
+	import flash.events.Event;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
+	import flash.ui.*;
+	
+	//包括了启动3D场景所有，和一些基本的使用库
+	public class World3D
+	{
+		private static var _work3d:World3D;
+		private static var _create:Boolean = false;
+		//private
+		private var _root:Object3D;
+		private var _stage3D:Stage3D;
+		private var _camera:Camera3D;
+		private var _stage:Stage;
+		private var _complete:Function;
+		private var _enterList:Vector.<Function>;
+		//简单控制器
+		public var controller:SimpleObjectController;
+		//裁剪范围
+		public var farLeng:int = 10000;
+		public var nearLeng:Number = 1;
+		//摄像初始位置
+		private var _angle:int;
+		private var _x:int;
+		private var _y:int;
+		private var _z:int;
+		
+		//static
+		public static function get gets():World3D
+		{
+			if (!_create) {
+				_create = true;
+				_work3d = new World3D();
+			}
+			return _work3d;
+		}
+		
+		//启动 启动过就不需要启动了
+		public function launch($stage:Stage, called:Function = null):void
+		{
+			if (_stage) return;
+			_stage = $stage;
+			_complete = called;
+			_root = new Object3D;
+			_enterList = new Vector.<Function>;
+			_stage.scaleMode = StageScaleMode.NO_SCALE;
+			_stage.align = StageAlign.TOP_LEFT;
+			_stage3D = _stage.stage3Ds[0];
+			_stage3D.addEventListener(Event.CONTEXT3D_CREATE, startInit, false, 0, true);
+			_stage3D.requestContext3D(Context3DRenderMode.SOFTWARE);
+		}
+		
+		private function startInit(e:Event = null):void
+		{
+			_stage3D.removeEventListener(Event.CONTEXT3D_CREATE, startInit);
+			_camera = new Camera3D(nearLeng, farLeng);
+			_camera.view = new View(_stage.stageWidth, _stage.stageHeight, false, 0, 1, 4);
+			_camera.view.hideLogo();
+			setCamera(-120, 0, -stage.stageHeight/2, stage.stageHeight);
+			_stage.addChild(_camera.view);
+			_root.addChild(_camera);
+			if (_complete is Function) _complete();
+			_stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			_stage.addEventListener(Event.RESIZE, onResize);
+			setMenuToAlternativa3D(_camera.view);
+		}
+		
+		private function onEnterFrame(e:Event = null):void 
+		{
+			for each(_complete in _enterList) _complete();
+			if(controller) controller.update();
+			camera.render(stage3D);
+		}
+		
+		private function onResize(e:Event = null):void 
+		{
+			camera.view.width = stage.stageWidth;
+			camera.view.height = stage.stageHeight;
+		}
+		
+		public function setCamera(anglex:Number, x:int = 0, y:int = 0, z:int = 0):void
+		{
+			_angle = anglex;
+			_x = x; _y = y; _z = z;
+			_camera.rotationX = _angle * Math.PI / 180;
+			_camera.setPosition(x, y, z);
+		}
+		
+		//移除内存查看
+		public function removeDiagram():void 
+		{
+			if (_camera.diagram.parent) {
+				_camera.diagram.parent.removeChild(_camera.diagram);
+			}
+		}
+		
+		//显示内存查看
+		public function addDiagram(parent:DisplayObjectContainer):void
+		{
+			if (parent == _camera.diagram.parent) return;
+			removeDiagram();
+			parent.addChild(_camera.diagram);
+		}
+			
+		//get 
+		public function get root():Object3D 
+		{
+			return _root;
+		}
+			
+		public function get stage():Stage
+		{
+			return _stage;
+		}
+		
+		public function get stage3D():Stage3D
+		{
+			return _stage3D;
+		}
+		
+		public function get camera():Camera3D
+		{
+			return _camera;
+		}
+		
+		//function
+		public function upload(resource:Resource):void
+		{
+			if (resource.isUploaded) return;
+			resource.upload(stage3D.context3D);
+		}
+		
+		//添加显示对象列表
+		public function addList(...rest):void
+		{
+			for (var i:int = 0; i < rest.length; i++) _root.addChild(rest[i] as Object3D);
+		}
+		
+		public function addChild(dis:Object3D):Object3D
+		{
+			return _root.addChild(dis);
+		}
+		
+		public function removeChild(dis:Object3D):Object3D
+		{
+			if (dis.parent) dis.parent.removeChild(dis);
+			return dis;
+		}
+		
+		//刷新所有材质
+		public function uploadAll():void
+		{
+			var resource:Resource;
+			var resources:Vector.<Resource> = _root.getResources(true);
+			for each (resource in resources) upload(resource);
+		}
+		
+		//添加帧循环 一个不做多添加
+		public function addEnterFrame(called:Function, remove:Boolean = false):void
+		{
+			if (remove) {
+				var index:int = _enterList.indexOf(called);
+				if (index != -1) _enterList.splice(index, 1);
+			}else {
+				_enterList.push(called);
+			}
+		}
+		
+		public function isEnter(called:Function):Boolean
+		{
+			return _enterList.indexOf(called) != -1;
+		}
+		
+		//设置Alternativa3D连接菜单栏
+		public static function setMenuToAlternativa3D(menu:DisplayObjectContainer):void
+		{
+			var context:ContextMenu = new ContextMenu;
+			var menuItem:ContextMenuItem = new ContextMenuItem("Powered by Alternativa3D 8.32.0");
+			context.hideBuiltInItems();
+			context.clipboardMenu = false;
+			context.customItems = [menuItem];
+			menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuItem_click, false, 0, true);
+			menu.contextMenu = context;
+		}
+		
+		private static function menuItem_click(event:ContextMenuEvent):void
+		{
+			navigateToURL(new URLRequest("http://alternativaplatform.com/"))
+		}
+		//ends
+	}
+
+}
