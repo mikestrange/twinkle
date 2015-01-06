@@ -200,7 +200,7 @@ package org.web.sdk.system
 			Log.log(this).debug("#启动天网");
 			if (_isLaunch) return;
 			_isLaunch = true;
-			_message = notice == null ? EternalMessage.gets() : notice;
+			_message = notice == null ? GlobalMessage.gets() : notice;
 			addMessageFromController(this);
 			initialization();
 		}

@@ -6,12 +6,11 @@ package game.ui.core.actions
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.gpu.asset.CryRenderer;
 	import org.web.sdk.gpu.core.GpuSprite;
-	import game.ui.core.actions.ActionTexture;
 	import org.web.sdk.utils.HashMap;
 	/*
 	 * 动作集合
 	 * */
-	public class ActionMovie extends GpuSprite
+	public class GpuMovie extends GpuSprite
 	{
 		//默认动作不改变
 		private var _index:int = 0;		
@@ -21,6 +20,7 @@ package game.ui.core.actions
 		private var _vecotr:Vector.<BitmapData>;
 		protected var _url:String;
 		
+		//立刻下载
 		public function load(url:String):void
 		{
 			_url = url;
@@ -49,7 +49,7 @@ package game.ui.core.actions
 			if (_isstop) _isstop = true;
 			if(action) _action = action;
 			if (value == -1) value = _index;
-			sendRender("user");
+			sendRender("render");
 		}
 		
 		public function play(action:String = null, value:int = -1):void
@@ -57,7 +57,7 @@ package game.ui.core.actions
 			if (_isstop) _isstop = false;
 			if(action) _action = action;
 			if (value == -1) value = _index;
-			sendRender("user");
+			sendRender("render");
 		}
 		
 		public function isPlay():Boolean
@@ -69,6 +69,7 @@ package game.ui.core.actions
 		override public function render():void 
 		{
 			if (_isstop) return;
+			if (!isValid()) return;
 			if (getTimer() - _float_time > GpuSprite.RENDER_FPS) {
 				showIndex(_action, ++_index);
 				doFrame(_index);
@@ -85,15 +86,13 @@ package game.ui.core.actions
 		{
 			if (code == null) return;
 			_vecotr = data;
-			trace(_vecotr)
-			//showIndex(_action, _index);
 		}
 		
 		protected function showIndex(action:String, value:int):void
 		{
 			_index = value;
-			_float_time = getTimer();
-			if (!this.isValid() || action == null) {
+			restore();
+			if (action == null) {
 				_index = 0;
 				return;
 			}

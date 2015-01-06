@@ -5,9 +5,9 @@ package org.web.sdk.system
 	import org.web.sdk.system.inter.IMessage;
 	
 	/*定义一个全局的事件处理*/
-	final public class EternalMessage
+	final public class GlobalMessage
 	{
-		public function EternalMessage() { throw Error('do not new this class'); };
+		public function GlobalMessage() { throw Error('do not new this class'); };
 		
 		private static var _ins:IMessage;
 		

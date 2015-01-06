@@ -14,7 +14,6 @@ package game.ui.map
 	import game.datas.PlayerObj;
 	import game.datas.vo.ActionVo;
 	import game.mvc.WorldKidnap;
-	import game.ui.eff.EffectAction;
 	import game.ui.role.PlayerAction;
 	import game.ui.role.PlayerSprite;
 	import org.alg.astar.Astar;
@@ -24,7 +23,7 @@ package game.ui.map
 	import org.alg.utils.FormatUtils;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.net.socket.ServerSocket;
-	import org.web.sdk.system.EternalMessage;
+	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.system.key.KeyAction;
 	import org.web.sdk.system.key.KeyManager;
 	import org.web.sdk.tool.Clock;

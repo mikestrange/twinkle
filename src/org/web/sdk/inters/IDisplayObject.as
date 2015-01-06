@@ -75,7 +75,7 @@ package org.web.sdk.inters
 		
 		function hitTestObject(obj:DisplayObject):Boolean;
 		function hitTestPoint(x:Number, y:Number, shapeFlag:Boolean = false):Boolean;
-		//end
+		//新增接口
 		function removeFromParent():IBaseSprite;
 		function moveTo(mx:int = 0, my:int = 0):void;
 		function moveToPoint(value:Point):void;

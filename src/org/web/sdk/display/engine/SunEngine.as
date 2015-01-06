@@ -168,7 +168,7 @@ package org.web.sdk.display.engine
 		/*
 		 * 如果暂停，可以取得这个暂停时间长
 		 * */
-		public static function getTime():int
+		public static function get sleepTime():int
 		{ 
 			if (_pauseTime == NAN) return -1;
 			return getTimer() - _pauseTime; 

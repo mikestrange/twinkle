@@ -3,7 +3,7 @@ package game.ui.eff
 	import game.ui.core.GreatTexture;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
-	import game.ui.core.actions.ActionMovie;
+	import game.ui.core.actions.GpuMovie;
 	import org.web.sdk.gpu.actions.texture.ActionTexture;
 	import org.web.sdk.gpu.core.CreateTexture;
 	import org.web.sdk.gpu.asset.CryRenderer;

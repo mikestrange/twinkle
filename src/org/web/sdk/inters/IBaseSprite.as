@@ -14,13 +14,11 @@ package org.web.sdk.inters
 		function get numChildren():int;
 		function get graphics():Graphics;
 		function isEmpty():Boolean;
-		//
+		function initialization(value:Boolean = true):void;
 		function removeChildByName(disName:String):DisplayObject;
 		function isByName(disName:String):Boolean;
 		function clearChildren():void;
 		function addChildByName(child:IDisplayObject, sonName:String, index:int = -1):IDisplayObject;
-		//
-		function initialization(value:Boolean = true):void;
 		function show():void;
 		function hide():void;
 		function showEvent(event:Event = null):void;

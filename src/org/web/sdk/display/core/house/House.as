@@ -4,7 +4,7 @@ package org.web.sdk.display.core.house
 	import flash.display.DisplayObjectContainer;
 	import org.web.sdk.display.core.house.ILayer;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.system.EternalMessage;
+	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.utils.HashMap;
 	
 	final public class House
@@ -108,6 +108,7 @@ package org.web.sdk.display.core.house
 						break;
 					}
 				}
+				if (index < 0) index = 0;
 				_root.addChildAt(layer, index);
 			}
 		}

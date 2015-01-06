@@ -7,6 +7,7 @@ package
 	import flash.net.*;
 	import flash.ui.*;
 	import flash.utils.*;
+	import game.consts.LayerType;
 	import game.consts.NoticeDefined;
 	import game.mvc.WorldKidnap;
 	import game.consts.CmdDefined;
@@ -60,6 +61,7 @@ package
 			PerfectLoader.gets().LOAD_MAX = 5;
 			//
 			StartLayer.gets().show();
+			//ends
 		}
 		
 		

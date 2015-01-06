@@ -6,7 +6,7 @@ package org.web.sdk.net.socket
 	import flash.utils.*;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.net.socket.inter.*;
-	import org.web.sdk.system.EternalMessage;
+	import org.web.sdk.system.GlobalMessage;
 	
 	public class ServerSocket extends Socket implements ISocket
 	{
@@ -138,7 +138,7 @@ package org.web.sdk.net.socket
 		//通过命令发送到服务器
 		public function sendNotice(noticName:String, message:Object = null):void
 		{
-			EternalMessage.sendMessage(noticName, message, this);
+			GlobalMessage.sendMessage(noticName, message, this);
 		}
 		
 		//初始化一次sockete

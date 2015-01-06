@@ -14,10 +14,6 @@ package org.web.sdk.display.core
 	
 	public class KitSprite extends Sprite implements IBaseSprite 
 	{
-		public function KitSprite() 
-		{
-			
-		}
 		
 		/* INTERFACE org.web.sdk.inters.IBaseSprite */
 		public function lock():void 

@@ -4,8 +4,10 @@ package org.web.sdk.inters
 	
 	public interface IBitmap extends IDisplayObject 
 	{
+		//释放
 		function dispose():void;
-		function setTexture(byte:*, smooth:Boolean = true):void;
+		//设置材质
+		function setTexture(byte:*, smooth:Boolean = true):void;	
 		function clone():IBitmap;
 		//ends
 	}

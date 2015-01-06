@@ -1,10 +1,10 @@
 package game.ui.core 
 {
-	import game.ui.core.actions.ActionMovie;
-	import game.ui.core.actions.ActionTexture;
+	import game.ui.core.actions.GpuMovie;
+	import game.ui.core.actions.MovieShader;
 	import org.web.sdk.gpu.asset.ShaderManager;
 	
-	public class GreatTexture extends ActionMovie
+	public class GreatTexture extends GpuMovie
 	{	
 		private var _point:int;
 		private var _action:String;
@@ -14,7 +14,7 @@ package game.ui.core
 		public function GreatTexture(type:String, point:int = 0, action:String = null) 
 		{
 			super();
-			if (!ShaderManager.has(type)) ShaderManager.create(new ActionTexture(type));
+			if (!ShaderManager.has(type)) ShaderManager.create(new MovieShader(type));
 			this.setShader(type)
 			this._point = point;
 			this._action = action;
@@ -34,7 +34,7 @@ package game.ui.core
 		{
 			if (action == null) return;
 			_action = action;
-			currentName = ActionTexture.getActionName(_action, _point);
+			currentName = MovieShader.getActionName(_action, _point);
 			sendRender("render",_url);
 		}
 		

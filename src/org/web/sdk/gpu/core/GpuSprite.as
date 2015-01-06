@@ -11,9 +11,7 @@ package org.web.sdk.gpu.core
 	
 	use namespace beyond_challenge
 	/**
-	 * 支持所有纹理
-	 * 如果有坐骑，那么可以添加一个内部渲染坐骑的BaseAction,
-	 * 因为主角是主体，其他配件可以通过hash管理，同时渲染
+	 * GPU渲染的基类
 	 */
 	public class GpuSprite extends VRayMap implements IMutation
 	{
@@ -37,7 +35,7 @@ package org.web.sdk.gpu.core
 				_conductor.unmark();	//取消之前的标记
 				_conductor = null;
 			}
-			if (!value.isValid()) throw Error("无效材质");
+			if (!value.isValid()) throw Error("无效材质：" + value);
 			_conductor = value;
 			_conductor.mark();
 		}
@@ -54,7 +52,7 @@ package org.web.sdk.gpu.core
 			
 		}
 		
-		//唯一允许渲染的情况
+		//通知渲染器
 		final public function sendRender(type:String, data:Object = null):void
 		{
 			if (isValid()) getTexure().render(type, this, data);
@@ -67,7 +65,7 @@ package org.web.sdk.gpu.core
 			return _conductor.isValid();
 		}
 		
-		//等于
+		//释放元素
 		override public function dispose():void 
 		{
 			removeFromParent();

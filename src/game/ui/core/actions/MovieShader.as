@@ -10,13 +10,13 @@ package game.ui.core.actions
 	import org.web.sdk.utils.HashMap;
 	
 	//动态库，大部分相同的保存在同一库下,这里必须做一个标记，下载过的标记
-	public class ActionTexture extends CryRenderer 
+	public class MovieShader extends CryRenderer 
 	{
 		private static var INDEX:int = 0;
 		//
 		private var actionHash:HashMap;
 		
-		public function ActionTexture(key:String) 
+		public function MovieShader(key:String) 
 		{
 			super(key);
 		}
@@ -30,7 +30,7 @@ package game.ui.core.actions
 		public function load(url:String,action:IMutation):void
 		{
 			if (FrameWork.app.has(url)) {
-				render("user", action);	//
+				render("render", action);	//
 			}else {
 				FrameWork.downLoad(url, LoadEvent.SWF, "MARK", complete, action);
 			}
@@ -40,7 +40,7 @@ package game.ui.core.actions
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			FrameWork.app.share(e.url, e.target as Loader);
-			render("user", e.data as IMutation,e.url);
+			render("render", e.data as IMutation,e.url);
 		}
 		
 		override public function render(type:String, action:IMutation, data:Object = null):void 
@@ -52,7 +52,7 @@ package game.ui.core.actions
 						load(data as String, action);
 					break;
 					default:
-						var name:String = ActionMovie(action).currentName;
+						var name:String = GpuMovie(action).currentName;
 						if (!hasAction(name)) addAction(name, getActionVectors(name, data as String));
 						//直接渲染
 						action.updateRender(getCode(), getActions(name));
