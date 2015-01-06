@@ -6,7 +6,7 @@ package game.mvc
 	import game.mvc.room.MapController;
 	import game.consts.LayerType;
 	import org.web.sdk.display.core.house.*;
-	import org.web.sdk.display.inters.ILayer;
+	import org.web.sdk.display.core.house.ILayer;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.system.*;
 	import org.web.sdk.system.events.Evented;
@@ -30,12 +30,12 @@ package game.mvc
 			FrameWork.utilization(root.stage, sceneWidth, sceneHeight, false, true, true);
 			//图层初始化
 			House.nativer.root = root;
-			House.nativer.addLayer(new Layer(LayerType.BACK_DROP));
-			House.nativer.addLayer(new Layer(LayerType.MAP));
-			House.nativer.addLayer(new Layer(LayerType.UI));
-			House.nativer.addLayer(new Layer(LayerType.TIPS));
-			House.nativer.addLayer(new Layer(LayerType.LOADING, true));
-			House.nativer.addLayer(new Layer(LayerType.TOP));
+			House.nativer.createLayer(LayerType.BACK_DROP, 1);
+			House.nativer.createLayer(LayerType.MAP, 2);
+			House.nativer.createLayer(LayerType.UI, 3);
+			House.nativer.createLayer(LayerType.TIPS, 4);
+			House.nativer.createLayer(LayerType.LOADING, 5);
+			House.nativer.createLayer(LayerType.TOP, 6);
 			//屏幕改变的时候
 			FrameWork.stage.addEventListener(Event.RESIZE, onResize);
 			onResize();
@@ -43,14 +43,13 @@ package game.mvc
 		
 		private function onResize(e:Event = null):void
 		{
-			FrameWork.showRect(House.nativer.root, House.nativer.getLayer(LayerType.TOP).graphics);
+			//FrameWork.showRect(House.nativer.root, House.nativer.getLayer(LayerType.TOP).graphics);
 		}
 		
 		//添加到图层，不进行其他操作
-		public static function addToLayer(dis:DisplayObject, layerName:String = LayerType.UI, floor:int = -1):void
+		public static function addToLayer(dis:DisplayObject, layerName:String = LayerType.UI):void
 		{
-			var layer:ILayer = House.nativer.getLayer(layerName);
-			if (layer) layer.addChildDoName(dis, null, floor);
+			House.nativer.addToLayer(dis, layerName);
 		}
 		
 		//launch  初始化模块

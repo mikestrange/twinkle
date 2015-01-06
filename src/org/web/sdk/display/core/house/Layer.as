@@ -1,10 +1,11 @@
 package org.web.sdk.display.core.house 
 {
 	import flash.display.DisplayObject;
-	import org.web.sdk.display.core.BoneSprite;
-	import org.web.sdk.display.inters.ILayer;
+	import flash.display.Sprite;
+	import org.web.sdk.display.core.house.ILayer;
+	import org.web.sdk.display.core.KitSprite;
 	
-	public class Layer extends BoneSprite implements ILayer 
+	public class Layer extends KitSprite implements ILayer 
 	{
 		public function Layer(vsname:String, value:Boolean = false) 
 		{
@@ -20,21 +21,9 @@ package org.web.sdk.display.core.house
 		
 		public function removeToLayer(dis:DisplayObject):DisplayObject
 		{
-			return removeChild(dis);
+			removeChild(dis);
+			return dis;
 		}
-		
-		//不需要释放元件下面的东西
-		public function removeAll():void
-		{
-			while(numChildren) removeChildAt(0);
-		}
-		
-		override public function drawBack(mx:Number = 0, my:Number = 0, across:Number = 0, vertical:Number = 0, color:uint = 0):void 
-		{
-			this.backAlpha = .4;
-			super.drawBack(mx, my, across, vertical, 0x222222);
-		}
-		
 		//ends
 	}
 }

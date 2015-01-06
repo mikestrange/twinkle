@@ -14,24 +14,24 @@ package game.ui.role
 	import org.alg.astar.Grid;
 	import org.alg.astar.Node;
 	import org.alg.utils.FormatUtils;
-	import org.web.sdk.display.core.BoneSprite;
+	import org.web.sdk.display.core.KitSprite;
 	import org.web.sdk.display.core.TextEditor;
-	import org.web.sdk.display.core.Texture;
+	import org.web.sdk.display.core.VRayMap;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.gpu.core.GpuDisplayObject;
+	import org.web.sdk.gpu.core.GpuSprite;
 	import org.web.sdk.net.socket.ServerSocket;
 	
 	/*
 	 * role
 	 * */
-	public class PlayerSprite extends BoneSprite implements IRole, IStepper
+	public class PlayerSprite extends KitSprite implements IRole, IStepper
 	{
 		private var _action:PlayerAction;
 		//
 		private var _data:PlayerObj;
-		private var _texture:Texture;
+		private var _texture:VRayMap;
 		private var speedX:int = 4;
 		private var speedY:int = 4;
 		private var path:Array;
@@ -46,25 +46,23 @@ package game.ui.role
 		{
 			this.grid = grid;
 			this._data = data;
-			this.addEventListener(Event.ADDED_TO_STAGE, showEvent, false, 0, true);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
+			Multiple.addListener(this);
 			this.initialization();
 		}
 		
-		override protected function hideEvent(e:Object = null):void 
+		override public function hideEvent(event:Event = null):void 
 		{
+			super.hideEvent(event);
 			this.finality();
 		}
 		
-		override public function initialization():void 
+		override public function initialization(value:Boolean = true):void 
 		{
-			super.initialization();
-			//
 			_action = new PlayerAction("playerAction");
 			_action.load(_data.url);
 			this.addChild(_action);
 			//名称
-			_texture = new Texture(EditorTexture.draw(_data.usn));
+			_texture = new VRayMap(EditorTexture.draw(_data.usn));
 			this.addChild(_texture);
 			//绘制一个基点
 			drawSingularity();

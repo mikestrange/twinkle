@@ -15,11 +15,8 @@ package
 	import org.web.sdk.display.core.*;
 	import org.web.sdk.display.core.house.*;
 	import org.web.sdk.display.engine.*;
-	import org.web.sdk.display.inters.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
-	import org.web.sdk.gpu.actions.*;
-	import org.web.sdk.gpu.core.CreateTexture;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
 	import org.web.sdk.net.socket.base.*;
@@ -38,7 +35,7 @@ package
 	
 	[SWF(frameRate = "60", width = "500", height = "400")]
 	
-	public class Twinkle extends BoneSprite
+	public class Twinkle extends KitSprite
 	{
 		public function Twinkle():void 
 		{
@@ -46,9 +43,10 @@ package
 			else addEventListener(Event.ADDED_TO_STAGE, showEvent);
 		}
 		
-		override protected function showEvent(e:Object = null):void 
+		override public function showEvent(event:Event = null):void 
 		{
-			if (e) removeEventListener(Event.ADDED_TO_STAGE, showEvent);
+			super.showEvent(event);
+			if (event) removeEventListener(Event.ADDED_TO_STAGE, showEvent);
 			var time:int = getTimer();
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;

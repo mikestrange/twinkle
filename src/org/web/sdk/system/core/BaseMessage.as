@@ -1,6 +1,6 @@
 package org.web.sdk.system.core 
 {
-	import org.web.sdk.display.core.EventedDispatcher;
+	import org.web.sdk.handler.EventedDispatcher;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.inter.IMessage;

@@ -124,12 +124,6 @@ package org.web.sdk
 			return Resource.create();
 		}
 		
-		//图像存储器
-		public static function get photo():Photos
-		{
-			return Photos.create();
-		}
-		
 		//对象管理池
 		public static function getpool(fileName:String):Pools
 		{
@@ -142,7 +136,7 @@ package org.web.sdk
 			return new LoaderContext(false, ApplicationDomain.currentDomain);
 		}
 		
-		
+		//
 		private static var perfectLoader:PerfectLoader = PerfectLoader.gets();
 		
 		//比较完美的下载，只需要扩展Iloader接口就能应付一切下载

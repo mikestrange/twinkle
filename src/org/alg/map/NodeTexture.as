@@ -4,11 +4,11 @@ package org.alg.map
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import org.alg.utils.MapPath;
-	import org.web.sdk.display.core.Texture;
+	import org.web.sdk.display.core.VRayMap;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 
-	public class NodeTexture extends Texture
+	public class NodeTexture extends VRayMap
 	{
 		//连接地址
 		private var _url:String;
@@ -36,10 +36,10 @@ package org.alg.map
 			return _url;
 		}
 		
-		override public function setBitmapdata(bit:BitmapData, smooth:Boolean = true):void 
+		public function setBitmapdata(bit:BitmapData):void 
 		{
-			super.setBitmapdata(null);
-			super.setBitmapdata(bit, smooth);
+			super.setTexture(null);
+			super.setTexture(bit, true);
 		}
 		
 		public function startLoad():void

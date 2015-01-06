@@ -2,7 +2,7 @@ package
 {
 	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
-	import org.web.sdk.display.core.BoneSprite;
+	import org.web.sdk.display.core.KitSprite;
 	import org.web.sdk.FrameWork;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -17,28 +17,25 @@ package
 	import org.web.sdk.tool.Clock;
 	
 	
-	public class StartLayer extends BoneSprite
+	public class StartLayer extends KitSprite
 	{
 		private static var _ins:StartLayer;
 		
 		public static function gets():StartLayer
 		{
-			if (_ins == null) _ins = new StartLayer;
+			if (_ins == null) {
+				_ins = new StartLayer;
+				_ins.initialization();
+			}
 			return _ins;
 		}
 		
 		private var idTextInput:TextField;
 		private var pwTextInput:TextField;
 		
-		public function StartLayer()
+		override public function initialization(value:Boolean = true):void 
 		{
-			this.initialization();
-		}
-		
-		override public function initialization():void 
-		{
-			this.mouseEnabled = true;
-			this.mouseChildren = true;
+			super.initialization(value);
 			idTextInput = new TextField();
 			idTextInput.type = TextFieldType.INPUT;
 			idTextInput.background = true;

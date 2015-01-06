@@ -28,7 +28,7 @@ package org.web.sdk.log
 		public static const HTML:String = 'html';
 		public static const TEXT:String = 'text';
 		//这里可以用正则
-		private static var print_name:String = "null";
+		private static var print_name:String = null;
 		
 		
 		//[log object]

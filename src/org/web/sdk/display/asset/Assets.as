@@ -1,37 +1,26 @@
-package org.web.sdk.pool 
+package org.web.sdk.display.asset 
 {
 	import flash.display.BitmapData;
+	import org.web.sdk.inters.IAsset;
 	import org.web.sdk.utils.HashMap;
 	/**
 	 * ...
-	 * 具体实现，请扩展本类
+	 *动态下载静态贴图
 	 */
-	public class Photos 
+	public class Assets 
 	{
-		private static var _ins:Photos;
+		private static var _ins:Assets;
 		
-		public static function create():Photos
+		public static function gets():Assets
 		{
-			if (null == _ins) _ins = new Photos;
+			if (null == _ins) _ins = new Assets;
 			return _ins;
 		}
 		
-		//
 		private var _protoKeys:HashMap = new HashMap;
 		
-		//保存一张图 
-		public function share(url:String, bit:BitmapData):Boolean
-		{
-			if (null == bit) return false;
-			if (!has(url)) {
-				_protoKeys.put(url, new ImageData(url, bit));
-				return true;
-			}
-			return false;
-		}
-		
 		//不用了的从这里删除下
-		public function remove(url:String):Boolean
+		public function unmark(url:String):Boolean
 		{
 			var image:ImageData = _protoKeys.getValue(url);
 			if (null == image) return false;
@@ -43,7 +32,7 @@ package org.web.sdk.pool
 		}
 		
 		//释放一个纹理
-		public function deletes(url:String):void 
+		public function remove(url:String):void 
 		{
 			var image:ImageData = _protoKeys.remove(url);
 			if (image) image.dispose();
@@ -56,12 +45,18 @@ package org.web.sdk.pool
 		}
 		
 		//取一张图 只有在取的时候才记录备份出去了多少
-		public function gets(url:String):BitmapData
+		public function mark(asset:IAsset, bit:BitmapData = null):Boolean
 		{
-			var image:ImageData = _protoKeys.getValue(url);
-			if (null == image) return null;
+			if (asset.resource == null) return false;
+			var image:ImageData = _protoKeys.getValue(asset.resource);
+			if (image == null) {
+				if (bit == null) return false;
+				image = new ImageData(url, bit);
+				_protoKeys.put(url, image);
+			}
 			image.leng++;
-			return image.bitmapdata;
+			asset.derive(image.bitmapdata);
+			return true;
 		}
 		
 		//释放整个模块
@@ -84,7 +79,7 @@ package org.web.sdk.pool
 			chat += "->总共:" + arr.length + "]";
 			return chat;
 		}
-			
+		
 		private function dispose(image:ImageData):void 
 		{
 			image.dispose();

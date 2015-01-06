@@ -1,12 +1,12 @@
 package org.web.sdk.display 
 {
 	import flash.display.*;
+	import flash.events.Event;
 	import flash.geom.*;
 	import flash.net.LocalConnection;
-	import org.web.sdk.display.core.Image;
-	import org.web.sdk.display.core.BoneSprite;
-	import org.web.sdk.display.inters.IBitmap;
-	import org.web.sdk.display.inters.ISprite;
+	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.inters.IBitmap;
+	import org.web.sdk.inters.IDisplayObject;
 	import org.web.sdk.log.Log;
 	
 	public class Multiple 
@@ -16,21 +16,32 @@ package org.web.sdk.display
 		public static const MATRIX:Matrix = new Matrix;
 		
 		//释放元素子集
-		public static function wipeout(dis:DisplayObjectContainer, dispose:Boolean = true):void
+		public static function wipeout(dis:DisplayObjectContainer, value:Boolean = true):void
 		{
 			if (null == dis) return;
 			var item:DisplayObject;
 			while (dis.numChildren) {
 				item = dis.removeChildAt(0);
-				if (item is ISprite) ISprite(item).finality(dispose);
+				if (item is IBaseSprite) IBaseSprite(item).finality(value);
 				else if (item is IBitmap) IBitmap(item).dispose();
 				else if (item is Sprite) wipeout(Sprite(item));
 				//
 				if (item is MovieClip) MovieClip(item).stop();
-				if (dispose) {
-					if (item is Loader) Loader(item).unloadAndStop();
-				}
+				if (value) if (item is Loader) Loader(item).unloadAndStop();
 			}
+		}
+		
+		public static function addListener(dis:IBaseSprite):void 
+		{
+			if (dis.hasEventListener(Event.ADDED_TO_STAGE)) return;
+			DisplayObject(dis).addEventListener(Event.ADDED_TO_STAGE, dis.showEvent, false, 0, true);
+			DisplayObject(dis).addEventListener(Event.REMOVED_FROM_STAGE, dis.hideEvent, false, 0, true);
+		}
+		
+		public static function removeListener(dis:IBaseSprite):void 
+		{
+			DisplayObject(dis).removeEventListener(Event.ADDED_TO_STAGE, dis.showEvent);
+			DisplayObject(dis).removeEventListener(Event.REMOVED_FROM_STAGE, dis.hideEvent);
 		}
 		
 		//初始化一个dis   不改变显示状态
@@ -48,6 +59,12 @@ package org.web.sdk.display
 			dis.transform.colorTransform = COLOR_TRANS_FORM;
 			dis.transform.matrix = MATRIX;
 			return dis;
+		}
+		
+		//释放位图
+		public static function dispose(bit:BitmapData):void
+		{
+			if (bit && bit.width + bit.height > 0) bit.dispose();
 		}
 		
 		//强制回收

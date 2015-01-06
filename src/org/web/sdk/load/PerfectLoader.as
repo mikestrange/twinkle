@@ -34,6 +34,11 @@ package org.web.sdk.load
 		//下载蓝图列表,默认，可以更改
 		beyond_challenge var LoaderBlueprint:Array = [];
 		
+		public function PerfectLoader()
+		{
+			this.initialization();
+		}
+		
 		protected function initialization():void
 		{
 			setLoader(LoadEvent.TXT, TextLoader);
@@ -355,13 +360,9 @@ package org.web.sdk.load
 		
 		public static function gets():PerfectLoader
 		{
-			if (_ins == null) {
-				_ins = new PerfectLoader;
-				_ins.initialization();
-			}
+			if (_ins == null) _ins = new PerfectLoader;
 			return _ins;
 		}
-		
 		//ends
 	}
 

@@ -1,30 +1,24 @@
 package game.ui.core 
 {
-	import org.web.sdk.gpu.actions.ActionMovie;
-	import org.web.sdk.gpu.actions.texture.ActionTexture;
-	import org.web.sdk.gpu.core.CreateTexture;
-	import org.web.sdk.gpu.core.TextureConductor;
+	import game.ui.core.actions.ActionMovie;
+	import game.ui.core.actions.ActionTexture;
+	import org.web.sdk.gpu.asset.ShaderManager;
 	
-	public class GreatTexture extends ActionMovie 
-	{
+	public class GreatTexture extends ActionMovie
+	{	
 		private var _point:int;
 		private var _action:String;
 		private var _mark:String;
 		
 		//全面的动作
-		public function GreatTexture(type:String, point:int = 0, action:String = null, defName:String = null) 
+		public function GreatTexture(type:String, point:int = 0, action:String = null) 
 		{
-			super(defName);
-			this.setConductor(CreateTexture.getFactory(type, ActionTexture));
+			super();
+			if (!ShaderManager.has(type)) ShaderManager.create(new ActionTexture(type));
+			this.setShader(type)
 			this._point = point;
 			this._action = action;
 			setAction(_action);
-		}
-		
-		//下载也是设置，设置下载就表示当前取库
-		public function load(url:String):void
-		{
-			ActionTexture(getTexure()).load(url, this, url);
 		}
 		
 		//方向
@@ -40,30 +34,8 @@ package game.ui.core
 		{
 			if (action == null) return;
 			_action = action;
-			currentName = _action + "_" + _point;
-			var texture:ActionTexture = getTexure() as ActionTexture;
-			if (!texture.hasAction(currentName)) {
-				texture.addAction(currentName, CreateTexture.getActionVectors(_action, _point, _mark));
-			}
-		}
-		
-		//不同下载都不同设置
-		override public function adaptFor(mark:String, conductor:TextureConductor):void 
-		{
-			if (mark) {
-				_mark = mark;
-				setAction(_action);
-			}
-		}
-		
-		public function setMark(value:String):void
-		{
-			this._mark = value;
-		}
-		
-		public function getMark():String
-		{
-			return _mark;
+			currentName = ActionTexture.getActionName(_action, _point);
+			sendRender("render",_url);
 		}
 		
 		public function setActionAndPoint(action:String, value:int = -1):void

@@ -3,10 +3,10 @@ package game.ui.eff
 	import game.ui.core.GreatTexture;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
-	import org.web.sdk.gpu.actions.ActionMovie;
+	import game.ui.core.actions.ActionMovie;
 	import org.web.sdk.gpu.actions.texture.ActionTexture;
 	import org.web.sdk.gpu.core.CreateTexture;
-	import org.web.sdk.gpu.core.TextureConductor;
+	import org.web.sdk.gpu.asset.CryRenderer;
 	
 	public class EffectAction extends GreatTexture implements IStepper 
 	{
@@ -30,7 +30,7 @@ package game.ui.eff
 		
 		public function setNext(nexteff:EffectAction):void
 		{
-			if (_next) _next.cut();
+			if (_next) _next.die();
 			_next = nexteff;
 		}
 		
@@ -62,19 +62,13 @@ package game.ui.eff
 					if (parent) parent.addChild(_next);
 					_next = null;
 				}
-				if(_remove) cut();
+				if(_remove) die();
 			}
 		}
 		
-		public function cut(type:String = null):void 
+		public function die():void 
 		{
 			SunEngine.cut(this);
-			this.kill();
-		}
-		
-		//替代了释放
-		public function kill():void 
-		{
 			this.dispose();
 		}
 		//end

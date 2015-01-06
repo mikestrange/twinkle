@@ -1,7 +1,7 @@
-package org.web.sdk.display.core 
+package org.web.sdk.handler 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.display.inters.IDispatcher;
+	import org.web.sdk.handler.IDispatcher;
 	
 	public class EventedDispatcher implements IDispatcher 
 	{

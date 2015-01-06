@@ -11,14 +11,14 @@ package org.alg.map
 	import org.alg.astar.Grid;
 	import org.alg.astar.Node;
 	import org.alg.utils.DrawLine;
-	import org.web.sdk.display.core.BoneSprite;
+	import org.web.sdk.display.core.KitSprite;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	
 	/*
 	 * 这里作为背景和寻路算法基础
 	 * */
-	public class MeshMap extends BoneSprite 
+	public class MeshMap extends KitSprite 
 	{
 		//网格
 		private var _grid:Grid;
@@ -31,20 +31,14 @@ package org.alg.map
 		public function MeshMap(grid:Grid)
 		{
 			this._grid = grid;
-			initialization();
-		}
-		
-		override public function initialization():void 
-		{
-			super.initialization();
 			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
 			this.addChild(_userLayer = new Sprite);
 			_userLayer.mouseEnabled = false;
 		}
 		
-		override protected function hideEvent(e:Object = null):void 
+		override public function hideEvent(event:Event = null):void 
 		{
-			super.hideEvent(e);
+			super.hideEvent(event);
 			clearAction();
 			_backdrop.dispose();
 			if (_backdrop.parent) _backdrop.parent.removeChild(_backdrop);

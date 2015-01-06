@@ -3,10 +3,8 @@ package game.ui.role
 	import flash.display.Loader;
 	import game.ui.core.GreatTexture;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.gpu.actions.ActionMovie;
-	import org.web.sdk.gpu.core.CreateTexture;
-	import org.web.sdk.gpu.actions.texture.ActionTexture;
-	import org.web.sdk.gpu.core.TextureConductor;
+	import game.ui.core.actions.ActionMovie;
+	import org.web.sdk.gpu.asset.CryRenderer;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 	
@@ -15,7 +13,7 @@ package game.ui.role
 	{
 		public function PlayerAction(type:String)
 		{
-			super(type, 4, ActionType.STAND, null);
+			super(type, 4, ActionType.STAND);
 		}
 		//ends
 	}

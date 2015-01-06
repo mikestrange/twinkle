@@ -1,6 +1,6 @@
-package org.web.sdk.display.inters 
+package org.web.sdk.handler 
 {
-	import org.web.sdk.display.core.EventedDispatcher;
+	import org.web.sdk.handler.EventedDispatcher;
 	
 	public interface IDispatcher 
 	{
