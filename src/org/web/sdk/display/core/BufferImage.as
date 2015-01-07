@@ -51,7 +51,7 @@ package org.web.sdk.display.core
 			}else {
 				_wait = true;
 				_mark = MARK + (++MARK_INDEX);
-				FrameWork.downLoad(value, LoadEvent.IMG, _mark, complete, null, null, vital);
+				FrameWork.downLoad(value, LoadEvent.IMG, _mark, complete, null, null, _vital);
 			}
 		}
 		

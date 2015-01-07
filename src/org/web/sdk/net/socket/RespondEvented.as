@@ -8,7 +8,7 @@ package org.web.sdk.net.socket
 	{
 		private var socket:ISocket;
 		
-		public function RespondEvented(socket:ISocket,byte:ByteArray) 
+		public function RespondEvented(socket:ISocket, byte:ByteArray) 
 		{
 			this.socket = socket;
 			super(byte);

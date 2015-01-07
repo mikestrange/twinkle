@@ -1,29 +1,25 @@
 package org.web.sdk.net.socket 
 {
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.socket.base.FtpRead;
-	import org.web.sdk.net.socket.inter.IRequest;
-	import org.web.sdk.net.socket.inter.ISocketRespond;
-	import org.web.sdk.utils.HashMap;
-	import org.web.sdk.utils.NameUtil;
+	import org.web.sdk.utils.UniqueHash;
 	/*
 	 * 对socket的回执进行处理
 	 * */
 	public class SocketModule 
 	{
 		//所有回执添加
-		private static var hash_respond:HashMap = new HashMap;
+		private static var hash_respond:UniqueHash = new UniqueHash;
+		//16进止转换
+		private static const UINT:String = "0x";
+		private static const LEN:int = 16;
 		//
 		private var _moduleType:int;
-		private var cmdRespondList:Vector.<String>;
-		//
-		public static const UINT:String = "0x";
-		public static const LEN:int = 16;
+		private var cmdRespondList:Vector.<Number>;
 		
 		public function SocketModule(moduleType:int = 1) 
 		{
 			_moduleType = moduleType;
-			cmdRespondList = new Vector.<String>;
+			cmdRespondList = new Vector.<Number>;
 			register();
 		}
 		
@@ -33,27 +29,37 @@ package org.web.sdk.net.socket
 			
 		}
 		
-		//
-		public function addRespond(cmd:uint, respondName:Class):void
+		//可以多添加
+		public function addRespond(cmd:uint, respondName:Class, ...rest):void
 		{
-			var key:String = match(cmd);
-			//添加回执
-			if (respondName) {
-				Log.log(this).debug("#添加回执: cmd=", cmd, respondName);
-				if (SocketModule.hash_respond.isKey(key)) throw Error(key + ' 已经注册过的ISocketRespond' + NameUtil.getClassName(this));
-				cmdRespondList.push(key);
-				SocketModule.hash_respond.put(key, respondName);
+			if (null == respondName) throw Error("回调空");
+			var respond:RespondConverter = hash_respond.getValue(cmd);
+			if (null == respond) {
+				respond = new RespondConverter(cmd, respondName, rest);
+				hash_respond.put(cmd, respond);
+				cmdRespondList.push(cmd);
 			}
+			respond.addNotice(rest);
 		}
 		
-		
+		//这个方法可以删除其他模块的,所以一般不用
+		public function removeRespond(cmd:Number):void
+		{
+			var respond:RespondConverter = hash_respond.remove(cmd);
+			if (respond) respond.free();
+			var index:int = cmdRespondList.indexOf(cmd);
+			if (index != -1) cmdRespondList.splice(index, 1);
+		}
 		
 		//摧毁一个模块
 		public function destroy():void
 		{
-			while (cmdRespondList.length) SocketModule.hash_respond.remove(cmdRespondList.shift());
+			var respond:RespondConverter;
+			while (cmdRespondList.length) {
+				respond = hash_respond.remove(cmdRespondList.shift());
+				if (respond) respond.free();
+			}
 		}
-		
 		
 		//模板
 		public static function match(cmd:uint):String
@@ -61,13 +67,14 @@ package org.web.sdk.net.socket
 			return UINT.concat(cmd.toString(LEN));
 		}
 		
-		//取回执
-		public static function createRespond(cmd:uint):ISocketRespond
+		//当你直接调用handlerRespond  的时候那么就派发了所有CMD所关心的命令，并且把
+		public static function handlerRespond(cmd:uint, event:RespondEvented = null):Boolean
 		{
-			var Respond:Class = SocketModule.hash_respond.getValue(match(cmd)) as Class;
-			if (Respond) return new Respond as ISocketRespond;
-			return null;
+			var respond:RespondConverter = hash_respond.getValue(cmd);
+			if (respond) respond.handler(event);
+			return respond != null;
 		}
+		
 		//ends
 	}
 

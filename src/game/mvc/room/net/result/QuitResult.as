@@ -15,7 +15,6 @@ package game.mvc.room.net.result
 			super.action(cmd, event);
 			player = new PlayerObj;
 			player.uid = event.readInt();
-			sendMessage(NoticeDefined.ON_QUIT_MAP);
 		}
 		
 		//ends

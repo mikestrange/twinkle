@@ -21,8 +21,6 @@ package game.mvc.room.net.result
 			player.point = event.readByte();
 			player.x = event.readShort();
 			player.y = event.readShort();
-			//
-			sendMessage(NoticeDefined.ON_USER_MOVE);
 		}
 		//ends
 	}

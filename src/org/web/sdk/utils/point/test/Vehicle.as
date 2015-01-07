@@ -1,9 +1,9 @@
 package org.web.sdk.utils.point.test 
 {
-	import org.web.sdk.display.core.BoneSprite;
+	import flash.display.Sprite;
 	import org.web.sdk.utils.point.Vector2D;
 	
-	public class Vehicle extends BoneSprite 
+	public class Vehicle extends Sprite 
 	{
 		public static const WRAP:String = "wrap";
 		public static const BOUNCE:String = "bounce";
@@ -101,6 +101,11 @@ package org.web.sdk.utils.point.test
 					dispose();
 				}
 			}
+		}
+		
+		public function dispose():void
+		{
+			
 		}
 		
 		public function set edgeBehavior(value:String):void

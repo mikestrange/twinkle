@@ -82,7 +82,7 @@ package game.mvc
 		private function addModule():void
 		{
 			_moduble = new SocketModule(ModuleType.WORLD);
-			_moduble.addRespond(CmdDefined.LOGIC_GAME, LogicResult);
+			_moduble.addRespond(CmdDefined.LOGIC_GAME, LogicResult, NoticeDefined.ON_LOGIC);
 			_moduble.addRespond(CmdDefined.HEART_BEAT, HeartBeat);
 		}
 		

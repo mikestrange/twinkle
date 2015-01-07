@@ -1,5 +1,6 @@
 package org.web.sdk.net.socket 
 {
+	import flash.events.Event;
 	import flash.utils.getTimer;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
@@ -9,6 +10,8 @@ package org.web.sdk.net.socket
 	import org.web.sdk.net.socket.inter.IAssigned;
 	import org.web.sdk.net.socket.inter.ISocket;
 	import org.web.sdk.net.socket.inter.ISocketRespond;
+	import org.web.sdk.system.events.Evented;
+	import org.web.sdk.system.GlobalMessage;
 	
 	use namespace beyond_challenge
 	
@@ -87,22 +90,9 @@ package org.web.sdk.net.socket
 		{
 			var cmd:uint = ftp.readUint();						//1-uint.MAX_VALUE这里是具体的命令
 			var type:int = ftp.readShort();
-			//取回执
-			action(cmd, ftp);
+			//处理回执
+			SocketModule.handlerRespond(cmd, ftp);
 		}
-		
-		//正确发送
-		protected function action(cmd:int, ftp:RespondEvented):void
-		{
-			var respond:ISocketRespond = SocketModule.createRespond(cmd);
-			Log.log(this).debug("->服务端推送命令:" + cmd, ',handler:', respond);
-			if (respond) {
-				respond.action(cmd, ftp);
-			}else {
-				return;
-			}
-		}
-		
 		//ends
 	}
 

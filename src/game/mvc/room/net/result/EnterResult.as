@@ -33,7 +33,6 @@ package game.mvc.room.net.result
 				player = new PlayerObj();
 				player.update(uid, usn, x, y, point, level, type);
 			}
-			sendMessage(NoticeDefined.ON_ENTER_MAP);
 		}	
 		//ends
 	}

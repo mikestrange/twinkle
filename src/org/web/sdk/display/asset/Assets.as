@@ -51,8 +51,8 @@ package org.web.sdk.display.asset
 			var image:ImageData = _protoKeys.getValue(asset.resource);
 			if (image == null) {
 				if (bit == null) return false;
-				image = new ImageData(url, bit);
-				_protoKeys.put(url, image);
+				image = new ImageData(asset.resource, bit);
+				_protoKeys.put(asset.resource, image);
 			}
 			image.leng++;
 			asset.derive(image.bitmapdata);

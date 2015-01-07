@@ -22,7 +22,7 @@ package org.web.sdk.net.socket.core
 			return this;
 		}
 		
-		//直接发送命令给前台
+		//如果想在回执的时候发送，那么就可以这样处理
 		protected function sendMessage(noticeName:String, data:Object = null):void
 		{
 			if (data == null) {
