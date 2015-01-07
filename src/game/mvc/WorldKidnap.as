@@ -2,13 +2,20 @@ package game.mvc
 {
 	import flash.display.*;
 	import flash.events.Event;
+	import game.consts.CmdDefined;
+	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
+	import game.mvc.net.beat.HeartBeat;
+	import game.mvc.net.request.LogicRequest;
+	import game.mvc.net.result.LogicResult;
 	import game.mvc.room.MapController;
 	import game.consts.LayerType;
 	import org.web.sdk.display.core.house.*;
 	import org.web.sdk.display.core.house.ILayer;
 	import org.web.sdk.FrameWork;
+	import org.web.sdk.net.socket.SocketModule;
 	import org.web.sdk.system.*;
+	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
 	
 	public class WorldKidnap extends Kidnap 
@@ -56,11 +63,27 @@ package game.mvc
 		override protected function initialization():void 
 		{
 			super.initialization();
-			WorldModule.gets().register();
-			//添加命令
-			getMessage().addInvoker("world", new WorldInvoker);
+			//
+			addModule();
+			addInvoker();
 			//添加模块
 			addControllers();
+		}
+		
+		private var _invoker:Invoker;
+		private function addInvoker():void
+		{
+			_invoker = new Invoker;
+			_invoker.register(getMessage());
+			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicRequest);
+		}
+		
+		private var _moduble:SocketModule;
+		private function addModule():void
+		{
+			_moduble = new SocketModule(ModuleType.WORLD);
+			_moduble.addRespond(CmdDefined.LOGIC_GAME, LogicResult);
+			_moduble.addRespond(CmdDefined.HEART_BEAT, HeartBeat);
 		}
 		
 		private function addControllers():void
@@ -72,8 +95,8 @@ package game.mvc
 		{
 			super.free();
 			if (!this.isLaunch()) {
-				WorldModule.gets().destroy();
-				getMessage().removeInvoker("world");
+				_invoker.quit();
+				_moduble.destroy();
 			}
 		}
 		

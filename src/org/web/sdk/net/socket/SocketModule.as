@@ -11,11 +11,11 @@ package org.web.sdk.net.socket
 	 * */
 	public class SocketModule 
 	{
+		//所有回执添加
 		private static var hash_respond:HashMap = new HashMap;
 		//
 		private var _moduleType:int;
 		private var cmdRespondList:Vector.<String>;
-		private var _isRegister:Boolean = false;
 		//
 		public static const UINT:String = "0x";
 		public static const LEN:int = 16;
@@ -28,27 +28,13 @@ package org.web.sdk.net.socket
 		}
 		
 		//初始化
-		public function register():Boolean
-		{
-			if (_isRegister) return false;
-			_isRegister = true;
-			about_register();
-			return _isRegister;
-		}
-		
-		//真正的注册
-		protected function about_register():void
+		public function register():void
 		{
 			
 		}
 		
-		public function isRegister():Boolean
-		{
-			return _isRegister;
-		}
-		
 		//
-		protected function addRespond(cmd:uint, respondName:Class):void
+		public function addRespond(cmd:uint, respondName:Class):void
 		{
 			var key:String = match(cmd);
 			//添加回执
@@ -60,21 +46,21 @@ package org.web.sdk.net.socket
 			}
 		}
 		
+		
+		
 		//摧毁一个模块
 		public function destroy():void
 		{
-			if (!_isRegister) return;
-			_isRegister = false;
-			while (cmdRespondList.length) {
-				SocketModule.hash_respond.remove(cmdRespondList.shift());
-			}
+			while (cmdRespondList.length) SocketModule.hash_respond.remove(cmdRespondList.shift());
 		}
 		
+		
+		//模板
 		public static function match(cmd:uint):String
 		{
 			return UINT.concat(cmd.toString(LEN));
 		}
-			
+		
 		//取回执
 		public static function createRespond(cmd:uint):ISocketRespond
 		{

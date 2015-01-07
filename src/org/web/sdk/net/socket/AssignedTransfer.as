@@ -96,7 +96,11 @@ package org.web.sdk.net.socket
 		{
 			var respond:ISocketRespond = SocketModule.createRespond(cmd);
 			Log.log(this).debug("->服务端推送命令:" + cmd, ',handler:', respond);
-			if (respond) respond.action(cmd, ftp);
+			if (respond) {
+				respond.action(cmd, ftp);
+			}else {
+				return;
+			}
 		}
 		
 		//ends

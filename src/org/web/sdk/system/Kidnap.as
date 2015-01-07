@@ -93,7 +93,7 @@ package org.web.sdk.system
 		 */
 		public function sendMessage(newName:String, data:Object = null, client:* = undefined):void 
 		{
-			_message.sendMessage(newName, data, client, Evented.CLIENT);
+			_message.sendMessage(newName, data, client, Evented.CLIENT_SEND);
 		}
 		
 		/*

@@ -1,13 +1,16 @@
 package game.mvc.room 
 {
 	import flash.ui.Keyboard;
+	import game.consts.CmdDefined;
+	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
-	import game.mvc.room.MapInvoker;
-	import game.mvc.room.MapModule;
+	import game.mvc.room.net.resquest.*;
 	import game.mvc.room.net.result.*;
 	import game.ui.map.WorldMap;
 	import org.web.sdk.net.socket.ServerSocket;
+	import org.web.sdk.net.socket.SocketModule;
+	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.core.Controller;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.inter.IMessage;
@@ -16,12 +19,25 @@ package game.mvc.room
 	public class MapController extends Controller 
 	{
 		private var _ismap:Boolean = false;	
+		private var _invoker:Invoker;
+		private var _result:SocketModule;
 		
 		override public function launch(notice:IMessage):void 
 		{
 			super.launch(notice);
-			MapModule.gets().register();
-			notice.addInvoker("map", new MapInvoker);
+			//注册命令
+			_invoker = new Invoker;
+			_invoker.register(notice);
+			_invoker.addOnlyCommand(NoticeDefined.ENTER_MAP, EnterMapReqeust);
+			_invoker.addOnlyCommand(NoticeDefined.QUIT_MAP, QuitMapRequest);
+			_invoker.addOnlyCommand(NoticeDefined.USER_MOVE, MoveRequest);
+			_invoker.addOnlyCommand(NoticeDefined.STAND_HERE, StandRequest);
+			//注册回调
+			_result = new SocketModule(ModuleType.MAP);
+			_result.addRespond(CmdDefined.ENTER_MAP, EnterResult);
+			_result.addRespond(CmdDefined.QUIT_MAP, QuitResult);
+			_result.addRespond(CmdDefined.MOVE_TO, MoveResult);
+			_result.addRespond(CmdDefined.STAND_HERE, StandResult);
 			//
 			KeyManager.keyListener(Keyboard.F8, "enterF8", onKeyDown);
 		}
@@ -35,8 +51,8 @@ package game.mvc.room
 		override public function free():void 
 		{
 			super.free();
-			MapModule.gets().destroy();
-			getMessage().removeInvoker("map");
+			_result.destroy();
+			_invoker.quit();
 			WorldMap.gets().free();
 		}
 		

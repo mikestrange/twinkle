@@ -3,10 +3,9 @@ package org.web.sdk.system.events
 	/*消息*/
 	public class Evented 
 	{
-		public static const COM:int = 2;				//命令推送
-		public static const CLIENT:int = 1;				//客服端推送
-		public static const SERVER:int = 3;				//服务器发送
-		public static const NONE_TYPE:int = -1;			//无类型表示
+		public static const CLIENT_SEND:int = 1;				//客服端推送
+		public static const SERVER_CALL_CLIENT:int = 3;			//服务器发送
+		public static const NONE_TYPE:int = -1;					//无类型表示,也是本地推送
 		//
 		private var _name:String;
 		private var _data:Object;
