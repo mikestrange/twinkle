@@ -34,8 +34,10 @@ package org.web.sdk.display.core
 		
 		public function setTexture(byte:*, smooth:Boolean = true):void 
 		{
-			this.bitmapData = byte as BitmapData;
-			this.smoothing = smooth;
+			if (byte is BitmapData) {
+				this.bitmapData = byte as BitmapData;
+				this.smoothing = smooth;
+			}
 		}
 		
 		public function clone():IBitmap 
@@ -97,6 +99,14 @@ package org.web.sdk.display.core
 			}else {
 				this.width = horizontal;
 				this.height = vertical;
+			}
+		}
+		
+		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0):void
+		{
+			if (father) {
+				father.addChildByName(this);
+				this.moveTo(mx, my);
 			}
 		}
 		

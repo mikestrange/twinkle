@@ -5,7 +5,7 @@ package game.mvc.room.net.result
 	import game.datas.SelfData;
 	import org.web.sdk.net.socket.base.FtpRead;
 	import org.web.sdk.net.socket.core.ServerRespond;
-	import org.web.sdk.net.socket.RespondEvented;
+	import org.web.sdk.net.events.RespondEvented;
 	
 	public class EnterResult extends ServerRespond 
 	{

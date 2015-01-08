@@ -33,6 +33,12 @@ package org.web.sdk.display.core
 			return dis;
 		}
 		
+		public function addDisplay(dis:IDisplayObject, mx:Number = 0, my:Number = 0):void 
+		{
+			dis.moveTo(mx, my);
+			this.addChild(dis as DisplayObject);
+		}
+		
 		public function isByName(disName:String):Boolean 
 		{
 			return getChildByName(disName) != null;
@@ -43,7 +49,7 @@ package org.web.sdk.display.core
 			while (this.numChildren) removeChildAt(0);
 		}
 		
-		public function addChildByName(child:IDisplayObject, sonName:String, index:int = -1):IDisplayObject 
+		public function addChildByName(child:IDisplayObject, sonName:String = null, index:int = -1):IDisplayObject 
 		{
 			if (sonName != null) {
 				if (getChildByName(sonName) == child) throw Error('命名重复->' + sonName);
@@ -159,6 +165,14 @@ package org.web.sdk.display.core
 		public function setAuto(type:String = null):void 
 		{
 			
+		}
+		
+		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0):void
+		{
+			if (father) {
+				father.addChildByName(this);
+				this.moveTo(mx, my);
+			}
 		}
 		
 		public function onResize(target:Object = null):void 

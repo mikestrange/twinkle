@@ -84,6 +84,7 @@ package org.web.sdk.inters
 		function render():void;
 		function setAuto(type:String = null):void;
 		function isshow():Boolean;
+		function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0):void;
 		//ends
 	}
 	

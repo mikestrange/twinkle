@@ -13,7 +13,7 @@ package game.mvc
 	import org.web.sdk.display.core.house.*;
 	import org.web.sdk.display.core.house.ILayer;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.net.socket.SocketModule;
+	import org.web.sdk.net.socket.handler.CmdManager;
 	import org.web.sdk.system.*;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
@@ -70,20 +70,23 @@ package game.mvc
 			addControllers();
 		}
 		
-		private var _invoker:Invoker;
 		private function addInvoker():void
 		{
-			_invoker = new Invoker;
+			var _invoker:Invoker = new Invoker;
 			_invoker.register(getMessage());
 			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicRequest);
+			getMessage().addInvoker("world", _invoker);
 		}
 		
-		private var _moduble:SocketModule;
 		private function addModule():void
 		{
-			_moduble = new SocketModule(ModuleType.WORLD);
+			//CmdManager.gets().cmdHanlder(,)
+			/*
+			var _moduble:SocketModule = new SocketModule(ModuleType.WORLD);
 			_moduble.addRespond(CmdDefined.LOGIC_GAME, LogicResult, NoticeDefined.ON_LOGIC);
 			_moduble.addRespond(CmdDefined.HEART_BEAT, HeartBeat);
+			write(_moduble.getModule(), _moduble);
+			*/
 		}
 		
 		private function addControllers():void
@@ -95,8 +98,7 @@ package game.mvc
 		{
 			super.free();
 			if (!this.isLaunch()) {
-				_invoker.quit();
-				_moduble.destroy();
+				getMessage().removeInvoker("world");
 			}
 		}
 		
@@ -111,11 +113,9 @@ package game.mvc
 			{
 				case NoticeDefined.ON_LOGIC:
 					trace("成功登陆");
-					break;
-				
+				break;
 			}
 		}
-		
 		//ends
 	}
 }

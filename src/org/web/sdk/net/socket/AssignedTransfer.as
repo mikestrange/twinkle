@@ -5,8 +5,10 @@ package org.web.sdk.net.socket
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	import org.web.sdk.log.Log;
+	import org.web.sdk.net.events.RespondEvented;
 	import org.web.sdk.net.socket.base.*;
 	import org.web.apk.beyond_challenge;
+	import org.web.sdk.net.socket.handler.CmdManager;
 	import org.web.sdk.net.socket.inter.IAssigned;
 	import org.web.sdk.net.socket.inter.ISocket;
 	import org.web.sdk.net.socket.inter.ISocketRespond;
@@ -91,7 +93,8 @@ package org.web.sdk.net.socket
 			var cmd:uint = ftp.readUint();						//1-uint.MAX_VALUE这里是具体的命令
 			var type:int = ftp.readShort();
 			//处理回执
-			SocketModule.handlerRespond(cmd, ftp);
+			CmdManager.handlerRespond(cmd, ftp);
+			//SocketModule.handlerRespond(cmd, ftp);
 		}
 		//ends
 	}

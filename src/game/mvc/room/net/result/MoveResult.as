@@ -3,7 +3,7 @@ package game.mvc.room.net.result
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
 	import org.web.sdk.net.socket.core.ServerRespond;
-	import org.web.sdk.net.socket.RespondEvented;
+	import org.web.sdk.net.events.RespondEvented;
 	
 	public class MoveResult extends ServerRespond 
 	{

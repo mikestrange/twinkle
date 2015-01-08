@@ -18,7 +18,7 @@ package org.web.sdk.system.core
 		public function BaseMessage()
 		{
 			_hashInvoker = new HashMap;
-			_dispatcher = new EventedDispatcher(null, false);
+			_dispatcher = new EventedDispatcher;
 		}
 		
 		/*
@@ -61,12 +61,12 @@ package org.web.sdk.system.core
 		/* INTERFACE org.web.sdk.system.inter.IZclient */
 		public function addMessage(name:String, called:Function):void 
 		{
-			_dispatcher.listenfor(name, called);
+			_dispatcher.addNotice(name, called);
 		}
 		
 		public function removeMessage(name:String, called:Function):void 
 		{
-			_dispatcher.removeListener(name, called);
+			_dispatcher.removeNotice(name, called);
 		}
 		
 		public function isMessage(name:String):Boolean
@@ -81,12 +81,12 @@ package org.web.sdk.system.core
 		
 		public function sendBody(name:String, body:Object = null):void 
 		{
-			_dispatcher.handler(name, body);
+			_dispatcher.dispatchNotice(name, body);
 		}
 		
 		public function sendMessage(name:String, data:Object = null, client:*= undefined, type:uint = 0):void 
 		{
-			_dispatcher.handler(name, new Evented(name, data, client, type));
+			_dispatcher.dispatchNotice(name, new Evented(name, data, client, type));
 		}
 		//ends
 	}

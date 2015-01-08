@@ -3,7 +3,7 @@ package game.mvc.net.beat
 	import game.consts.CmdDefined;
 	import org.web.sdk.net.socket.core.ServerRequest;
 	import org.web.sdk.net.socket.core.ServerRespond;
-	import org.web.sdk.net.socket.RespondEvented;
+	import org.web.sdk.net.events.RespondEvented;
 	import org.web.sdk.net.socket.ServerSocket;
 	
 	public class HeartBeat extends ServerRespond 

@@ -9,45 +9,42 @@ package org.web.sdk.system
 	{
 		public function GlobalMessage() { throw Error('do not new this class'); };
 		
-		private static var _ins:IMessage;
+		private static var message:IMessage =  new BaseMessage;
 		
 		public static function gets():IMessage
 		{
-			if (null == _ins) {
-				_ins = new BaseMessage;
-			}
-			return _ins;
+			return message;
 		}
 		
 		//全局
 		public static function addMessage(name:String, called:Function):void 
 		{
-			gets().addMessage(name, called);
+			message.addMessage(name, called);
 		}
 		
 		public static function removeMessage(name:String, called:Function):void 
 		{
-			gets().removeMessage(name, called);
+			message.removeMessage(name, called);
 		}
 		
 		public static function isMessage(name:String):Boolean
 		{
-			return gets().isMessage(name);
+			return message.isMessage(name);
 		}
 		
 		public static function removeLink(name:String = null):void 
 		{
-			gets().removeLink(name);
+			message.removeLink(name);
 		}
 		
 		public static function sendBody(name:String, body:Object = null):void 
 		{
-			gets().sendBody(name, body);
+			message.sendBody(name, body);
 		}
 		
 		public static function sendMessage(name:String, data:Object = null, client:*= undefined, type:uint = 0):void 
 		{
-			gets().sendBody(name, new Evented(name, data, client, type));
+			message.sendBody(name, new Evented(name, data, client, type));
 		}
 		//ends
 	}

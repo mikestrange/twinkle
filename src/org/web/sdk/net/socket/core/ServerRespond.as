@@ -2,7 +2,7 @@ package org.web.sdk.net.socket.core
 {
 	import org.web.sdk.log.Log;
 	import org.web.sdk.net.socket.inter.*;
-	import org.web.sdk.net.socket.RespondEvented;
+	import org.web.sdk.net.events.RespondEvented;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.GlobalMessage;
 	/*

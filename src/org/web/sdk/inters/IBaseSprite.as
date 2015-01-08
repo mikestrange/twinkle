@@ -18,13 +18,14 @@ package org.web.sdk.inters
 		function removeChildByName(disName:String):DisplayObject;
 		function isByName(disName:String):Boolean;
 		function clearChildren():void;
-		function addChildByName(child:IDisplayObject, sonName:String, index:int = -1):IDisplayObject;
+		function addChildByName(child:IDisplayObject, sonName:String = null, index:int = -1):IDisplayObject;
 		function show():void;
 		function hide():void;
 		function showEvent(event:Event = null):void;
 		function hideEvent(event:Event = null):void;
 		function finality(value:Boolean = true):void;
 		function onResize(target:Object = null):void;
+		function addDisplay(dis:IDisplayObject, mx:Number = 0, my:Number = 0):void;
 		//ENDS
 	}
 	

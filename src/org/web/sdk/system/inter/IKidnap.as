@@ -8,8 +8,6 @@ package org.web.sdk.system.inter
 		function sendLink(...events):void;
 		function sendMessage(newName:String, data:Object = null, client:*= undefined):void;
 		function addController(controller:IController):Boolean;
-		function setModule(name:String, module:IDataBank = null):Boolean;
-		function getModule(name:String):IDataBank;
 		function isController(name:String):Boolean;
 		function disController(name:String):IController;
 		function getMessage():IMessage;

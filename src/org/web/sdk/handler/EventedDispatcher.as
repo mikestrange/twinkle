@@ -2,110 +2,94 @@ package org.web.sdk.handler
 {
 	import flash.utils.Dictionary;
 	import org.web.sdk.handler.IDispatcher;
-	
+	/*
+	 * 一个比较好的事件拍发起
+	 * */
 	public class EventedDispatcher implements IDispatcher 
 	{
 		private var compare:Dictionary;
 		private var def_dispatcher:EventedDispatcher;
-		private var allow_replace:Boolean;
 		
 		//一旦设置不允许替换 alow=false; 必须释放后才能重新设置
-		public function EventedDispatcher(dispatch:EventedDispatcher = null, alow:Boolean = true) 
+		public function EventedDispatcher(dispatch:EventedDispatcher = null) 
 		{
-			this.allow_replace = alow;
 			if (null == dispatch) {
 				def_dispatcher = this;
 				compare = new Dictionary;
 			}else {
-				def_dispatcher = dispatch.getDispatcher();
+				def_dispatcher = dispatch.dispatcher;
 			}
-		}
-		
-		public function get allow():Boolean
-		{
-			return allow_replace;
-		}
-		
-		//设置响应 可以替换
-		public function setDispatcher(dispatch:EventedDispatcher):Boolean
-		{
-			if (!allow) return false;
-			if (dispatch != def_dispatcher) destroy();
-			def_dispatcher = dispatch.getDispatcher();
-			return true;
 		}
 		
 		/* INTERFACE org.web.sdk.system.inter.IZclient */
-		public function listenfor(newName:String, called:Function):void
+		public function addNotice(notice:String, called:Function):void
 		{
-			var vector:Vector.<Function> = getDispatcher().compare[newName] as Vector.<Function>;
-			if (!isset(newName)) {
-				vector = new Vector.<Function>;
-				getDispatcher().compare[newName] = vector;
+			var vector:Vector.<Observer> = dispatcher.compare[notice] as Vector.<Observer>;
+			if (!isset(notice)) {
+				vector = new Vector.<Observer>;
+				dispatcher.compare[notice] = vector;
 			}
-			vector.push(called);
+			vector.push(new Observer(this, called));
 		}
 		
-		//并没有真正的删除 [不是自己不能删除]
-		public function removeListener(newName:String,called:Function):void 
+		public function removeNotice(notice:String, called:Function):void
 		{
-			if (!isset(newName)) return;
-			var vector:Vector.<Function> = getDispatcher().compare[newName] as Vector.<Function>;
-			for (var i:int = 0; i < vector.length; i++)
+			if (!isset(notice)) return;
+			var vector:Vector.<Observer> = dispatcher.compare[notice] as Vector.<Observer>;
+			for (var i:int = vector.length - 1; i >= 0; i--)
 			{
-				if (called == vector[i]) {
-					vector[i] = null;
+				//vector[i].match(this) &&  不需要
+				if (called == vector[i].handler) {
+					vector[i].destroy();
+					vector.splice(i, 1);
 					break;
 				}
 			}
-			//if (vector.length == 0) delete getDispatcher().compare[newName];
+			if (vector.length == 0) {
+				dispatcher.compare[notice] = null;
+				delete dispatcher.compare[notice];
+			}
 		}
 		
-		public function isset(newName:String):Boolean
+		public function isset(notice:String):Boolean
 		{
-			return getDispatcher().compare[newName] != undefined;
+			return dispatcher.compare[notice] != undefined;
 		}
 		
 		//不是自身不能删除
-		public function removeLink(newName:String = null):void
+		public function removeLink(notice:String = null):void
 		{
-			if (!isset(newName)) return;
-			if (newName == null) {
+			if (!isset(notice)) return;
+			if (notice == null) {
 				var value:String;
-				for (value in getDispatcher().compare) removeLink(value);
+				for (value in dispatcher.compare) removeLink(value);
 			}else {
-				var vector:Vector.<Function> = getDispatcher().compare[newName] as Vector.<Function>;
-				vector.splice(0, vector.length);
-				delete getDispatcher().compare[newName];
+				var vector:Vector.<Observer> = dispatcher.compare[notice] as Vector.<Observer>;
+				dispatcher.compare[notice] = null;
+				delete dispatcher.compare[notice];
+				const begin:int = 0;
+				while (vector.length) {
+					vector[begin].destroy();
+					vector.shift();
+				}
 			}
 		}
 		
 		//发送的时候，如果命令设置为Null才删除 [无顺序可言]
-		public function handler(newName:String, newRest:Object = null):void
+		public function dispatchNotice(notice:String, ...events):void
 		{
-			if (!isset(newName)) return;
-			var vector:Vector.<Function> = getDispatcher().compare[newName] as Vector.<Function>;
-			var called:Function;
-			const none:int = 0;
-			var i:int = none;
-			while (i < vector.length)
-			{
-				called = vector[i];
-				if (called is Function) {
-					called.apply(null, [newRest]);
-				}else {
-					vector.splice(i, 1);
-					continue;
-				}
-				i++;
-			}
-			if (vector.length == none) delete getDispatcher().compare[newName];
+			if (!isset(notice)) return;
+			var vector:Vector.<Observer> = dispatcher.compare[notice] as Vector.<Observer>;
+			var index:int = 0;
+			var list:Vector.<Observer> = vector.slice(index, vector.length);
+			for (; index < list.length; index++) list[index].dispatch(events);
+			list = null;
 		}
 		
 		//是否自身注册
 		public function isself():Boolean
 		{
-			return this == getDispatcher();
+			return this == dispatcher;
 		}
 		
 		//不允许别人摧毁,但是别人可以调用removeLink一样摧毁
@@ -115,7 +99,7 @@ package org.web.sdk.handler
 		}
 		
 		//不对外公开
-		protected function getDispatcher():EventedDispatcher
+		protected function get dispatcher():EventedDispatcher
 		{
 			return def_dispatcher;
 		}

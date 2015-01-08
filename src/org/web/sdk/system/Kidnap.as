@@ -1,5 +1,6 @@
 package org.web.sdk.system 
 {
+	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.system.com.*;
 	import org.web.sdk.system.events.Evented;
@@ -23,7 +24,6 @@ package org.web.sdk.system
 		/*
 		 * 注意，不要把自身添加在自己的模板中
 		 * */
-		private var _moduleHash:HashMap;
 		private var _controHash:HashMap;
 		private var _message:IMessage;
 		private var _isLaunch:Boolean = false;
@@ -31,7 +31,6 @@ package org.web.sdk.system
 		public function Kidnap() 
 		{
 			_controHash = new HashMap; 	
-			_moduleHash = new HashMap;
 		}
 		
 		/*
@@ -97,7 +96,7 @@ package org.web.sdk.system
 		}
 		
 		/*
-		 * 添加一个模块 
+		 * 添加一个模块   所有模块他管理
 		 * */
 		public function addController(controller:IController):Boolean 
 		{
@@ -118,29 +117,6 @@ package org.web.sdk.system
 			for (var i:int = 0; i < newList.length; i++) {
 				addMessage(newList[i], controller.dutyEvented);
 			}
-		}
-		
-		/*
-		 * 设置一个模块
-		 * */
-		public function setModule(name:String, module:IDataBank = null):Boolean
-		{
-			if (module == null) {
-				var mod:IDataBank = _moduleHash.remove(name);
-				if (mod) mod.destroy();
-				return mod != null;
-			}else {
-				if (_moduleHash.isKey(name)) return false;
-				_moduleHash.put(name, module);
-				return true;
-			}
-			return false;
-		}
-		
-		//取一个模块数据
-		public function getModule(name:String):IDataBank
-		{
-			return _moduleHash.getValue(name);
 		}
 		
 		//
@@ -217,8 +193,6 @@ package org.web.sdk.system
 			removeMessageFromController(this);
 			//删除模块
 			_controHash.eachKey(disController);
-			//删除所有数据模块
-			_moduleHash.eachKey(setModule);
 		}
 		
 		/*
@@ -228,15 +202,6 @@ package org.web.sdk.system
 		{
 			
 		}
-		
-		/*
-		 * 
-		 * */
-		public function read(index:uint):Object 
-		{
-			return null;
-		}
-		
 		//ends
 	}
 

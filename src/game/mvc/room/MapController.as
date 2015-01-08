@@ -9,7 +9,6 @@ package game.mvc.room
 	import game.mvc.room.net.result.*;
 	import game.ui.map.WorldMap;
 	import org.web.sdk.net.socket.ServerSocket;
-	import org.web.sdk.net.socket.SocketModule;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.core.Controller;
 	import org.web.sdk.system.events.Evented;
@@ -19,25 +18,27 @@ package game.mvc.room
 	public class MapController extends Controller 
 	{
 		private var _ismap:Boolean = false;	
-		private var _invoker:Invoker;
-		private var _result:SocketModule;
 		
 		override public function launch(notice:IMessage):void 
 		{
 			super.launch(notice);
 			//注册命令  一个命令器只关心自己注册的事务
-			_invoker = new Invoker;
+			var _invoker:Invoker = new Invoker;
 			_invoker.register(notice);
 			_invoker.addOnlyCommand(NoticeDefined.ENTER_MAP, EnterMapReqeust);
 			_invoker.addOnlyCommand(NoticeDefined.QUIT_MAP, QuitMapRequest);
 			_invoker.addOnlyCommand(NoticeDefined.USER_MOVE, MoveRequest);
 			_invoker.addOnlyCommand(NoticeDefined.STAND_HERE, StandRequest);
+			notice.addInvoker("map", _invoker);
 			//命令模块
-			_result = new SocketModule(ModuleType.MAP);
+			/*
+			var _result:SocketModule = new SocketModule(ModuleType.MAP);
 			_result.addRespond(CmdDefined.ENTER_MAP, EnterResult, NoticeDefined.ON_ENTER_MAP);
 			_result.addRespond(CmdDefined.QUIT_MAP, QuitResult, NoticeDefined.ON_QUIT_MAP);
 			_result.addRespond(CmdDefined.MOVE_TO, MoveResult, NoticeDefined.ON_USER_MOVE);
 			_result.addRespond(CmdDefined.STAND_HERE, StandResult, NoticeDefined.ON_STAND_HERE);
+			write(_result.getModule(), _result);
+			*/
 			//
 			KeyManager.keyListener(Keyboard.F8, "enterF8", onKeyDown);
 		}
@@ -51,8 +52,7 @@ package game.mvc.room
 		override public function free():void 
 		{
 			super.free();
-			_result.destroy();
-			_invoker.quit();
+			getMessage().removeInvoker("map");
 			WorldMap.gets().free();
 		}
 		

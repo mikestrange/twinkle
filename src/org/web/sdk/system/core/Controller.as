@@ -74,22 +74,6 @@ package org.web.sdk.system.core
 			trace(event);
 		}
 		
-		/*
-		 * 读取数据,一个逻辑所包含的数据包
-		 * */
-		public function read(index:uint):Object
-		{
-			return null;	
-		}
-		
-		/*
-		 * 外界无法对其进行数据写入
-		 * */
-		protected function write(index:int, data:Object):Boolean
-		{
-			return false;
-		}
-		
 		public function toString():String
 		{
 			return "[" + NameUtil.getClassName(this) + "] info={ name:" + this.getName() + "}";

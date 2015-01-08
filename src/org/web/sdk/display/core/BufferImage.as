@@ -1,7 +1,9 @@
 package org.web.sdk.display.core 
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.inters.IAsset;
 	import org.web.sdk.load.LoadEvent;
@@ -20,11 +22,26 @@ package org.web.sdk.display.core
 		private var _error:Boolean = false;
 		private var _wait:Boolean = false;
 		private var _vital:Boolean = false;
+		private var _wide:Number;
+		private var _heig:Number;
+		private var _ishave:Boolean = false;
 		
-		public function BufferImage(vital:Boolean = false) 
+		public function BufferImage(url:String = null, wide:Number = NaN, heig:Number = NaN, color:uint = 0, vital:Boolean = false) 
 		{
 			this._vital = vital;
-			super(null, true);
+			super(createdef(wide, heig), true);
+			this.resource = url;
+		}
+		
+		private function createdef(wide:Number = NaN, heig:Number = NaN, color:uint = 0):BitmapData
+		{
+			if (!isNaN(wide) && !isNaN(heig)) {
+				_ishave = true;
+				_wide = wide;
+				_heig = heig;
+				return new BitmapData(wide, heig, false, color);
+			}
+			return null;
 		}
 		
 		public function get resource():String
@@ -44,9 +61,11 @@ package org.web.sdk.display.core
 		
 		public function set resource(value:String):void
 		{
-			if (_wait) dispose();
+			if (value == null || value == "") return;
+			if (!_wait) stopUnmark();
 			_url = value;
 			if (Assets.gets().has(value)) {
+				_mark = null;
 				Assets.gets().mark(this);
 			}else {
 				_wait = true;
@@ -62,11 +81,18 @@ package org.web.sdk.display.core
 			_wait = false;
 			if (_error) {
 				_url = null;
-				this.dispatchEvent(new Event("loadImageError"));
 			}else {
+				freedef();
 				Assets.gets().mark(this, e.target as BitmapData);
-				this.dispatchEvent(new Event(Event.COMPLETE));
+				if (!isNaN(_wide) && !isNaN(height)) this.setNorms(_wide, _heig, false);
 			}
+			//结果处理
+			handler(_error);
+		}
+		
+		protected function handler(error:Boolean):void
+		{
+			
 		}
 		
 		public function derive(bit:BitmapData):void
@@ -74,7 +100,21 @@ package org.web.sdk.display.core
 			this.setTexture(bit);
 		}
 		
+		private function freedef():void
+		{
+			if (_ishave) {
+				_ishave = false;
+				Multiple.dispose(this.bitmapData);
+			}
+		}
+		
 		override public function dispose():void 
+		{
+			freedef();
+			stopUnmark();
+		}
+		
+		private function stopUnmark():void
 		{
 			if (null == _url) return;
 			if (_wait) PerfectLoader.gets().removeMark(_url, _mark)

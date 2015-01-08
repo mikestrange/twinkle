@@ -1,4 +1,4 @@
-package org.web.sdk.net.socket 
+package org.web.sdk.net.events 
 {
 	import flash.utils.ByteArray;
 	import org.web.sdk.net.socket.base.FtpRead;

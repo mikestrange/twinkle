@@ -62,6 +62,7 @@ package
 			//
 			StartLayer.gets().show();
 			//ends
+			//this.addDisplay(new BufferImage("icon.png"), 100, 100);
 		}
 		
 		

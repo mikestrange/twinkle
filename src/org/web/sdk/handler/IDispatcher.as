@@ -4,12 +4,11 @@ package org.web.sdk.handler
 	
 	public interface IDispatcher 
 	{
-		function listenfor(newName:String, called:Function):void;
-		function removeListener(newName:String, called:Function):void;
-		function isset(newName:String):Boolean;					
-		function removeLink(newName:String = null):void;
-		function handler(newName:String, newRest:Object = null):void;
-		function get allow():Boolean;
+		function addNotice(notice:String, called:Function):void;
+		function removeNotice(notice:String, called:Function):void;
+		function isset(notice:String):Boolean;					
+		function removeLink(notice:String = null):void;
+		function dispatchNotice(notice:String, ...events):void;
 		//eds
 	}
 	
