@@ -62,15 +62,18 @@ package
 			PerfectLoader.gets().LOAD_MAX = 5;
 			//
 			//StartLayer.gets().show();
-			//ends
-			
 			for ( var i:int = 0; i < 10; i++) {
-				this.addDisplay(new BufferImage("icon.png"), i*10, 100);
+				this.addDisplay(new BufferImage("icon.png",100,100,0), i*10, 100);
 			}
-			trace("xxxx")
+			var step:Steper = new Steper(this);
+			step.run();
 		}
 		
-		
+		override public function render():void 
+		{
+			var dis:DisplayObject = getChildAt(4);
+			dis.x++
+		}
 		//ends
 	}
 	
