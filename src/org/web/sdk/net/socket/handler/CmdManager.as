@@ -1,45 +1,57 @@
 package org.web.sdk.net.socket.handler 
 {
-	import org.web.sdk.net.events.RespondEvented;
-	import org.web.sdk.net.socket.inter.ICmdHandler;
+	import org.web.sdk.handler.Observer;
+	import org.web.sdk.log.Log;
+	import org.web.sdk.net.socket.handler.RespondEvented;
+	import org.web.sdk.net.socket.inter.ICmdConverter;
 	import org.web.sdk.system.inter.IController;
 	import org.web.sdk.utils.UniqueHash;
 	
 	public class CmdManager 
 	{
 		private static var modules:UniqueHash = new UniqueHash;
+		private static const NONE:int = 0;
 		
-		//添加命令处理  ICmdHandler 尽量永久保存  至于ICmdHandler内部是怎么处理的我们不管
-		public static function cmdHanlder(cmd:Number, handler:ICmdHandler, called:Function):void
+		//一个命令一个处理
+		public static function cmdHanlder(cmd:Number, called:Function, target:Object):void
 		{
-			if (!modules.isKey(cmd)) {
-				modules.put(cmd, handler);
-				handler.register();
+			var vector:Vector.<Observer> = modules.getValue(cmd);
+			if (null == vector) {
+				vector = new Vector.<Observer>
+				modules.put(cmd, vector);
 			}
-			handler.add(called);
+			vector.push(new Observer(target, called));
 		}
 		
-		public static function removeHander(cmd:Number, called:Function):void
+		public static function removeHandler(cmd:Number, called:Function, target:Object):void
 		{
-			var handler:ICmdHandler = modules.getValue(cmd);
-			if (handler) {
-				if (handler.remove(called)) {
-					modules.remove(cmd);
-					handler.destroy();
+			var vector:Vector.<Observer> = modules.getValue(cmd);
+			if (vector) {
+				for (var i:int = vector.length - 1; i >= NONE; i--) {
+					if (vector[i].match(target) && vector[i].handler == called) {
+						vector[i].destroy();
+						vector.splice(i, 1);
+						break;
+					}
 				}
+				if (vector.length == NONE) modules.remove(cmd);
 			}
 		}
 		
-		private static function getHandler(cmd:Number):ICmdHandler
+		//处理socket事务
+		public static function dispatchRespond(event:RespondEvented):Boolean
 		{
-			return modules.getValue(cmd);
-		}
-		
-		public static function handlerRespond(cmd:uint, event:RespondEvented = null):Boolean
-		{
-			var hanlder:ICmdHandler = getHandler(cmd);
-			if (hanlder) hanlder.handler(cmd, event);
-			return hanlder != null;
+			var cmd:Number = event.getCmd();
+			var vector:Vector.<Observer> = modules.getValue(cmd);
+			if (vector) {
+				Log.log().debug("->server :cmd" + cmd);
+				var list:Vector.<Observer> = vector.slice(NONE, vector.length);
+				for (var index:int = NONE; index < list.length; index++) {
+					list[index].dispatch([event]);
+				}
+				list = null;
+			}
+			return vector != null;
 		}
 		//ends
 	}

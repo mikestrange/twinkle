@@ -1,16 +1,15 @@
-package game.mvc.room.net.resquest 
+package game.socket.revc.map 
 {
 	import game.consts.CmdDefined;
-	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
-	import game.mvc.net.BaseRequest;
+	import game.socket.core.CommandRequest;
 	
-	public class QuitMapRequest extends BaseRequest 
+	public class StandRequest extends CommandRequest 
 	{
 		
-		public function QuitMapRequest() 
+		public function StandRequest() 
 		{
-			super(CmdDefined.QUIT_MAP);
+			super(CmdDefined.STAND_HERE);
 		}
 		
 		// map_id,point,x,y,lenx,leny,
@@ -19,7 +18,7 @@ package game.mvc.room.net.resquest
 			super.plumage(message);
 			writeInt(SelfData.gets().uid);
 		}
-		//EMDS
+		//ends
 	}
 
 }

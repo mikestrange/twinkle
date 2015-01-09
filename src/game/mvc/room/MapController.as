@@ -5,8 +5,8 @@ package game.mvc.room
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
-	import game.mvc.room.net.resquest.*;
-	import game.mvc.room.net.result.*;
+	import game.socket.revc.map.*;
+	import game.socket.revc.map.recv.*;
 	import game.ui.map.WorldMap;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.com.Invoker;
@@ -30,15 +30,6 @@ package game.mvc.room
 			_invoker.addOnlyCommand(NoticeDefined.USER_MOVE, MoveRequest);
 			_invoker.addOnlyCommand(NoticeDefined.STAND_HERE, StandRequest);
 			notice.addInvoker("map", _invoker);
-			//命令模块
-			/*
-			var _result:SocketModule = new SocketModule(ModuleType.MAP);
-			_result.addRespond(CmdDefined.ENTER_MAP, EnterResult, NoticeDefined.ON_ENTER_MAP);
-			_result.addRespond(CmdDefined.QUIT_MAP, QuitResult, NoticeDefined.ON_QUIT_MAP);
-			_result.addRespond(CmdDefined.MOVE_TO, MoveResult, NoticeDefined.ON_USER_MOVE);
-			_result.addRespond(CmdDefined.STAND_HERE, StandResult, NoticeDefined.ON_STAND_HERE);
-			write(_result.getModule(), _result);
-			*/
 			//
 			KeyManager.keyListener(Keyboard.F8, "enterF8", onKeyDown);
 		}

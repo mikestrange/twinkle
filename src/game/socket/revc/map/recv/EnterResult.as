@@ -1,11 +1,11 @@
-package game.mvc.room.net.result 
+package game.socket.revc.map.recv 
 {
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
 	import game.datas.SelfData;
 	import org.web.sdk.net.socket.base.FtpRead;
 	import org.web.sdk.net.socket.core.ServerRespond;
-	import org.web.sdk.net.events.RespondEvented;
+	import org.web.sdk.net.socket.handler.RespondEvented;
 	
 	public class EnterResult extends ServerRespond 
 	{
@@ -14,9 +14,9 @@ package game.mvc.room.net.result
 		public var player:PlayerObj;
 		
 		//只有用户在进入地图的时候才回调
-		override public function action(cmd:uint, event:RespondEvented = null):void 
+		override public function action(event:RespondEvented):Boolean 
 		{
-			super.action(cmd, event);
+			super.action(event);
 			mapId = event.readShort();
 			var uid:int = event.readInt();			//
 			var type:int = event.readShort();		//角色类型
@@ -33,6 +33,8 @@ package game.mvc.room.net.result
 				player = new PlayerObj();
 				player.update(uid, usn, x, y, point, level, type);
 			}
+			
+			return true;
 		}	
 		//ends
 	}

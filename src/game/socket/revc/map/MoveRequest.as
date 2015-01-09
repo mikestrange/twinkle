@@ -1,13 +1,12 @@
-package game.mvc.room.net.resquest 
+package game.socket.revc.map 
 {
 	import game.consts.CmdDefined;
 	import game.consts.NoticeDefined;
 	import game.datas.vo.ActionVo;
-	import game.mvc.net.BaseRequest;
+	import game.socket.core.CommandRequest;
 	
-	public class MoveRequest extends BaseRequest 
+	public class MoveRequest extends CommandRequest 
 	{
-		
 		public function MoveRequest() 
 		{
 			super(CmdDefined.MOVE_TO, 0);

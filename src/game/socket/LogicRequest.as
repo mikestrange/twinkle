@@ -1,13 +1,13 @@
-package game.mvc.net.request 
+package game.socket 
 {
 	import game.consts.CmdDefined;
-	import game.mvc.net.BaseRequest;
+	import game.socket.core.CommandRequest;
 	import org.web.sdk.net.socket.core.ServerRequest;
 	
 	/*
 	 * 登陆游戏
 	 * */
-	public class LogicRequest extends BaseRequest 
+	public class LogicRequest extends CommandRequest 
 	{
 		
 		public function LogicRequest() 

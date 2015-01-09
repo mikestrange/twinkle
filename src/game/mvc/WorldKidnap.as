@@ -5,9 +5,8 @@ package game.mvc
 	import game.consts.CmdDefined;
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
-	import game.mvc.net.beat.HeartBeat;
-	import game.mvc.net.request.LogicRequest;
-	import game.mvc.net.result.LogicResult;
+	import game.mvc.cmd.GameManager;
+	import game.socket.LogicRequest;
 	import game.mvc.room.MapController;
 	import game.consts.LayerType;
 	import org.web.sdk.display.core.house.*;
@@ -64,7 +63,7 @@ package game.mvc
 		{
 			super.initialization();
 			//
-			addModule();
+			GameManager.gets().register();
 			addInvoker();
 			//添加模块
 			addControllers();
@@ -76,17 +75,6 @@ package game.mvc
 			_invoker.register(getMessage());
 			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicRequest);
 			getMessage().addInvoker("world", _invoker);
-		}
-		
-		private function addModule():void
-		{
-			//CmdManager.gets().cmdHanlder(,)
-			/*
-			var _moduble:SocketModule = new SocketModule(ModuleType.WORLD);
-			_moduble.addRespond(CmdDefined.LOGIC_GAME, LogicResult, NoticeDefined.ON_LOGIC);
-			_moduble.addRespond(CmdDefined.HEART_BEAT, HeartBeat);
-			write(_moduble.getModule(), _moduble);
-			*/
 		}
 		
 		private function addControllers():void

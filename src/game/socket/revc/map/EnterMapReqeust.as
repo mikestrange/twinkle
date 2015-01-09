@@ -1,10 +1,10 @@
-package game.mvc.room.net.resquest 
+package game.socket.revc.map 
 {
 	import game.consts.CmdDefined;
 	import game.datas.vo.ActionVo;
-	import game.mvc.net.BaseRequest;
+	import game.socket.core.CommandRequest;
 	
-	public class EnterMapReqeust extends BaseRequest 
+	public class EnterMapReqeust extends CommandRequest 
 	{
 		
 		public function EnterMapReqeust() 

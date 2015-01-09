@@ -5,13 +5,13 @@ package org.web.sdk.net.socket
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.events.RespondEvented;
+	import org.web.sdk.net.socket.handler.RespondEvented;
 	import org.web.sdk.net.socket.base.*;
 	import org.web.apk.beyond_challenge;
 	import org.web.sdk.net.socket.handler.CmdManager;
 	import org.web.sdk.net.socket.inter.IAssigned;
 	import org.web.sdk.net.socket.inter.ISocket;
-	import org.web.sdk.net.socket.inter.ISocketRespond;
+	import org.web.sdk.net.socket.inter.ISocketHandler;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.GlobalMessage;
 	
@@ -68,34 +68,27 @@ package org.web.sdk.net.socket
 		}
 		
 		//这里对外传入一个完整的数据包,服务只要传过来数据包就可以了，其他的这边会处理
-		beyond_challenge function underhand(socket:Socket,byte:ByteArray):void
+		protected function underhand(socket:Socket, byte:ByteArray):void
 		{
 			//trace('->接收到服务器数据包:', byte.length);
 			//固化解析包
-			var newByte:ByteArray = createByteArray(byte);
-			handler(new RespondEvented(socket as ISocket, newByte));
+			byte.position = 0;
+			var cmd:uint = byte.readUnsignedInt();
+			var type:int = byte.readUnsignedShort();
+			//
+			CmdManager.dispatchRespond(new RespondEvented(cmd, socket as ISocket, createByteArray(byte)));
 		}
 		
 		//把长度包分装
-		beyond_challenge function createByteArray(byte:ByteArray, position:int = 0):ByteArray
+		beyond_challenge function createByteArray(byte:ByteArray):ByteArray
 		{
 			var data:ByteArray = new ByteArray;
 			data.endian = byte.endian;	//设置大小端
-			byte.position = position;
-			byte.readBytes(data, ZERO, byte.bytesAvailable);
+			byte.readBytes(data, 0, byte.bytesAvailable);
 			data.position = ZERO;
 			return data;
 		}
 		
-		//继承在这里处理就可以了,至于怎么解析自己决定
-		protected function handler(ftp:RespondEvented):void
-		{
-			var cmd:uint = ftp.readUint();						//1-uint.MAX_VALUE这里是具体的命令
-			var type:int = ftp.readShort();
-			//处理回执
-			CmdManager.handlerRespond(cmd, ftp);
-			//SocketModule.handlerRespond(cmd, ftp);
-		}
 		//ends
 	}
 

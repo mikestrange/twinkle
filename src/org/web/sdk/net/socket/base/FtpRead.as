@@ -24,6 +24,11 @@ package org.web.sdk.net.socket.base
 			Input = input;
 		}
 		
+		public function restore():void
+		{
+			ByteArray(Input).position = 0; 
+		}
+		
 		public function set endian(value:String):void
 		{
 			Input.endian = value;

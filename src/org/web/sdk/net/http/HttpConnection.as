@@ -10,7 +10,7 @@ package org.web.sdk.net.http
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.events.HttpEvent;
+	import org.web.sdk.net.http.events.HttpEvent;
 	import org.web.sdk.net.IConnection;
 	
 	public class HttpConnection extends EventDispatcher implements IConnection 

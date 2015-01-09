@@ -1,4 +1,4 @@
-package org.web.sdk.net.events 
+package org.web.sdk.net.http.events 
 {
 	import flash.events.Event;
 	
