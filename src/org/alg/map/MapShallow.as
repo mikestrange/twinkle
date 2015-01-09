@@ -51,7 +51,7 @@ package org.alg.map
 				}
 			}
 			draw();	//下载小地图
-			FrameWork.downLoad(MapPath.getMapSmall(mapId), LoadEvent.IMG, "map+", complete);
+			FrameWork.downLoad(MapPath.getMapSmall(mapId), LoadEvent.IMG, complete);
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -117,7 +117,7 @@ package org.alg.map
 					}
 				}
 			}
-			PerfectLoader.gets().startLoad();
+			PerfectLoader.gets().start();
 			//渲染位图
 			refresh();
 		}

@@ -5,6 +5,9 @@
  **/ 
 package org.web.sdk.load 
 {
+	import org.web.sdk.load.inters.ILoadController;
+	import org.web.sdk.load.inters.ILoader;
+	import org.web.sdk.load.inters.ILoadRespond;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
@@ -15,7 +18,7 @@ package org.web.sdk.load
 	 * */
 	use namespace beyond_challenge;
 	
-	public class PerfectLoader 
+	public class PerfectLoader implements ILoadController 
 	{
 		//下载列表
 		beyond_challenge var hashLoad:HashMap = new HashMap;
@@ -53,50 +56,50 @@ package org.web.sdk.load
 			LoaderBlueprint[type] = className;
 		}
 		
+		//取一个下载器
+		beyond_challenge function getLoader(type:int):ILoader
+		{
+			return new LoaderBlueprint[type] as ILoader;
+		}
+		
 		/*
 		 * 建立一个下载 vital=true表示当前所有下载完成后会下载此,重要的立刻为他腾出一个空间，否则添加到最开始
 		 * */
-		public function addWait(url:String, type:int = 0, context:*= undefined, vital:Boolean = false):IRespond
+		public function addWait(url:String, type:int = 0, context:*= undefined, vital:Boolean = false):ILoadRespond
 		{
 			//如果在下载中，直接跳出来
-			if (isLoadIng(url)) return getFluiderByLoad(url);
+			if (hashLoad.isKey(url)) return hashLoad.getValue(url);
 			//在等待列表
-			if (isWait(url)) return getFluider(url);
+			if (hashWait.isKey(url)) return hashWait.getValue(url);
 			//添加到等待列表
-			var fluider:LoadFluider = new LoadFluider(url, type, context);
-			if (isEmpty()) {
+			var filder:LoadFluider = new LoadFluider(this, url, type, context);
+			if (hashWait.isEmpty()) {
 				lastUrl = firstUrl = url;
 			}else {
 				//vital true 放到最前面 false 放到最后
 				if (vital) {
-					fluider.setNext(getFluider(firstUrl));
+					filder.setNext(getWaiter(firstUrl));
 					firstUrl = url;
 				}else {
-					fluider.setPrev(getFluider(lastUrl));
+					filder.setPrev(getWaiter(lastUrl));
 					lastUrl = url;
 				}
 			}
 			//添加
-			hashWait.put(url, fluider);
-			return fluider;
+			hashWait.put(url, filder);
+			return filder;
 		}
 		
-		//直接添加到下载列表 添加到的是最开始
-		beyond_challenge function addWaitByFluider(fluider:LoadFluider):void
-		{
-			if (isEmpty()) {
-				lastUrl = firstUrl = fluider.url;
-			}else {
-				fluider.setNext(getFluider(firstUrl));
-				firstUrl = fluider.url;
-			}
-			hashWait.put(fluider.url, fluider);
-		}
-			
 		//取等待下载
-		beyond_challenge function getFluider(url:String):LoadFluider
+		beyond_challenge function getWaiter(url:String):LoadFluider
 		{
 			return hashWait.getValue(url) as LoadFluider;
+		}
+		
+		//取下载中管理
+		beyond_challenge function getWorker(url:String):LoadFluider
+		{
+			return hashLoad.getValue(url) as LoadFluider;
 		}
 		
 		/*
@@ -166,33 +169,9 @@ package org.web.sdk.load
 		}
 		
 		/*
-		 * 启动下载
-		 * */
-		public function startLoad():void
-		{
-			if (isEmpty()) return;
-			if (isLoadFull()) return;
-			var fluider:LoadFluider = getNext();
-			if (fluider.size == NONE) {
-				fluider.clear(); //没有回调就清理
-			}else {
-				fluider.load(this, getLoader(fluider.type));
-				addToLoad(fluider);
-			}
-			//多个开放
-			startLoad();
-		}
-		
-		//添加到下载列表中去 放心添加，不会重复
-		beyond_challenge function addToLoad(fluider:LoadFluider):void
-		{
-			hashLoad.put(fluider.url, fluider);
-		}
-		
-		/*
 		 * 判断是否下载中
 		 * */
-		public function isLoadIng(url:String):Boolean
+		public function isInLoad(url:String):Boolean
 		{
 			return hashLoad.isKey(url);
 		}
@@ -200,145 +179,160 @@ package org.web.sdk.load
 		//
 		public function isInto(url:String):Boolean
 		{
-			return isLoadIng(url) || isWait(url);
+			return isInLoad(url) || isWait(url);
 		}
 		
-		//取下载中管理
-		beyond_challenge function getFluiderByLoad(url:String):LoadFluider
+		/*
+		 * 启动下载
+		 * */
+		public function start():void
 		{
-			return hashLoad.getValue(url) as LoadFluider;
-		}
-		
-		//关闭清理所有下载 或者清理单个下载
-		beyond_challenge function closeAndRemove(url:String = null):void
-		{
-			if (url == null) {
-				hashLoad.eachKey(closeAndRemove);
+			if (isEmpty()) return;
+			if (isLoadFull()) return;
+			var filder:LoadFluider = getNext();
+			if (filder.size == NONE) {
+				filder.destroy();
 			}else {
-				if (isLoadIng(url)) {
-					var fluider:LoadFluider = removeLoadIng(url);
-					fluider.close();
-					fluider.clear();
-				}
+				addToLoad(filder);
+				filder.load(getLoader(filder.type));
 			}
+			//多个开放
+			start();
 		}
 		
-		//下载完成 提供给LoadFluider
-		internal function loadOver(url:String):void
+		//添加到下载列表中去 放心添加，不会重复
+		beyond_challenge function addToLoad(filder:LoadFluider):void
 		{
-			removeLoadIng(url);
-			startLoad();
+			hashLoad.put(filder.url, filder);
+		}
+		
+		//直接移除
+		public function remove(url:String):void
+		{
+			var filder:LoadFluider = recompose(url);
+			if (filder) filder.destroy();
+			filder = hashLoad.remove(url);
+			if (filder) filder.destroy();
 		}
 		
 		//删除下载中列表
-		beyond_challenge function removeLoadIng(url:String):LoadFluider
+		beyond_challenge function removeLoad(url:String):LoadFluider
 		{
 			return hashLoad.remove(url) as LoadFluider;
-		}
-		
-		//取一个下载器
-		beyond_challenge function getLoader(type:int):ILoader
-		{
-			return new LoaderBlueprint[type] as ILoader;
 		}
 		
 		//取下一个等待下载
 		beyond_challenge function getNext():LoadFluider
 		{
-			return removePath(firstUrl) as LoadFluider;
+			return recompose(firstUrl) as LoadFluider;
 		}
 		
-		//删除其中一个下载
-		beyond_challenge function removePath(url:String):LoadFluider
+		//删除其中一个下载  然后重组
+		beyond_challenge function recompose(url:String):LoadFluider
 		{
-			var flder:LoadFluider = hashWait.remove(url) as LoadFluider;
-			if (flder) {
+			var filder:LoadFluider = hashWait.remove(url) as LoadFluider;
+			if (filder) {
 				//第一个也是最后一个
 				if (isEmpty()) {
 					firstUrl = null;
 					lastUrl = null;
-				}else if (flder.isNext() && flder.isPrev()) {
+				}else if (filder.isNext() && filder.isPrev()) {
 					//设置前后两个兑换
-					getFluider(flder.prevPath).setNext(getFluider(flder.nextPath));
+					getWaiter(filder.prevPath).setNext(getWaiter(filder.nextPath));
 				}else if (isBegin(url)) {
-					firstUrl = flder.nextPath;
+					firstUrl = filder.nextPath;
 					//设置下一个为第一个
-					getFluider(flder.nextPath).setPrev(null);
+					getWaiter(filder.nextPath).setPrev(null);
 				}else if (isLast(url)) {
 					//这个删除的是最后一个，而且有前面
-					lastUrl = flder.prevPath;
+					lastUrl = filder.prevPath;
 					//设置前面一个为最后一个
-					getFluider(flder.prevPath).setNext(null);
+					getWaiter(filder.prevPath).setNext(null);
 				}
-				flder.setPrev(null);
-				flder.setNext(null);
+				filder.setPrev(null);
+				filder.setNext(null);
 			}
-			return flder;
+			return filder;
 		}
 		
 		/*
 		 * 删除回调,删除关闭
 		 * */
-		public function removeMark(url:String, mark:String = null):void
+		public function removeRespond(url:String, called:Function = null):void
 		{
 			if (url == null) throw Error('this url is null');
-			var flder:LoadFluider;
-			if (isWait(url)) {
-				if (mark == null) {
-					removePath(url).clear();
-				}else {
-					flder = getFluider(url);
-					if (flder.removeRespond(mark) == NONE) removeMark(url);
+			var filder:LoadFluider = hashWait.getValue(url);
+			if (filder) {
+				if (called == null || filder.removeRespond(called) == NONE) {
+					recompose(url).destroy();
 				}
 			}
-			if (isLoadIng(url)) {
-				//关闭后开启下一个加载
-				if (mark == null) {
-					closeAndRemove(url);
-					startLoad();
-				}else {
-					flder = getFluiderByLoad(url);
-					if (flder.removeRespond(mark) == NONE) removeMark(url);
+			filder = hashLoad.getValue(url);
+			if (filder) {
+				if (called == null || filder.removeRespond(called) == NONE) {
+					hashLoad.remove(url);
+					filder.destroy();
+					start();
 				}
 			}
-			Log.log(this).debug('##delete url=', url, ',mark=', mark);
-		}
-		
-		/*
-		 * 清理所有等待
-		 * */
-		public function clearWait():void
-		{
-			hashWait.eachKey(removeMark);
-			Log.log(this).debug('##clear wait loads');
 		}
 		
 		/*
 		 * 停止当前所有下载，会把下载中的提到最开始,直接暂停所有并且保存就是
 		 * */
-		public function stop(share:Boolean = true):void
+		public function stop(share:Boolean = false):void
 		{
-			if (!share) {
-				closeAndRemove();
+			if (!isLoad()) return;
+			if (share) {
+				hashLoad.eachKey(stopLoader);
 			}else {
-				hashLoad.eachKey(addLoadToWait);
+				clearLoad();
 			}
 			Log.log(this).debug('##stop loading ->share=', share);
 		}
 		
-		//暂停被添加到等待列表
-		beyond_challenge function addLoadToWait(url:String):void
+		
+		beyond_challenge function stopLoader(url:String):void
 		{
-			var flder:LoadFluider = getFluiderByLoad(url);
-			//已经下载过，可能回调没有结束
-			if (!flder.isLoad()) {
-				flder.close();
-				removeLoadIng(url);	//不清理其他回调
-			}else {
-				//没有下载
-				flder.close();
-				addWaitByFluider(flder);
+			var filder:LoadFluider = getWorker(url);
+			//没有下载就不添加了
+			if (filder.isLoad()) {
+				filder.close();
+				hashLoad.remove(url);
+				addWaitByRespond(filder);
 			}
+		}
+		
+		//直接添加到下载列表 添加到的是最开始
+		beyond_challenge function addWaitByRespond(filder:LoadFluider):void
+		{
+			if (hashLoad.isKey(filder.url)) throw Error("下载列表中..")
+			if (hashWait.isKey(filder.url)) throw Error("等待列表中..")
+			if(hashWait.isEmpty()) {
+				lastUrl = firstUrl = filder.url;
+			}else {
+				filder.setNext(getWaiter(firstUrl));
+				firstUrl = filder.url;
+			}
+			hashWait.put(filder.url, filder);
+		}
+		
+		/*
+		 * 清除所有下载  ,不公开
+		 * */
+		private function clearLoad():void
+		{
+			hashLoad.eachKey(remove);
+		}
+		
+		/*
+		 * 清理所有等待
+		 * */
+		public function clear():void
+		{
+			if (hashWait.isEmpty()) return;
+			hashWait.eachKey(remove);
+			Log.log(this).debug('##clear wait loads');
 		}
 		
 		/*
@@ -346,8 +340,8 @@ package org.web.sdk.load
 		 * */
 		public function free():void
 		{
-			if (!isEmpty()) clearWait();
-			if (isLoad()) stop(false);
+			clear();
+			stop(false);
 		}
 		
 		public function toString():String

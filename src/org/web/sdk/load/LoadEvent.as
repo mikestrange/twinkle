@@ -5,7 +5,6 @@
  **/ 
 package org.web.sdk.load 
 {
-	import flash.utils.Dictionary;
 	//下载回执
 	public class LoadEvent 
 	{
@@ -24,15 +23,20 @@ package org.web.sdk.load
 		private var _url:String;
 		private var _eventType:String;
 		private var _type:int;
-		//携带数据
-		public var data:Object;
+		private var _data:Object;
 		//
-		public function LoadEvent(target:Object, url:String, eventType:String,type:int = 0) 
+		public function LoadEvent(target:Object, url:String, eventType:String, data:Object = null, type:int = 0)
 		{
 			this._target = target;
 			this._url = url;
 			this._eventType = eventType;
 			this._type = type;
+			this._data = data;
+		}
+		
+		public function get data():Object
+		{
+			return _data;
 		}
 		
 		public function get target():Object

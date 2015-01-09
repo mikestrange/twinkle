@@ -6,7 +6,6 @@ package game.ui.core.actions
 	import org.web.sdk.inters.IMutation;
 	import org.web.sdk.gpu.asset.CryRenderer;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.PerfectLoader;
 	import org.web.sdk.utils.HashMap;
 	
 	//动态库，大部分相同的保存在同一库下,这里必须做一个标记，下载过的标记
@@ -30,9 +29,9 @@ package game.ui.core.actions
 		public function load(url:String,action:IMutation):void
 		{
 			if (FrameWork.app.has(url)) {
-				render("render", action);	//
+				render("render", action);
 			}else {
-				FrameWork.downLoad(url, LoadEvent.SWF, "MARK", complete, action);
+				FrameWork.downLoad(url, LoadEvent.SWF, complete, action);
 			}
 		}
 		
@@ -40,24 +39,23 @@ package game.ui.core.actions
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			FrameWork.app.share(e.url, e.target as Loader);
+			if (!isValid()) return;
 			render("render", e.data as IMutation,e.url);
 		}
 		
 		override public function render(type:String, action:IMutation, data:Object = null):void 
 		{
-			if (isValid()) {
-				switch(type)
-				{
-					case "load":
-						load(data as String, action);
-					break;
-					default:
-						var name:String = GpuMovie(action).currentName;
-						if (!hasAction(name)) addAction(name, getActionVectors(name, data as String));
-						//直接渲染
-						action.updateRender(getCode(), getActions(name));
-					break;
-				}
+			switch(type)
+			{
+				case "load":
+					load(data as String, action);
+				break;
+				default:
+					var name:String = GpuMovie(action).currentName;
+					if (!hasAction(name)) addAction(name, getActionVectors(name, data as String));
+					//直接渲染
+					action.updateRender(getCode(), getActions(name));
+				break;
 			}
 		}
 		
@@ -86,11 +84,6 @@ package game.ui.core.actions
 				actionHash.eachValue(eachVector);
 				actionHash.clear();
 			}
-			//删除所有相关下载
-			/*
-			for each(var url:String in vector) {
-				PerfectLoader.gets().removeMark(url);
-			}*/
 		}
 		
 		private function eachVector(data:Object):void

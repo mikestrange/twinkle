@@ -5,6 +5,7 @@ package
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.net.*;
+	import flash.system.System;
 	import flash.ui.*;
 	import flash.utils.*;
 	import game.consts.LayerType;
@@ -60,9 +61,13 @@ package
 			//
 			PerfectLoader.gets().LOAD_MAX = 5;
 			//
-			StartLayer.gets().show();
+			//StartLayer.gets().show();
 			//ends
-			//this.addDisplay(new BufferImage("icon.png"), 100, 100);
+			
+			for ( var i:int = 0; i < 10; i++) {
+				this.addDisplay(new BufferImage("icon.png"), i*10, 100);
+			}
+			trace("xxxx")
 		}
 		
 		

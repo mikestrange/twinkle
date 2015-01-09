@@ -46,7 +46,7 @@ package org.alg.map
 		{
 			if (_isLoad) return;
 			_isLoad = true;
-			PerfectLoader.gets().addWait(_url, LoadEvent.IMG, null).addRespond("map+", complete);
+			PerfectLoader.gets().addWait(_url, LoadEvent.IMG, null).addRespond(complete);
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -74,7 +74,7 @@ package org.alg.map
 		public function free():void 
 		{
 			_isLoad = false;
-			PerfectLoader.gets().removeMark(_url, "map+");
+			PerfectLoader.gets().removeRespond(_url, complete);
 			hide();
 			super.dispose();
 		}

@@ -9,14 +9,13 @@ package org.alg.map
 	import org.alg.utils.MapPath;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.PerfectLoader;
 	
 	public class MapBase
 	{
 		//
 		public static function showMap(id:uint, called:Function):void
 		{
-			FrameWork.downLoad(MapPath.getMapConfig(id), LoadEvent.TXT, "map+", complete, called);
+			FrameWork.downLoad(MapPath.getMapConfig(id), LoadEvent.TXT, complete, called);
 		}
 		
 		private static function complete(e:LoadEvent):void

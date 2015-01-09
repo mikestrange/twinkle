@@ -146,10 +146,10 @@ package org.web.sdk
 		private static var perfectLoader:PerfectLoader = PerfectLoader.gets();
 		
 		//比较完美的下载，只需要扩展Iloader接口就能应付一切下载
-		public static function downLoad(url:String, type:int, mark:String, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void
+		public static function downLoad(url:String, type:int, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void
 		{
-			perfectLoader.addWait(url, type, context, vital).addRespond(mark, complete, data);
-			perfectLoader.startLoad();
+			perfectLoader.addWait(url, type, context, vital).addRespond(complete, data);
+			perfectLoader.start();
 		}
 		
 		//两种索取素材的方法------------这种非RSL共享时候的  可能是BitmapData，所以是*

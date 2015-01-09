@@ -1,7 +1,7 @@
 package org.web.sdk.load.loads 
 {
 	import flash.events.ProgressEvent;
-	import org.web.sdk.load.ILoader;
+	import org.web.sdk.load.inters.ILoader;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -9,7 +9,6 @@ package org.web.sdk.load.loads
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.PerfectLoader;
 	
 	/*
 	 * swf下载

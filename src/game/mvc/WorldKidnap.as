@@ -29,7 +29,7 @@ package game.mvc
 		}
 		
 		//初始化图层
-		public function initLayer(root:DisplayObjectContainer, sceneWidth:int = 200, sceneHeight:int = 100):void
+		public function initLayer(root:DisplayObjectContainer, sceneWidth:int = 3000, sceneHeight:int = 2000):void
 		{
 			if (House.nativer.root) return;
 			//框架启动

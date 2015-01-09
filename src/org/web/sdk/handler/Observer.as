@@ -5,11 +5,13 @@ package org.web.sdk.handler
 		private var target:Object;
 		private var called:Function;
 		private var valid:Boolean;
+		private var data:Object;
 		
-		public function Observer(target:Object,called:Function) 
+		public function Observer(target:Object, called:Function, data:Object = null) 
 		{
 			this.target = target;
 			this.called = called;
+			this.data = data;
 			this.valid = true;
 		}
 		
@@ -26,6 +28,11 @@ package org.web.sdk.handler
 		public function isValid():Boolean
 		{
 			return this.valid;
+		}
+		
+		public function getBody():Object
+		{
+			return this.data;
 		}
 		
 		public function destroy():void

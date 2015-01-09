@@ -14,16 +14,12 @@ package org.web.sdk.display.core
 	 * */
 	public class BufferImage extends VRayMap implements IAsset 
 	{
-		private static var MARK_INDEX:uint = 0;
-		private static var MARK:String = "MARK_";
-		
-		private var _mark:String;
 		private var _url:String;
+		private var _wide:Number;
+		private var _heig:Number;
 		private var _error:Boolean = false;
 		private var _wait:Boolean = false;
 		private var _vital:Boolean = false;
-		private var _wide:Number;
-		private var _heig:Number;
 		private var _ishave:Boolean = false;
 		
 		public function BufferImage(url:String = null, wide:Number = NaN, heig:Number = NaN, color:uint = 0, vital:Boolean = false) 
@@ -65,19 +61,16 @@ package org.web.sdk.display.core
 			if (!_wait) stopUnmark();
 			_url = value;
 			if (Assets.gets().has(value)) {
-				_mark = null;
 				Assets.gets().mark(this);
 			}else {
 				_wait = true;
-				_mark = MARK + (++MARK_INDEX);
-				FrameWork.downLoad(value, LoadEvent.IMG, _mark, complete, null, null, _vital);
+				FrameWork.downLoad(value, LoadEvent.IMG, complete, null, null, _vital);
 			}
 		}
 		
 		private function complete(e:LoadEvent):void
 		{
 			_error = (e.eventType == LoadEvent.ERROR);
-			_mark = null;
 			_wait = false;
 			if (_error) {
 				_url = null;
@@ -117,7 +110,7 @@ package org.web.sdk.display.core
 		private function stopUnmark():void
 		{
 			if (null == _url) return;
-			if (_wait) PerfectLoader.gets().removeMark(_url, _mark)
+			if (_wait) PerfectLoader.gets().removeRespond(_url, complete);
 			else Assets.gets().unmark(_url);
 			_url = null;
 		}

@@ -7,7 +7,7 @@ package org.web.sdk.load.loads
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import org.web.sdk.load.ILoader;
+	import org.web.sdk.load.inters.ILoader;
 	import org.web.sdk.load.LoadEvent;
 	
 	/*
