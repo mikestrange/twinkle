@@ -150,9 +150,11 @@ package org.web.sdk.tool
 		
 		private function onClick(e : MouseEvent) : void
 		{
+			/*
 			mouseY / height > .5 ? stage.frameRate-- : stage.frameRate++;
 			xml.fps = "FPS: " + fps + " / " + stage.frameRate;
 			text.htmlText = xml;
+			*/
 		}
 		
 		// .. Utils

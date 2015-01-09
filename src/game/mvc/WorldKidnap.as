@@ -16,6 +16,7 @@ package game.mvc
 	import org.web.sdk.system.*;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
+	import org.web.sdk.tool.FpsMonitor;
 	
 	public class WorldKidnap extends Kidnap 
 	{
@@ -28,7 +29,7 @@ package game.mvc
 		}
 		
 		//初始化图层
-		public function initLayer(root:DisplayObjectContainer, sceneWidth:int = 4000, sceneHeight:int = 3000):void
+		public function initLayer(root:DisplayObjectContainer, sceneWidth:int = 200, sceneHeight:int = 100):void
 		{
 			if (House.nativer.root) return;
 			//框架启动
@@ -49,7 +50,8 @@ package game.mvc
 		
 		private function onResize(e:Event = null):void
 		{
-			//FrameWork.showRect(House.nativer.root, House.nativer.getLayer(LayerType.TOP).graphics);
+			FrameWork.followWin(House.nativer.root);
+			FrameWork.graphicsViewArea(FpsMonitor.gets().graphics);
 		}
 		
 		//添加到图层，不进行其他操作

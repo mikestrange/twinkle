@@ -90,26 +90,32 @@ package org.web.sdk
 			$system.setSize(w, h);	
 		}
 		
-		//调整区域
-		public static function showRect(root:DisplayObject, graphics:Graphics = null):void
+		public static function followWin(root:DisplayObject, offsetx:Number = 0, offsety:Number = 0):void
 		{
-			root.x = $system.x;
-			root.y = $system.y;
+			if (root) {
+				root.x = $system.x + offsetx;
+				root.y = $system.y + offsety;
+			}
+		}
+		
+		//调整区域 这个东西的位置必须在 0 0
+		public static function graphicsViewArea(graphics:Graphics, color:uint= 0, alpha:Number = .5):void
+		{
 			if (graphics) {
 				//绘制主屏幕
 				graphics.clear();
-				graphics.beginFill(0, .4);
+				graphics.beginFill(color, alpha);
 				graphics.lineStyle(1, 0, 0);
-				graphics.moveTo(-$system.x, -$system.y);
-				graphics.lineTo(-$system.x + stageWidth, -$system.y);
-				graphics.lineTo(-$system.x + stageWidth, stageHeight - $system.y);
-				graphics.lineTo(-$system.x, stageHeight - $system.y);
-				graphics.lineTo(-$system.x, -$system.y);
 				graphics.moveTo(0, 0);
-				graphics.lineTo($system.width, 0);
-				graphics.lineTo($system.width, $system.height);
-				graphics.lineTo(0, $system.height);
+				graphics.lineTo(stageWidth, 0);
+				graphics.lineTo(stageWidth, stageHeight);
+				graphics.lineTo(0, stageHeight);
 				graphics.lineTo(0, 0);
+				graphics.moveTo($system.x, $system.y);
+				graphics.lineTo($system.width + $system.x, $system.y);
+				graphics.lineTo($system.width + $system.x, $system.height + $system.y);
+				graphics.lineTo($system.x, $system.height + $system.y);
+				graphics.lineTo($system.x, $system.y);
 				/*
 				graphics.beginFill(0,.5);
 				graphics.drawRect(0, 0, $system.width, $system.height);
