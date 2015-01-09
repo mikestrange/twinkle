@@ -1,4 +1,4 @@
-package org.web.sdk.load 
+package org.web.sdk.load.inters 
 {
 	import flash.events.IEventDispatcher;
 	
