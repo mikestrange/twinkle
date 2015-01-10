@@ -33,12 +33,16 @@ package
 	import org.web.sdk.system.*;
 	import org.web.sdk.tool.*;
 	import org.web.sdk.utils.*;
+	import org.web.sdk.utils.list.HashList;
+	import org.web.sdk.utils.list.ListNode;
 	
 	
 	[SWF(frameRate = "60", width = "500", height = "400")]
 	
 	public class Twinkle extends KitSprite
 	{
+		private var _box:KitSprite;
+		
 		public function Twinkle():void 
 		{
 			if (stage) showEvent();
@@ -62,17 +66,21 @@ package
 			PerfectLoader.gets().LOAD_MAX = 5;
 			//
 			//StartLayer.gets().show();
-			for ( var i:int = 0; i < 10; i++) {
-				this.addDisplay(new BufferImage("icon.png",100,100,0), i*10, 100);
-			}
-			var step:Steper = new Steper(this);
-			step.run();
+			var node:HashList = new HashList;
+			node.push(new ListNode("timi1"))
+			node.push(new ListNode("timi2"))
+			node.push(new ListNode("timi3"))
+			node.push(new ListNode("timi4"))
+			
+			trace(node.splice(1))
+			trace(node)
 		}
 		
 		override public function render():void 
 		{
-			var dis:DisplayObject = getChildAt(4);
-			dis.x++
+			var endy:int = _box.y + 3;
+			if (_box.y + 50 >= 300) endy = 300 - 50;
+			_box.y = endy;
 		}
 		//ends
 	}
