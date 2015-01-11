@@ -1,75 +1,59 @@
 package org.web.sdk.utils.list
 {
+	import org.web.apk.beyond_challenge;
+	use namespace beyond_challenge
+	
 	public class ListNode 
 	{
-		private var _name:String;
-		private var _father:ListNode;
-		private var _next:ListNode;
-		private var _target:*= undefined;
+		beyond_challenge var stamp:String;
+		beyond_challenge var target:* = undefined;
+		beyond_challenge var father:ListNode;
+		beyond_challenge var next:ListNode;
 		
 		public function ListNode(name:String, data:*= undefined) 
 		{
-			_name = name;
-			_target = data;
+			stamp = name;
+			target = data;
 		}
 		
-		public function get next():ListNode
-		{
-			return _next;
-		}
-		
-		public function get father():ListNode
-		{
-			return _father;
-		}
-		
-		public function get stamp():String 
-		{	
-			return _name;
-		}
-		
-		public function get target():*
-		{
-			return _target;
-		}
-		
-		internal function setFather(value:ListNode = null):void
+		beyond_challenge function setFather(value:ListNode = null):void
 		{
 			if (value) {
-				value._next = this;
-				_father = value;
+				value.next = this;
+				father = value;
 			}else {
-				_father = null;
+				father = null;
 			}
 		}
 		
-		internal function setNext(value:ListNode = null):void
+		beyond_challenge function setNext(value:ListNode = null):void
 		{
 			if (value) {
-				_next = value;
-				value._father = this;
+				next = value;
+				value.father = this;
 			}else {
-				_next = null;
+				next = null;
 			}
 		}
 		
 		public function hasNext():Boolean
 		{
-			return this._next != null;
+			return next != null;
 		}
 		
 		public function hasFather():Boolean
 		{
-			return this._father != null;
+			return father != null;
 		}
 		
 		public function toString():String
 		{
-			var chat:String = "name:" + _name;
-			if (hasFather()) chat += ", father:" + _father.stamp;
-			else chat += ", father:null";
-			if (hasNext()) chat += ", next:" + _next.stamp;
+			var chat:String = "name:" + stamp;
+			if (hasNext()) chat += ", next:" + next.stamp;
 			else chat += ", next:null";
+			if (hasFather()) chat += ", father:" + father.stamp;
+			else chat += ", father:null";
+			chat += ", data:" + target;
 			return chat;
 		}
 		

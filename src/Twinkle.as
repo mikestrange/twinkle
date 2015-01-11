@@ -67,14 +67,16 @@ package
 			//
 			//StartLayer.gets().show();
 			var node:HashList = new HashList;
-			node.push(new ListNode("timi1"))
-			node.push(new ListNode("timi2"))
-			node.push(new ListNode("timi3"))
-			node.push(new ListNode("timi4"))
-			
-			trace(node.splice(1))
+			node.push("timi1",1)
+			node.push("timi2")
+			node.push("timi3")
+			node.push("timi4")
+			node.push("timi5");
+			node.reverse();
+			node.reverse();
 			trace(node)
 		}
+		
 		
 		override public function render():void 
 		{
