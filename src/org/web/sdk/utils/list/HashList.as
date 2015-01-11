@@ -1,9 +1,10 @@
 package org.web.sdk.utils.list 
 {
 	import flash.utils.Dictionary;
-	import org.web.apk.beyond_challenge;
-	use namespace beyond_challenge
-	
+	/*
+	 * 添加是Array的1/20倍，但是取值和删除速度很快
+	 * 对于一个建立无关速度,取值查找快的实用，他能实现Array的顺序遍历
+	 * */
 	public class HashList
 	{
 		private var hash:Dictionary;
@@ -65,21 +66,21 @@ package org.web.sdk.utils.list
 			length++;
 		}
 		
-		beyond_challenge function getNode(name:String):ListNode
+		public function getNode(name:String):ListNode
 		{
 			return hash[name];
 		}
 		
 		public function getTarget(name:String):*
 		{
-			var node:ListNode = getNode(name);
+			var node:ListNode = hash[name];
 			if (node) return node.target;
 			return null;
 		}
 		
 		public function setTarget(name:String, target:*= undefined):void
 		{
-			var node:ListNode = getNode(name);
+			var node:ListNode = hash[name];
 			if (node) node.target = target;
 		}
 		
@@ -157,7 +158,7 @@ package org.web.sdk.utils.list
 			return hash[node] != undefined;
 		}
 		
-		//删除
+		//删除 返回元素
 		public function splice(node:String, leng:uint = 1):Array
 		{
 			var item:ListNode;
@@ -216,6 +217,20 @@ package org.web.sdk.utils.list
 			length = 0;
 			header = null;
 			laster = null;
+		}
+		
+		//迭代器
+		public function getIterator():Vector.<ListNode>
+		{
+			if (empty()) return null;
+			var vector:Vector.<ListNode> = new Vector.<ListNode>(length);
+			var item:ListNode = header;
+			var i:int = 0;
+			while (item != null) {
+				vector[i++] = item;
+				item = item.next;
+			}
+			return vector;
 		}
 		
 		//反序
