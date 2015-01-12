@@ -10,9 +10,11 @@ package
 	import flash.utils.*;
 	import game.consts.LayerType;
 	import game.consts.NoticeDefined;
+	import game.datas.PlayerObj;
 	import game.mvc.WorldKidnap;
 	import game.consts.CmdDefined;
 	import game.ui.map.WorldMap;
+	import game.ui.role.PlayerSprite;
 	import org.alg.map.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
@@ -62,8 +64,18 @@ package
 			//
 			PerfectLoader.gets().LOAD_MAX = 5;
 			FpsMonitor.gets().show();
-			StartLayer.gets().show();
-			
+			//StartLayer.gets().show();
+			//
+			var player:PlayerObj;
+			var dx:Number;
+			var dy:Number;
+			for (var i:int = 0; i < 500; i++) {
+				player = new PlayerObj;
+				dx = Math.random() * 450 
+				dy = Math.random() * 400;
+				player.update(i, "测试" + i, dx, dy);
+				addDisplay(new PlayerSprite(null,player),dx,dy)
+			}
 		}
 		
 		private function complete(e:LoadEvent):void

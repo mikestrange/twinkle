@@ -5,7 +5,7 @@ package org.web.sdk.gpu
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.gpu.texture.VRayTexture;
 	
-	public class GpuMovie extends GpuSprite implements IStepper 
+	public class GpuMovie extends GpuSprite
 	{
 		private var _vector:Vector.<VRayTexture>;
 		private var _float_time:Number = 0;
@@ -51,10 +51,9 @@ package org.web.sdk.gpu
 		override public function render():void 
 		{
 			if (_isstop) return;
-			if (!isValid()) return;
 			if (getTimer() - _float_time > _fps) {
-				restore();
-				position = ++_index;
+				_float_time = getTimer();
+				position++;
 			}
 		}
 		
@@ -64,7 +63,7 @@ package org.web.sdk.gpu
 			if (_vector == null) return;
 			_index = value;
 			if (_index >= _vector.length) _index = 0;
-			_vector[_index].render(this);
+			setTexture(_vector[_index]);
 		}
 		
 		public function get position():int
@@ -81,25 +80,6 @@ package org.web.sdk.gpu
 		{
 			return _fps;
 		}
-		
-		//启动离子
-		public function run():void
-		{
-			SunEngine.run(this);
-		}
-		
-		//检测类容
-		public function step(event:Object):void 
-		{
-			this.render();
-		}
-		
-		//终止  在终止的时候要移除直接kill
-		public function die():void
-		{
-			SunEngine.cut(this);
-		}
-		
 		//ends
 	}
 

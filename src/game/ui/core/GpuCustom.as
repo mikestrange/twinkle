@@ -20,7 +20,6 @@ package game.ui.core
 			this._action = action;
 			_domain = formt();
 			if (action) sendRender("render", _action);
-			this.run();
 		}
 		
 		public function formt():String

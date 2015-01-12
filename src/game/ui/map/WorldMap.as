@@ -151,7 +151,6 @@ package game.ui.map
 		
 		private function test():void
 		{
-			/*
 			var player:PlayerObj;
 			var dx:Number;
 			var dy:Number;
@@ -161,7 +160,7 @@ package game.ui.map
 				dy = Math.random() * 400 + (actor.y - 200);
 				player.update(i, "测试" + i, dx, dy);
 				stop(player);
-			}*/
+			}
 		}
 		
 		public function sendSelf(e:Object = null):void

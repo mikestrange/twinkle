@@ -66,6 +66,7 @@ package game.ui.role
 			this.addChild(_texture);
 			//绘制一个基点
 			drawSingularity();
+			stand();
 			//
 			this.run();
 		}
