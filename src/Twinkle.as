@@ -14,8 +14,6 @@ package
 	import game.consts.CmdDefined;
 	import game.ui.map.WorldMap;
 	import org.alg.map.*;
-	import org.web.sdk.display.core.*;
-	import org.web.sdk.display.core.house.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
@@ -61,29 +59,18 @@ package
 			WorldKidnap.gets().initLayer(this);
 			WorldKidnap.gets().launch(null);
 			//
-			FpsMonitor.gets().show();
-			//
+			
 			PerfectLoader.gets().LOAD_MAX = 5;
-			//
-			//StartLayer.gets().show();
-			var node:HashList = new HashList;
-			node.push("timi1",1)
-			node.push("timi2")
-			node.push("timi3")
-			node.push("timi4")
-			node.push("timi5");
-			node.reverse();
-			node.reverse();
-			trace(node)
+			FpsMonitor.gets().show();
+			StartLayer.gets().show();
+			
 		}
 		
-		
-		override public function render():void 
+		private function complete(e:LoadEvent):void
 		{
-			var endy:int = _box.y + 3;
-			if (_box.y + 50 >= 300) endy = 300 - 50;
-			_box.y = endy;
+			trace(e.eventType)
 		}
+		
 		//ends
 	}
 	

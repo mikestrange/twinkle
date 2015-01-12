@@ -14,13 +14,13 @@ package game.ui.role
 	import org.alg.astar.Grid;
 	import org.alg.astar.Node;
 	import org.alg.utils.FormatUtils;
-	import org.web.sdk.display.core.KitSprite;
-	import org.web.sdk.display.core.TextEditor;
-	import org.web.sdk.display.core.VRayMap;
+	import org.web.sdk.display.KitSprite;
+	import org.web.sdk.display.TextEditor;
+	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.gpu.core.GpuSprite;
+	import org.web.sdk.gpu.GpuSprite;
 	import org.web.sdk.net.socket.ServerSocket;
 	
 	/*

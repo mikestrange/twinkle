@@ -1,4 +1,4 @@
-package org.web.sdk.display.core 
+package org.web.sdk.display 
 {
 	import flash.events.Event;
 	import flash.geom.Transform;

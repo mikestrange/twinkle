@@ -153,7 +153,7 @@ package org.web.sdk
 		}
 		
 		//两种索取素材的方法------------这种非RSL共享时候的  可能是BitmapData，所以是*
-		public static function getAsset(className:String, url:String = null):Object
+		public static function getAsset(className:String, url:String = null):*
 		{
 			return app.getAsset(className,url);
 		}

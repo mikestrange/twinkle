@@ -1,19 +1,18 @@
-package org.web.sdk.gpu.core 
+package org.web.sdk.gpu 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.display.core.VRayMap;
+	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
-	import org.web.sdk.gpu.asset.CryRenderer;
-	import org.web.sdk.gpu.asset.ShaderManager;
-	import org.web.sdk.inters.IMutation;
+	import org.web.sdk.gpu.shader.*;
+	import org.web.sdk.inters.IEscape;
 	import org.web.apk.beyond_challenge;
 	
 	use namespace beyond_challenge
 	/**
 	 * GPU渲染的基类
 	 */
-	public class GpuSprite extends VRayMap implements IMutation
+	public class GpuSprite extends VRayMap implements IEscape
 	{
 		//渲染速度
 		public static var RENDER_FPS:int = 100;
@@ -41,7 +40,7 @@ package org.web.sdk.gpu.core
 		}
 		
 		//子类不允许更改
-		final public function getTexure():CryRenderer
+		final public function getRenderer():CryRenderer
 		{
 			return _conductor;
 		}
@@ -55,7 +54,7 @@ package org.web.sdk.gpu.core
 		//通知渲染器
 		final public function sendRender(type:String, data:Object = null):void
 		{
-			if (isValid()) getTexure().render(type, this, data);
+			if (isValid()) getRenderer().render(type, this, data);
 		}
 		
 		//材质是否有效

@@ -1,7 +1,8 @@
-package org.web.sdk.display.core 
+package org.web.sdk.gpu 
 {
 	import flash.events.Event;
 	import org.web.sdk.display.Multiple;
+	import org.web.sdk.gpu.texture.VRayTexture;
 	import org.web.sdk.inters.IDisplayObject;
 	import flash.geom.Transform;
 	import flash.display.Stage;
@@ -11,36 +12,35 @@ package org.web.sdk.display.core
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import org.web.sdk.inters.IBitmap;
+	import org.web.sdk.inters.IAcceptor;
 	
 	/**
 	 * 贴图基类
 	 */
-	public class VRayMap extends Bitmap implements IBitmap 
+	public class VRayMap extends Bitmap implements IAcceptor 
 	{
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
 		
-		public function VRayMap(bitmapData:BitmapData = null, smoothing:Boolean = true) 
+		public function VRayMap(texture:VRayTexture = null) 
 		{
-			super(bitmapData, AUTO, smoothing);
+			super(null, AUTO, true);
+			if(texture) setTexture(texture);
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IBitmap */
 		public function dispose():void 
 		{
-			Multiple.dispose(bitmapData);
 			this.bitmapData = null;
 		}
-		
-		public function setTexture(byte:*, smooth:Boolean = true):void 
+		 
+		public function setTexture(texture:VRayTexture):void 
 		{
-			if (byte is BitmapData) {
-				this.bitmapData = byte as BitmapData;
-				this.smoothing = smooth;
-			}
+			if (texture == null) throw Error("材质无效"); 
+			this.bitmapData = texture.texture;
+			this.smoothing = true;
 		}
 		
-		public function clone():IBitmap 
+		public function clone():IAcceptor 
 		{
 			return null;
 		}
@@ -104,10 +104,7 @@ package org.web.sdk.display.core
 		
 		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0):void
 		{
-			if (father) {
-				father.addChildByName(this);
-				this.moveTo(mx, my);
-			}
+			if (father) father.addDisplay(this, mx, my);
 		}
 		
 		public function render():void 

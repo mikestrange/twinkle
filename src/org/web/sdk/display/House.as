@@ -1,8 +1,8 @@
-package org.web.sdk.display.core.house 
+package org.web.sdk.display 
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import org.web.sdk.display.core.house.ILayer;
+	import org.web.sdk.display.ILayer;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.utils.HashMap;

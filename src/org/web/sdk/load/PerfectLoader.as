@@ -85,9 +85,7 @@ package org.web.sdk.load
 		internal function removeLoad(url:String):void
 		{
 			var index:int = indexOfLoad(url);
-			if (index != -1) {
-				load_list.splice(index, 1);
-			}
+			if (index != -1) load_list.splice(index, 1);
 		}
 		
 		/*
@@ -143,13 +141,16 @@ package org.web.sdk.load
 		 * */
 		public function isInLoad(url:String):Boolean
 		{
-			var index:int = load_list.indexOf(url);
+			var index:int = indexOfLoad(url);
 			return index != -1;
 		}
 		
 		public function indexOfLoad(url:String):int
 		{
-			return load_list.indexOf(url);
+			for (var i:int = load_list.length - 1; i >= 0; i--) {
+				if (load_list[i].url == url) return i;
+			}
+			return -1;
 		}
 		
 		//
@@ -188,6 +189,7 @@ package org.web.sdk.load
 					filder = load_list[index];
 					load_list.splice(index, 1);
 					filder.destroy();
+					start();
 				}
 			}
 		}

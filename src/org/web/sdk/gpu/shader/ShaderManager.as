@@ -1,7 +1,5 @@
-package org.web.sdk.gpu.asset 
+package org.web.sdk.gpu.shader 
 {
-	import org.web.sdk.gpu.asset.CryRenderer;
-	import org.web.sdk.inters.IMutation;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
 	/*

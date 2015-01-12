@@ -1,4 +1,4 @@
-package org.web.sdk.display.core.house 
+package org.web.sdk.display 
 {
 	import flash.display.DisplayObject;
 	

@@ -4,11 +4,12 @@ package org.alg.map
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import org.alg.utils.MapPath;
-	import org.web.sdk.display.core.VRayMap;
+	import org.web.sdk.display.Multiple;
+	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 
-	public class NodeTexture extends VRayMap
+	public class NodeTexture extends Bitmap
 	{
 		//连接地址
 		private var _url:String;
@@ -38,8 +39,8 @@ package org.alg.map
 		
 		public function setBitmapdata(bit:BitmapData):void 
 		{
-			super.setTexture(null);
-			super.setTexture(bit, true);
+			Multiple.dispose(this.bitmapData);
+			this.bitmapData = bit;
 		}
 		
 		public function startLoad():void
@@ -47,6 +48,7 @@ package org.alg.map
 			if (_isLoad) return;
 			_isLoad = true;
 			PerfectLoader.gets().addWait(_url, LoadEvent.IMG, null).addRespond(complete);
+			trace(PerfectLoader.gets().waitLength())
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -73,10 +75,10 @@ package org.alg.map
 		//直接释放
 		public function free():void 
 		{
+			hide();
 			_isLoad = false;
 			PerfectLoader.gets().removeRespond(_url, complete);
-			hide();
-			super.dispose();
+			Multiple.dispose(this.bitmapData);
 		}
 		//ends
 	}

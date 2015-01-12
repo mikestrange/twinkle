@@ -2,7 +2,7 @@ package
 {
 	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
-	import org.web.sdk.display.core.KitSprite;
+	import org.web.sdk.display.KitSprite;
 	import org.web.sdk.FrameWork;
 	import flash.display.Sprite;
 	import flash.events.Event;

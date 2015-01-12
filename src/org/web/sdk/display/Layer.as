@@ -1,9 +1,9 @@
-package org.web.sdk.display.core.house 
+package org.web.sdk.display 
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import org.web.sdk.display.core.house.ILayer;
-	import org.web.sdk.display.core.KitSprite;
+	import org.web.sdk.display.ILayer;
+	import org.web.sdk.display.KitSprite;
 	
 	public class Layer extends KitSprite implements ILayer 
 	{

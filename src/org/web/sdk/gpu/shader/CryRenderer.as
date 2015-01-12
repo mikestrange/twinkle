@@ -1,7 +1,7 @@
-package org.web.sdk.gpu.asset 
+package org.web.sdk.gpu.shader 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.inters.IMutation;
+	import org.web.sdk.inters.IEscape;
 	/**
 	 *一个动画元件的所有纹理
 	 */
@@ -25,7 +25,7 @@ package org.web.sdk.gpu.asset
 		}
 		
 		//子类继承他就可以了
-		public function render(type:String, action:IMutation, data:Object = null):void
+		public function render(type:String, action:IEscape, data:Object = null):void
 		{
 			/* //test
 			 * if (_isvalid) action.updateRender(this.code, data);

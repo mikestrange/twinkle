@@ -1,5 +1,6 @@
 package game.mvc 
 {
+	import org.web.sdk.display.House;
 	import flash.display.*;
 	import flash.events.Event;
 	import game.consts.CmdDefined;
@@ -9,8 +10,7 @@ package game.mvc
 	import game.socket.LogicRequest;
 	import game.mvc.room.MapController;
 	import game.consts.LayerType;
-	import org.web.sdk.display.core.house.*;
-	import org.web.sdk.display.core.house.ILayer;
+	import org.web.sdk.display.ILayer;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.net.socket.handler.CmdManager;
 	import org.web.sdk.system.*;

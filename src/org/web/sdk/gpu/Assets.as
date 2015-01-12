@@ -1,13 +1,16 @@
-package org.web.sdk.display.asset 
+package org.web.sdk.gpu 
 {
+	import com.greensock.events.LoaderEvent;
 	import flash.display.BitmapData;
-	import org.web.sdk.inters.IAsset;
+	import org.web.sdk.inters.IBuffer;
+	import org.web.sdk.load.core.BelieveLoader;
+	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.utils.HashMap;
 	/**
 	 * ...
 	 *动态下载静态贴图
 	 */
-	public class Assets 
+	public class Assets extends BelieveLoader 
 	{
 		private static var _ins:Assets;
 		
@@ -18,6 +21,16 @@ package org.web.sdk.display.asset
 		}
 		
 		private var _protoKeys:HashMap = new HashMap;
+		
+		public function load(asset:IBuffer):IBuffer
+		{
+			if (has(asset.resource)) {
+				mark(asset);
+			}else {
+				loader.addWait(asset.resource).addRespond(asset.complete);
+			}
+			return asset;
+		}
 		
 		//不用了的从这里删除下
 		public function unmark(url:String):Boolean
@@ -45,7 +58,7 @@ package org.web.sdk.display.asset
 		}
 		
 		//取一张图 只有在取的时候才记录备份出去了多少
-		public function mark(asset:IAsset, bit:BitmapData = null):Boolean
+		public function mark(asset:IBuffer, bit:BitmapData = null):Boolean
 		{
 			if (asset.resource == null) return false;
 			var image:ImageData = _protoKeys.getValue(asset.resource);
@@ -55,7 +68,7 @@ package org.web.sdk.display.asset
 				_protoKeys.put(asset.resource, image);
 			}
 			image.leng++;
-			asset.derive(image.bitmapdata);
+			asset.setTexture(image.texture);
 			return true;
 		}
 		
@@ -90,25 +103,26 @@ package org.web.sdk.display.asset
 
 
 import flash.display.BitmapData;
+import org.web.sdk.gpu.texture.VRayTexture;
 
 class ImageData {
 	
-	public var leng:int = 0;
-	public var bitmapdata:BitmapData;
+	public var leng:int;
 	public var url:String;
+	public var texture:VRayTexture;
 	
 	public function ImageData(path:String, bit:BitmapData, leng:int = 0)
 	{
 		this.url = path;
-		this.bitmapdata = bit;
+		this.texture = VRayTexture.fromBitmapdata(bit);
 		this.leng = leng;
 	}
 	
 	public function dispose():void
 	{
-		if (bitmapdata) {
-			bitmapdata.dispose();
-			bitmapdata = null;
+		if (texture) {
+			texture.dispose();
+			texture = null;
 		}
 	}
 	//ends

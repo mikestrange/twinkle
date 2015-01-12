@@ -1,6 +1,6 @@
-package org.web.sdk.display.core.house 
+package org.web.sdk.display 
 {
-	import org.web.sdk.display.core.house.ILayer;
+	import org.web.sdk.display.ILayer;
 	
 	internal class LayerData 
 	{

@@ -2,7 +2,7 @@ package game.ui.core
 {
 	import game.ui.core.actions.GpuMovie;
 	import game.ui.core.actions.MovieShader;
-	import org.web.sdk.gpu.asset.ShaderManager;
+	import org.web.sdk.gpu.shader.ShaderManager;
 	
 	public class GreatTexture extends GpuMovie
 	{	

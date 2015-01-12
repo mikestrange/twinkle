@@ -5,7 +5,7 @@ package org.web.sdk.display
 	import flash.geom.*;
 	import flash.net.LocalConnection;
 	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.inters.IBitmap;
+	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.inters.IDisplayObject;
 	import org.web.sdk.log.Log;
 	
@@ -23,7 +23,7 @@ package org.web.sdk.display
 			while (dis.numChildren) {
 				item = dis.removeChildAt(0);
 				if (item is IBaseSprite) IBaseSprite(item).finality(value);
-				else if (item is IBitmap) IBitmap(item).dispose();
+				else if (item is IAcceptor) IAcceptor(item).dispose();
 				else if (item is Sprite) wipeout(Sprite(item));
 				//
 				if (item is MovieClip) MovieClip(item).stop();

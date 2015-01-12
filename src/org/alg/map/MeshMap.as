@@ -11,7 +11,7 @@ package org.alg.map
 	import org.alg.astar.Grid;
 	import org.alg.astar.Node;
 	import org.alg.utils.DrawLine;
-	import org.web.sdk.display.core.KitSprite;
+	import org.web.sdk.display.KitSprite;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	

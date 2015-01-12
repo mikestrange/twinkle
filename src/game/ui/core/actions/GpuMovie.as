@@ -4,8 +4,8 @@ package game.ui.core.actions
 	import flash.utils.getTimer;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
-	import org.web.sdk.gpu.asset.CryRenderer;
-	import org.web.sdk.gpu.core.GpuSprite;
+	import org.web.sdk.gpu.GpuSprite;
+	import org.web.sdk.gpu.texture.VRayTexture;
 	import org.web.sdk.utils.HashMap;
 	/*
 	 * 动作集合
@@ -17,7 +17,7 @@ package game.ui.core.actions
 		private var _action:String;				//动作名称
 		private var _isstop:Boolean;	
 		private var _float_time:Number = getTimer();
-		private var _vecotr:Vector.<BitmapData>;
+		private var _vecotr:Vector.<VRayTexture>;
 		protected var _url:String;
 		
 		//立刻下载
