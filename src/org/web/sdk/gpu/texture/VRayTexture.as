@@ -28,7 +28,7 @@ package org.web.sdk.gpu.texture
 			}
 		}
 		
-		public function shader(mesh:IAcceptor):void
+		public function render(mesh:IAcceptor):void
 		{
 			mesh.setTexture(this);
 		}

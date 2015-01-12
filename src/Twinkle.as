@@ -17,6 +17,7 @@ package
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
+	import org.web.sdk.gpu.BufferImage;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
 	import org.web.sdk.net.socket.base.*;
@@ -61,9 +62,9 @@ package
 			//
 			
 			PerfectLoader.gets().LOAD_MAX = 5;
-			FpsMonitor.gets().show();
-			StartLayer.gets().show();
-			
+			//FpsMonitor.gets().show();
+			//StartLayer.gets().show();
+			//load.addInto(this, 100, 100);
 		}
 		
 		private function complete(e:LoadEvent):void

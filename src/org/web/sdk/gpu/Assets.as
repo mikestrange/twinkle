@@ -27,7 +27,8 @@ package org.web.sdk.gpu
 			if (has(asset.resource)) {
 				mark(asset);
 			}else {
-				loader.addWait(asset.resource).addRespond(asset.complete);
+				loader.addWait(asset.resource, LoadEvent.IMG).addRespond(asset.complete);
+				loader.start();
 			}
 			return asset;
 		}

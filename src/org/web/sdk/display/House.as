@@ -6,7 +6,9 @@ package org.web.sdk.display
 	import org.web.sdk.log.Log;
 	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.utils.HashMap;
-	
+	/*
+	 * 一个场景
+	 * */
 	final public class House
 	{
 		private static var house:House;	
