@@ -14,7 +14,6 @@ package game.ui.map
 	import game.datas.PlayerObj;
 	import game.datas.vo.ActionVo;
 	import game.mvc.WorldKidnap;
-	import game.ui.role.PlayerAction;
 	import game.ui.role.PlayerSprite;
 	import org.alg.astar.Astar;
 	import org.alg.astar.Node;

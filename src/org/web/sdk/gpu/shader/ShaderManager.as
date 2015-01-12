@@ -24,10 +24,11 @@ package org.web.sdk.gpu.shader
 		}
 		
 		//直接创建
+		/*
 		public static function create(value:CryRenderer):Boolean
 		{
 			return gets().share(value);
-		}
+		}*/
 		
 		public static function has(code:String):Boolean
 		{

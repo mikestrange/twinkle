@@ -8,6 +8,7 @@ package game.ui.role
 	import game.datas.PlayerObj;
 	import game.datas.SelfData;
 	import game.datas.vo.ActionVo;
+	import game.ui.core.GpuCustom;
 	import game.ui.inters.IRole;
 	import game.ui.map.WorldMap;
 	import game.ui.utils.EditorTexture;
@@ -28,7 +29,7 @@ package game.ui.role
 	 * */
 	public class PlayerSprite extends KitSprite implements IRole, IStepper
 	{
-		private var _action:PlayerAction;
+		private var _action:GpuCustom;
 		//
 		private var _data:PlayerObj;
 		private var _texture:VRayMap;
@@ -58,8 +59,7 @@ package game.ui.role
 		
 		override public function initialization(value:Boolean = true):void 
 		{
-			_action = new PlayerAction("playerAction");
-			_action.load(_data.url);
+			_action = new GpuCustom("playerAction", 4, ActionType.STAND);
 			this.addChild(_action);
 			//名称
 			_texture = new VRayMap(EditorTexture.draw(_data.usn));

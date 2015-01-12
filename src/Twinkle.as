@@ -60,11 +60,10 @@ package
 			WorldKidnap.gets().initLayer(this);
 			WorldKidnap.gets().launch(null);
 			//
-			
 			PerfectLoader.gets().LOAD_MAX = 5;
-			//FpsMonitor.gets().show();
-			//StartLayer.gets().show();
-			//load.addInto(this, 100, 100);
+			FpsMonitor.gets().show();
+			StartLayer.gets().show();
+			
 		}
 		
 		private function complete(e:LoadEvent):void

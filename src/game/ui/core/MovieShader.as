@@ -1,7 +1,9 @@
-package game.ui.core.actions 
+package game.ui.core 
 {
 	import flash.display.BitmapData;
 	import flash.display.Loader;
+	import game.ui.core.GpuCustom;
+	import org.alg.utils.MapPath;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.shader.CryRenderer;
 	import org.web.sdk.gpu.texture.VRayTexture;
@@ -9,12 +11,16 @@ package game.ui.core.actions
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.utils.HashMap;
 	
+	/*
+	 *通过不同的动作下载不同，下载不被删除,可以选择一个替代品 
+	 * */
 	//动态库，大部分相同的保存在同一库下,这里必须做一个标记，下载过的标记
 	public class MovieShader extends CryRenderer 
 	{
 		private static var INDEX:int = 0;
 		//
 		private var actionHash:HashMap;
+		private var _url:String = MapPath.ROOT_URL + "ui/001_player.swf";
 		
 		public function MovieShader(key:String) 
 		{
@@ -27,15 +33,6 @@ package game.ui.core.actions
 		}
 		
 		//动态渲染
-		public function load(url:String, action:IEscape):void
-		{
-			if (FrameWork.app.has(url)) {
-				render("render", action);
-			}else {
-				FrameWork.downLoad(url, LoadEvent.SWF, complete, action);
-			}
-		}
-		
 		private function complete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
@@ -44,25 +41,23 @@ package game.ui.core.actions
 			render("render", e.data as IEscape, e.url);
 		}
 		
-		override public function render(type:String, action:IEscape, data:Object = null):void 
+		override public function render(type:String, display:IEscape, data:Object = null):void 
 		{
-			switch(type)
-			{
-				case "load":
-					load(data as String, action);
-				break;
-				default:
-					var name:String = GpuMovie(action).currentName;
-					if (!hasAction(name)) {
-						trace(data)
-						addAction(name, VRayTexture.fromVector(name+".png", "%d", -1, data as String));
-						//VRayTexture.fromVector(name,getActionName(name))
-						//addAction(name, getActionVectors(name, data as String));
-					}
-					//直接渲染
-					action.updateRender(getCode(), getActions(name));
-				break;
+			if (!FrameWork.app.has(_url)) {
+				FrameWork.app.load(_url, complete, display);
+				return;
 			}
+			loadAction(data as String);
+			var name:String = GpuCustom(display).currentName;
+			if (!hasAction(name)) addAction(name, VRayTexture.fromVector(name + ".png", "%d", -1, _url));
+			//直接渲染
+			display.updateRender(getCode(), getActions(name));
+		}
+		
+		protected function loadAction(action:String):void
+		{
+			
+			
 		}
 		
 		//添加动作

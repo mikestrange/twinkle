@@ -2,7 +2,10 @@
 {
 	import flash.display.Loader;
 	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import flash.utils.getDefinitionByName;
+	import org.web.sdk.load.core.BelieveLoader;
+	import org.web.sdk.load.LoadEvent;
 	
 	/**
 	 * ...  swf->分为主界面swf和人物动画swf
@@ -10,7 +13,7 @@
 	 * 2，人物动画swfs（人物，怪物，npc，技能，） (动态加载，集合卸载)
 	 * ..具体实现，请扩展本类
 	 */
-	public class Resource 
+	public class Resource extends BelieveLoader 
 	{
 		private static var _ins:Resource;
 		
@@ -28,6 +31,15 @@
 		{
 			if (domain == null) domain = ApplicationDomain.currentDomain;
 			_appdomain = domain;
+		}
+		
+		//swf不允许close
+		public function load(url:String, complete:Function, data:Object = null, context:LoaderContext = null):void
+		{
+			if (!has(url)) {
+				loader.addWait(url, LoadEvent.SWF, context).addRespond(complete, data);
+				loader.start();
+			}
 		}
 		
 		//注册一个类型  不是Loader不会被注册

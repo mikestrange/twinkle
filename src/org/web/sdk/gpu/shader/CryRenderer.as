@@ -25,7 +25,7 @@ package org.web.sdk.gpu.shader
 		}
 		
 		//子类继承他就可以了
-		public function render(type:String, action:IEscape, data:Object = null):void
+		public function render(type:String, display:IEscape, data:Object = null):void
 		{
 			/* //test
 			 * if (_isvalid) action.updateRender(this.code, data);
