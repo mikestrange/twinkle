@@ -202,17 +202,17 @@ package org.web.sdk.load
 			if (url == null) throw Error('this url is null');
 			var filder:LoadFluider = getWaiter(url);
 			if (filder) {
-				Log.log(this).debug("#remove: url=" + url);
 				if (called == null || filder.removeRespond(called) == NONE) {
+					Log.log(this).debug("#remove: url=" + url);
 					wait_list.remove(url).destroy();
 				}
 			}
 			if (closeload) {
 				var index:int = indexOfLoad(url);
 				if (index != -1) {
-					Log.log(this).debug("#remove and close: url = " + url);
 					filder = load_list[index];
 					if (called == null || filder.removeRespond(called) == NONE) {
+						Log.log(this).debug("#remove and close: url = " + url);
 						load_list.splice(index, 1);
 						filder.destroy();
 						start();

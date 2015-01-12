@@ -159,6 +159,7 @@ package org.web.sdk.display
 		{
 			var father:IBaseSprite = getParent();
 			if (parent) parent.removeChild(this);
+			finality();
 			return father;
 		}
 		

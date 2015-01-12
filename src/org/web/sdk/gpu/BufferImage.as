@@ -43,6 +43,7 @@ package org.web.sdk.gpu
 			_over = true;
 			if (e.eventType == LoadEvent.ERROR) return;
 			asset.mark(this, e.target as BitmapData);
+			this.dispatchEvent(new Event(e.eventType));
 		}
 		
 		override public function dispose():void 
