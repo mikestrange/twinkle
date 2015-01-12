@@ -5,7 +5,7 @@ package org.web.sdk.gpu.texture
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.inters.IAcceptor;
 	/**
-	 * 单材质
+	 * 材质
 	 */
 	public class VRayTexture
 	{
