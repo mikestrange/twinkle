@@ -18,16 +18,19 @@ package org.web.sdk.utils.list
 			length = 0;
 		}
 		
-		public function getHeader():String
+		public function getHeader():ListNode
 		{
-			if (header) return header.stamp;
-			return null;
+			return header;
 		}
 		
-		public function getLaster():String
+		public function getLaster():ListNode
 		{
-			if (laster) return laster.stamp;
-			return null;
+			return laster;
+		}
+		
+		public function getNode(name:String):ListNode
+		{
+			return hash[name];
 		}
 		
 		//添加到最后
@@ -64,11 +67,6 @@ package org.web.sdk.utils.list
 			}
 			hash[name] = node;
 			length++;
-		}
-		
-		public function getNode(name:String):ListNode
-		{
-			return hash[name];
 		}
 		
 		public function getTarget(name:String):*
@@ -258,7 +256,7 @@ package org.web.sdk.utils.list
 		public function toString():String
 		{
 			if (empty()) return "[empty]";
-			var chat:String = "leng:" + length + "\n";
+			var chat:String = "-----start-----\nleng:" + length + "\n";
 			var item:ListNode = header;
 			var index:int = 0;
 			while (item != null) {
@@ -266,6 +264,7 @@ package org.web.sdk.utils.list
 				item = item.next;
 				index++
 			}
+			chat += "------end-----";
 			return chat;
 		}
 		//end

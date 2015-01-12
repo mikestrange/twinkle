@@ -5,7 +5,7 @@ package org.web.sdk.load.inters
 	{
 		function start():void;
 		function stop(share:Boolean = false):void;
-		function remove(url:String):void;
+		function remove(url:String, remove_load:Boolean = true):void;
 		function free():void;
 		//ends
 	}

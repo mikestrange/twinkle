@@ -12,6 +12,7 @@ package org.web.sdk.load
 	import org.web.sdk.load.inters.ILoader;
 	import org.web.sdk.load.inters.ILoadRespond;
 	import org.web.sdk.log.Log;
+	import org.web.sdk.utils.HashMap;
 	
 	use namespace beyond_challenge;
 	//下载流体
@@ -21,15 +22,13 @@ package org.web.sdk.load
 		beyond_challenge var _url:String;
 		beyond_challenge var _type:int;
 		beyond_challenge var _context:*;
-		//下载链
-		beyond_challenge var _nextPath:String;
-		beyond_challenge var _prevPath:String;
 		//只有在下载的时候进行短暂的交易
 		beyond_challenge var _loader:ILoader;			//下载器
 		//回执列表
 		beyond_challenge var _vector:Vector.<Observer>
-		beyond_challenge var _controller:ILoadController
+		beyond_challenge var _controller:ILoadController;
 		private var _called:Function;
+		
 		
 		public function LoadFluider(controller:ILoadController, url:String, type:int = 0, context:*= undefined) 
 		{
@@ -83,12 +82,8 @@ package org.web.sdk.load
 		
 		public function destroy():void
 		{
-			_nextPath = null;
-			_prevPath = null;
 			close();
-			while (_vector.length) {
-				_vector.shift().destroy(); 
-			}
+			while (_vector.length) _vector.shift().destroy(); 
 		}
 		
 		//调用所有监听,open,opress,error,complete
@@ -101,12 +96,7 @@ package org.web.sdk.load
 				_controller.start();
 				Log.log(this).debug('#加载完成->url:' + _url + ',context:' + _context + ",type:" + eventType);
 			}
-			var index:int = 0;
-			var list:Vector.<Observer> = _vector.slice(index, _vector.length);
-			for (;index < list.length; index++) {
-				list[index].handler(new LoadEvent(target, _url, eventType, list[index].getBody(), _type));
-			}
-			list = null;
+			eachRespond(target, eventType);
 			if (isEnd) destroy();
 		}
 		
@@ -118,50 +108,20 @@ package org.web.sdk.load
 				_loader.close();
 			}catch (e:Error) {
 				Log.log(this).debug('#关闭下载出错:下载已经完成或者下载未开始', _url);
+			}finally {
+				eachRespond(null, LoadEvent.CLOSED);
 			}
 			_loader = null;
 		}
 		
-		//双向设置
-		public function setNext(value:LoadFluider):void
+		private function eachRespond(target:Object, eventType:String):void
 		{
-			if (value == null) {
-				_nextPath = null;
-			}else {
-				value._prevPath = _url;
-				_nextPath = value.url;
+			var index:int = 0;
+			var list:Vector.<Observer> = _vector.slice(index, _vector.length);
+			for (;index < list.length; index++) {
+				list[index].handler(new LoadEvent(target, _url, eventType, list[index].getBody(), _type));
 			}
-		}
-		
-		//双向设置
-		public function setPrev(value:LoadFluider):void
-		{
-			if (value == null) {
-				_prevPath = null;
-			}else {
-				_prevPath = value.url;
-				value._nextPath = _url;
-			}
-		}
-		
-		public function get nextPath():String
-		{
-			return _nextPath;
-		}
-		
-		public function get prevPath():String
-		{
-			return _prevPath;
-		}
-		
-		public function isNext():Boolean
-		{
-			return _nextPath != null;
-		}
-		
-		public function isPrev():Boolean
-		{
-			return _prevPath != null;
+			list = null;
 		}
 		
 		public function get size():int

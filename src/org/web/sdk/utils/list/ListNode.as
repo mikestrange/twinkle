@@ -13,21 +13,19 @@ package org.web.sdk.utils.list
 			target = data;
 		}
 		
-		public function get name():String
+		public function getName():String
 		{
 			return stamp;
 		}
 		
-		public function getNext():String
+		public function getNext():ListNode
 		{
-			if (next) return next.stamp;
-			return null;
+			return next;
 		}
 		
-		public function getFather():String
+		public function getFather():ListNode
 		{
-			if (father) return father.stamp;
-			return null;
+			return father;
 		}
 		
 		public function hasNext():Boolean

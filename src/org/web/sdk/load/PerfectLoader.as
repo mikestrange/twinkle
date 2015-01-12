@@ -12,7 +12,7 @@ package org.web.sdk.load
 	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
 	import org.web.apk.beyond_challenge;
-	
+	import org.web.sdk.utils.list.HashList;
 	/*
 	 * 下载管理,完美的下载管理器
 	 * */
@@ -20,18 +20,12 @@ package org.web.sdk.load
 	
 	public class PerfectLoader implements ILoadController 
 	{
-		//下载列表
-		beyond_challenge var hashLoad:HashMap = new HashMap;
+		//下载列表 下载列表比较少，所以用数组，查询也很快
+		beyond_challenge var load_list:Vector.<LoadFluider> = new Vector.<LoadFluider>;
 		//等待列表
-		beyond_challenge var hashWait:HashMap = new HashMap;
-		//等待的第一个下载地址
-		beyond_challenge var firstUrl:String = null;
-		//列表的最后一个下载
-		beyond_challenge var lastUrl:String = null;
+		beyond_challenge var wait_list:HashList = new HashList;
 		//不是下载
 		public static const NONE:int = 0;
-		public static const HAVE:int = 1;
-		public static const LOAD:int = 2;
 		//最大下载  公开
 		public var LOAD_MAX:int = 4;
 		//下载蓝图列表,默认，可以更改
@@ -68,56 +62,32 @@ package org.web.sdk.load
 		public function addWait(url:String, type:int = 0, context:*= undefined, vital:Boolean = false):ILoadRespond
 		{
 			//如果在下载中，直接跳出来
-			if (hashLoad.isKey(url)) return hashLoad.getValue(url);
+			var index:int = indexOfLoad(url);
+			if (index != -1) return load_list[index];
 			//在等待列表
-			if (hashWait.isKey(url)) return hashWait.getValue(url);
+			if (wait_list.hasNode(url)) return getWaiter(url);
 			//添加到等待列表
 			var filder:LoadFluider = new LoadFluider(this, url, type, context);
-			if (hashWait.isEmpty()) {
-				lastUrl = firstUrl = url;
+			if (vital) {
+				wait_list.unshift(url, filder);
 			}else {
-				//vital true 放到最前面 false 放到最后
-				if (vital) {
-					filder.setNext(getWaiter(firstUrl));
-					firstUrl = url;
-				}else {
-					filder.setPrev(getWaiter(lastUrl));
-					lastUrl = url;
-				}
+				wait_list.push(url, filder);
 			}
-			//添加
-			hashWait.put(url, filder);
 			return filder;
 		}
 		
 		//取等待下载
 		beyond_challenge function getWaiter(url:String):LoadFluider
 		{
-			return hashWait.getValue(url) as LoadFluider;
+			return wait_list.getTarget(url) as LoadFluider;
 		}
 		
-		//取下载中管理
-		beyond_challenge function getWorker(url:String):LoadFluider
+		internal function removeLoad(url:String):void
 		{
-			return hashLoad.getValue(url) as LoadFluider;
-		}
-		
-		/*
-		 * 是否为最后等待下载
-		 * */
-		public function isLast(url:String):Boolean 
-		{
-			if (url == null) throw Error('this url is null');
-			return url == lastUrl;
-		}
-		
-		/*
-		 * 是否为最开始等待下载
-		 * */
-		public function isBegin(url:String):Boolean
-		{
-			if (url == null) throw Error('this url is null');
-			return url == firstUrl;
+			var index:int = indexOfLoad(url);
+			if (index != -1) {
+				load_list.splice(index, 1);
+			}
 		}
 		
 		/*
@@ -125,7 +95,7 @@ package org.web.sdk.load
 		 * */
 		public function isEmpty():Boolean
 		{
-			return hashWait.size == NONE;
+			return wait_list.empty();
 		}
 		
 		/*
@@ -133,7 +103,7 @@ package org.web.sdk.load
 		 * */
 		public function isLoad():Boolean
 		{
-			return hashLoad.size != NONE;
+			return load_list.length > NONE;
 		}
 		
 		/*
@@ -141,15 +111,15 @@ package org.web.sdk.load
 		 * */
 		public function isWait(url:String):Boolean
 		{
-			return hashWait.isKey(url);
+			return wait_list.hasNode(url);
 		}
 		 
 		/*
 		 * 当前下载满了
 		 * */
-		public function isLoadFull():Boolean 
+		public function isFull():Boolean 
 		{
-			return hashLoad.size >= LOAD_MAX;
+			return load_list.length >= LOAD_MAX;
 		}
 		
 		/*
@@ -157,7 +127,7 @@ package org.web.sdk.load
 		 * */
 		public function loadLength():int
 		{
-			return hashLoad.size;
+			return load_list.length;
 		}
 		
 		/*
@@ -165,7 +135,7 @@ package org.web.sdk.load
 		 * */
 		public function waitLength():int
 		{
-			return hashWait.size;
+			return wait_list.size();
 		}
 		
 		/*
@@ -173,7 +143,13 @@ package org.web.sdk.load
 		 * */
 		public function isInLoad(url:String):Boolean
 		{
-			return hashLoad.isKey(url);
+			var index:int = load_list.indexOf(url);
+			return index != -1;
+		}
+		
+		public function indexOfLoad(url:String):int
+		{
+			return load_list.indexOf(url);
 		}
 		
 		//
@@ -187,92 +163,56 @@ package org.web.sdk.load
 		 * */
 		public function start():void
 		{
-			if (isEmpty()) return;
-			if (isLoadFull()) return;
-			var filder:LoadFluider = getNext();
+			if (wait_list.empty()) return;
+			if (isFull()) return;
+			var filder:LoadFluider = wait_list.shift() as LoadFluider;
 			if (filder.size == NONE) {
 				filder.destroy();
 			}else {
-				addToLoad(filder);
+				//添加到下载列表中去 并且开始下载
+				load_list.push(filder);
 				filder.load(getLoader(filder.type));
 			}
 			//多个开放
 			start();
 		}
 		
-		//添加到下载列表中去 放心添加，不会重复
-		beyond_challenge function addToLoad(filder:LoadFluider):void
-		{
-			hashLoad.put(filder.url, filder);
-		}
-		
 		//直接移除
-		public function remove(url:String):void
+		public function remove(url:String, remove_load:Boolean = true):void
 		{
-			var filder:LoadFluider = recompose(url);
+			var filder:LoadFluider = wait_list.remove(url);
 			if (filder) filder.destroy();
-			filder = hashLoad.remove(url);
-			if (filder) filder.destroy();
-		}
-		
-		//删除下载中列表
-		beyond_challenge function removeLoad(url:String):LoadFluider
-		{
-			return hashLoad.remove(url) as LoadFluider;
-		}
-		
-		//取下一个等待下载
-		beyond_challenge function getNext():LoadFluider
-		{
-			return recompose(firstUrl) as LoadFluider;
-		}
-		
-		//删除其中一个下载  然后重组
-		beyond_challenge function recompose(url:String):LoadFluider
-		{
-			var filder:LoadFluider = hashWait.remove(url) as LoadFluider;
-			if (filder) {
-				//第一个也是最后一个
-				if (isEmpty()) {
-					firstUrl = null;
-					lastUrl = null;
-				}else if (filder.isNext() && filder.isPrev()) {
-					//设置前后两个兑换
-					getWaiter(filder.prevPath).setNext(getWaiter(filder.nextPath));
-				}else if (isBegin(url)) {
-					firstUrl = filder.nextPath;
-					//设置下一个为第一个
-					getWaiter(filder.nextPath).setPrev(null);
-				}else if (isLast(url)) {
-					//这个删除的是最后一个，而且有前面
-					lastUrl = filder.prevPath;
-					//设置前面一个为最后一个
-					getWaiter(filder.prevPath).setNext(null);
+			if (remove_load) {
+				var index:int = indexOfLoad(url);
+				if (index != -1) {
+					filder = load_list[index];
+					load_list.splice(index, 1);
+					filder.destroy();
 				}
-				filder.setPrev(null);
-				filder.setNext(null);
 			}
-			return filder;
 		}
 		
 		/*
 		 * 删除回调,删除关闭
 		 * */
-		public function removeRespond(url:String, called:Function = null):void
+		public function removeRespond(url:String, called:Function = null, closeload:Boolean = true):void
 		{
 			if (url == null) throw Error('this url is null');
-			var filder:LoadFluider = hashWait.getValue(url);
+			var filder:LoadFluider = getWaiter(url);
 			if (filder) {
 				if (called == null || filder.removeRespond(called) == NONE) {
-					recompose(url).destroy();
+					wait_list.remove(url).destroy();
 				}
 			}
-			filder = hashLoad.getValue(url);
-			if (filder) {
-				if (called == null || filder.removeRespond(called) == NONE) {
-					hashLoad.remove(url);
-					filder.destroy();
-					start();
+			if (closeload) {
+				var index:int = indexOfLoad(url);
+				if (index != -1){
+					filder = load_list[index];
+					if (called == null || filder.removeRespond(called) == NONE) {
+						load_list.splice(index, 1);
+						filder.destroy();
+						start();
+					}
 				}
 			}
 		}
@@ -282,47 +222,22 @@ package org.web.sdk.load
 		 * */
 		public function stop(share:Boolean = false):void
 		{
-			if (!isLoad()) return;
 			if (share) {
-				hashLoad.eachKey(stopLoader);
+				while (load_list.length) stopShare(load_list.shift());
 			}else {
-				clearLoad();
+				while (load_list.length) load_list.shift().destroy();
 			}
-			Log.log(this).debug('##stop loading ->share=', share);
+			Log.log(this).debug('##stop loading ->share = ' + share);
 		}
 		
 		
-		beyond_challenge function stopLoader(url:String):void
+		beyond_challenge function stopShare(filder:LoadFluider):void
 		{
-			var filder:LoadFluider = getWorker(url);
 			//没有下载就不添加了
 			if (filder.isLoad()) {
 				filder.close();
-				hashLoad.remove(url);
-				addWaitByRespond(filder);
+				wait_list.push(filder.url, filder);	//添加到等待列表
 			}
-		}
-		
-		//直接添加到下载列表 添加到的是最开始
-		beyond_challenge function addWaitByRespond(filder:LoadFluider):void
-		{
-			if (hashLoad.isKey(filder.url)) throw Error("下载列表中..")
-			if (hashWait.isKey(filder.url)) throw Error("等待列表中..")
-			if(hashWait.isEmpty()) {
-				lastUrl = firstUrl = filder.url;
-			}else {
-				filder.setNext(getWaiter(firstUrl));
-				firstUrl = filder.url;
-			}
-			hashWait.put(filder.url, filder);
-		}
-		
-		/*
-		 * 清除所有下载  ,不公开
-		 * */
-		private function clearLoad():void
-		{
-			hashLoad.eachKey(remove);
 		}
 		
 		/*
@@ -330,8 +245,9 @@ package org.web.sdk.load
 		 * */
 		public function clear():void
 		{
-			if (hashWait.isEmpty()) return;
-			hashWait.eachKey(remove);
+			while (!wait_list.empty()) {
+				LoadFluider(wait_list.pop()).destroy();
+			}
 			Log.log(this).debug('##clear wait loads');
 		}
 		
@@ -346,7 +262,11 @@ package org.web.sdk.load
 		
 		public function toString():String
 		{
-			return "===============\nwait list->\n"+hashWait + "\n load list->\n" + hashLoad+"\n===================";
+			var chat:String = "=============== wait list->" + wait_list + "\n";
+			chat += "----->load list->leng = " + load_list.length+"\n";
+			for (var i:int = 0; i < load_list.length; i++) chat += "index:" + i + ", url:" + load_list[i].url + "\n";
+			chat+="==================end==============="
+			return chat;
 		}
 		
 		//利用一个全局

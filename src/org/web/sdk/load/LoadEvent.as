@@ -18,6 +18,7 @@ package org.web.sdk.load
 		public static const ERROR:String = 'error';
 		public static const OPEN:String = 'open';
 		public static const OPRESS:String = 'opress';
+		public static const CLOSED:String = 'closed';
 		//_target传过来的数据
 		private var _target:Object;
 		private var _url:String;
