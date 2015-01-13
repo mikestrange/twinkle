@@ -64,8 +64,9 @@ package game.mvc
 		override protected function initialization():void 
 		{
 			super.initialization();
-			//
+			//服务器回执注册
 			GameManager.gets().register();
+			//添加本地命令
 			addInvoker();
 			//添加模块
 			addControllers();
@@ -73,8 +74,7 @@ package game.mvc
 		
 		private function addInvoker():void
 		{
-			var _invoker:Invoker = new Invoker;
-			_invoker.register(getMessage());
+			var _invoker:Invoker = new Invoker(getMessage());
 			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicRequest);
 			getMessage().addInvoker("world", _invoker);
 		}

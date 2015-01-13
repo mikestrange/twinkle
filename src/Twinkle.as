@@ -65,7 +65,7 @@ package
 			WorldKidnap.gets().launch(null);
 			//
 			PerfectLoader.gets().LOAD_MAX = 5;
-			FpsMonitor.gets().show();
+			
 			//StartLayer.gets().show();
 			//
 			var top:KitSprite = new KitSprite;
@@ -81,20 +81,23 @@ package
 			var i:int = 0
 			var dx:Number;
 			var dy:Number;
-			 //此效率比下面高2倍fps  8K=25fps 4K - 34
-			 
+			//此效率比下面高2倍fps  8K=25fps 4K - 34
+			/*
 			for (i = 0; i < 4000; i++) {
 				var kimi:KitSprite = new KitSprite;
 				var move:GpuCustom = new GpuCustom("timi", 4, ActionType.RUN);
 				move.play();
 				kimi.addChild(move)
 				ti.addDisplay(kimi, Math.random() * 450, Math.random() * 400);
-			} 
+			}
+			*/
+			Clock.step(500, states);
 		}
 		
-		private function complete(e:LoadEvent):void
+		private function states():void
 		{
-			trace(e.eventType)
+			FpsMonitor.gets().show();
+			
 		}
 		
 		//ends

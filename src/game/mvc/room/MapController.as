@@ -23,8 +23,7 @@ package game.mvc.room
 		{
 			super.launch(notice);
 			//注册命令  一个命令器只关心自己注册的事务
-			var _invoker:Invoker = new Invoker;
-			_invoker.register(notice);
+			var _invoker:Invoker = new Invoker(notice);
 			_invoker.addOnlyCommand(NoticeDefined.ENTER_MAP, EnterMapReqeust);
 			_invoker.addOnlyCommand(NoticeDefined.QUIT_MAP, QuitMapRequest);
 			_invoker.addOnlyCommand(NoticeDefined.USER_MOVE, MoveRequest);

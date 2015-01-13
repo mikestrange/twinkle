@@ -48,12 +48,12 @@ package org.web.sdk.net.socket.handler
 		public function invoke(notice:String, result:ISocketHandler = null):void
 		{
 			if (null == result) {
-				GlobalMessage.sendMessage(notice, null, this, Evented.SERVER_CALL_CLIENT);
+				GlobalMessage.sendMessage(notice, null, this, Evented.ERROR_TYPE);
 			}else {
 				filed = result.action(this);
 				//这里保存命令发送的所有数据 我们先不这么做
 				//this.hashMessage[notice] = result.getMessage();				
-				GlobalMessage.sendMessage(notice, result.getMessage(), this, Evented.SERVER_CALL_CLIENT);
+				GlobalMessage.sendMessage(notice, result.getMessage(), this, Evented.SERVER_MESSAGE);
 			}
 		}
 		//

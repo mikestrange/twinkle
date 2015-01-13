@@ -27,9 +27,10 @@ package org.web.sdk.system.com
 		private var commandHash:HashMap;
 		private var message:IMessage;
 		
-		public function Invoker() 
+		public function Invoker(msg:IMessage = null) 
 		{
 			commandHash = new HashMap;
+			if(msg) register(msg);
 		}
 		
 		/*
