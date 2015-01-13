@@ -15,6 +15,7 @@ package game.ui.role
 	import org.alg.astar.Grid;
 	import org.alg.astar.Node;
 	import org.alg.utils.FormatUtils;
+	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.KitSprite;
 	import org.web.sdk.display.TextEditor;
 	import org.web.sdk.gpu.VRayMap;
@@ -27,7 +28,7 @@ package game.ui.role
 	/*
 	 * role
 	 * */
-	public class PlayerSprite extends KitSprite implements IRole, IStepper
+	public class PlayerSprite extends KitSprite implements IRole
 	{
 		private var _action:GpuCustom;
 		//
@@ -42,6 +43,7 @@ package game.ui.role
 		private var endpo:Point = new Point;
 		private var startpo:Point = new Point;
 		private var iswait:Boolean = true;
+		private var _step:Steper;
 		
 		public function PlayerSprite(grid:Grid, data:PlayerObj) 
 		{
@@ -68,7 +70,8 @@ package game.ui.role
 			drawSingularity();
 			stand();
 			//
-			this.run();
+			_step = new Steper(_action);
+			_step.run();
 		}
 		
 		public function drawSingularity(high:int = 0):void
@@ -87,6 +90,10 @@ package game.ui.role
 		
 		override public function render():void 
 		{
+			_action.moveTo( -_action.width >> 1, -_action.height);
+			_texture.x = -_texture.width >> 1;
+			_texture.y = -_action.height - _texture.height;
+			
 			if (path) {
 				var node:Node = path[pathIndex];
 				if (node == null) {
@@ -174,26 +181,6 @@ package game.ui.role
 		public function hit(value:int = -1):void
 		{
 			_action.setActionAndPoint(ActionType.HIT, value);
-		}
-		
-		
-		/* INTERFACE org.web.sdk.display.engine.IStepper */
-		public function run():void 
-		{
-			SunEngine.run(this);
-		}
-		
-		public function step(event:Object):void 
-		{
-			_action.render();
-			_action.moveTo( -_action.width >> 1, -_action.height);
-			_texture.x = -_texture.width >> 1;
-			_texture.y = -_action.height - _texture.height;
-		}
-		
-		public function die():void 
-		{
-			SunEngine.cut(this);
 		}
 		
 		//ends

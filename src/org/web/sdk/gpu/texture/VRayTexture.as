@@ -39,29 +39,29 @@ package org.web.sdk.gpu.texture
 			return new VRayTexture(bit);
 		}
 		
-		public static function fromAppdomain(className:String, app:ApplicationDomain = null):VRayTexture
+		//可以是displayer，movieclip,bitmapdata
+		public static function fromClass(className:String, app:ApplicationDomain = null):VRayTexture
 		{
 			if (app && app.hasDefinition(className)) {
-				var classs:Class = app.getDefinition(className) as Class;
-				return new VRayTexture(new classs);
+				var Objects:Class = app.getDefinition(className) as Class;
+				var item:* = new Objects;
+				return new VRayTexture(item as BitmapData);
 			}
 			return null;
 		}
 		
+		//根据一个泛型类，注入替换字符
 		public static function fromVector(className:String, form:String, last:int = -1, url:String = null):Vector.<VRayTexture>
 		{
 			var vector:Vector.<VRayTexture> = new Vector.<VRayTexture>;
 			var index:int = 1;	//0开始
 			var name:String;
-			var bit:BitmapData;
+			var bitdata:BitmapData;
 			while (true) {
 				name = className.replace(form, index);
-				trace(name,url)
-				bit = FrameWork.getAsset(name, url);
-				trace(bit)
-				// fromAppdomain(className.replace(form, index), FrameWork.app.getAppDomain(url));
-				if (null == bit) break;
-				vector.push(fromBitmapdata(bit));
+				bitdata = FrameWork.getAsset(name, url);
+				if (null == bitdata) break;
+				vector.push(fromBitmapdata(bitdata));
 				if (++index > last && last != -1) break;
 			}
 			return vector;

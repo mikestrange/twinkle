@@ -1,21 +1,29 @@
 package org.web.sdk.gpu 
 {
+	import flash.events.Event;
 	import flash.utils.getTimer;
 	import org.web.sdk.display.engine.IStepper;
+	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.engine.SunEngine;
+	import org.web.sdk.display.Multiple;
 	import org.web.sdk.gpu.texture.VRayTexture;
-	
+	/*
+	 * 就算包含一个sprite 效率也是movieclip的2倍,如果用3D渲染，那么效率肯定更高
+	 * */
 	public class GpuMovie extends GpuSprite
 	{
 		private var _vector:Vector.<VRayTexture>;
-		private var _float_time:Number = 0;
 		private var _isstop:Boolean;
 		private var _index:int = 0;		
 		private var _fps:int;
+		private var _currfps:int = 0;
+		//添加一个粒子控制器
+		private var _step:Steper;	
 		
-		public function GpuMovie(render_time:Number = NaN)
+		public function GpuMovie(render_time:int = 0)
 		{
-			_fps = isNaN(render_time)? GpuSprite.RENDER_FPS : render_time;
+			_fps = render_time == 0? GpuSprite.RENDER_FPS : Math.abs(render_time);
+			_step = new Steper(this);
 		}
 		
 		public function setFrames(vector:Vector.<VRayTexture>):void
@@ -23,16 +31,16 @@ package org.web.sdk.gpu
 			_vector = vector;
 		}
 		
-		//恢复
 		public function restore():void
 		{
-			this._float_time = getTimer();
+			_currfps = 0;
 		}
 		
 		public function stop(index:int = 0):void
 		{
-			position = index;
 			_isstop = true;
+			position = index;
+			_step.die();
 		}
 		
 		public function play(index:int = 0):void
@@ -40,6 +48,7 @@ package org.web.sdk.gpu
 			_isstop = false;
 			restore();
 			position = index;
+			_step.run();
 		}
 		
 		public function isStop():Boolean
@@ -51,8 +60,8 @@ package org.web.sdk.gpu
 		override public function render():void 
 		{
 			if (_isstop) return;
-			if (getTimer() - _float_time > _fps) {
-				_float_time = getTimer();
+			if (++_currfps > _fps) {
+				_currfps = 0;
 				position++;
 			}
 		}

@@ -13,7 +13,9 @@ package
 	import game.datas.PlayerObj;
 	import game.mvc.WorldKidnap;
 	import game.consts.CmdDefined;
+	import game.ui.core.GpuCustom;
 	import game.ui.map.WorldMap;
+	import game.ui.role.ActionType;
 	import game.ui.role.PlayerSprite;
 	import org.alg.map.*;
 	import org.web.sdk.display.engine.*;
@@ -66,16 +68,28 @@ package
 			FpsMonitor.gets().show();
 			//StartLayer.gets().show();
 			//
-			var player:PlayerObj;
+			var top:KitSprite = new KitSprite;
+			WorldKidnap.addToLayer(top);
+			top.graphics.clear();
+			top.graphics.beginFill(0xffffff,.5);
+			top.graphics.drawRect(0, 0, 1000, 1000);
+			top.graphics.endFill();
+			//
+			var ti:KitSprite = new KitSprite;
+			WorldKidnap.addToLayer(ti, LayerType.MAP);
+			//
+			var i:int = 0
 			var dx:Number;
 			var dy:Number;
-			for (var i:int = 0; i < 500; i++) {
-				player = new PlayerObj;
-				dx = Math.random() * 450 
-				dy = Math.random() * 400;
-				player.update(i, "测试" + i, dx, dy);
-				addDisplay(new PlayerSprite(null,player),dx,dy)
-			}
+			 //此效率比下面高2倍fps  8K=25fps 4K - 34
+			 
+			for (i = 0; i < 4000; i++) {
+				var kimi:KitSprite = new KitSprite;
+				var move:GpuCustom = new GpuCustom("timi", 4, ActionType.RUN);
+				move.play();
+				kimi.addChild(move)
+				ti.addDisplay(kimi, Math.random() * 450, Math.random() * 400);
+			} 
 		}
 		
 		private function complete(e:LoadEvent):void

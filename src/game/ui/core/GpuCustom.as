@@ -1,9 +1,16 @@
 package game.ui.core 
 {
 	import game.ui.core.MovieShader;
+	import org.web.sdk.display.engine.IStepper;
+	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.gpu.GpuMovie;
 	import org.web.sdk.gpu.shader.ShaderManager;
-	
+	/*
+	 * 定制的一个动画，8个方向,各种动作
+	 * 
+	 * **每一个type都是不同的url，也许一个type下面有几个url，但是他们必须在同一个资源库下
+	 * **只要一个类型存在，我们可以随时调出来，不用每次new,一般人物动作不会超过 10几个，而且不可能同时都存在 10*1*8*6KB
+	 * */
 	public class GpuCustom extends GpuMovie
 	{	
 		private var _point:int;
@@ -77,6 +84,7 @@ package game.ui.core
 		{
 			return _action;
 		}
+		
 		//ends
 	}
 

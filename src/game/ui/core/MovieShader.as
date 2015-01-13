@@ -20,7 +20,6 @@ package game.ui.core
 		private static var INDEX:int = 0;
 		//
 		private var actionHash:HashMap;
-		private var _url:String = MapPath.ROOT_URL + "ui/001_player.swf";
 		
 		public function MovieShader(key:String) 
 		{
@@ -32,32 +31,32 @@ package game.ui.core
 			if (value) actionHash = new HashMap;
 		}
 		
-		//动态渲染
+		override public function render(type:String, display:IEscape, data:Object = null):void 
+		{
+			var url:String = loadAction(data as String);
+			if (!FrameWork.app.has(url)) {
+				FrameWork.app.load(url, complete, display);
+				return;	//这里可以给他默认渲染
+			}
+			var name:String = GpuCustom(display).currentName;
+			if (!hasAction(name)) addAction(name, VRayTexture.fromVector(name + ".png", "%d", -1, url));
+			//直接渲染
+			display.updateRender(getCode(), getActions(name));
+		}
+		
+		//根据不同的动作和type取url
+		protected function loadAction(action:String):String
+		{
+			return MapPath.ROOT_URL + "ui/001_player.swf";
+		}
+		
+		//加载完成后继续渲染
 		private function complete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			FrameWork.app.share(e.url, e.target as Loader);
 			if (!isValid()) return;
 			render("render", e.data as IEscape, e.url);
-		}
-		
-		override public function render(type:String, display:IEscape, data:Object = null):void 
-		{
-			if (!FrameWork.app.has(_url)) {
-				FrameWork.app.load(_url, complete, display);
-				return;
-			}
-			loadAction(data as String);
-			var name:String = GpuCustom(display).currentName;
-			if (!hasAction(name)) addAction(name, VRayTexture.fromVector(name + ".png", "%d", -1, _url));
-			//直接渲染
-			display.updateRender(getCode(), getActions(name));
-		}
-		
-		protected function loadAction(action:String):void
-		{
-			
-			
 		}
 		
 		//添加动作
@@ -78,6 +77,7 @@ package game.ui.core
 			return actionHash.isKey(action);
 		}
 		
+		//释放资源
 		override public function free():void 
 		{
 			if (isValid()) {
@@ -95,11 +95,6 @@ package game.ui.core
 				texture = vector.shift();
 				if(texture) texture.dispose();
 			}
-		}
-		
-		public static function getActionName(action:String, point:int = 0):String
-		{
-			return action.replace("%s", point);
 		}
 		//ends
 	}

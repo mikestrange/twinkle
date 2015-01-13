@@ -2,7 +2,7 @@ package org.web.sdk.display.engine
 {
 	import org.web.sdk.inters.IDisplayObject;
 	/**
-	 *
+	 *渲染器
 	 */
 	public class Steper implements IStepper 
 	{

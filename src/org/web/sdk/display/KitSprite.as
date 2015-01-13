@@ -33,9 +33,10 @@ package org.web.sdk.display
 			return dis;
 		}
 		
-		public function addDisplay(dis:IDisplayObject, mx:Number = 0, my:Number = 0):void 
+		public function addDisplay(dis:IDisplayObject, mx:Number = NaN, my:Number = NaN):void 
 		{
-			dis.moveTo(mx, my);
+			if (!isNaN(mx)) dis.x = mx;
+			if (!isNaN(my)) dis.y = my;
 			this.addChild(dis as DisplayObject);
 		}
 		
