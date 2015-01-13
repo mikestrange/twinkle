@@ -8,6 +8,7 @@ package game.ui.role
 	import game.datas.PlayerObj;
 	import game.datas.SelfData;
 	import game.datas.vo.ActionVo;
+	import game.ui.core.ActionType;
 	import game.ui.core.GpuCustom;
 	import game.ui.inters.IRole;
 	import game.ui.map.WorldMap;

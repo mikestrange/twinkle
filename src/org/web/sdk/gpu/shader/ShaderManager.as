@@ -47,17 +47,17 @@ package org.web.sdk.gpu.shader
 			var code:String = value.getCode();
 			if (!hash.isKey(code)) {
 				hash.put(code, value);
-				Log.log(this).debug("成功建立资源库:", value, ",code=", code);
+				Log.log(this).debug("成功建立资源库:" + value+" code = " + code);
 				return true;
 			}
-			Log.log(this).debug("成功建立库失败:", value, ",code=", code);
+			Log.log(this).debug("成功建立库失败:" + value+" code = " + code);
 			return false;
 		}
 		
 		internal function remove(value:CryRenderer):void
 		{
 			hash.remove(value.getCode());
-			Log.log(this).debug("成功删除资源库:", value, ",code=", value.getCode());
+			Log.log(this).debug("成功删除资源库:" + value+" code = " + value.getCode());
 		}
 		
 		//根据编码取得

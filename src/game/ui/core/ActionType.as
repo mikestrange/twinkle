@@ -1,4 +1,4 @@
-package game.ui.role 
+package game.ui.core 
 {
 	
 	public class ActionType 

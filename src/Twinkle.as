@@ -15,7 +15,7 @@ package
 	import game.consts.CmdDefined;
 	import game.ui.core.GpuCustom;
 	import game.ui.map.WorldMap;
-	import game.ui.role.ActionType;
+	import game.ui.core.ActionType;
 	import game.ui.role.PlayerSprite;
 	import org.alg.map.*;
 	import org.web.sdk.display.engine.*;

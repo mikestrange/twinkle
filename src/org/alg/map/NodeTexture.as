@@ -48,7 +48,6 @@ package org.alg.map
 			if (_isLoad) return;
 			_isLoad = true;
 			PerfectLoader.gets().addWait(_url, LoadEvent.IMG, null).addRespond(complete);
-			trace(PerfectLoader.gets().waitLength())
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -62,9 +61,7 @@ package org.alg.map
 		
 		public function show(target:DisplayObjectContainer):void 
 		{
-			if (parent == null) {
-				target.addChild(this);
-			}
+			if (parent == null) target.addChild(this);
 		}
 		
 		public function hide():void

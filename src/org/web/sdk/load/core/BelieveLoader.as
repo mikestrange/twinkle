@@ -5,7 +5,7 @@ package org.web.sdk.load.core
 	
 	public class BelieveLoader
 	{
-		private static var _loader:PerfectLoader = PerfectLoader.gets();
+		private static const _loader:PerfectLoader = PerfectLoader.gets();
 		
 		protected function complete(e:LoadEvent):void
 		{

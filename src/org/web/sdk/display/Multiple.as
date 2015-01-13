@@ -4,9 +4,7 @@ package org.web.sdk.display
 	import flash.events.Event;
 	import flash.geom.*;
 	import flash.net.LocalConnection;
-	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.*;
 	import org.web.sdk.log.Log;
 	
 	public class Multiple 

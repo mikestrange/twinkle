@@ -7,9 +7,9 @@ package org.web.sdk.display
 	
 	public class Layer extends KitSprite implements ILayer 
 	{
-		public function Layer(vsname:String, value:Boolean = false) 
+		public function Layer(layerName:String, value:Boolean = false) 
 		{
-			this.name = vsname;
+			this.name = layerName;
 			this.mouseEnabled = value;
 		}
 		

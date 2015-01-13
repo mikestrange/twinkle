@@ -41,7 +41,7 @@ package org.alg.utils
 				case LEFT.unThis(point):		return LEFT.type;
 				case LEFT_UP.inThis(point):		return LEFT_UP.type;
 			}
-			return 0;
+			return NONE;
 		}
 		
 		//ends
