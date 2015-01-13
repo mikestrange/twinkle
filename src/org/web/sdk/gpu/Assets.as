@@ -1,6 +1,5 @@
-package org.web.sdk.gpu 
+package org.web.sdk.gpu
 {
-	import com.greensock.events.LoaderEvent;
 	import flash.display.BitmapData;
 	import org.web.sdk.inters.IBuffer;
 	import org.web.sdk.load.core.BelieveLoader;

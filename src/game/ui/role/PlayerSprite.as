@@ -44,7 +44,6 @@ package game.ui.role
 		private var endpo:Point = new Point;
 		private var startpo:Point = new Point;
 		private var iswait:Boolean = true;
-		private var _step:Steper;
 		
 		public function PlayerSprite(grid:Grid, data:PlayerObj) 
 		{
@@ -63,16 +62,15 @@ package game.ui.role
 		override public function initialization(value:Boolean = true):void 
 		{
 			_action = new GpuCustom("playerAction", 4, ActionType.STAND);
+			_action.play();
 			this.addChild(_action);
 			//名称
+			
 			_texture = new VRayMap(EditorTexture.draw(_data.usn));
 			this.addChild(_texture);
 			//绘制一个基点
-			drawSingularity();
+			//drawSingularity();
 			stand();
-			//
-			_step = new Steper(_action);
-			_step.run();
 		}
 		
 		public function drawSingularity(high:int = 0):void
