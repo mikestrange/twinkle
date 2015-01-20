@@ -1,13 +1,16 @@
-package game.socket.revc.map 
+package game.socket.map 
 {
 	import game.consts.CmdDefined;
 	import game.datas.vo.ActionVo;
 	import game.socket.core.CommandRequest;
+	import org.web.sdk.net.socket.handler.CmdManager;
+	import org.web.sdk.net.socket.handler.RespondEvented;
+	import org.web.sdk.system.inter.IMessage;
 	
-	public class EnterMapReqeust extends CommandRequest 
+	public class EntermapRequest extends CommandRequest 
 	{
 		
-		public function EnterMapReqeust() 
+		public function EntermapRequest() 
 		{
 			super(CmdDefined.ENTER_MAP, 0);
 		}
@@ -33,6 +36,13 @@ package game.socket.revc.map
 			writeShort(0);
 			writeShort(500);		//len
 			writeShort(300);
+		}
+		
+		//测试的时候会进入这里
+		override protected function test(message:IMessage):void 
+		{
+			trace("提醒进入地图")
+			CmdManager.dispatchRespond(new RespondEvented(CmdDefined.ENTER_MAP, null, null, false));
 		}
 		
 		//ends

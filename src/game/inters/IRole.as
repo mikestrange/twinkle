@@ -1,4 +1,4 @@
-package game.ui.inters 
+package game.inters 
 {
 	
 	public interface IRole

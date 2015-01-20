@@ -1,5 +1,6 @@
 package game.ui.core 
 {
+	import flash.events.Event;
 	import game.ui.core.MovieShader;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.Steper;
@@ -70,6 +71,7 @@ package game.ui.core
 			_point = value;
 			_domain = formt();
 			sendRender("render", _action);
+			trace("render")
 		}
 		
 		public function get currentName():String

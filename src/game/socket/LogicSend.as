@@ -1,16 +1,18 @@
 package game.socket 
 {
 	import game.consts.CmdDefined;
+	import game.consts.NoticeDefined;
 	import game.socket.core.CommandRequest;
 	import org.web.sdk.net.socket.core.ServerRequest;
+	import org.web.sdk.system.inter.IMessage;
 	
 	/*
 	 * 登陆游戏
 	 * */
-	public class LogicRequest extends CommandRequest 
+	public class LogicSend extends CommandRequest 
 	{
 		
-		public function LogicRequest() 
+		public function LogicSend() 
 		{
 			super(CmdDefined.LOGIC_GAME, 0);
 		}
@@ -26,6 +28,12 @@ package game.socket
 			writeInt(arr[0]);
 			writeInt(arr[0]);
 		}
+		
+		override protected function test(message:IMessage):void 
+		{
+			message.sendMessage(NoticeDefined.ON_LOGIC);
+		}
+		
 		//ends
 	}
 

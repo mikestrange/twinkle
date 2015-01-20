@@ -16,8 +16,8 @@ package
 	import game.ui.core.GpuCustom;
 	import game.ui.map.WorldMap;
 	import game.ui.core.ActionType;
-	import game.ui.role.PlayerSprite;
-	import game.ui.role.RoleSprite;
+	import game.ui.map.RoleSprite;
+	import game.ui.map.RoleSprite;
 	import org.alg.map.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
@@ -57,46 +57,54 @@ package
 		{
 			super.showEvent(event);
 			if (event) removeEventListener(Event.ADDED_TO_STAGE, showEvent);
-			var time:int = getTimer();
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//世界启动
 			WorldKidnap.gets().initLayer(this);
-			WorldKidnap.gets().launch(null);
+			WorldKidnap.gets().start();
 			//
+			ServerSocket.create(new AssignedTransfer)
 			PerfectLoader.gets().LOAD_MAX = 5;
-			
-			//StartLayer.gets().show();
-			//
-			var top:KitSprite = new KitSprite;
-			WorldKidnap.addToLayer(top);
-			top.graphics.clear();
-			top.graphics.beginFill(0xffffff,.9);
-			top.graphics.drawRect(0, 0, 1000, 1000);
-			top.graphics.endFill();
-			//
-			var ti:KitSprite = new KitSprite;
-			WorldKidnap.addToLayer(ti, LayerType.MAP);
-			//
-			var i:int = 0
-			var dx:Number;
-			var dy:Number;
-			//此效率比下面高2倍fps  8K=25fps 4K - 34 
-			for (i = 0; i < 4000; i++) {
-				var kimi:KitSprite = new RoleSprite();
-				ti.addDisplay(kimi, Math.random() * 450, Math.random() * 400);
-			}
-			Clock.step(500, states);
-		}
-		
-		private function states():void
-		{
 			FpsMonitor.gets().show();
-			
+			SoundManager.playUrl("bg.mp3");
+			StartLayer.gets().show();
+			SocketClock.start();
 		}
 		
 		//ends
 	}
 	
 }
+
+
+/*
+ * var i:int = 0;
+			var j:int = 0;
+			var leng:int = 10000;
+			var seachleng:int = 10000;
+			
+			var arr:Vector.<Number> = new Vector.<Number>;
+			var time:int = getTimer();
+			for (i = 0; i < leng; i++) {
+				arr.push(i);
+			}
+			trace("array push time:", getTimer() - time);
+			time = getTimer();
+			for (j = 0; j < seachleng; j++) {
+				var index:int = arr.indexOf(5000);
+			}
+			trace("array seach time:", getTimer() - time);
+			
+			var hash:HashList = new HashList;
+			time = getTimer();
+			for (i = 0; i < leng; i++) {
+				hash.push(i + "", i);
+			}
+			trace("list push time:", getTimer() - time);
+			time = getTimer();
+			for (j = 0; j < seachleng; j++) {
+				hash.getTarget("1000")
+			}
+			trace("list seach time:", getTimer() - time);
+ * */

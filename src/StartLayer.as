@@ -2,6 +2,7 @@ package
 {
 	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
+	import game.GameGlobal;
 	import org.web.sdk.display.KitSprite;
 	import org.web.sdk.FrameWork;
 	import flash.display.Sprite;
@@ -93,17 +94,20 @@ package
 			spt.buttonMode = true;
 			spt.addChild(loginText);
 			spt.addEventListener(MouseEvent.CLICK, loginEvent, false, 0, true);
+			//
 		}
 		
 		override public function show():void 
 		{
 			FrameWork.stage.addChild(this);
+			if (GameGlobal.isDebug) minaLine(null);
 		}
 		
 		private function loginEvent(e:Event):void
 		{
 			ServerSocket.create(new AssignedTransfer);
 			ServerSocket.socket.link('127.0.0.1', 9555, minaLine);
+			//登陆
 		}
 		
 		private function minaLine(e:Object):void

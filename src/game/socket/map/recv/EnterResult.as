@@ -1,4 +1,4 @@
-package game.socket.revc.map.recv 
+package game.socket.map.recv 
 {
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
@@ -10,13 +10,15 @@ package game.socket.revc.map.recv
 	public class EnterResult extends ServerRespond 
 	{
 		public var mapId:int;
-		public var self:Boolean = false;
+		public var self:Boolean;
 		public var player:PlayerObj;
 		
 		//只有用户在进入地图的时候才回调
 		override public function action(event:RespondEvented):Boolean 
 		{
 			super.action(event);
+			if (!event.isTreated()) return false;
+			
 			mapId = event.readShort();
 			var uid:int = event.readInt();			//
 			var type:int = event.readShort();		//角色类型
@@ -36,6 +38,18 @@ package game.socket.revc.map.recv
 			
 			return true;
 		}	
+		
+		override public function getMessage():Object 
+		{
+			if (player == null) {
+				mapId = 3001;
+				self = true;
+				PlayerObj.gets().update(SelfData.gets().uid, "ts1", 1000, 1000);
+			}
+			return super.getMessage();
+		}
+		
+		
 		//ends
 	}
 }

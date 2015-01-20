@@ -75,7 +75,7 @@ package org.web.sdk.net.socket
 			byte.position = 0;
 			var cmd:uint = byte.readUnsignedInt();
 			var type:int = byte.readUnsignedShort();
-			//
+			//派发命令事务
 			CmdManager.dispatchRespond(new RespondEvented(cmd, socket as ISocket, createByteArray(byte)));
 		}
 		

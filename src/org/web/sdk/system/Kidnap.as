@@ -26,7 +26,6 @@ package org.web.sdk.system
 		 * */
 		private var _controHash:HashMap;
 		private var _message:IMessage;
-		private var _isLaunch:Boolean = false;
 		
 		public function Kidnap() 
 		{
@@ -39,14 +38,6 @@ package org.web.sdk.system
 		protected function initialization():void
 		{
 			
-		}
-		
-		/*
-		 * 是否调用了Launch
-		 * */
-		public function isLaunch():Boolean
-		{
-			return _isLaunch;
 		}
 		
 		//添加自身监听 []
@@ -171,11 +162,15 @@ package org.web.sdk.system
 		/*
 		 * 默认了一个启动全局事件
 		 * */
-		public function launch(notice:IMessage):void 
+		public function launch(notice:IMessage):void
+		{
+			start(notice);
+		}
+		
+		//开始需要一个消息机制
+		public function start(notice:IMessage = null):void
 		{
 			Log.log(this).debug("#启动天网");
-			if (_isLaunch) return;
-			_isLaunch = true;
 			_message = notice == null ? GlobalMessage.gets() : notice;
 			addMessageFromController(this);
 			initialization();
@@ -187,8 +182,6 @@ package org.web.sdk.system
 		public function free():void 
 		{
 			Log.log(this).debug("#释放天网");
-			if (!_isLaunch) return;
-			_isLaunch = false;
 			//移除自身命令监听
 			removeMessageFromController(this);
 			//删除模块

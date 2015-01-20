@@ -43,8 +43,8 @@ package org.web.sdk.net.socket.handler
 		{
 			var cmd:Number = event.getCmd();
 			var vector:Vector.<Observer> = modules.getValue(cmd);
+			Log.log().debug("->server :cmd" + cmd, ",call:" + vector);
 			if (vector) {
-				Log.log().debug("->server :cmd" + cmd);
 				var list:Vector.<Observer> = vector.slice(NONE, vector.length);
 				for (var index:int = NONE; index < list.length; index++) {
 					list[index].dispatch([event]);

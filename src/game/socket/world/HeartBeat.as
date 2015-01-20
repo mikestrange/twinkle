@@ -1,4 +1,4 @@
-package game.socket.revc 
+package game.socket.world 
 {
 	import game.consts.CmdDefined;
 	import org.web.sdk.net.socket.core.ServerRequest;
@@ -12,8 +12,10 @@ package game.socket.revc
 		override public function action(event:RespondEvented):Boolean 
 		{
 			super.action(event);
-			//收到心跳包直接回执
-			event.getSocket().sendNoticeRequest(new ServerRequest(CmdDefined.HEART_BEAT));
+			if (event.getSocket()) {
+				//收到心跳包直接回执
+				event.getSocket().sendNoticeRequest(new ServerRequest(CmdDefined.HEART_BEAT));
+			}
 			return true;
 		}
 		//ends

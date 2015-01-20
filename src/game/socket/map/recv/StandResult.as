@@ -1,4 +1,4 @@
-package game.socket.revc.map.recv 
+package game.socket.map.recv 
 {
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;

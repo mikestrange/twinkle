@@ -1,4 +1,4 @@
-package game.socket.revc.map 
+package game.socket.map 
 {
 	import game.consts.CmdDefined;
 	import game.consts.NoticeDefined;

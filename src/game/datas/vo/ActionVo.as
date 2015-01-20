@@ -24,7 +24,7 @@ package game.datas.vo
 			this.lefty = dy < 0?0:dy;
 			this.width = FrameWork.winWidth + offx;
 			this.height = FrameWork.winHeight + offy;
-			trace(x, y, leftx, lefty, width, height);
+			//trace(x, y, leftx, lefty, width, height);
 		}
 		
 		private static var _ins:ActionVo;

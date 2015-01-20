@@ -5,8 +5,8 @@ package game.mvc.room
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
-	import game.socket.revc.map.*;
-	import game.socket.revc.map.recv.*;
+	import game.socket.map.*;
+	import game.socket.map.recv.*;
 	import game.ui.map.WorldMap;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.com.Invoker;
@@ -24,7 +24,7 @@ package game.mvc.room
 			super.launch(notice);
 			//注册命令  一个命令器只关心自己注册的事务
 			var _invoker:Invoker = new Invoker(notice);
-			_invoker.addOnlyCommand(NoticeDefined.ENTER_MAP, EnterMapReqeust);
+			_invoker.addOnlyCommand(NoticeDefined.ENTER_MAP, EntermapRequest);
 			_invoker.addOnlyCommand(NoticeDefined.QUIT_MAP, QuitMapRequest);
 			_invoker.addOnlyCommand(NoticeDefined.USER_MOVE, MoveRequest);
 			_invoker.addOnlyCommand(NoticeDefined.STAND_HERE, StandRequest);

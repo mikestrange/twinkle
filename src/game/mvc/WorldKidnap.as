@@ -1,5 +1,6 @@
 package game.mvc 
 {
+	import game.GameGlobal;
 	import org.web.sdk.display.House;
 	import flash.display.*;
 	import flash.events.Event;
@@ -7,7 +8,7 @@ package game.mvc
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
 	import game.mvc.cmd.GameManager;
-	import game.socket.LogicRequest;
+	import game.socket.LogicSend;
 	import game.mvc.room.MapController;
 	import game.consts.LayerType;
 	import org.web.sdk.display.ILayer;
@@ -75,7 +76,7 @@ package game.mvc
 		private function addInvoker():void
 		{
 			var _invoker:Invoker = new Invoker(getMessage());
-			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicRequest);
+			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicSend);
 			getMessage().addInvoker("world", _invoker);
 		}
 		
@@ -87,9 +88,7 @@ package game.mvc
 		override public function free():void 
 		{
 			super.free();
-			if (!this.isLaunch()) {
-				getMessage().removeInvoker("world");
-			}
+			getMessage().removeInvoker("world");
 		}
 		
 		override public function getSecretlyNotices():Array 
@@ -103,6 +102,7 @@ package game.mvc
 			{
 				case NoticeDefined.ON_LOGIC:
 					trace("成功登陆");
+					if (GameGlobal.isDebug) sendMessage(NoticeDefined.ENTER_MAP);
 				break;
 			}
 		}

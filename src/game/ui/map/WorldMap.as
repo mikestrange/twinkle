@@ -14,7 +14,7 @@ package game.ui.map
 	import game.datas.PlayerObj;
 	import game.datas.vo.ActionVo;
 	import game.mvc.WorldKidnap;
-	import game.ui.role.PlayerSprite;
+	import game.ui.map.RoleSprite;
 	import org.alg.astar.Astar;
 	import org.alg.astar.Node;
 	import org.alg.map.MapBase;
@@ -43,7 +43,7 @@ package game.ui.map
 		private const STOP_TIME:int = 3000;
 		private var sendTime:Number = 0;
 		//主演
-		public var actor:PlayerSprite;
+		public var actor:RoleSprite;
 		//所有角色
 		public var playerHash:HashMap;
 		private var isListener:Boolean = false;
@@ -141,7 +141,7 @@ package game.ui.map
 		private function setActor(data:PlayerObj):void
 		{
 			if (actor) actor.hide();
-			actor = new PlayerSprite(map.grid, data);
+			actor = new RoleSprite(map.grid, data);
 			//actor.addEventListener("move", sendSelf, false, 0, true);
 			actor.moveTo(data.x, data.y);
 			addChind(actor);
@@ -154,7 +154,7 @@ package game.ui.map
 			var player:PlayerObj;
 			var dx:Number;
 			var dy:Number;
-			for (var i:int = 0; i < 100; i++) {
+			for (var i:int = 0; i < 1000; i++) {
 				player = new PlayerObj;
 				dx = Math.random() * 450 + (actor.x - 250);
 				dy = Math.random() * 400 + (actor.y - 200);
@@ -171,12 +171,12 @@ package game.ui.map
 		}
 		
 		//建立角色
-		public function createPlayer(data:PlayerObj):PlayerSprite
+		public function createPlayer(data:PlayerObj):RoleSprite
 		{
 			var key:String = data.uid.toString();
-			var player:PlayerSprite = playerHash.getValue(key);
+			var player:RoleSprite = playerHash.getValue(key);
 			if (player == null) {
-				player = new PlayerSprite(map.grid,data);
+				player = new RoleSprite(map.grid,data);
 				playerHash.put(key, player);
 				player.stand();
 				addChind(player);
@@ -187,14 +187,14 @@ package game.ui.map
 		
 		public function stop(data:PlayerObj):void
 		{
-			var player:PlayerSprite = createPlayer(data);
+			var player:RoleSprite = createPlayer(data);
 			player.moveTo(data.x, data.y);
 			player.stand(data.point);
 		}
 		
 		public function move(data:PlayerObj):void
 		{
-			var player:PlayerSprite = createPlayer(data);
+			var player:RoleSprite = createPlayer(data);
 			player.moveTo(data.x, data.y);
 			player.move(data.point);
 		}
@@ -203,7 +203,7 @@ package game.ui.map
 		public function removeUser(uid:int):void
 		{
 			var key:String = uid.toString();
-			var player:PlayerSprite = playerHash.remove(key);
+			var player:RoleSprite = playerHash.remove(key);
 			if (player) player.hide();
 		}
 		
@@ -220,15 +220,15 @@ package game.ui.map
 			var userRoot:Sprite = map.actionLayer;
 			var rect:Rectangle = map.getHitRect(0,100);
 			var list:Array = [];
-			var player:PlayerSprite;
+			var player:RoleSprite;
 			var index:int = userRoot.numChildren - 1;
 			for (; index >= 0; index--)
 			{
-				player = userRoot.getChildAt(index) as PlayerSprite;
+				player = userRoot.getChildAt(index) as RoleSprite;
 				if (player == null) continue;
 				if (rect.contains(player.x, player.y)) list.push(player);
 				else removeUser(player.getUid());
-				//if (player.getUid() != actor.getUid()) player.render();
+				if (!player.isself()) player.render();
 			}
 			//排序，TM比写的排序算法快的多
 			list.sortOn("y", Array.NUMERIC);

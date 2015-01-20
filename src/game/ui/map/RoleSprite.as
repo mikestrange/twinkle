@@ -1,8 +1,9 @@
-package game.ui.role 
+package game.ui.map 
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.filters.GlowFilter;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import game.consts.NoticeDefined;
 	import game.datas.PlayerObj;
@@ -10,7 +11,7 @@ package game.ui.role
 	import game.datas.vo.ActionVo;
 	import game.ui.core.ActionType;
 	import game.ui.core.GpuCustom;
-	import game.ui.inters.IRole;
+	import game.inters.IRole;
 	import game.ui.map.WorldMap;
 	import game.ui.utils.EditorTexture;
 	import org.alg.astar.Grid;
@@ -29,14 +30,14 @@ package game.ui.role
 	/*
 	 * role
 	 * */
-	public class PlayerSprite extends KitSprite implements IRole
+	public class RoleSprite extends KitSprite implements IRole
 	{
 		private var _action:GpuCustom;
 		//
 		private var _data:PlayerObj;
 		private var _texture:VRayMap;
-		private var speedX:int = 4;
-		private var speedY:int = 4;
+		private var speedX:int = 10;
+		private var speedY:int = 10;
 		private var path:Array;
 		private var pathIndex:int = 0;
 		private var max_leng:int = speedX + speedY;
@@ -45,7 +46,7 @@ package game.ui.role
 		private var startpo:Point = new Point;
 		private var iswait:Boolean = true;
 		
-		public function PlayerSprite(grid:Grid, data:PlayerObj) 
+		public function RoleSprite(grid:Grid, data:PlayerObj) 
 		{
 			this.grid = grid;
 			this._data = data;
@@ -63,21 +64,23 @@ package game.ui.role
 		{
 			_action = new GpuCustom("playerAction", 4, ActionType.STAND);
 			_action.play();
+			var matrix:Matrix = new Matrix;
+			matrix.translate( -20, -90)
+			_action.transform.matrix = matrix;
 			this.addChild(_action);
 			//名称
-			
 			_texture = new VRayMap(EditorTexture.draw(_data.usn));
+			_texture.x = -_texture.width >> 1;
+			_texture.y = -90 - _texture.height;
 			this.addChild(_texture);
-			//绘制一个基点
-			//drawSingularity();
+			//
 			stand();
-		}
-		
-		public function drawSingularity(high:int = 0):void
-		{
+			/*
 			this.graphics.clear();
-			this.graphics.beginFill(0xcccccc,.3);
-			this.graphics.drawEllipse(-20, -12, 40, 16);
+			this.graphics.beginFill(0xff0000);
+			this.graphics.drawCircle( -1, -1, 2);
+			this.graphics.endFill();
+			*/
 		}
 		
 		public function setPath(value:Array):void
@@ -89,10 +92,6 @@ package game.ui.role
 		
 		override public function render():void 
 		{
-			_action.moveTo( -_action.width >> 1, -_action.height);
-			_texture.x = -_texture.width >> 1;
-			_texture.y = -_action.height - _texture.height;
-			
 			if (path) {
 				var node:Node = path[pathIndex];
 				if (node == null) {
@@ -138,6 +137,11 @@ package game.ui.role
 		public function getUid():int
 		{
 			return _data.uid;
+		}
+		
+		public function isself():Boolean
+		{
+			return _data.uid == SelfData.gets().uid;
 		}
 		
 		public function get point():int

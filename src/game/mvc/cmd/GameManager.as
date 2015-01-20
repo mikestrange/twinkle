@@ -2,8 +2,8 @@ package game.mvc.cmd
 {
 	import game.consts.CmdDefined;
 	import game.consts.NoticeDefined;
-	import game.socket.revc.LogicResult;
-	import game.socket.revc.map.recv.*;
+	import game.socket.map.recv.*;
+	import game.socket.world.LogicResult;
 	import org.web.sdk.net.socket.handler.RespondConverter;
 	import org.web.sdk.net.socket.handler.RespondEvented;
 	

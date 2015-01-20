@@ -15,11 +15,12 @@ package org.web.sdk.net.socket.handler
 		private var cmd:Number;
 		private var hashMessage:Dictionary;
 		
-		public function RespondEvented(cmd:Number, socket:ISocket = null, byte:ByteArray = null) 
+		public function RespondEvented(cmd:Number, socket:ISocket = null, byte:ByteArray = null, filed:Boolean = true) 
 		{
 			this.cmd = cmd;
 			this.socket = socket;
 			this.hashMessage = new Dictionary;
+			this.filed = filed;
 			super(byte);
 		}
 		

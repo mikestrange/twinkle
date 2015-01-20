@@ -69,14 +69,14 @@ package org.web.sdk.utils.list
 			length++;
 		}
 		
-		public function getTarget(name:String):*
+		public function getValue(name:String):*
 		{
 			var node:ListNode = hash[name];
 			if (node) return node.target;
 			return null;
 		}
 		
-		public function setTarget(name:String, target:*= undefined):void
+		public function setValue(name:String, target:*= undefined):void
 		{
 			var node:ListNode = hash[name];
 			if (node) node.target = target;

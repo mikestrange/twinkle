@@ -79,7 +79,7 @@ package org.web.sdk.load
 		//取等待下载
 		beyond_challenge function getWaiter(url:String):LoadFluider
 		{
-			return wait_list.getTarget(url) as LoadFluider;
+			return wait_list.getValue(url) as LoadFluider;
 		}
 		
 		internal function removeLoad(url:String):void
