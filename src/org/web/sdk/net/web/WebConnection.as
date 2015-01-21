@@ -10,7 +10,7 @@ package org.web.sdk.net.web
 	import org.web.sdk.net.handler.CmdManager;
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.net.interfaces.INetwork;
-	import org.web.sdk.net.interfaces.IRequest;
+	import org.web.sdk.net.interfaces.INetRequest;
 	
 	public class WebConnection implements INetwork 
 	{
@@ -59,7 +59,7 @@ package org.web.sdk.net.web
 		}
 		
 		/* INTERFACE org.web.sdk.net.interfaces.INetwork */
-		public function sendNoticeRequest(request:IRequest, message:Object = null):void 
+		public function sendNoticeRequest(request:INetRequest, message:Object = null):void 
 		{
 			request.sendRequest(message, this);	//可以自定义解析方式
 		}
@@ -117,9 +117,12 @@ package org.web.sdk.net.web
 			}catch (e:Error) {
 				Log.log(this).debug("json解析错误 Error:", e, "  ->url:" + web.url);
 			}
-			//cmd:cmd,data:object  不需要任何解析了，所以可以直接忽略INetHandler
+			/* [cmd:cmd,data:object,...]  这个是用http座位异步就可以这么处理
+			 * 不需要任何解析了，所以可以直接忽略INetHandler
+			 * 这里直接回调监听函数
+			*/
 			if (data && web.client is Function) {
-				web.client(data);
+				web.client(data);		//当次回调->如果用异步，那么这里就不是这么处理了
 			}else {
 				Log.log(this).debug("#url:", web.url, "   无回调!");
 			}

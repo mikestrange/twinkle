@@ -7,7 +7,7 @@ package org.web.sdk.net.socket
 	import org.web.sdk.log.Log;
 	import org.web.sdk.net.interfaces.IAssigned;
 	import org.web.sdk.net.interfaces.INetwork;
-	import org.web.sdk.net.interfaces.IRequest;
+	import org.web.sdk.net.interfaces.INetRequest;
 	import org.web.sdk.system.GlobalMessage;
 	
 	public class ServerSocket extends Socket implements INetwork
@@ -129,7 +129,7 @@ package org.web.sdk.net.socket
 		}
 		
 		//通知调用,公开信
-		public function sendNoticeRequest(request:IRequest, message:Object = null):void
+		public function sendNoticeRequest(request:INetRequest, message:Object = null):void
 		{
 			Log.log(this).debug('->client 请求cmd: ' + request.getCmd());
 			request.sendRequest(message, this);

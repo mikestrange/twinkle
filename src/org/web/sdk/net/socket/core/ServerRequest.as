@@ -1,13 +1,13 @@
 package org.web.sdk.net.socket.core 
 {
-	import org.web.sdk.net.interfaces.IRequest;
+	import org.web.sdk.net.interfaces.INetRequest;
 	import org.web.sdk.net.interfaces.INetwork;
 	import org.web.sdk.net.utils.FtpWrite;
 	
 	/*
 	 * 发送给服务器的数据,被socket调用，不自己发送
 	 * */
-	public class ServerRequest extends FtpWrite implements IRequest 
+	public class ServerRequest extends FtpWrite implements INetRequest 
 	{
 		protected var cmd:uint;
 		protected var type:int;

@@ -38,7 +38,7 @@ package org.web.sdk.net.socket
 				if (socket.bytesAvailable >= btLeng) {
 					socket.readBytes(byteBuff, ZERO, btLeng);
 					isReadTop = false;
-					underhand(socket,byteBuff); 	//密传
+					underhand(socket, byteBuff); 	//密传
 					if (socket.bytesAvailable > ZERO) unpack(socket);
 				}
 			}else {

@@ -1,9 +1,9 @@
 package org.web.sdk.net.interfaces 
 {
 	/*
-	 * 命令
+	 * 注销和摧毁
 	 * */
-	public interface ICmdConverter 
+	public interface IConverter 
 	{
 		function register():void;
 		function destroy():void;

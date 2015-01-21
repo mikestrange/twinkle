@@ -3,7 +3,7 @@ package org.web.sdk.net.handler
 	import flash.utils.Dictionary;
 	import org.web.sdk.handler.Observer;
 	import org.web.sdk.net.handler.RespondEvented;
-	import org.web.sdk.net.interfaces.ICmdConverter;
+	import org.web.sdk.net.interfaces.IConverter;
 	import org.web.sdk.net.interfaces.INetHandler;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.utils.UniqueHash;
@@ -11,7 +11,7 @@ package org.web.sdk.net.handler
 	/*
 	 * 处理命令的转换器，基类
 	 * */
-	public class RespondConverter implements ICmdConverter 
+	public class RespondConverter implements IConverter 
 	{
 		private var isregister:Boolean = false;
 		

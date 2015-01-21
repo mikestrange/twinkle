@@ -3,7 +3,7 @@ package org.web.sdk.net.handler
 	import org.web.sdk.handler.Observer;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.net.handler.RespondEvented;
-	import org.web.sdk.net.interfaces.ICmdConverter;
+	import org.web.sdk.net.interfaces.IConverter;
 	import org.web.sdk.system.inter.IController;
 	import org.web.sdk.utils.UniqueHash;
 	/*
