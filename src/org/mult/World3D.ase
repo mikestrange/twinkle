@@ -1,4 +1,4 @@
-package org.max 
+package org.mult 
 {
 	import alternativa.engine3d.controllers.SimpleObjectController;
 	import alternativa.engine3d.core.Camera3D;

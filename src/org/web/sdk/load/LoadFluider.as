@@ -6,7 +6,7 @@
 package org.web.sdk.load 
 {
 	import flash.utils.Dictionary;
-	import org.web.apk.beyond_challenge;
+	import org.web.sdk.beyond_challenge;
 	import org.web.sdk.handler.Observer;
 	import org.web.sdk.load.inters.ILoadController;
 	import org.web.sdk.load.inters.ILoader;

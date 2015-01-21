@@ -13,7 +13,7 @@ package game.ui.map
 	import game.ui.core.GpuCustom;
 	import game.inters.IRole;
 	import game.ui.map.WorldMap;
-	import game.ui.utils.EditorTexture;
+	import game.utils.DrawUtils;
 	import org.alg.astar.Grid;
 	import org.alg.astar.Node;
 	import org.alg.utils.FormatUtils;
@@ -69,7 +69,7 @@ package game.ui.map
 			_action.transform.matrix = matrix;
 			this.addChild(_action);
 			//名称
-			_texture = new VRayMap(EditorTexture.draw(_data.usn));
+			_texture = new VRayMap(DrawUtils.draw(_data.usn));
 			_texture.x = -_texture.width >> 1;
 			_texture.y = -90 - _texture.height;
 			this.addChild(_texture);

@@ -5,7 +5,7 @@ package org.web.sdk.net.socket
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	import org.web.sdk.log.Log;
-	import org.web.apk.beyond_challenge;
+	import org.web.sdk.beyond_challenge;
 	import org.web.sdk.net.handler.CmdManager;
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.net.interfaces.IAssigned;

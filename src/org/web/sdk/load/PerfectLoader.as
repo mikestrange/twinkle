@@ -11,7 +11,7 @@ package org.web.sdk.load
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
-	import org.web.apk.beyond_challenge;
+	import org.web.sdk.beyond_challenge;
 	import org.web.sdk.utils.list.HashList;
 	/*
 	 * 下载管理,完美的下载管理器

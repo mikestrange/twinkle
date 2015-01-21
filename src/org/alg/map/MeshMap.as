@@ -140,7 +140,7 @@ package org.alg.map
 		}
 		
 		//取一个屏幕左边的基点   偏移是为了扩大屏幕
-		public function getLeft(localx:int, localy:int):Point
+		public function getMapRect(localx:int, localy:int):Rectangle
 		{
 			var lenx:int = FrameWork.winWidth >> 1;
 			var leny:int = FrameWork.winHeight >> 1;
@@ -148,15 +148,17 @@ package org.alg.map
 			var dy:int = localy - leny;
 			var rightx:int = this.width - lenx;
 			var righty:int = this.height - leny;
-			if (localx > rightx) dx = this.width - FrameWork.winWidth;
-			if (localy > righty) dy = this.height - FrameWork.winHeight;
-			if (localx < lenx) dx = 0;
-			if (localy < leny) dy = 0;
-			return new Point(dx, dy);
+			currRect.width = FrameWork.winWidth;
+			currRect.height = FrameWork.winHeight;
+			if (localx > rightx) currRect.x = this.width - FrameWork.winWidth;
+			if (localy > righty) currRect.y = this.height - FrameWork.winHeight;
+			if (localx < lenx) currRect.x = 0;
+			if (localy < leny) currRect.y = 0;
+			return currRect;
 		}
 		
-		//一个碰撞
-		public function getHitRect(offx:int = 0, offy:int = 0):Rectangle
+		//当前地图的显示范围
+		public function getVisibility(offx:int = 0, offy:int = 0):Rectangle
 		{
 			var tpo:Point = this.globalToLocal(new Point(FrameWork.leftx, FrameWork.lefty));
 			rect.x = tpo.x;
@@ -167,7 +169,7 @@ package org.alg.map
 		}
 		
 		private static const rect:Rectangle = new Rectangle();
-		
+		private static const currRect:Rectangle = new Rectangle();
 		//绘制可视化网格
 		public function drawGridShape():void
 		{

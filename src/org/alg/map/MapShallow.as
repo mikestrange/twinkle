@@ -13,7 +13,9 @@ package org.alg.map
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
-	
+	/*
+	 * 背景地图，完美的封装了
+	 * */
 	public class MapShallow extends Sprite
 	{
 		//单个地图大小

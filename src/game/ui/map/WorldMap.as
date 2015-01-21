@@ -165,8 +165,7 @@ package game.ui.map
 		
 		public function sendSelf(e:Object = null):void
 		{
-			var leftpo:Point = map.getLeft(actor.x, actor.y);
-			ActionVo.gets().setData(actor.point, actor.x, actor.y, leftpo.x, leftpo.y, 50, 100);
+			ActionVo.gets().setData(actor.point, actor.x, actor.y, map.getMapRect(actor.x, actor.y), 50, 100);
 			ServerSocket.socket.sendNotice(NoticeDefined.USER_MOVE, ActionVo.gets());
 		}
 		
@@ -219,7 +218,7 @@ package game.ui.map
 			if (null == map) return;
 			var time:int = getTimer();
 			var userRoot:Sprite = map.actionLayer;
-			var rect:Rectangle = map.getHitRect(0,100);
+			var rect:Rectangle = map.getVisibility(0,100);
 			var list:Array = [];
 			var player:RoleSprite;
 			var index:int = userRoot.numChildren - 1;
