@@ -1,20 +1,23 @@
 package org.web.sdk.net.socket.core 
 {
-	import org.web.sdk.log.Log;
-	import org.web.sdk.net.socket.inter.*;
-	import org.web.sdk.net.socket.handler.RespondEvented;
-	import org.web.sdk.system.events.Evented;
-	import org.web.sdk.system.GlobalMessage;
+	import org.web.sdk.net.interfaces.INetHandler;
+	import org.web.sdk.net.handler.RespondEvented;
+	import org.web.sdk.net.utils.FtpRead;
 	/*
 	 * 处理服务器回执的数据包 
 	 * */
-	public class ServerRespond implements ISocketHandler 
+	public class ServerRespond implements INetHandler 
 	{
-		
 		//处理服务器的回执
-		public function action(event:RespondEvented):Boolean
+		public function action(event:RespondEvented):void
 		{
-			return false;
+			trace("event:", event);
+			if (event && !event.isMatter()) readByte(event.proto);
+		}
+		
+		protected function readByte(proto:FtpRead):void
+		{
+			
 		}
 		
 		public function getMessage():Object

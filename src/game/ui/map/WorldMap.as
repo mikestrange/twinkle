@@ -154,7 +154,7 @@ package game.ui.map
 			var player:PlayerObj;
 			var dx:Number;
 			var dy:Number;
-			for (var i:int = 0; i < 1000; i++) {
+			for (var i:int = 0; i < 800; i++) {
 				player = new PlayerObj;
 				dx = Math.random() * 450 + (actor.x - 250);
 				dy = Math.random() * 400 + (actor.y - 200);
@@ -217,6 +217,7 @@ package game.ui.map
 		private function render():void
 		{
 			if (null == map) return;
+			var time:int = getTimer();
 			var userRoot:Sprite = map.actionLayer;
 			var rect:Rectangle = map.getHitRect(0,100);
 			var list:Array = [];
@@ -228,7 +229,7 @@ package game.ui.map
 				if (player == null) continue;
 				if (rect.contains(player.x, player.y)) list.push(player);
 				else removeUser(player.getUid());
-				if (!player.isself()) player.render();
+				//if (!player.isself()) player.render();
 			}
 			//排序，TM比写的排序算法快的多
 			list.sortOn("y", Array.NUMERIC);
@@ -239,6 +240,7 @@ package game.ui.map
 				if (floor >= userRoot.numChildren) floor = userRoot.numChildren - 1;
 				userRoot.setChildIndex(player, floor);
 			}
+			trace("渲染时间：", getTimer() - time);
 		}
 		
 		//ends

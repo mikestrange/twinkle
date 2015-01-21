@@ -1,5 +1,6 @@
 package 
 {
+	import org.web.sdk.net.web.WebConnection;
 	import party.greensock.*;
 	import flash.display.*;
 	import flash.events.*;
@@ -25,7 +26,6 @@ package
 	import org.web.sdk.gpu.BufferImage;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
-	import org.web.sdk.net.socket.base.*;
 	import org.web.sdk.net.socket.*;
 	import org.web.sdk.sound.core.*;
 	import org.web.sdk.sound.*;
@@ -70,41 +70,17 @@ package
 			SoundManager.playUrl("bg.mp3");
 			StartLayer.gets().show();
 			SocketClock.start();
+			//
+			var web:WebConnection = new WebConnection("http://www.baidu.com/")
+			web.sendWeb(0);
+		}
+		
+		private function complete(e:Event):void
+		{
+			trace("load>", e.target.data);
 		}
 		
 		//ends
 	}
 	
 }
-
-
-/*
- * var i:int = 0;
-			var j:int = 0;
-			var leng:int = 10000;
-			var seachleng:int = 10000;
-			
-			var arr:Vector.<Number> = new Vector.<Number>;
-			var time:int = getTimer();
-			for (i = 0; i < leng; i++) {
-				arr.push(i);
-			}
-			trace("array push time:", getTimer() - time);
-			time = getTimer();
-			for (j = 0; j < seachleng; j++) {
-				var index:int = arr.indexOf(5000);
-			}
-			trace("array seach time:", getTimer() - time);
-			
-			var hash:HashList = new HashList;
-			time = getTimer();
-			for (i = 0; i < leng; i++) {
-				hash.push(i + "", i);
-			}
-			trace("list push time:", getTimer() - time);
-			time = getTimer();
-			for (j = 0; j < seachleng; j++) {
-				hash.getTarget("1000")
-			}
-			trace("list seach time:", getTimer() - time);
- * */

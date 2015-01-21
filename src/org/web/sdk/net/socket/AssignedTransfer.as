@@ -5,13 +5,13 @@ package org.web.sdk.net.socket
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.socket.handler.RespondEvented;
-	import org.web.sdk.net.socket.base.*;
 	import org.web.apk.beyond_challenge;
-	import org.web.sdk.net.socket.handler.CmdManager;
-	import org.web.sdk.net.socket.inter.IAssigned;
-	import org.web.sdk.net.socket.inter.ISocket;
-	import org.web.sdk.net.socket.inter.ISocketHandler;
+	import org.web.sdk.net.handler.CmdManager;
+	import org.web.sdk.net.handler.RespondEvented;
+	import org.web.sdk.net.interfaces.IAssigned;
+	import org.web.sdk.net.interfaces.INetwork;
+	import org.web.sdk.net.interfaces.INetHandler;
+	import org.web.sdk.net.utils.FtpRead;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.GlobalMessage;
 	
@@ -76,7 +76,7 @@ package org.web.sdk.net.socket
 			var cmd:uint = byte.readUnsignedInt();
 			var type:int = byte.readUnsignedShort();
 			//派发命令事务
-			CmdManager.dispatchRespond(new RespondEvented(cmd, socket as ISocket, createByteArray(byte)));
+			CmdManager.dispatchRespond(new RespondEvented(cmd, socket as INetwork, new FtpRead(createByteArray(byte))));
 		}
 		
 		//把长度包分装

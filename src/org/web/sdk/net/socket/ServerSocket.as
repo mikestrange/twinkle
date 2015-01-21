@@ -5,10 +5,12 @@ package org.web.sdk.net.socket
 	import flash.net.*;
 	import flash.utils.*;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.socket.inter.*;
+	import org.web.sdk.net.interfaces.IAssigned;
+	import org.web.sdk.net.interfaces.INetwork;
+	import org.web.sdk.net.interfaces.IRequest;
 	import org.web.sdk.system.GlobalMessage;
 	
-	public class ServerSocket extends Socket implements ISocket
+	public class ServerSocket extends Socket implements INetwork
 	{
 		//协同器
 		private var _assigned:IAssigned;
@@ -21,8 +23,6 @@ package org.web.sdk.net.socket
 		{
 			this._assigned = assigned;
 		}
-		
-		
 		
 		public function link(host:String = '127.0.0.1', port:int = 0, complete:Function = null):void
 		{
@@ -120,11 +120,11 @@ package org.web.sdk.net.socket
 		}
 		
 		//打包发送到服务器
-		public function callFinal(byte:ByteArray):void
+		public function flushTerminal(pack:* = undefined):void
 		{
 			if (!connected) return;
 			//Log.log(this).debug("发送字段：", byte.length);
-			writes(byte);
+			writes(pack as ByteArray);
 			flush();
 		}
 		

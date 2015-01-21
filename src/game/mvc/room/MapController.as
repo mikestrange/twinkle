@@ -57,10 +57,10 @@ package game.mvc.room
 			switch(event.name)
 			{
 				case NoticeDefined.ON_ENTER_MAP:
-					enterMap(event.data as EnterResult);
+					enterMap(event.data as EnterHandler);
 					break;
 				case NoticeDefined.ON_QUIT_MAP:
-					quitMap(event.data as QuitResult);
+					quitMap(event.data as QuitHandler);
 					break;
 				case NoticeDefined.ON_USER_MOVE:
 					WorldMap.gets().move(event.data.player as PlayerObj);
@@ -71,7 +71,7 @@ package game.mvc.room
 			}
 		}
 		
-		private function enterMap(data:EnterResult):void
+		private function enterMap(data:EnterHandler):void
 		{
 			if (data.self) {
 				WorldMap.gets().showMap(data.mapId);
@@ -80,7 +80,7 @@ package game.mvc.room
 			}
 		}
 		
-		private function quitMap(data:QuitResult):void
+		private function quitMap(data:QuitHandler):void
 		{
 			if (!_ismap) return;
 			if (data.player.isSelf()) {

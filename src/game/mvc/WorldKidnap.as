@@ -8,12 +8,11 @@ package game.mvc
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
 	import game.mvc.cmd.GameManager;
-	import game.socket.LogicSend;
+	import game.socket.logic.LogicRequest;
 	import game.mvc.room.MapController;
 	import game.consts.LayerType;
 	import org.web.sdk.display.ILayer;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.net.socket.handler.CmdManager;
 	import org.web.sdk.system.*;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
@@ -76,7 +75,7 @@ package game.mvc
 		private function addInvoker():void
 		{
 			var _invoker:Invoker = new Invoker(getMessage());
-			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicSend);
+			_invoker.addOnlyCommand(NoticeDefined.SET_LOGIC, LogicRequest);
 			getMessage().addInvoker("world", _invoker);
 		}
 		

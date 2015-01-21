@@ -2,6 +2,9 @@ package game.consts
 {
 	public class CmdDefined 
 	{
+		public static const SOCKET_TYPE:int = 1;
+		public static const HTTP:int = 2;
+		
 		//
 		public static const HEART_BEAT:uint = 101;
 		public static const LOGIC_GAME:uint = 1001;

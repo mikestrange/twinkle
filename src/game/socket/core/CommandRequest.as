@@ -1,8 +1,11 @@
 package game.socket.core 
 {
+	import game.consts.CmdDefined;
 	import game.GameGlobal;
 	import org.web.sdk.net.socket.core.ServerRequest;
-	import org.web.sdk.net.socket.inter.ISocket;
+	import org.web.sdk.net.handler.CmdManager;
+	import org.web.sdk.net.handler.RespondEvented;
+	import org.web.sdk.net.interfaces.INetwork;
 	import org.web.sdk.system.com.ICommand;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.GlobalMessage;
@@ -24,7 +27,7 @@ package game.socket.core
 			if (GameGlobal.isDebug) {
 				test(GlobalMessage.gets());
 			}else {
-				var socket:ISocket = event.client as ISocket;
+				var socket:INetwork = event.client as INetwork;
 				if(socket) socket.sendNoticeRequest(this, event.data);
 			}
 		}
@@ -32,6 +35,11 @@ package game.socket.core
 		protected function test(message:IMessage):void
 		{
 			
+		}
+		
+		protected function sendTest(cmd:Number):void
+		{
+			CmdManager.dispatchRespond(new RespondEvented(cmd, null, null, true));
 		}
 		//ends
 	}

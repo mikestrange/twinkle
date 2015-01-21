@@ -1,7 +1,8 @@
 package org.web.sdk.net.socket.core 
 {
-	import org.web.sdk.net.socket.inter.*;
-	import org.web.sdk.net.socket.base.FtpWrite;
+	import org.web.sdk.net.interfaces.IRequest;
+	import org.web.sdk.net.interfaces.INetwork;
+	import org.web.sdk.net.utils.FtpWrite;
 	
 	/*
 	 * 发送给服务器的数据,被socket调用，不自己发送
@@ -17,14 +18,14 @@ package org.web.sdk.net.socket.core
 			this.type = type;
 		}
 		
-		public function sendRequest(message:Object, socket:ISocket = null):void
+		public function sendRequest(message:Object, socket:INetwork = null):void
 		{
 			//设置大小端
 			this.endian = socket.endian;
 			//读取数据
 			plumage(message);
 			//发送到服务器
-			socket.callFinal(getBytes());
+			socket.flushTerminal(getBytes());
 		}
 		
 		public function getCmd():uint

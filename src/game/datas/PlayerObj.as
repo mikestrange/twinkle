@@ -1,6 +1,6 @@
 package game.datas 
 {
-	import game.utils.MaterialPath;
+	import game.utils.DrivePath;
 	import org.alg.astar.Node;
 	
 	public class PlayerObj 
@@ -26,7 +26,7 @@ package game.datas
 		
 		public function get url():String
 		{
-			return MaterialPath.getUrlByType(type);
+			return DrivePath.getUrlByType(type);
 		}
 		
 		public function isSelf():Boolean
