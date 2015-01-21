@@ -25,15 +25,15 @@ package game.socket.map.recv
 		override public function getMessage():Object 
 		{
 			if (isdebug) {
-				var ran:int = Math.random() * 1000 >> 0;
+				var ran:int = Math.random() * 5000 >> 0;
 				player = new PlayerObj();
 				player.uid = ran;
 				player.type = 0
-				player.usn = "测试人员" + ran;
+				player.usn = "测试" + ran;
 				player.level = 10;
 				player.point = Math.floor(Math.random() * 8);
 				player.x = Math.floor(Math.random() * 1000);
-				player.y = Math.floor(Math.random() * 1000);
+				player.y = Math.floor(Math.random() * 800);
 			}
 			return player;
 		}

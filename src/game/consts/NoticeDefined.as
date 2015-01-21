@@ -15,6 +15,7 @@ package game.consts
 		public static const ON_USER_MOVE:String = "onUserMove";
 		public static const ON_USER_COME_IN:String = "onUserComeIn";
 		public static const ON_STAND_HERE:String = "onstandHere";
+		public static const ON_ACTION_ROLE:String = "onActionRole";
 		//ends
 	}
 

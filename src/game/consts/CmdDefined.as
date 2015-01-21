@@ -13,6 +13,7 @@ package game.consts
 		public static const QUIT_MAP:uint = 2002;
 		public static const MOVE_TO:uint = 2011;
 		public static const STAND_HERE:uint = 2015;
+		public static const ACTION_ROLE:uint = 2016;
 		//ends
 	}
 

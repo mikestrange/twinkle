@@ -11,6 +11,7 @@ package game.ui.map
 	import flash.utils.getTimer;
 	import game.consts.LayerType;
 	import game.consts.NoticeDefined;
+	import game.datas.obj.ActionObj;
 	import game.datas.obj.PlayerObj;
 	import game.datas.vo.ActionVo;
 	import game.logic.WorldKidnap;
@@ -146,6 +147,8 @@ package game.ui.map
 			actor.moveTo(data.x, data.y);
 			addChind(actor);
 			map.followDisplay(actor);
+			//
+			playerHash.put(data.uid.toString(), actor);
 		}
 		
 		//测试调用
@@ -198,6 +201,14 @@ package game.ui.map
 			player.move(data.point);
 		}
 		
+		public function action(data:ActionObj):void
+		{
+			var player:RoleSprite = playerHash.getValue(data.uid.toString());
+			if (player) {
+				player.attack(data.point);
+			}
+		}
+		
 		//移除角色
 		public function removeUser(uid:int):void
 		{
@@ -228,7 +239,7 @@ package game.ui.map
 				if (player == null) continue;
 				if (rect.contains(player.x, player.y)) list.push(player);
 				else removeUser(player.getUid());
-				//if (!player.isself()) player.render();
+				if (!player.isself()) player.render();
 			}
 			//排序，TM比写的排序算法快的多
 			list.sortOn("y", Array.NUMERIC);
@@ -239,7 +250,7 @@ package game.ui.map
 				if (floor >= userRoot.numChildren) floor = userRoot.numChildren - 1;
 				userRoot.setChildIndex(player, floor);
 			}
-			trace("渲染时间：", getTimer() - time);
+		//	trace("渲染时间：", getTimer() - time);
 		}
 		
 		//ends

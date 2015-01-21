@@ -20,6 +20,8 @@ package game.ui.core
 		private var _action:String;
 		private var _domain:String;		//当前动作
 		private var _url:String;
+		private var _defaction:String;
+		private var _play_value:int = 0;
 		
 		//全面的动作
 		public function GpuCustom(type:String, point:int = 4, action:String = null) 
@@ -27,7 +29,7 @@ package game.ui.core
 			if (!ShaderManager.has(type)) new MovieShader(type);
 			this.setShader(type);
 			this._point = point;
-			this._action = action;
+			this._defaction = this._action = action;
 			_domain = formt();
 			if (action) sendRender("render", _action);
 		}
@@ -62,7 +64,7 @@ package game.ui.core
 			sendRender("render", _action);
 		}
 		
-		public function setActionAndPoint(action:String, value:int = -1):void
+		public function setActionAndPoint(action:String, value:int = -1, leng:int = 0):void
 		{
 			if (value == -1) value = _point;
 			if (action == null) action = _action;
@@ -70,8 +72,18 @@ package game.ui.core
 			_action = action;
 			_point = value;
 			_domain = formt();
+			_play_value = leng;
 			sendRender("render", _action);
-			trace("render")
+		}
+		
+		override protected function handlerFrame(index:int):void 
+		{
+			if (_play_value <= 0) return;
+			if (index == 0) _play_value--;
+			if (_play_value <= 0) {
+				_play_value = 0;
+				setAction(_defaction);
+			}
 		}
 		
 		public function get currentName():String

@@ -173,7 +173,9 @@ package game.ui.map
 		
 		public function attack(value:int = -1):void
 		{
-			_action.setActionAndPoint(ActionType.ATTACK, value);
+			_action.setActionAndPoint(ActionType.YEMAN, value);
+			//_action.setActionAndPoint(ActionType.BEATEN, value, 1);
+			//_action.setActionAndPoint(ActionType.ATTACK, value);
 		}
 		
 		public function walk(value:int = -1):void

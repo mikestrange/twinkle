@@ -14,7 +14,7 @@ package game.socket
 		override public function getCmdList():Array 
 		{
 			return [CmdDefined.HEART_BEAT, CmdDefined.LOGIC_GAME,
-			CmdDefined.ENTER_MAP, CmdDefined.QUIT_MAP, CmdDefined.MOVE_TO, CmdDefined.STAND_HERE];
+			CmdDefined.ENTER_MAP, CmdDefined.QUIT_MAP, CmdDefined.MOVE_TO, CmdDefined.STAND_HERE, CmdDefined.ACTION_ROLE];
 		}
 		
 		override protected function actionHandler(event:RespondEvented):void 
@@ -35,7 +35,10 @@ package game.socket
 					break;
 				case CmdDefined.STAND_HERE:
 					event.invoke(NoticeDefined.ON_STAND_HERE, new StandHandler);
-					break;	
+					break;
+				case CmdDefined.ACTION_ROLE:
+					event.invoke(NoticeDefined.ON_ACTION_ROLE, new ActionHandler);
+					break;
 			}
 		}
 		

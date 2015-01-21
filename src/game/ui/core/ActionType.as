@@ -8,7 +8,8 @@ package game.ui.core
 		public static const HIT:String = "beaten_%s000%d";
 		public static const ATTACK:String = "attack_%s000%d";
 		public static const WALK:String = "walk_%s000%d";
-		
+		public static const BEATEN:String = "beaten_%s000%d";
+		public static const YEMAN:String = "yeman_%s000%d";
 		//ends
 	}
 

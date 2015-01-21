@@ -44,12 +44,14 @@ package game.socket.map
 		{
 			sendTest(CmdDefined.ENTER_MAP);
 			//
-			Clock.step(1000, call, 0);
+			Clock.step(200, call, 0, CmdDefined.STAND_HERE);
+			Clock.step(1000, call, 0, CmdDefined.MOVE_TO);
+			Clock.step(2000, call, 0, CmdDefined.ACTION_ROLE);
 		}
 		
-		private function call():void
+		private function call(cmd:int):void
 		{
-			sendTest(CmdDefined.STAND_HERE);
+			sendTest(cmd);
 		}
 		
 		//ends

@@ -4,6 +4,7 @@ package game.logic
 	import game.consts.CmdDefined;
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
+	import game.datas.obj.ActionObj;
 	import game.datas.obj.EntermapObj;
 	import game.datas.obj.PlayerObj;
 	import game.socket.map.*;
@@ -42,7 +43,8 @@ package game.logic
 		
 		override public function getSecretlyNotices():Array 
 		{
-			return [NoticeDefined.ON_ENTER_MAP, NoticeDefined.ON_QUIT_MAP, NoticeDefined.ON_USER_MOVE,NoticeDefined.ON_STAND_HERE];
+			return [NoticeDefined.ON_ENTER_MAP, NoticeDefined.ON_QUIT_MAP, NoticeDefined.ON_USER_MOVE, NoticeDefined.ON_STAND_HERE,
+				NoticeDefined.ON_ACTION_ROLE];
 		}
 		
 		//责任处理
@@ -61,6 +63,9 @@ package game.logic
 					break;
 				case NoticeDefined.ON_STAND_HERE:
 					WorldMap.gets().stop(event.data as PlayerObj);
+					break;
+				case NoticeDefined.ON_ACTION_ROLE:
+					actionRole(event.data as ActionObj);
 					break;
 			}
 		}
@@ -82,6 +87,11 @@ package game.logic
 			}else {
 				WorldMap.gets().removeUser(player.uid);
 			}
+		}
+		
+		private function actionRole(obj:ActionObj):void
+		{
+			WorldMap.gets().action(obj);
 		}
 		
 		//ends

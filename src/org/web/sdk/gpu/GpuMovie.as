@@ -63,7 +63,13 @@ package org.web.sdk.gpu
 			if (++_currfps > _fps) {
 				_currfps = 0;
 				position++;
+				handlerFrame(_index);
 			}
+		}
+		
+		protected function handlerFrame(index:int):void
+		{
+			
 		}
 		
 		//动作可以初始化
