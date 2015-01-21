@@ -1,6 +1,6 @@
 一个2D的SDK，为快速构造2D提供接口！
 
-display:	扩展了actionscript的display 提供接口IDisplayObject
+display:	扩展了actionscript的display 提供接口IDisplayObject  \n
 gpu:		一个易扩展易添加的GPU渲染，基于Bitmapdata
 handler:	事件派发器
 lang:		语言包
