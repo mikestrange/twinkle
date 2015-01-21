@@ -1,7 +1,7 @@
 package 
 {
 	import org.web.sdk.net.web.WebConnection;
-	import party.greensock.*;
+	import com.greensock.*;
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;

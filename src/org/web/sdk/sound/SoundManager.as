@@ -1,6 +1,6 @@
 package org.web.sdk.sound  
 {
-	import party.greensock.TweenLite;
+	import com.greensock.TweenLite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.media.Sound;
