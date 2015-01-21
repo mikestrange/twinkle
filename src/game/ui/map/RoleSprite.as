@@ -6,7 +6,7 @@ package game.ui.map
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import game.consts.NoticeDefined;
-	import game.datas.PlayerObj;
+	import game.datas.obj.PlayerObj;
 	import game.datas.SelfData;
 	import game.datas.vo.ActionVo;
 	import game.ui.core.ActionType;
@@ -100,7 +100,7 @@ package game.ui.map
 				}
 				doplace(node);
 				if (Point.distance(endpo, startpo) < max_leng) {
-					if (_data.isSelf()) this.dispatchEvent(new Event("move"));
+					if (_data.isself()) this.dispatchEvent(new Event("move"));
 					pathIndex++;
 					fetch();
 					if (pathIndex >= path.length) {

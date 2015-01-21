@@ -12,10 +12,8 @@ package game.socket.keep
 		override public function action(event:RespondEvented):void 
 		{
 			super.action(event);
-			if (event.socket) {
-				//收到心跳包直接回执
-				event.socket.sendNoticeRequest(new ServerRequest(CmdDefined.HEART_BEAT));
-			}
+			//收到心跳包直接回执
+			if (event.socket) event.socket.sendNoticeRequest(new ServerRequest(CmdDefined.HEART_BEAT));
 		}
 		//ends
 	}

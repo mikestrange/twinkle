@@ -1,4 +1,4 @@
-package game.mvc 
+package game.logic 
 {
 	import game.GameGlobal;
 	import org.web.sdk.display.House;
@@ -7,15 +7,15 @@ package game.mvc
 	import game.consts.CmdDefined;
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
-	import game.mvc.cmd.GameManager;
+	import game.socket.GameManager;
 	import game.socket.logic.LogicRequest;
-	import game.mvc.room.MapController;
 	import game.consts.LayerType;
 	import org.web.sdk.display.ILayer;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.system.*;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
+	import org.web.sdk.system.inter.IMessage;
 	import org.web.sdk.tool.FpsMonitor;
 	
 	public class WorldKidnap extends Kidnap 
@@ -61,9 +61,9 @@ package game.mvc
 		}
 		
 		//launch  初始化模块
-		override protected function initialization():void 
+		override public function launch(notice:IMessage):void 
 		{
-			super.initialization();
+			super.launch(notice);
 			//服务器回执注册
 			GameManager.gets().register();
 			//添加本地命令

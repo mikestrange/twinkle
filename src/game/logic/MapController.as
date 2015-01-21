@@ -1,10 +1,11 @@
-package game.mvc.room 
+package game.logic 
 {
 	import flash.ui.Keyboard;
 	import game.consts.CmdDefined;
 	import game.consts.ModuleType;
 	import game.consts.NoticeDefined;
-	import game.datas.PlayerObj;
+	import game.datas.obj.EntermapObj;
+	import game.datas.obj.PlayerObj;
 	import game.socket.map.*;
 	import game.socket.map.recv.*;
 	import game.ui.map.WorldMap;
@@ -29,14 +30,7 @@ package game.mvc.room
 			_invoker.addOnlyCommand(NoticeDefined.USER_MOVE, MoveRequest);
 			_invoker.addOnlyCommand(NoticeDefined.STAND_HERE, StandRequest);
 			notice.addInvoker("map", _invoker);
-			//
-			KeyManager.keyListener(Keyboard.F8, "enterF8", onKeyDown);
-		}
-		
-		private function onKeyDown(...rest):void
-		{
-			ServerSocket.socket.sendNotice(NoticeDefined.QUIT_MAP);
-			ServerSocket.socket.sendNotice(NoticeDefined.ENTER_MAP);
+			//可以设置监听所有端口
 		}
 		
 		override public function free():void 
@@ -57,36 +51,36 @@ package game.mvc.room
 			switch(event.name)
 			{
 				case NoticeDefined.ON_ENTER_MAP:
-					enterMap(event.data as EnterHandler);
+					enterMap(event.data as EntermapObj);
 					break;
 				case NoticeDefined.ON_QUIT_MAP:
-					quitMap(event.data as QuitHandler);
+					quitMap(event.data as PlayerObj);
 					break;
 				case NoticeDefined.ON_USER_MOVE:
-					WorldMap.gets().move(event.data.player as PlayerObj);
+					WorldMap.gets().move(event.data as PlayerObj);
 					break;
 				case NoticeDefined.ON_STAND_HERE:
-					WorldMap.gets().stop(event.data.player as PlayerObj);
+					WorldMap.gets().stop(event.data as PlayerObj);
 					break;
 			}
 		}
 		
-		private function enterMap(data:EnterHandler):void
+		private function enterMap(data:EntermapObj):void
 		{
-			if (data.self) {
+			if (data.player.isself()) {
 				WorldMap.gets().showMap(data.mapId);
 			}else {
 				WorldMap.gets().createPlayer(data.player);
 			}
 		}
 		
-		private function quitMap(data:QuitHandler):void
+		private function quitMap(player:PlayerObj):void
 		{
 			if (!_ismap) return;
-			if (data.player.isSelf()) {
+			if (player.isself()) {
 				WorldMap.gets().free();
 			}else {
-				WorldMap.gets().removeUser(data.player.uid);
+				WorldMap.gets().removeUser(player.uid);
 			}
 		}
 		

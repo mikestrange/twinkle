@@ -1,5 +1,6 @@
 package org.web.sdk.net.socket.core 
 {
+	import game.GameGlobal;
 	import org.web.sdk.net.interfaces.INetHandler;
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.net.utils.FtpRead;
@@ -11,13 +12,18 @@ package org.web.sdk.net.socket.core
 		//处理服务器的回执
 		public function action(event:RespondEvented):void
 		{
-			trace("event:", event);
-			if (event && !event.isMatter()) readByte(event.proto);
+			if (event && !event.isMatter()) analyze(event.proto);
+			else trace("#数据不能解析:", event.cmd);
 		}
 		
-		protected function readByte(proto:FtpRead):void
+		protected function analyze(proto:FtpRead):void
 		{
 			
+		}
+		
+		protected function get isdebug():Boolean
+		{
+			return GameGlobal.isDebug;
 		}
 		
 		public function getMessage():Object

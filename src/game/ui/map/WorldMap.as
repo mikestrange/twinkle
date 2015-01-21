@@ -11,9 +11,9 @@ package game.ui.map
 	import flash.utils.getTimer;
 	import game.consts.LayerType;
 	import game.consts.NoticeDefined;
-	import game.datas.PlayerObj;
+	import game.datas.obj.PlayerObj;
 	import game.datas.vo.ActionVo;
-	import game.mvc.WorldKidnap;
+	import game.logic.WorldKidnap;
 	import game.ui.map.RoleSprite;
 	import org.alg.astar.Astar;
 	import org.alg.astar.Node;
@@ -146,9 +146,9 @@ package game.ui.map
 			actor.moveTo(data.x, data.y);
 			addChind(actor);
 			map.followDisplay(actor);
-			Clock.step(1000, test, 1);
 		}
 		
+		//测试调用
 		private function test():void
 		{
 			var player:PlayerObj;

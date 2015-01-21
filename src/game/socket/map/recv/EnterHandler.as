@@ -1,7 +1,8 @@
 package game.socket.map.recv 
 {
 	import game.consts.NoticeDefined;
-	import game.datas.PlayerObj;
+	import game.datas.obj.EntermapObj;
+	import game.datas.obj.PlayerObj;
 	import game.datas.SelfData;
 	import org.web.sdk.net.utils.FtpRead;
 	import org.web.sdk.net.socket.core.ServerRespond;
@@ -9,14 +10,13 @@ package game.socket.map.recv
 	
 	public class EnterHandler extends ServerRespond 
 	{
-		public var mapId:int;
-		public var self:Boolean;
-		public var player:PlayerObj;
+		public var data:EntermapObj;
 		
 		//只有用户在进入地图的时候才回调
-		override protected function readByte(proto:FtpRead):void 
+		override protected function analyze(proto:FtpRead):void 
 		{
-			mapId = proto.readShort();
+			data = new EntermapObj;
+			data.mapId = proto.readShort();
 			var uid:int = proto.readInt();			//
 			var type:int = proto.readShort();		//角色类型
 			var usn:String = proto.readString();		//
@@ -25,23 +25,19 @@ package game.socket.map.recv
 			var x:int = proto.readShort();
 			var y:int = proto.readShort();
 			
-			if (uid == SelfData.gets().uid) {
-				self = true;
-				PlayerObj.gets().update(uid, usn, x, y, point, level, type);
-			}else {
-				player = new PlayerObj();
-				player.update(uid, usn, x, y, point, level, type);
-			}
+			data.player.update(uid, usn, x, y, point, level, type);
+			if(data.player.isself()) PlayerObj.gets().update(uid, usn, x, y, point, level, type);
 		}
 		
 		override public function getMessage():Object 
 		{
-			if (player == null) {
-				mapId = 3001;
-				self = true;
-				PlayerObj.gets().update(SelfData.gets().uid, "ts1", 1000, 1000);
+			if (this.isdebug) {
+				data = new EntermapObj;
+				data.mapId = 3001;
+				data.player.update(SelfData.gets().uid, "ts1", 1000, 1000);
+				if(data.player.isself()) PlayerObj.gets().update(SelfData.gets().uid, "ts1", 1000, 1000);
 			}
-			return super.getMessage();
+			return data;
 		}
 		
 		

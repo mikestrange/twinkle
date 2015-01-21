@@ -8,7 +8,7 @@ package game.socket.logic
 	public class LogicHandler extends ServerRespond 
 	{
 		
-		override protected function readByte(proto:FtpRead):void 
+		override protected function analyze(proto:FtpRead):void 
 		{
 			//
 			var logged:Boolean = proto.readBoolean();

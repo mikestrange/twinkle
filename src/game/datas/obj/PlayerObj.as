@@ -1,5 +1,6 @@
-package game.datas 
+package game.datas.obj 
 {
+	import game.datas.SelfData;
 	import game.utils.DrivePath;
 	import org.alg.astar.Node;
 	
@@ -29,7 +30,7 @@ package game.datas
 			return DrivePath.getUrlByType(type);
 		}
 		
-		public function isSelf():Boolean
+		public function isself():Boolean
 		{
 			return uid == SelfData.gets().uid;
 		}

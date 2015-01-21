@@ -6,6 +6,7 @@ package game.socket.map
 	import org.web.sdk.net.handler.CmdManager;
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.system.inter.IMessage;
+	import org.web.sdk.tool.Clock;
 	
 	public class EntermapRequest extends CommandRequest 
 	{
@@ -29,8 +30,8 @@ package game.socket.map
 			writeShort(data.height);
 			*/
 			writeShort(3001);		//mapid
-			writeByte(4);		//point
-			writeShort(100);			//x
+			writeByte(4);			//point
+			writeShort(100);		//x
 			writeShort(100);
 			writeShort(0);			//x
 			writeShort(0);
@@ -39,9 +40,16 @@ package game.socket.map
 		}
 		
 		//测试的时候会进入这里
-		override protected function test(message:IMessage):void 
+		override protected function debug(data:Object):void 
 		{
 			sendTest(CmdDefined.ENTER_MAP);
+			//
+			Clock.step(1000, call, 0);
+		}
+		
+		private function call():void
+		{
+			sendTest(CmdDefined.STAND_HERE);
 		}
 		
 		//ends

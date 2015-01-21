@@ -29,9 +29,9 @@ package game.socket.logic
 			writeInt(arr[0]);
 		}
 		
-		override protected function test(message:IMessage):void 
+		override protected function debug(data:Object):void 
 		{
-			message.sendMessage(NoticeDefined.ON_LOGIC);
+			sendTest(CmdDefined.LOGIC_GAME);
 		}
 		
 		//ends

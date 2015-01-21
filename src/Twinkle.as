@@ -1,29 +1,23 @@
 package 
 {
-	import org.web.sdk.net.web.WebConnection;
 	import com.greensock.*;
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.net.*;
-	import flash.system.System;
 	import flash.ui.*;
 	import flash.utils.*;
-	import game.consts.LayerType;
-	import game.consts.NoticeDefined;
-	import game.datas.PlayerObj;
-	import game.mvc.WorldKidnap;
-	import game.consts.CmdDefined;
+	import game.consts.*;
+	import game.datas.obj.PlayerObj;
+	import game.logic.WorldKidnap;
 	import game.ui.core.GpuCustom;
 	import game.ui.map.WorldMap;
 	import game.ui.core.ActionType;
-	import game.ui.map.RoleSprite;
 	import game.ui.map.RoleSprite;
 	import org.alg.map.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
-	import org.web.sdk.gpu.BufferImage;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
 	import org.web.sdk.net.socket.*;
@@ -37,9 +31,6 @@ package
 	import org.web.sdk.system.*;
 	import org.web.sdk.tool.*;
 	import org.web.sdk.utils.*;
-	import org.web.sdk.utils.list.HashList;
-	import org.web.sdk.utils.list.ListNode;
-	
 	
 	[SWF(frameRate = "60", width = "500", height = "400")]
 	
@@ -69,15 +60,7 @@ package
 			FpsMonitor.gets().show();
 			SoundManager.playUrl("bg.mp3");
 			StartLayer.gets().show();
-			SocketClock.start();
 			//
-			var web:WebConnection = new WebConnection("http://www.baidu.com/")
-			web.sendWeb(0);
-		}
-		
-		private function complete(e:Event):void
-		{
-			trace("load>", e.target.data);
 		}
 		
 		//ends

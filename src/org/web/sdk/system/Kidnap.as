@@ -32,14 +32,6 @@ package org.web.sdk.system
 			_controHash = new HashMap; 	
 		}
 		
-		/*
-		 * launch 启动的时候调用
-		 * */
-		protected function initialization():void
-		{
-			
-		}
-		
 		//添加自身监听 []
 		protected function addMessage(name:String, called:Function):void
 		{
@@ -164,7 +156,7 @@ package org.web.sdk.system
 		 * */
 		public function launch(notice:IMessage):void
 		{
-			start(notice);
+			
 		}
 		
 		//开始需要一个消息机制
@@ -173,7 +165,7 @@ package org.web.sdk.system
 			Log.log(this).debug("#启动天网");
 			_message = notice == null ? GlobalMessage.gets() : notice;
 			addMessageFromController(this);
-			initialization();
+			launch(_message);
 		}
 		
 		/*

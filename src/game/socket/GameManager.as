@@ -1,4 +1,4 @@
-package game.mvc.cmd 
+package game.socket 
 {
 	import game.consts.CmdDefined;
 	import game.consts.NoticeDefined;
@@ -6,7 +6,9 @@ package game.mvc.cmd
 	import game.socket.logic.LogicHandler;
 	import org.web.sdk.net.handler.RespondConverter;
 	import org.web.sdk.net.handler.RespondEvented;
-	
+	/*
+	 * socket cmd callblack
+	 * */
 	public class GameManager extends RespondConverter 
 	{
 		override public function getCmdList():Array 

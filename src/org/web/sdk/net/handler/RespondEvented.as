@@ -26,10 +26,10 @@ package org.web.sdk.net.handler
 			this.proto = proto;
 		}
 		
-		//处理过
+		//处理过或者没有数据
 		public function isMatter():Boolean
 		{
-			return filed;
+			return proto == null || filed;
 		}
 		
 		public function shut():void
@@ -51,7 +51,7 @@ package org.web.sdk.net.handler
 				getMessage().sendMessage(notice, null, this, Evented.ERROR_TYPE);
 			}else {
 				//解析->   返回true就证明之前有处理过,之后的处理或者不处理不需要它关心
-				result.action(proto);
+				result.action(this);
 				//发送解析后的事务
 				getMessage().sendMessage(notice, result.getMessage(), this, Evented.SERVER_MESSAGE);
 			}

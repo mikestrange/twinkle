@@ -1,7 +1,7 @@
 package game.socket.map.recv 
 {
 	import game.consts.NoticeDefined;
-	import game.datas.PlayerObj;
+	import game.datas.obj.PlayerObj;
 	import game.datas.SelfData;
 	import org.web.sdk.net.socket.core.ServerRespond;
 	import org.web.sdk.net.handler.RespondEvented;
@@ -11,12 +11,20 @@ package game.socket.map.recv
 	{
 		public var player:PlayerObj;
 		
-		override protected function readByte(proto:FtpRead):void 
+		override protected function analyze(proto:FtpRead):void 
 		{
 			player = new PlayerObj;
 			player.uid = proto.readInt();
 		}
 		
+		override public function getMessage():Object 
+		{
+			if (isdebug) {
+				player = new PlayerObj;
+				player.uid = 0;
+			}
+			return player;
+		}
 		//ends
 	}
 

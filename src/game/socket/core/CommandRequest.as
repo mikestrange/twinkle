@@ -25,14 +25,15 @@ package game.socket.core
 		public function execute(event:Evented):void 
 		{
 			if (GameGlobal.isDebug) {
-				test(GlobalMessage.gets());
+				debug(event.data);
 			}else {
 				var socket:INetwork = event.client as INetwork;
 				if(socket) socket.sendNoticeRequest(this, event.data);
 			}
 		}
 		
-		protected function test(message:IMessage):void
+		//测试的时候进入
+		protected function debug(data:Object):void
 		{
 			
 		}

@@ -25,6 +25,7 @@ package game.socket.map
 			writeShort(data.width);			//len
 			writeShort(data.height);
 		}
+		
 		//ends
 	}
 

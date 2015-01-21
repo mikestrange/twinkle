@@ -105,9 +105,7 @@ package
 		
 		private function loginEvent(e:Event):void
 		{
-			ServerSocket.create(new AssignedTransfer);
 			ServerSocket.socket.link('127.0.0.1', 9555, minaLine);
-			//登陆
 		}
 		
 		private function minaLine(e:Object):void
