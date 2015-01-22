@@ -17,6 +17,9 @@ package
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
 	import org.web.sdk.gpu.BufferImage;
+	import org.web.sdk.gpu.texture.VRayTexture;
+	import org.web.sdk.gpu.VRayMap;
+	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
 	import org.web.sdk.net.socket.*;
@@ -57,13 +60,14 @@ package
 			ServerSocket.create(new AssignedTransfer);	//socket建立
 			PerfectLoader.gets().LOAD_MAX = 5;			//最大下载
 			FpsMonitor.gets().show();					//内存查看
-			//SoundManager.playUrl("bg.mp3");				
-			StartLayer.gets().show();
+			SoundManager.playUrl("bg.mp3");				
+			//StartLayer.gets().show();
 			//------
-			return;
 			var url:String = "http://e.hiphotos.baidu.com/zhidao/pic/item/1b4c510fd9f9d72ab4b95ef0d42a2834359bbb7a.jpg";
 			var butter:BufferImage = new BufferImage(url);
-			this.addDisplay(butter)
+			this.addDisplay(butter);
+			var bit:IAcceptor = butter.clone();
+			bit.addInto(this,100,100)
 		}
 		
 		//ends

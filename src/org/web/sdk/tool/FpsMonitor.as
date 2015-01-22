@@ -66,6 +66,7 @@ package org.web.sdk.tool
 			style.setStyle("memMax", {color: hex2css(theme.memmax)});
 			
 			text = new TextField();
+			text.autoSize = "left";
 			text.width = WIDTH;
 			text.height = 50;
 			text.styleSheet = style;

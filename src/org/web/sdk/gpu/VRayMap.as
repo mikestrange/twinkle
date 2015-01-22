@@ -15,35 +15,40 @@ package org.web.sdk.gpu
 	import org.web.sdk.inters.IAcceptor;
 	
 	/**
-	 * 贴图基类
+	 * 贴图基类,自身释放了bitmapdata，扩展不必调用dispose
 	 */
 	public class VRayMap extends Bitmap implements IAcceptor 
 	{
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
 		
+		private var _texture:VRayTexture;
+		
 		public function VRayMap(texture:VRayTexture = null) 
 		{
 			super(null, AUTO, true);
-			if(texture) setTexture(texture);
+			if (texture) setTexture(texture);
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IBitmap */
 		public function dispose():void 
 		{
-			Multiple.dispose(this.bitmapData);
+			if (_texture) _texture.relieve();
+			this._texture = null;
 			this.bitmapData = null;
 		}
-		 
+		
 		public function setTexture(texture:VRayTexture):void 
 		{
 			if (texture == null) throw Error("材质无效"); 
+			if (_texture != texture && _texture) _texture.relieve();
+			_texture = texture;
 			this.bitmapData = texture.texture;
 			this.smoothing = true;
 		}
 		
 		public function clone():IAcceptor 
 		{
-			return null;
+			return new VRayMap(this._texture);
 		}
 		
 		public function clearFilters():void 

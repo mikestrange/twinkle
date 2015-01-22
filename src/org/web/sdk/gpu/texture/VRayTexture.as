@@ -10,10 +10,24 @@ package org.web.sdk.gpu.texture
 	public class VRayTexture
 	{
 		private var _bitmapdata:BitmapData;
+		private var _mild:Boolean;
 		
-		public function VRayTexture(bit:BitmapData, finWidth:int = 0, finHeight:int = 0) 
+		//不会自动释放 mild=false
+		public function VRayTexture(bit:BitmapData, mild:Boolean = false) 
 		{
 			this._bitmapdata = bit;
+			this._mild = mild;
+		}
+		
+		public function set mild(value:Boolean):void
+		{
+			_mild = value;
+		}
+		
+		//微弱的
+		public function get mild():Boolean
+		{
+			return _mild;
 		}
 		
 		public function get texture():BitmapData
@@ -33,19 +47,25 @@ package org.web.sdk.gpu.texture
 			mesh.setTexture(this);
 		}
 		
-		//---------
-		public static function fromBitmapdata(bit:BitmapData):VRayTexture
+		//解除
+		public function relieve():void
 		{
-			return new VRayTexture(bit);
+			if(_mild) dispose();
+		}
+		
+		//---------
+		public static function fromBitmapdata(bit:BitmapData, mild:Boolean = false):VRayTexture
+		{
+			return new VRayTexture(bit, mild);
 		}
 		
 		//可以是displayer，movieclip,bitmapdata
-		public static function fromClass(className:String, app:ApplicationDomain = null):VRayTexture
+		public static function fromClass(className:String, app:ApplicationDomain = null, mild:Boolean = false):VRayTexture
 		{
 			if (app && app.hasDefinition(className)) {
 				var Objects:Class = app.getDefinition(className) as Class;
 				var item:* = new Objects;
-				return new VRayTexture(item as BitmapData);
+				return new VRayTexture(item as BitmapData, mild);
 			}
 			return null;
 		}

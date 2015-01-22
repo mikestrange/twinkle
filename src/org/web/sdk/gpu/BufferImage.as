@@ -5,7 +5,7 @@ package org.web.sdk.gpu
 	import flash.events.Event;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.gpu.texture.VRayTexture;
+	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.inters.IBuffer;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
@@ -48,7 +48,6 @@ package org.web.sdk.gpu
 		
 		override public function dispose():void 
 		{
-			super.dispose();
 			if (_url == null) return;
 			if (_over) {
 				asset.unmark(_url);
@@ -56,6 +55,11 @@ package org.web.sdk.gpu
 				asset.loader.removeRespond(_url, complete);
 			}
 			_url = null;
+		}
+		
+		override public function clone():IAcceptor 
+		{
+			return new BufferImage(this._url);
 		}
 		//ends
 	}
