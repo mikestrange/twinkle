@@ -1,15 +1,15 @@
-package org.alg.map 
+package org.web.rpg.core 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
-	import org.alg.utils.MapPath;
+	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 
-	public class NodeTexture extends Bitmap
+	public class MapLump extends Bitmap
 	{
 		//连接地址
 		private var _url:String;
@@ -20,7 +20,7 @@ package org.alg.map
 		//是否下载
 		private var _isLoad:Boolean = false;
 
-		public function NodeTexture(id:uint, mx:int = 0, my:int = 0, w:int = 0, h:int = 0)
+		public function MapLump(id:uint, mx:int = 0, my:int = 0, w:int = 0, h:int = 0)
 		{
 			this._x = mx;
 			this._y = my;

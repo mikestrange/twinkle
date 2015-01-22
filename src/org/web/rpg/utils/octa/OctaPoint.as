@@ -1,4 +1,4 @@
-package org.alg.utils 
+package org.web.rpg.utils.octa 
 {
 	public class OctaPoint 
 	{
@@ -12,7 +12,7 @@ package org.alg.utils
 			this.max = max;
 			this.type = type;
 		}
-		
+			
 		public function inThis(point:int):Boolean
 		{
 			return point > min && point < max;
@@ -22,8 +22,6 @@ package org.alg.utils
 		{
 			return point < min || point > max;
 		}	
-		
 		//ends
 	}
-
 }

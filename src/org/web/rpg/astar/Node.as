@@ -1,4 +1,4 @@
-package org.alg.astar 
+package org.web.rpg.astar 
 {
 	public class Node 
 	{
@@ -6,7 +6,7 @@ package org.alg.astar
 		private var _x:int;
 		private var _y:int;
 		//地表类型
-		private var _type:int = 1;
+		private var _type:int;	
 		//代价
 		public const costMultiplier:Number = 1;
 		//父节点

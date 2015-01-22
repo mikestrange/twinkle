@@ -72,7 +72,7 @@ package org.web.sdk.gpu
 		//动作可以初始化
 		public function set position(value:int):void
 		{
-			if (_totals < 2) return;
+			if (_vector == null || _vector.length < 2) return;
 			if (value < 1) value = 1;
 			if (value > _totals) value = 1;
 			_index = value;
@@ -97,6 +97,12 @@ package org.web.sdk.gpu
 		public function get frameRate():int
 		{
 			return _fps;
+		}
+		
+		override public function dispose():void 
+		{
+			this.stop();
+			super.dispose();
 		}
 		//ends
 	}

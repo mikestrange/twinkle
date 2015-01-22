@@ -1,6 +1,6 @@
 package game.utils 
 {
-	import org.alg.utils.MapPath;
+	import org.web.rpg.utils.MapPath;
 	
 	public class DrivePath 
 	{

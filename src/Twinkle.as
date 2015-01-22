@@ -11,10 +11,8 @@ package
 	import game.datas.obj.PlayerObj;
 	import game.logic.WorldKidnap;
 	import game.ui.core.GpuCustom;
-	import game.ui.map.WorldMap;
 	import game.ui.core.ActionType;
 	import game.ui.map.RoleSprite;
-	import org.alg.map.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
@@ -60,7 +58,7 @@ package
 			PerfectLoader.gets().LOAD_MAX = 5;			//最大下载
 			FpsMonitor.gets().show();					//内存查看
 			//SoundManager.playUrl("bg.mp3");				
-			//StartLayer.gets().show();
+			StartLayer.gets().show();
 			//------
 			return;
 			var url:String = "http://e.hiphotos.baidu.com/zhidao/pic/item/1b4c510fd9f9d72ab4b95ef0d42a2834359bbb7a.jpg";

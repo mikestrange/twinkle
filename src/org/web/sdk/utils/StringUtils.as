@@ -1,9 +1,9 @@
 package org.web.sdk.utils 
 {
-	public class CharUtil 
+	public class StringUtils 
 	{
 		private static var regexp:RegExp;
-		
+		//屏蔽字符
 		public static function setRegExp(chat:String):void
 		{
 			if (null == regexp) regexp = new RegExp(chat, 'ig');
@@ -14,28 +14,23 @@ package org.web.sdk.utils
 			return chat.replace(regexp, '*');
 		}
 		
-		//还不确定
-		public static function formatNumberWithZero(num:Number, leng:int = 2):String
+		//给一个数字字符墙面补0
+		public static function formatNumber(number:Number, leng:int = 32, radix:int = 10):String
         {
-            if (String(num).length >= leng) return String(num);
-			
+			var value:String = number.toString(radix);
+            if (value.length >= leng) return value;
+			const ZEOR:String = "0";
             var char:String = "";
             var length:int = leng;
             while (length > 0)
             {
-                char = char + "0";
+                char = char + ZEOR;
                 --length;
             }
-            char = char + num;
+            char = char + value;
             return char.substr(char.length - leng);
         }
 		
-		//删掉html格式
-		public static function removeHTML(char:String):String
-        {
-            return char.replace(/\<[^<\/]{1,}\>""\<[^<\/]{1,}\>/gi, "");
-        }
-
 		//截断 一个长度，小于这个长度则不计算
         public static function cutRight(char:String, length:int = 1) : String
         {

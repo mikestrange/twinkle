@@ -56,8 +56,7 @@ package com.adobe.net.proxies
 	 * @author Christian Cantrell
 	 * 
 	 **/
-	public class RFC2817Socket
-		extends Socket
+	public class RFC2817Socket extends Socket
 	{
 		private var proxyHost:String = null;
 		private var host:String = null;

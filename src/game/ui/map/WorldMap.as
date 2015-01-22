@@ -16,30 +16,22 @@ package game.ui.map
 	import game.datas.vo.ActionVo;
 	import game.logic.WorldKidnap;
 	import game.ui.map.RoleSprite;
-	import org.alg.astar.Astar;
-	import org.alg.astar.Node;
-	import org.alg.map.MapBase;
-	import org.alg.map.MeshMap;
-	import org.alg.utils.FormatUtils;
+	import org.web.rpg.astar.Astar;
+	import org.web.rpg.astar.Node;
+	import org.web.rpg.core.MeshMap;
+	import org.web.rpg.core.MapData;
+	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.FrameWork;
+	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.system.key.KeyAction;
 	import org.web.sdk.system.key.KeyManager;
 	import org.web.sdk.tool.Clock;
-	import org.web.sdk.utils.ArrayUtils;
 	import org.web.sdk.utils.HashMap;
 	
 	public class WorldMap
 	{
-		private static var _ins:WorldMap;
-		
-		public static function gets():WorldMap
-		{
-			if (null == _ins) _ins = new WorldMap;
-			return _ins;
-		}
-		
 		//
 		private const STOP_TIME:int = 3000;
 		private var sendTime:Number = 0;
@@ -47,6 +39,7 @@ package game.ui.map
 		public var actor:RoleSprite;
 		//所有角色
 		public var playerHash:HashMap;
+		//
 		private var isListener:Boolean = false;
 		
 		private var map:MeshMap;
@@ -54,6 +47,7 @@ package game.ui.map
 		public function WorldMap() 
 		{
 			playerHash = new HashMap;
+			map = new MeshMap;
 		}
 		
 		private function initialization():void
@@ -72,7 +66,8 @@ package game.ui.map
 		
 		public function free():void
 		{
-			if (map) map.hide();
+			map.hide();
+			playerHash.clear();
 			if (!isListener) return;
 			isListener = false;
 			FrameWork.stage.removeEventListener(Event.ENTER_FRAME, onEnter);
@@ -89,17 +84,18 @@ package game.ui.map
 		public function showMap(id:uint):void
 		{
 			free();
-			playerHash.clear();
-			MapBase.showMap(id, complete);
+			FrameWork.downLoad(MapPath.getMapConfig(id), LoadEvent.TXT, complete);
 		}
 		
-		//添加到地图
-		private function complete(e:MeshMap):void
+		private function complete(e:LoadEvent):void
 		{
-			initialization();
-			WorldKidnap.addToLayer(this.map = e, LayerType.MAP);
+			if (e.eventType == LoadEvent.ERROR) return;
+			map.setMapdata(MapData.create(new XML(e.target as String)));
+			if(!map.isshow()) WorldKidnap.addToLayer(map, LayerType.MAP);
 			//添加主角
 			setActor(PlayerObj.gets());
+			//初始化
+			initialization();
 		}
 		
 		private function onStageClick(e:MouseEvent):void 
@@ -244,19 +240,19 @@ package game.ui.map
 				}
 				//if (!player.isself()) player.render();
 			}
-			trace("一次：", getTimer() - t1);
+			//trace("一次：", getTimer() - t1);
 			if (userRoot.numChildren < 2) return;
 			//排序，TM比写的排序算法快的多
 			var t2:int = getTimer();
 			list.sortOn("y", Array.NUMERIC);
-			trace("二次:", getTimer() - t2);
+			//trace("二次:", getTimer() - t2);
 			var t3:int = getTimer();
 			for (index = list.length -1; index >= 0; index--)
 			{
 				player = list[index];
 				userRoot.setChildIndex(player, index);
 			}
-			trace("三次:", getTimer() - t3);
+			//trace("三次:", getTimer() - t3);
 			//这里主要是第三次渲染时间太久	
 		}
 		

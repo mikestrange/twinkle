@@ -1,4 +1,4 @@
-package org.alg.map 
+package org.web.rpg.core 
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
@@ -8,40 +8,49 @@ package org.alg.map
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import org.alg.astar.Grid;
-	import org.alg.astar.Node;
-	import org.alg.utils.DrawLine;
+	import org.web.rpg.astar.Grid;
+	import org.web.rpg.core.MapData;
+	import org.web.rpg.utils.DrawLine;
+	import org.web.rpg.astar.Node;
 	import org.web.sdk.display.KitSprite;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
-	
 	/*
 	 * 这里作为背景和寻路算法基础
 	 * */
 	public class MeshMap extends KitSprite 
 	{
+		//地图数据
+		private var _mapdata:MapData;
 		//网格
 		private var _grid:Grid;
-		//
-		private var _userLayer:Sprite;
-		//
+		//Npc,角色,物件
+		private var _itemLayer:KitSprite;
+		//分快加载的地方
 		private var _backdrop:MapShallow;
 		
 		//构造 不允许改变网格
-		public function MeshMap(grid:Grid)
+		public function MeshMap()
 		{
-			this._grid = grid;
 			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
-			this.addChild(_userLayer = new Sprite);
-			_userLayer.mouseEnabled = false;
+			this.addChild(_itemLayer = new KitSprite);
+			_itemLayer.lock();
+		}
+		
+		//设置所有数据
+		public function setMapdata(data:MapData):void
+		{
+			hideEvent();
+			_mapdata = data;
+			_grid = Grid.createByArray(data.mapArr, data.across, data.vertical, data.sizeWidth, data.sizeHeight);
+			_backdrop = new MapShallow(data);
+			this.addChildAt(_backdrop, 0);
 		}
 		
 		override public function hideEvent(event:Event = null):void 
 		{
-			super.hideEvent(event);
-			clearAction();
-			_backdrop.dispose();
-			if (_backdrop.parent) _backdrop.parent.removeChild(_backdrop);
+			_itemLayer.clearChildren();
+			removeDesktop();
 		}
 		
 		public function get grid():Grid
@@ -49,20 +58,28 @@ package org.alg.map
 			return _grid;
 		}
 		
-		//底图必须是全屏模式
+		public function get mapData():MapData
+		{
+			return _mapdata;
+		}
+		
 		//桌面，也就是底图
 		public function desktop():Sprite
 		{
 			return _backdrop;
 		}
 		
-		//设置背景地图  主动设置的时候会清桌面所有图标
-		public function setDesktop(dis:DisplayObject):void
+		public function removeDesktop():void
 		{
-			_backdrop = dis as MapShallow;
-			_backdrop.openLoad = true;
-			this.addChildAt(_backdrop, 0);
-			//drawGridShape();
+			if (_backdrop) {
+				_backdrop.hide();
+				_backdrop = null;
+			}
+		}
+		
+		public function update():void
+		{
+			if (_backdrop) _backdrop.setLocation(this.x,this.y);
 		}
 		
 		//设置地图的一个位置，返回其中心角色的位置
@@ -71,25 +88,20 @@ package org.alg.map
 		{
 			var dx:int = px >= 0 ? px : -px;
 			var dy:int = py >= 0 ? py : -py;
-			var playerx:int = dx > _backdrop.width ? _backdrop.width - 1 : dx;
-			var playery:int = dy > _backdrop.height ? _backdrop.height - 1 : dy;
-			if (dx > _backdrop.width - FrameWork.winWidth / 2 ) {
-				dx = _backdrop.width - FrameWork.winWidth;
+			var playerx:int = dx > _mapdata.M_width ? _mapdata.M_width - 1 : dx;
+			var playery:int = dy > _mapdata.M_height ? _mapdata.M_height - 1 : dy;
+			if (dx > _mapdata.M_width - FrameWork.winWidth / 2 ) {
+				dx = _mapdata.M_width - FrameWork.winWidth;
 			}else {
 				dx = ((playerx - FrameWork.winWidth / 2 < 0) ? 0 : playerx - FrameWork.winWidth / 2);
 			}
-			if (dy > _backdrop.height - FrameWork.winHeight / 2) {
-				dy = _backdrop.height - FrameWork.winHeight;
+			if (dy > _mapdata.M_height - FrameWork.winHeight / 2) {
+				dy = _mapdata.M_height - FrameWork.winHeight;
 			}else {
 				dy = ((playery - FrameWork.winHeight / 2) < 0 ? 0 : playery - FrameWork.winHeight / 2);
 			}
 			moveTo(-dx, -dy);
 			return new Point(playerx, playery);
-		}
-		
-		public function update():void
-		{
-			_backdrop.setLocation(this.x,this.y);
 		}
 		
 		//跟随主演
@@ -112,7 +124,7 @@ package org.alg.map
 				}
 			}else {
 				if (po.x >= FrameWork.winWidth / 2) {
-					var rightx:Number = FrameWork.winWidth - this._backdrop.width;
+					var rightx:Number = FrameWork.winWidth - _mapdata.M_width;
 					if (this.x > rightx) this.x = endx < rightx ? rightx : endx;
 				}
 			}
@@ -122,7 +134,7 @@ package org.alg.map
 				}
 			}else {
 				if (po.y >= FrameWork.winHeight / 2) {
-					var righty:Number = FrameWork.winHeight - this._backdrop.height;
+					var righty:Number = FrameWork.winHeight - _mapdata.M_height;
 					if (this.y > righty) this.y = endy < righty ? righty : endy;
 				}
 			}
@@ -131,12 +143,7 @@ package org.alg.map
 		
 		public function get actionLayer():Sprite
 		{
-			return _userLayer;
-		}
-		
-		public function clearAction():void
-		{
-			while (_userLayer.numChildren) _userLayer.removeChildAt(0);
+			return _itemLayer;
 		}
 		
 		//取一个屏幕左边的基点   偏移是为了扩大屏幕
@@ -170,12 +177,6 @@ package org.alg.map
 		
 		private static const rect:Rectangle = new Rectangle();
 		private static const currRect:Rectangle = new Rectangle();
-		//绘制可视化网格
-		public function drawGridShape():void
-		{
-			_backdrop.addChild(DrawLine.drawGrid(_grid.across, _grid.vertical, _grid.nodeWidth, _grid.nodeHeight));
-			_backdrop.addChild(DrawLine.drawRectToNode(_grid));
-		}
 		//
 	}
 }

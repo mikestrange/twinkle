@@ -2,7 +2,7 @@ package game.datas.obj
 {
 	import game.datas.SelfData;
 	import game.utils.DrivePath;
-	import org.alg.astar.Node;
+	import org.web.rpg.astar.Node;
 	
 	public class PlayerObj 
 	{

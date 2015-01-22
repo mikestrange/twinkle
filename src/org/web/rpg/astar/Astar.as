@@ -1,4 +1,4 @@
-package org.alg.astar 
+package org.web.rpg.astar 
 {
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;

@@ -6,7 +6,7 @@ package org.web.sdk
 	import flash.events.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.load.loads.*;
-	import org.web.sdk.log.Log;
+	import org.web.sdk.log.*;
 	import org.web.sdk.pool.*;
 	import org.web.sdk.load.*;
 	import org.web.sdk.system.key.*;

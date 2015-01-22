@@ -2,7 +2,7 @@ package org.web.sdk.utils
 {
 	import flash.utils.*;
 
-	public class NameUtil 
+	public class ClassUtils 
 	{
 		
 		public static function getClassName(value:*):String 

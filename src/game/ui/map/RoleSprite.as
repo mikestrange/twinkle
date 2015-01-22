@@ -12,21 +12,19 @@ package game.ui.map
 	import game.ui.core.ActionType;
 	import game.ui.core.GpuCustom;
 	import game.inters.IRole;
-	import game.ui.map.WorldMap;
 	import game.utils.DrawUtils;
-	import org.alg.astar.Grid;
-	import org.alg.astar.Node;
-	import org.alg.utils.FormatUtils;
+	import org.web.rpg.astar.Grid;
+	import org.web.rpg.astar.Node;
+	import org.web.rpg.utils.DrawLine;
+	import org.web.rpg.utils.FormatUtils;
 	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.KitSprite;
-	import org.web.sdk.display.TextEditor;
-	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.gpu.GpuSprite;
+	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.net.socket.ServerSocket;
-	
 	/*
 	 * role
 	 * */
@@ -50,14 +48,13 @@ package game.ui.map
 		{
 			this.grid = grid;
 			this._data = data;
-			Multiple.addListener(this);
 			this.initialization();
+			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
 		}
 		
 		override public function hideEvent(event:Event = null):void 
 		{
-			super.hideEvent(event);
-			this.finality();
+			finality();
 		}
 		
 		override public function initialization(value:Boolean = true):void 
@@ -75,12 +72,7 @@ package game.ui.map
 			this.addChild(_texture);
 			//
 			stand();
-			/*
-			this.graphics.clear();
-			this.graphics.beginFill(0xff0000);
-			this.graphics.drawCircle( -1, -1, 2);
-			this.graphics.endFill();
-			*/
+			DrawLine.drawSkeletonLine(this.graphics);
 		}
 		
 		public function setPath(value:Array):void

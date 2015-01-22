@@ -29,6 +29,11 @@ package org.web.sdk.display
 			}
 		}
 		
+		public static function removeForParent(dis:DisplayObject):void
+		{
+			if (dis.parent) dis.parent.removeChild(dis);
+		}
+		
 		public static function addListener(dis:IBaseSprite):void 
 		{
 			if (dis.hasEventListener(Event.ADDED_TO_STAGE)) return;

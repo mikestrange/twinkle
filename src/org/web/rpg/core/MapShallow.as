@@ -1,14 +1,11 @@
-package org.alg.map 
+package org.web.rpg.core 
 {
 	import flash.display.BitmapData;
-	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.geom.Matrix;
 	import flash.utils.Dictionary;
-	import org.alg.astar.Node;
-	import org.alg.utils.MapPath;
+	import org.web.rpg.core.MapData;
+	import org.web.sdk.display.KitSprite;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
@@ -16,7 +13,7 @@ package org.alg.map
 	/*
 	 * 背景地图，完美的封装了
 	 * */
-	public class MapShallow extends Sprite
+	public class MapShallow extends KitSprite
 	{
 		//单个地图大小
 		public var titleWidth:int;
@@ -39,9 +36,30 @@ package org.alg.map
 		//开始下载地图
 		public var openLoad:Boolean = false;
 		
-		//注册节点
-		public function layout():void
+		public function MapShallow(data:MapData) 
 		{
+			if (data) layout(data);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
+		}
+		
+		override public function hideEvent(event:Event = null):void 
+		{
+			super.hideEvent(event);
+			this.dispose();
+		}
+		
+		//注册节点
+		public function layout(data:MapData):void
+		{
+			this.mapId = data.mapId;
+			this.mapName = data.mapName;
+			this.titleWidth = data.titleWidth;
+			this.titleHeight = data.titleHeight;
+			this.M_width = data.M_width;
+			this.M_height = data.M_height;
+			this.wLeng = data.wLeng;
+			this.hLeng = data.hLeng;
+			//
 			_nowHash = new Dictionary;
 			_mapList = new Array;
 			for (var i:int = 0; i < hLeng; i++)
@@ -49,23 +67,26 @@ package org.alg.map
 				_mapList[i] = new Array;
 				for (var j:int = 0; j < wLeng; j++)
 				{
-					_mapList[i][j] = new NodeTexture(mapId, j, i, titleWidth, titleHeight);
+					_mapList[i][j] = new MapLump(mapId, j, i, titleWidth, titleHeight);
 				}
 			}
-			draw();	//下载小地图
-			FrameWork.downLoad(MapPath.getMapSmall(mapId), LoadEvent.IMG, complete);
+			drawBlack();	
+			//下载小地图
+			FrameWork.downLoad(data.smallUrl, LoadEvent.IMG, complete);
+			//打开地图下载
+			this.openLoad = true;
 		}
 		
 		private function complete(e:LoadEvent):void
 		{
 			var bitmapdata:BitmapData = null;
 			if (e.eventType == LoadEvent.COMPLETE) bitmapdata = e.target as BitmapData;
-			draw(bitmapdata);
+			drawBlack(bitmapdata);
 			//模糊地图下载完成
 			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
-		private function draw(bit:BitmapData = null):void
+		private function drawBlack(bit:BitmapData = null):void
 		{
 			this.graphics.clear();
 			if (bit) {
@@ -112,7 +133,7 @@ package org.alg.map
 			{
 				for (var j:int = startX; j < endX; j++)
 				{
-					var node:NodeTexture = getNode(i, j);
+					var node:MapLump = getNode(i, j);
 					if(node){
 						addNode(node);
 						node.startLoad();
@@ -126,7 +147,7 @@ package org.alg.map
 		
 		private function refresh():void
 		{
-			var node:NodeTexture;
+			var node:MapLump;
 			for(var url:* in _nowHash)
 			{
 				node = _nowHash[url];
@@ -141,7 +162,7 @@ package org.alg.map
 		}
 		
 		//添加到将被显示的列表
-		private function addNode(node:NodeTexture):void
+		private function addNode(node:MapLump):void
 		{
 			node.isOpen = true;
 			if(hasNode(node)) return;
@@ -149,7 +170,7 @@ package org.alg.map
 		}
 		
 		//显示列表移除
-		private function removeNode(node:NodeTexture):void
+		private function removeNode(node:MapLump):void
 		{
 			if(hasNode(node)){
 				_nowHash[node.url] = null;
@@ -159,13 +180,13 @@ package org.alg.map
 			}
 		}
 		
-		private function hasNode(node:NodeTexture):Boolean
+		private function hasNode(node:MapLump):Boolean
 		{
 			return undefined != _nowHash[node.url];
 		}
 		
 		//取分块
-		protected function getNode(x:int = 0, y:int = 0):NodeTexture
+		protected function getNode(x:int = 0, y:int = 0):MapLump
 		{
 			return _mapList[x][y];
 		}
@@ -180,13 +201,13 @@ package org.alg.map
 			
 			if (_mapList) {
 				//
-				var node:NodeTexture;
+				var node:MapLump;
 				var list:Array;
 				while (_mapList.length)
 				{
 					list = _mapList.shift() as Array;
 					while (list.length) {
-						node = list.shift() as NodeTexture;
+						node = list.shift() as MapLump;
 						node.free();
 					}
 				}

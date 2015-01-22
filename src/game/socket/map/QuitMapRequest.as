@@ -19,6 +19,7 @@ package game.socket.map
 			super.plumage(message);
 			writeInt(SelfData.gets().uid);
 		}
+		
 		//EMDS
 	}
 

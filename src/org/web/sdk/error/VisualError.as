@@ -1,6 +1,6 @@
 package org.web.sdk.error 
 {
-	import org.web.sdk.utils.NameUtil;
+	import org.web.sdk.utils.ClassUtils;
 	/**
 	 * ...
 	 * 可视化错误
@@ -21,7 +21,7 @@ package org.web.sdk.error
 		{
 			var chat:String;
 			if (target == null) chat = "[ NONE ]->" + type+" : " + index;
-			else chat = "[ " + NameUtil.getClassName(target) + " ] ->" + type+" : " + index;
+			else chat = "[ " + ClassUtils.getClassName(target) + " ] ->" + type+" : " + index;
 			return new VisualError(chat, index, cast);
 		}
 		

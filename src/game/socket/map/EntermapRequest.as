@@ -38,17 +38,27 @@ package game.socket.map
 			sendTest(CmdDefined.ENTER_MAP);
 			//
 			Clock.step(1500, call, 0, CmdDefined.STAND_HERE);
+			//Clock.step(50000, quit, 1, CmdDefined.QUIT_MAP);
 			//Clock.step(1000, call, 0, CmdDefined.MOVE_TO);
 			//Clock.step(1000, call, 0, CmdDefined.ACTION_ROLE);
 		}
 		
 		private function call(cmd:int):void
 		{
-			if (index > 2000) return;
+			/*if (index > 2000) return;
 			for (var i:int = 0; i < 300; i++) {
 				index++;
 				sendTest(cmd);
-			}
+			}*/
+			
+			sendTest(cmd);
+		}
+		
+		private function quit(cmd:int):void
+		{
+			trace("执行了什么:", cmd)
+			Clock.kill(call);
+			sendTest(cmd);
 		}
 		
 		//ends

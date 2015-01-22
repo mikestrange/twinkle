@@ -19,10 +19,7 @@ package game.socket.map.recv
 		
 		override public function getMessage():Object 
 		{
-			if (isdebug) {
-				player = new PlayerObj;
-				player.uid = 0;
-			}
+			if (isdebug) player = PlayerObj.gets();
 			return player;
 		}
 		//ends

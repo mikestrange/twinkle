@@ -7,7 +7,7 @@ package org.web.sdk.system.com
 	import org.web.sdk.system.inter.IMessage;
 	import org.web.sdk.system.Kidnap;
 	import org.web.sdk.utils.HashMap;
-	import org.web.sdk.utils.NameUtil;
+	import org.web.sdk.utils.ClassUtils;
 	
 	/*
 	 * 所有命令管理需要继承他
@@ -58,7 +58,7 @@ package org.web.sdk.system.com
 		public function addOnlyCommand(newName:String, className:Class):Boolean
 		{
 			if (commandHash.isKey(newName)) return false;
-			Log.log(this).debug("#添加命令 [ name =", newName, " , className =", NameUtil.getClassName(className), "]");
+			Log.log(this).debug("#添加命令 [ name =", newName, " , className =", ClassUtils.getClassName(className), "]");
 			commandHash.put(newName, new OrderZone(this, className));
 			//注册一个监听事务
 			message.addMessage(newName, execute);
@@ -72,7 +72,7 @@ package org.web.sdk.system.com
 		{
 			var order:OrderZone = commandHash.getValue(newName);
 			if (order && order.match(this)) {
-				Log.log(this).debug("#删除命令 [ name =", newName, ', from =', NameUtil.getClassName(this), "]");
+				Log.log(this).debug("#删除命令 [ name =", newName, ', from =', ClassUtils.getClassName(this), "]");
 				//删除回调监听事务
 				message.removeMessage(newName, execute);
 				return commandHash.remove(newName) != null;

@@ -10,6 +10,7 @@ package game.logic
 	import game.socket.map.*;
 	import game.socket.map.recv.*;
 	import game.ui.map.WorldMap;
+	import org.web.sdk.display.Multiple;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.core.Controller;
@@ -20,6 +21,7 @@ package game.logic
 	public class MapController extends Controller 
 	{
 		private var _ismap:Boolean = false;	
+		private var _map:WorldMap;
 		
 		override public function launch(notice:IMessage):void 
 		{
@@ -38,7 +40,7 @@ package game.logic
 		{
 			super.free();
 			getMessage().removeInvoker("map");
-			WorldMap.gets().free();
+			if(_ismap) _map.free();
 		}
 		
 		override public function getSecretlyNotices():Array 
@@ -56,16 +58,16 @@ package game.logic
 					enterMap(event.data as EntermapObj);
 					break;
 				case NoticeDefined.ON_QUIT_MAP:
-					quitMap(event.data as PlayerObj);
+					if(_ismap) quitMap(event.data as PlayerObj);
 					break;
 				case NoticeDefined.ON_USER_MOVE:
-					WorldMap.gets().move(event.data as PlayerObj);
+					if(_ismap) _map.move(event.data as PlayerObj);
 					break;
 				case NoticeDefined.ON_STAND_HERE:
-					WorldMap.gets().stop(event.data as PlayerObj);
+					if(_ismap) _map.stop(event.data as PlayerObj);
 					break;
 				case NoticeDefined.ON_ACTION_ROLE:
-					actionRole(event.data as ActionObj);
+					if(_ismap) actionRole(event.data as ActionObj);
 					break;
 			}
 		}
@@ -73,25 +75,30 @@ package game.logic
 		private function enterMap(data:EntermapObj):void
 		{
 			if (data.player.isself()) {
-				WorldMap.gets().showMap(data.mapId);
+				if (_ismap) return;
+				_ismap = true;
+				_map = new WorldMap()
+				_map.showMap(data.mapId);
 			}else {
-				WorldMap.gets().createPlayer(data.player);
+				if(_ismap) _map.createPlayer(data.player);
 			}
 		}
 		
 		private function quitMap(player:PlayerObj):void
 		{
-			if (!_ismap) return;
 			if (player.isself()) {
-				WorldMap.gets().free();
+				_ismap = false;
+				_map.free();
+				_map = null;
+				Multiple.collection(10);
 			}else {
-				WorldMap.gets().removeUser(player.uid);
+				_map.removeUser(player.uid);
 			}
 		}
 		
 		private function actionRole(obj:ActionObj):void
 		{
-			WorldMap.gets().action(obj);
+			_map.action(obj);
 		}
 		
 		//ends

@@ -30,6 +30,7 @@ package org.web.sdk.gpu
 		/* INTERFACE org.web.sdk.inters.IBitmap */
 		public function dispose():void 
 		{
+			Multiple.dispose(this.bitmapData);
 			this.bitmapData = null;
 		}
 		 

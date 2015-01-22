@@ -1,7 +1,7 @@
 package org.web.sdk.utils 
 {
 
-	public class TimeUtil
+	public class TimeUtils
 	{
 		public static const yearText:String = "年";
         public static const monthText:String = "月";
@@ -24,12 +24,12 @@ package org.web.sdk.utils
             }
 			
 			var year:String = String(times.fullYear);
-			var month:String = CharUtil.formatNumberWithZero((times.month + 1), 2);
-			var date:String = CharUtil.formatNumberWithZero(times.date, 2);
-			var hours:String = CharUtil.formatNumberWithZero(times.hours, 2);
-			var minutes:String = CharUtil.formatNumberWithZero(times.minutes, 2);
-			var seconds:String = CharUtil.formatNumberWithZero(times.seconds, 2);
-			var msec:String = CharUtil.formatNumberWithZero(times.milliseconds, 3);
+			var month:String = StringUtils.formatNumber((times.month + 1), 2);
+			var date:String = StringUtils.formatNumber(times.date, 2);
+			var hours:String = StringUtils.formatNumber(times.hours, 2);
+			var minutes:String = StringUtils.formatNumber(times.minutes, 2);
+			var seconds:String = StringUtils.formatNumber(times.seconds, 2);
+			var msec:String = StringUtils.formatNumber(times.milliseconds, 3);
 			//char
 			//var dat:String = year + "/" + month + "/" + date;
 			//var tm:String = hours + ":" + minutes + ":" + seconds;

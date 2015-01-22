@@ -153,6 +153,8 @@ package org.web.sdk.display
 		
 		public function finality(value:Boolean = true):void 
 		{
+			clearFilters();
+			this.graphics.clear();
 			Multiple.wipeout(this, value);
 		}
 		

@@ -3,7 +3,7 @@ package game.ui.core
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import game.ui.core.GpuCustom;
-	import org.alg.utils.MapPath;
+	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.shader.CryRenderer;
 	import org.web.sdk.gpu.texture.VRayTexture;

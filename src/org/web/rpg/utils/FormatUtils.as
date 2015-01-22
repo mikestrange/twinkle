@@ -1,7 +1,11 @@
-package org.alg.utils 
+package org.web.rpg.utils 
 {
 	import flash.geom.Point;
-
+	import org.web.rpg.utils.octa.OctaPoint;
+	import org.web.sdk.utils.Maths;
+	/*
+	 * 根据角色返回方向
+	 * */
 	public class FormatUtils 
 	{
 		public static const PI_ANGLE:int = 180;
@@ -19,15 +23,16 @@ package org.alg.utils
 		private static var LEFT_UP:OctaPoint = new OctaPoint(SMALL, 90 - SMALL, 7);
 		
 		 //取精确地角度   这个物体需要水平放置
-		public static function directionAngle(node:Point, other:Point):Number
+		public static function atanAngle(node:Point, other:Point):Number
 		{
-			return Math.atan2(-(node.y - other.y), -(node.x - other.x)) * 180 / Math.PI;
+			return Math.atan2(other.y - node.y, other.x - node.x) * PI_ANGLE / Math.PI;
 		}
 		
-		//
+		//取8个方向
 		public static function getPoint(node:Point, other:Point):int
 		{
-			var point:int = directionAngle(node, other);
+			//角度
+			var point:int = atanAngle(node, other);
 			//trace("方向：",point)
 			if (point < NONE) point = ROUND + point;
 			switch(true)

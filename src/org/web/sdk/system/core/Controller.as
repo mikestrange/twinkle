@@ -5,7 +5,7 @@ package org.web.sdk.system.core
 	import org.web.sdk.system.inter.IKidnap;
 	import org.web.sdk.system.inter.IMessage;
 	import org.web.sdk.system.Kidnap;
-	import org.web.sdk.utils.NameUtil;
+	import org.web.sdk.utils.ClassUtils;
 	/*
 	 * 逻辑主导模块并不需要关心自己处在的模块和其他模块之间的联系
 	 * 他的在乎是自身的消息管理和消息的派发
@@ -39,7 +39,7 @@ package org.web.sdk.system.core
 		 * */
 		public function getName():String
 		{
-			return NameUtil.getClassName(this);
+			return ClassUtils.getClassName(this);
 		}
 		
 		/*
@@ -76,7 +76,7 @@ package org.web.sdk.system.core
 		
 		public function toString():String
 		{
-			return "[" + NameUtil.getClassName(this) + "] info={ name:" + this.getName() + "}";
+			return "[" + ClassUtils.getClassName(this) + "] info={ name:" + this.getName() + "}";
 		}
 		
 		//ends

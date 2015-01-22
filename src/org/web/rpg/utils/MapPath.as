@@ -1,4 +1,4 @@
-package org.alg.utils 
+package org.web.rpg.utils 
 {
 
 	public class MapPath 

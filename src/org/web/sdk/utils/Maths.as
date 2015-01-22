@@ -67,10 +67,10 @@ package org.web.sdk.utils
 			return Math.atan2(selfy - aimy, selfx - aimx);
 		}
 		
-		//两点之间的角度  value到other的角度
+		//两点之间的角度  value到other的角度,不是360 是0-180,0-(-180)
 		public static function atanAngle(selfx:Number, selfy:Number, aimx:Number = 0, aimy:Number = 0):Number
 		{
-			return obtainAngle(atanRadian(selfx, selfy, aimx, aimy));
+			return atanRadian(selfx, selfy, aimx, aimy);
 		}
 		//ends
 	}
