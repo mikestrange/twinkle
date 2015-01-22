@@ -34,8 +34,8 @@ package game.socket.map.recv
 			if (this.isdebug) {
 				data = new EntermapObj;
 				data.mapId = 3001;
-				data.player.update(SelfData.gets().uid, "ts1", 1000, 1000);
-				if(data.player.isself()) PlayerObj.gets().update(SelfData.gets().uid, "ts1", 1000, 1000);
+				data.player.update(SelfData.gets().uid, "ts1", 500, 400);
+				if(data.player.isself()) PlayerObj.gets().update(SelfData.gets().uid, "ts1", 500, 400);
 			}
 			return data;
 		}

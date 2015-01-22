@@ -2,6 +2,7 @@ package game.socket.map.recv
 {
 	import game.consts.NoticeDefined;
 	import game.datas.obj.PlayerObj;
+	import game.datas.SelfData;
 	import org.web.sdk.net.socket.core.ServerRespond;
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.net.utils.FtpRead;
@@ -22,18 +23,20 @@ package game.socket.map.recv
 			player.y = proto.readShort();
 		}
 		
+		private static var index:int = 0;
 		override public function getMessage():Object 
 		{
 			if (isdebug) {
-				var ran:int = Math.random() * 5000 >> 0;
+				var ran:int = index++;// Math.random() * 5000 >> 0;
+				if (ran == SelfData.gets().uid) return PlayerObj.gets();
 				player = new PlayerObj();
 				player.uid = ran;
 				player.type = 0
 				player.usn = "测试" + ran;
 				player.level = 10;
 				player.point = Math.floor(Math.random() * 8);
-				player.x = Math.floor(Math.random() * 1000);
-				player.y = Math.floor(Math.random() * 800);
+				player.x =100+ Math.floor(Math.random() * 500);
+				player.y =100+ Math.floor(Math.random() * 400);
 			}
 			return player;
 		}

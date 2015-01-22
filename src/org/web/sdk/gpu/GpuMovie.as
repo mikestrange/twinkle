@@ -6,6 +6,7 @@ package org.web.sdk.gpu
 	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
+	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.texture.VRayTexture;
 	/*
 	 * 就算包含一个sprite 效率也是movieclip的2倍,如果用3D渲染，那么效率肯定更高
@@ -13,22 +14,24 @@ package org.web.sdk.gpu
 	public class GpuMovie extends GpuSprite
 	{
 		private var _vector:Vector.<VRayTexture>;
-		private var _isstop:Boolean;
-		private var _index:int = 0;		
-		private var _fps:int;
+		private var _isstop:Boolean = true;
+		private var _index:int = 1;		
+		private var _fps:int = GpuSprite.RENDER_FPS;
 		private var _currfps:int = 0;
+		private var _totals:int = 0;
 		//添加一个粒子控制器
 		private var _step:Steper;	
 		
-		public function GpuMovie(render_time:int = 0)
+		public function GpuMovie()
 		{
-			_fps = render_time == 0? GpuSprite.RENDER_FPS : Math.abs(render_time);
 			_step = new Steper(this);
 		}
 		
 		public function setFrames(vector:Vector.<VRayTexture>):void
 		{
 			_vector = vector;
+			if (_vector) _totals = _vector.length;
+			else _totals = 1;
 		}
 		
 		public function restore():void
@@ -63,22 +66,17 @@ package org.web.sdk.gpu
 			if (++_currfps > _fps) {
 				_currfps = 0;
 				position++;
-				handlerFrame(_index);
 			}
-		}
-		
-		protected function handlerFrame(index:int):void
-		{
-			
 		}
 		
 		//动作可以初始化
 		public function set position(value:int):void
 		{
-			if (_vector == null) return;
+			if (_totals < 2) return;
+			if (value < 1) value = 1;
+			if (value > _totals) value = 1;
 			_index = value;
-			if (_index >= _vector.length) _index = 0;
-			setTexture(_vector[_index]);
+			setTexture(_vector[_index - 1]);
 		}
 		
 		public function get position():int
@@ -86,12 +84,17 @@ package org.web.sdk.gpu
 			return _index;
 		}
 		
-		public function set fps(value:int):void
+		public function get totals():int
+		{
+			return _totals;
+		}
+		
+		public function set frameRate(value:int):void
 		{
 			_fps = value;
 		}
 		
-		public function get fps():int
+		public function get frameRate():int
 		{
 			return _fps;
 		}

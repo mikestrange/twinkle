@@ -21,37 +21,34 @@ package game.socket.map
 		{
 			super.plumage(message);
 			var data:ActionVo = message as ActionVo;
-			/*
 			writeShort(data.mapid);		//mapid
 			writeByte(data.point);		//point
 			writeShort(data.x);			//x
 			writeShort(data.y);
+			writeShort(data.leftx);			//x
+			writeShort(data.lefty);
 			writeShort(data.width);		//len
 			writeShort(data.height);
-			*/
-			writeShort(3001);		//mapid
-			writeByte(4);			//point
-			writeShort(100);		//x
-			writeShort(100);
-			writeShort(0);			//x
-			writeShort(0);
-			writeShort(500);		//len
-			writeShort(300);
 		}
 		
+		private var index:int = 0;
 		//测试的时候会进入这里
 		override protected function debug(data:Object):void 
 		{
 			sendTest(CmdDefined.ENTER_MAP);
 			//
-			Clock.step(200, call, 0, CmdDefined.STAND_HERE);
-			Clock.step(1000, call, 0, CmdDefined.MOVE_TO);
-			Clock.step(2000, call, 0, CmdDefined.ACTION_ROLE);
+			Clock.step(1500, call, 0, CmdDefined.STAND_HERE);
+			//Clock.step(1000, call, 0, CmdDefined.MOVE_TO);
+			//Clock.step(1000, call, 0, CmdDefined.ACTION_ROLE);
 		}
 		
 		private function call(cmd:int):void
 		{
-			sendTest(cmd);
+			if (index > 2000) return;
+			for (var i:int = 0; i < 300; i++) {
+				index++;
+				sendTest(cmd);
+			}
 		}
 		
 		//ends

@@ -223,11 +223,11 @@ package game.ui.map
 			if (map) map.actionLayer.addChild(dis);
 		}
 		
-		//每帧都渲染用户
+		//每帧都渲染用户  这里可以优化，500人左右问题不大
 		private function render():void
 		{
 			if (null == map) return;
-			var time:int = getTimer();
+			var t1:int = getTimer();
 			var userRoot:Sprite = map.actionLayer;
 			var rect:Rectangle = map.getVisibility(0,100);
 			var list:Array = [];
@@ -237,20 +237,27 @@ package game.ui.map
 			{
 				player = userRoot.getChildAt(index) as RoleSprite;
 				if (player == null) continue;
-				if (rect.contains(player.x, player.y)) list.push(player);
-				else removeUser(player.getUid());
-				if (!player.isself()) player.render();
+				if (rect.contains(player.x, player.y)) {
+					list.push(player);
+				}else {
+					removeUser(player.getUid());
+				}
+				//if (!player.isself()) player.render();
 			}
+			trace("一次：", getTimer() - t1);
+			if (userRoot.numChildren < 2) return;
 			//排序，TM比写的排序算法快的多
+			var t2:int = getTimer();
 			list.sortOn("y", Array.NUMERIC);
-			var floor:int = 0;
-			for (index = 0; index < list.length; index++) {
+			trace("二次:", getTimer() - t2);
+			var t3:int = getTimer();
+			for (index = list.length -1; index >= 0; index--)
+			{
 				player = list[index];
-				floor = index;
-				if (floor >= userRoot.numChildren) floor = userRoot.numChildren - 1;
-				userRoot.setChildIndex(player, floor);
+				userRoot.setChildIndex(player, index);
 			}
-		//	trace("渲染时间：", getTimer() - time);
+			trace("三次:", getTimer() - t3);
+			//这里主要是第三次渲染时间太久	
 		}
 		
 		//ends

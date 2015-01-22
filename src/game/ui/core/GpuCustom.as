@@ -21,7 +21,7 @@ package game.ui.core
 		private var _domain:String;		//当前动作
 		private var _url:String;
 		private var _defaction:String;
-		private var _play_value:int = 0;
+		private var _playtimes:int = 0;
 		
 		//全面的动作
 		public function GpuCustom(type:String, point:int = 4, action:String = null) 
@@ -64,24 +64,24 @@ package game.ui.core
 			sendRender("render", _action);
 		}
 		
-		public function setActionAndPoint(action:String, value:int = -1, leng:int = 0):void
+		//播放一个动作，方向，几次
+		public function setActionAndPoint(action:String, value:int = -1, times:int = 0):void
 		{
 			if (value == -1) value = _point;
 			if (action == null) action = _action;
 			if (_point == value && action == _action) return;
+			_playtimes = times;
 			_action = action;
 			_point = value;
 			_domain = formt();
-			_play_value = leng;
 			sendRender("render", _action);
 		}
 		
-		override protected function handlerFrame(index:int):void 
+		override public function render():void 
 		{
-			if (_play_value <= 0) return;
-			if (index == 0) _play_value--;
-			if (_play_value <= 0) {
-				_play_value = 0;
+			super.render();
+			if (_playtimes > 0 && position == totals && --_playtimes <= 0) {
+				_playtimes = 0;
 				setAction(_defaction);
 			}
 		}
