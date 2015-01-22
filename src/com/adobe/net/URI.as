@@ -34,53 +34,9 @@ package com.adobe.net
 {
 	import flash.utils.ByteArray;
 	
-	/**
-	 * This class implements functions and utilities for working with URI's
-	 * (Universal Resource Identifiers).  For technical description of the
-	 * URI syntax, please see RFC 3986 at http://www.ietf.org/rfc/rfc3986.txt
-	 * or do a web search for "rfc 3986".
-	 * 
-	 * <p>The most important aspect of URI's to understand is that URI's
-	 * and URL's are not strings.  URI's are complex data structures that
-	 * encapsulate many pieces of information.  The string version of a
-	 * URI is the serialized representation of that data structure.  This
-	 * string serialization is used to provide a human readable
-	 * representation and a means to transport the data over the network
-	 * where it can then be parsed back into its' component parts.</p>
-	 * 
-	 * <p>URI's fall into one of three categories:
-	 * <ul>
-	 *  <li>&lt;scheme&gt;:&lt;scheme-specific-part&gt;#&lt;fragment&gt;		(non-hierarchical)</li>
-	 *  <li>&lt;scheme&gt;:<authority&gt;&lt;path&gt;?&lt;query&gt;#&lt;fragment&gt;	(hierarchical)</li>
-	 *  <li>&lt;path&gt;?&lt;query&gt;#&lt;fragment&gt;						(relative hierarchical)</li>
-	 * </ul></p>
-	 * 
-	 * <p>The query and fragment parts are optional.</p>
-	 * 
-	 * <p>This class supports both non-hierarchical and hierarchical URI's</p>
-	 * 
-	 * <p>This class is intended to be used "as-is" for the vast majority
-	 * of common URI's.  However, if your application requires a custom
-	 * URI syntax (e.g. custom query syntax or special handling of
-	 * non-hierarchical URI's), this class can be fully subclassed.  If you
-	 * intended to subclass URI, please see the source code for complete
-	 * documation on protected members and protected fuctions.</p>
-	 * 
-	 * @langversion ActionScript 3.0
-	 * @playerversion Flash 9.0 
-	 */
 	public class URI
 	{	
-		// Here we define which characters must be escaped for each
-		// URI part.  The characters that must be escaped for each
-		// part differ depending on what would cause ambiguous parsing.
-		// RFC 3986 sec. 2.4 states that characters should only be
-		// encoded when they would conflict with subcomponent delimiters.
-		// We don't want to over-do the escaping.  We only want to escape
-		// the minimum needed to prevent parsing problems.
 		
-		// space and % must be escaped in all cases.  '%' is the delimiter
-		// for escaped characters.
 		public static const URImustEscape:String =	" %";
 		
 		// Baseline of what characters must be escaped
@@ -302,67 +258,7 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * @private
-		 *
-		 * Given a URI in string format, parse that sucker into its basic
-		 * components and assign them to this object.  A URI is of the form:
-		 *    <scheme>:<authority><path>?<query>#<fragment>
-		 *
-		 * For simplicity, we parse the URI in the following order:
-		 * 		
-		 *		1. Fragment (anchors)
-		 * 		2. Query	(CGI stuff)
-		 * 		3. Scheme	("http")
-		 * 		4. Authority (host name)
-		 * 		5. Username/Password (if any)
-		 * 		6. Port		(server port if any)
-		 *		7. Path		(/homepages/mypage.html)
-		 *
-		 * The reason for this order is to minimize any parsing ambiguities.
-		 * Fragments and queries can contain almost anything (they are parts
-		 * that can contain custom data with their own syntax).  Parsing
-		 * them out first removes a large chance of parsing errors.  This
-		 * method expects well formed URI's, but performing the parse in
-		 * this order makes us a little more tolerant of user error.
-		 * 
-		 * REGEXP
-		 * Why doesn't this use regular expressions to parse the URI?  We
-		 * have found that in a real world scenario, URI's are not always
-		 * well formed.  Sometimes characters that should have been escaped
-		 * are not, and those situations would break a regexp pattern.  This
-		 * function attempts to be smart about what it is parsing based on
-		 * location of characters relative to eachother.  This function has
-		 * been proven through real-world use to parse the vast majority
-		 * of URI's correctly.
-		 *
-		 * NOTE
-		 * It is assumed that the string in URI form is escaped.  This function
-		 * does not escape anything.  If you constructed the URI string by
-		 * hand, and used this to parse in the URI and still need it escaped,
-		 * call forceEscape() on your URI object.
-		 *
-		 * Parsing Assumptions
-		 * This routine assumes that the URI being passed is well formed.
-		 * Passing things like local paths, malformed URI's, and the such
-		 * will result in parsing errors.  This function can handle
-		 * 	 - absolute hierarchical (e.g. "http://something.com/index.html),
-		 *   - relative hierarchical (e.g. "../images/flower.gif"), or
-		 *   - non-hierarchical URIs (e.g. "mailto:jsmith@fungoo.com").
-		 * 
-		 * Anything else will probably result in a parsing error, or a bogus
-		 * URI object.
-		 * 
-		 * Note that non-hierarchical URIs *MUST* have a scheme, otherwise
-		 * they will be mistaken for relative URI's.
-		 * 
-		 * If you are not sure what is being passed to you (like manually
-		 * entered text from UI), you can construct a blank URI object and
-		 * call unknownToURI() passing in the unknown string.
-		 * 
-		 * @return	true if successful, false if there was some kind of
-		 * parsing error
-		 */
+		
 		protected function parseURI(uri:String) : Boolean
 		{
 			var baseURI:String = uri;
@@ -595,41 +491,17 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * Is this URI an absolute URI?  An absolute URI is a complete, fully
-		 * qualified reference to a resource.  e.g. http://site.com/index.htm
-		 * Non-hierarchical URI's are always absolute.
-		 */
 		public function isAbsolute() : Boolean
 		{ 
 			return !this._relative;
 		}
 		
 		
-		/**
-		 * Is this URI a relative URI?  Relative URI's do not have a scheme
-		 * and only contain a relative path with optional anchor and query
-		 * parts.  e.g. "../reports/index.htm".  Non-hierarchical URI's
-		 * will never be relative.
-		 */
 		public function isRelative() : Boolean
 		{ 
 			return this._relative;
 		}
 		
-		
-		/**
-		 * Does this URI point to a resource that is a directory/folder?
-		 * The URI specification dictates that any path that ends in a slash
-		 * is a directory.  This is needed to be able to perform correct path
-		 * logic when combining relative URI's with absolute URI's to
-		 * obtain the correct absolute URI to a resource.
-		 * 
-		 * @see URI.chdir
-		 * 
-		 * @return true if this URI represents a directory resource, false
-		 * if this URI represents a file resource.
-		 */
 		public function isDirectory() : Boolean
 		{
 			if (_path.length == 0)
@@ -663,13 +535,6 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * The authority (host) of the URI.  Only valid for
-		 * hierarchical URI's.  If the URI is relative, this will
-		 * be an empty string. When setting this value, the string
-		 * given is assumed to be unescaped.  When retrieving this
-		 * value, the resulting string is unescaped.
-		 */
 		public function get authority() : String
 		{ 
 			return URI.unescapeChars(_authority);
@@ -688,20 +553,7 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * The username of the URI.  Only valid for hierarchical
-		 * URI's.  If the URI is relative, this will be an empty
-		 * string.
-		 * 
-		 * <p>The URI specification allows for authentication
-		 * credentials to be embedded in the URI as such:</p>
-		 * 
-		 * <p>http://user:passwd&#64;host/path/to/file.htm</p>
-		 * 
-		 * <p>When setting this value, the string
-		 * given is assumed to be unescaped.  When retrieving this
-		 * value, the resulting string is unescaped.</p>
-		 */
+		
 		public function get username() : String
 		{
 			return URI.unescapeChars(_username);
@@ -733,13 +585,6 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * The host port number.  Only valid for hierarchical URI's.  If
-		 * the URI is relative, this will be an empty string. URI's can
-		 * contain the port number of the remote host:
-		 * 
-		 * <p>http://site.com:8080/index.htm</p>
-		 */
 		public function get port() : String
 		{ 
 			return URI.unescapeChars(_port);
@@ -753,43 +598,7 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * The path portion of the URI.  Only valid for hierarchical
-		 * URI's.  When setting this value, the string
-		 * given is assumed to be unescaped.  When retrieving this
-		 * value, the resulting string is unescaped.
-		 * 
-		 * <p>The path portion can be in one of two formats. 1) an absolute
-		 * path, or 2) a relative path.  An absolute path starts with a
-		 * slash ('/'), a relative path does not.</p>
-		 * 
-		 * <p>An absolute path may look like:</p>
-		 * <listing>/full/path/to/my/file.htm</listing>
-		 * 
-		 * <p>A relative path may look like:</p>
-		 * <listing>
-		 * path/to/my/file.htm
-		 * ../images/logo.gif
-		 * ../../reports/index.htm
-		 * </listing>
-		 * 
-		 * <p>Paths can be absolute or relative.  Note that this not the same as
-		 * an absolute or relative URI.  An absolute URI can only have absolute
-		 * paths.  For example:</p>
-		 * 
-		 * <listing>http:/site.com/path/to/file.htm</listing>
-		 * 
-		 * <p>This absolute URI has an absolute path of "/path/to/file.htm".</p>
-		 * 
-		 * <p>Relative URI's can have either absolute paths or relative paths.
-		 * All of the following relative URI's are valid:</p>
-		 * 
-		 * <listing>
-		 * /absolute/path/to/file.htm
-		 * path/to/file.htm
-		 * ../path/to/file.htm
-		 * </listing>
-		 */
+		
 		public function get path() : String
 		{ 
 			return URI.unescapeChars(_path);
@@ -809,42 +618,7 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * The query (CGI) portion of the URI.  This part is valid for
-		 * both hierarchical and non-hierarchical URI's.
-		 * 
-		 * <p>This accessor should only be used if a custom query syntax
-		 * is used.  This URI class supports the common "param=value"
-		 * style query syntax via the get/setQueryValue() and
-		 * get/setQueryByMap() functions.  Those functions should be used
-		 * instead if the common syntax is being used.
-		 * 
-		 * <p>The URI RFC does not specify any particular
-		 * syntax for the query part of a URI.  It is intended to allow
-		 * any format that can be agreed upon by the two communicating hosts.
-		 * However, most systems have standardized on the typical CGI
-		 * format:</p>
-		 * 
-		 * <listing>http://site.com/script.php?param1=value1&param2=value2</listing>
-		 * 
-		 * <p>This class has specific support for this query syntax</p>
-		 * 
-		 * <p>This common query format is an array of name/value
-		 * pairs with its own syntax that is different from the overall URI
-		 * syntax.  The query has its own escaping logic.  For a query part
-		 * to be properly escaped and unescaped, it must be split into its
-		 * component parts.  This accessor escapes/unescapes the entire query
-		 * part without regard for it's component parts.  This has the
-		 * possibliity of leaving the query string in an ambiguious state in
-		 * regards to its syntax.  If the contents of the query part are
-		 * important, it is recommended that get/setQueryValue() or
-		 * get/setQueryByMap() are used instead.</p>
-		 * 
-		 * If a different query syntax is being used, a subclass of URI
-		 * can be created to handle that specific syntax.
-		 *  
-		 * @see URI.getQueryValue, URI.getQueryByMap
-		 */
+		
 		public function get query() : String
 		{ 
 			return URI.unescapeChars(_query);
@@ -857,13 +631,6 @@ package com.adobe.net
 			// have a query.  Do not set the hierState.
 		}
 		
-		/**
-		 * Accessor to the raw query data.  If you are using a custom query
-		 * syntax, this accessor can be used to get and set the query part
-		 * directly with no escaping/unescaping.  This should ONLY be used
-		 * if your application logic is handling custom query logic and
-		 * handling the proper escaping of the query part.
-		 */
 		public function get queryRaw() : String
 		{
 			return _query;
@@ -885,18 +652,11 @@ package com.adobe.net
 		public function set fragment(fragmentStr:String) : void
 		{
 			_fragment = URI.fastEscapeChars(fragmentStr, URIfragmentExcludedBitmap);
-
 			// both hierarchical and non-hierarchical URI's can
 			// have a fragment.  Do not set the hierState.
 		}
 		
 		
-		/**
-		 * The non-hierarchical part of the URI.  For example, if
-		 * this URI object represents "mailto:somebody@company.com",
-		 * this will contain "somebody@company.com".  This is valid only
-		 * for non-hierarchical URI's.  
-		 */
 		public function get nonHierarchical() : String
 		{ 
 			return URI.unescapeChars(_nonHierarchical);
@@ -909,13 +669,6 @@ package com.adobe.net
 			this.hierState = false;
 		}
 		
-		
-		/**
-		 * Quick shorthand accessor to set the parts of this URI.
-		 * The given parts are assumed to be in unescaped form.  If
-		 * the URI is non-hierarchical (e.g. mailto:) you will need
-		 * to call SetScheme() and SetNonHierarchical().
-		 */
 		public function setParts(schemeStr:String, authorityStr:String,
 				portStr:String, pathStr:String, queryStr:String,
 				fragmentStr:String) : void
@@ -931,50 +684,15 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * URI escapes the given character string.  This is similar in function
-		 * to the global encodeURIComponent() function in ActionScript, but is
-		 * slightly different in regards to which characters get escaped.  This
-		 * escapes the characters specified in the URIbaselineExluded set (see class
-		 * static members).  This is needed for this class to work properly.
-		 * 
-		 * <p>If a different set of characters need to be used for the escaping,
-		 * you may use fastEscapeChars() and specify a custom URIEncodingBitmap
-		 * that contains the characters your application needs escaped.</p>
-		 * 
-		 * <p>Never pass a full URI to this function.  A URI can only be properly
-		 * escaped/unescaped when split into its component parts (see RFC 3986
-		 * section 2.4).  This is due to the fact that the URI component separators
-		 * could be characters that would normally need to be escaped.</p>
-		 * 
-		 * @param unescaped character string to be escaped.
-		 * 
-		 * @return	escaped character string
-		 * 
-		 * @see encodeURIComponent
-		 * @see fastEscapeChars
-		 */
+		
 		static public function escapeChars(unescaped:String) : String
 		{
 			// This uses the excluded set by default.
 			return fastEscapeChars(unescaped, URI.URIbaselineExcludedBitmap);
 		}
 		
-
-		/**
-		 * Unescape any URI escaped characters in the given character
-		 * string.
-		 * 
-		 * <p>Never pass a full URI to this function.  A URI can only be properly
-		 * escaped/unescaped when split into its component parts (see RFC 3986
-		 * section 2.4).  This is due to the fact that the URI component separators
-		 * could be characters that would normally need to be escaped.</p>
-		 * 
-		 * @param escaped the escaped string to be unescaped.
-		 * 
-		 * @return	unescaped string.
-		 */
-		static public function unescapeChars(escaped:String /*, onlyHighASCII:Boolean = false*/) : String
+		 /*, onlyHighASCII:Boolean = false*/
+		static public function unescapeChars(escaped:String) : String
 		{
 			// We can just use the default AS function.  It seems to
 			// decode everything correctly
@@ -983,23 +701,7 @@ package com.adobe.net
 			return unescaped;
 		}
 		
-		/**
-		 * Performance focused function that escapes the given character
-		 * string using the given URIEncodingBitmap as the rule for what
-		 * characters need to be escaped.  This function is used by this
-		 * class and can be used externally to this class to perform
-		 * escaping on custom character sets.
-		 * 
-		 * <p>Never pass a full URI to this function.  A URI can only be properly
-		 * escaped/unescaped when split into its component parts (see RFC 3986
-		 * section 2.4).  This is due to the fact that the URI component separators
-		 * could be characters that would normally need to be escaped.</p>
-		 * 
-		 * @param unescaped		the unescaped string to be escaped
-		 * @param bitmap		the set of characters that need to be escaped
-		 * 
-		 * @return	the escaped string.
-		 */
+		
 		static public function fastEscapeChars(unescaped:String, bitmap:URIEncodingBitmap) : String
 		{
 			var escaped:String = "";
@@ -1026,37 +728,14 @@ package com.adobe.net
 			
 			return escaped;
 		}
-
 		
-		/**
-		 * Is this URI of a particular scheme type?  For example,
-		 * passing "http" to a URI object that represents the URI
-		 * "http://site.com/" would return true.
-		 * 
-		 * @param scheme	scheme to check for
-		 * 
-		 * @return true if this URI object is of the given type, false
-		 * otherwise.
-		 */
 		public function isOfType(scheme:String) : Boolean
 		{
 			// Schemes are never case sensitive.  Ignore case.
 			scheme = scheme.toLowerCase();
 			return (this._scheme == scheme);
 		}
-
-
-		/**
-		 * Get the value for the specified named in the query part.  This
-		 * assumes the query part of the URI is in the common
-		 * "name1=value1&name2=value2" syntax.  Do not call this function
-		 * if you are using a custom query syntax.
-		 * 
-		 * @param name	name of the query value to get.
-		 * 
-		 * @return the value of the query name, empty string if the
-		 * query name does not exist.
-		 */
+		
 		public function getQueryValue(name:String) : String
 		{
 			var map:Object;
@@ -1078,21 +757,6 @@ package com.adobe.net
 			return new String("");
 		}
 		
-
-		/**
-		 * Set the given value on the given query name.  If the given name
-		 * does not exist, it will automatically add this name/value pair
-		 * to the query.  If null is passed as the value, it will remove
-		 * the given item from the query.
-		 * 
-		 * <p>This automatically escapes any characters that may conflict with
-		 * the query syntax so that they are "safe" within the query.  The
-		 * strings passed are assumed to be literal unescaped name and value.</p>
-		 * 
-		 * @param name	name of the query value to set
-		 * @param value	value of the query item to set.  If null, this will
-		 * force the removal of this item from the query.
-		 */
 		public function setQueryValue(name:String, value:String) : void
 		{
 			var map:Object;
@@ -1106,24 +770,7 @@ package com.adobe.net
 		
 			setQueryByMap(map);
 		}
-
 		
-		/**
-		 * Get the query of the URI in an Object class that allows for easy
-		 * access to the query data via Object accessors.  For example:
-		 * 
-		 * <listing>
-		 * var query:Object = uri.getQueryByMap();
-		 * var value:String = query["param"];    // get a value
-		 * query["param2"] = "foo";   // set a new value
-		 * </listing>
-		 * 
-		 * @return Object that contains the name/value pairs of the query.
-		 * 
-		 * @see #setQueryByMap
-		 * @see #getQueryValue
-		 * @see #setQueryValue
-		 */
 		public function getQueryByMap() : Object
 		{
 			var queryStr:String;
@@ -1165,19 +812,6 @@ package com.adobe.net
 			return map;
 		}
 		
-
-		/**
-		 * Set the query part of this URI using the given object as the
-		 * content source.  Any member of the object that has a value of
-		 * null will not be in the resulting query.
-		 * 
-		 * @param map	object that contains the name/value pairs as
-		 *    members of that object.
-		 * 
-		 * @see #getQueryByMap
-		 * @see #getQueryValue
-		 * @see #setQueryValue
-		 */
 		public function setQueryByMap(map:Object) : void
 		{
 			var item:String;
@@ -1222,20 +856,6 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * Similar to Escape(), except this also escapes characters that
-		 * would conflict with the name/value pair query syntax.  This is
-		 * intended to be called on each individual "name" and "value"
-		 * in the query making sure that nothing in the name or value
-		 * strings contain characters that would conflict with the query
-		 * syntax (e.g. '=' and '&').
-		 * 
-		 * @param unescaped		unescaped string that is to be escaped.
-		 * 
-		 * @return escaped string.
-		 * 
-		 * @see #queryUnescape
-		 */
 		static public function queryPartEscape(unescaped:String) : String
 		{
 			var escaped:String = unescaped;
@@ -1272,21 +892,6 @@ package com.adobe.net
 				return toStringInternal(false);
 		}
 		
-		/**
-		 * Output the URI as a string that is easily readable by a human.
-		 * This outputs the URI with all escape sequences unescaped to
-		 * their character representation.  This makes the URI easier for
-		 * a human to read, but the URI could be completely invalid
-		 * because some unescaped characters may now cause ambiguous parsing.
-		 * This function should only be used if you want to display a URI to
-		 * a user.  This function should never be used outside that specific
-		 * case.
-		 * 
-		 * @return the URI in string format with all escape sequences
-		 * unescaped.
-		 * 
-		 * @see #toString
-		 */
 		public function toDisplayString() : String
 		{
 			return toStringInternal(true);
@@ -1380,20 +985,7 @@ package com.adobe.net
 		
 			return uri;
 		}
-	
-		/**
-		 * Forcefully ensure that this URI is properly escaped.
-		 * 
-		 * <p>Sometimes URI's are constructed by hand using strings outside
-		 * this class.  In those cases, it is unlikely the URI has been
-		 * properly escaped.  This function forcefully escapes this URI
-		 * by unescaping each part and then re-escaping it.  If the URI
-		 * did not have any escaping, the first unescape will do nothing
-		 * and then the re-escape will properly escape everything.  If
-		 * the URI was already escaped, the unescape and re-escape will
-		 * essentally be a no-op.  This provides a safe way to make sure
-		 * a URI is in the proper escaped form.</p>
-		 */
+		
 		public function forceEscape() : void
 		{
 			// The accessors for each of the members will unescape
@@ -1420,19 +1012,6 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * Does this URI point to a resource of the given file type?
-		 * Given a file extension (or just a file name, this will strip the
-		 * extension), check to see if this URI points to a file of that
-		 * type.
-		 * 
-		 * @param extension 	string that contains a file extension with or
-		 * without a dot ("html" and ".html" are both valid), or a file
-		 * name with an extension (e.g. "index.html").
-		 * 
-		 * @return true if this URI points to a resource with the same file
-		 * file extension as the extension provided, false otherwise.
-		 */
 		public function isOfFileType(extension:String) : Boolean
 		{
 			var thisExtension:String;
@@ -1464,19 +1043,6 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * Get the ".xyz" file extension from the filename in the URI.
-		 * For example, if we have the following URI:
-		 * 
-		 * <listing>http://something.com/path/to/my/page.html?form=yes&name=bob#anchor</listing>
-		 * 
-		 * <p>This will return ".html".</p>
-		 * 
-		 * @param minusDot   If true, this will strip the dot from the extension.
-		 * If true, the above example would have returned "html".
-		 * 
-		 * @return  the file extension
-		 */
 		public function getExtension(minusDot:Boolean = false) : String
 		{
 			var filename:String = getFilename();
@@ -1503,18 +1069,7 @@ package com.adobe.net
 			return extension;
 		}
 		
-		/**
-		 * Quick function to retrieve the file name off the end of a URI.
-		 * 
-		 * <p>For example, if the URI is:</p>
-		 * <listing>http://something.com/some/path/to/my/file.html</listing>
-		 * <p>this function will return "file.html".</p>
-		 * 
-		 * @param minusExtension true if the file extension should be stripped
-		 * 
-		 * @return the file name.  If this URI is a directory, the return
-		 * value will be empty string.
-		 */
+		
 		public function getFilename(minusExtension:Boolean = false) : String
 		{
 			if (isDirectory())
@@ -1624,18 +1179,6 @@ package com.adobe.net
 			return _resolver;
 		}
 		
-		/**
-		 * Given another URI, return this URI object's relation to the one given.
-		 * URI's can have 1 of 4 possible relationships.  They can be unrelated,
-		 * equal, parent, or a child of the given URI.
-		 * 
-		 * @param uri	URI to compare this URI object to.
-		 * @param caseSensitive  true if the URI comparison should be done
-		 * taking case into account, false if the comparison should be
-		 * performed case insensitive.
-		 * 
-		 * @return URI.NOT_RELATED, URI.CHILD, URI.PARENT, or URI.EQUAL
-		 */
 		public function getRelation(uri:URI, caseSensitive:Boolean = true) : int
 		{
 			// Give the app a chance to resolve these URI's before we compare them.
@@ -1644,13 +1187,6 @@ package com.adobe.net
 			
 			if (thisURI.isRelative() || thatURI.isRelative())
 			{
-				// You cannot compare relative URI's due to their lack of context.
-				// You could have two relative URI's that look like:
-				//		../../images/
-				//		../../images/marketing/logo.gif
-				// These may appear related, but you have no overall context
-				// from which to make the comparison.  The first URI could be
-				// from one site and the other URI could be from another site.
 				return URI.NOT_RELATED;
 			}
 			else if (thisURI.isHierarchical() == false || thatURI.isHierarchical() == false)
@@ -1860,30 +1396,6 @@ package com.adobe.net
 		}
 		
 		
-		/**
-		 * This function is used to move around in a URI in a way similar
-		 * to the 'cd' or 'chdir' commands on Unix.  These operations are
-		 * completely string based, using the context of the URI to
-		 * determine the position within the path.  The heuristics used
-		 * to determine the action are based off Appendix C in RFC 2396.
-		 * 
-		 * <p>URI paths that end in '/' are considered paths that point to
-		 * directories, while paths that do not end in '/' are files.  For
-		 * example, if you execute chdir("d") on the following URI's:<br/>
-		 *    1.  http://something.com/a/b/c/  (directory)<br/>
-		 *    2.  http://something.com/a/b/c  (not directory)<br/>
-		 * you will get:<br/>
-		 *    1.  http://something.com/a/b/c/d<br/>
-		 *    2.  http://something.com/a/b/d<br/></p>
-		 * 
-		 * <p>See RFC 2396, Appendix C for more info.</p>
-		 * 
-		 * @param reference	the URI or path to "cd" to.
-		 * @param escape true if the passed reference string should be URI
-		 * escaped before using it.
-		 * 
-		 * @return true if the chdir was successful, false otherwise.
-		 */
 		public function chdir(reference:String, escape:Boolean = false) : Boolean
 		{
 			var uriReference:URI;
@@ -2162,32 +1674,6 @@ package com.adobe.net
 			return true;
 		}
 		
-		
-		/**
-		 * Given a URI to use as a base from which this object should be
-		 * relative to, convert this object into a relative URI.  For example,
-		 * if you have:
-		 * 
-		 * <listing>
-		 * var uri1:URI = new URI("http://something.com/path/to/some/file.html");
-		 * var uri2:URI = new URI("http://something.com/path/to/another/file.html");
-		 * 
-		 * uri1.MakeRelativePath(uri2);</listing>
-		 * 
-		 * <p>uri1 will have a final value of "../some/file.html"</p>
-		 * 
-		 * <p>Note! This function is brute force.  If you have two URI's
-		 * that are completely unrelated, this will still attempt to make
-		 * the relative URI.  In that case, you will most likely get a
-		 * relative path that looks something like:</p>
-		 * 
-		 * <p>../../../../../../some/path/to/my/file.html</p>
-		 * 
-		 * @param base_uri the URI from which to make this URI relative
-		 * 
-		 * @return true if successful, false if the base_uri and this URI
-		 * are not related, of if error.
-		 */
 		public function makeRelativeURI(base_uri:URI, caseSensitive:Boolean = true) : Boolean
 		{
 			var base:URI = new URI();
@@ -2325,44 +1811,6 @@ package com.adobe.net
 			return true;
 		}
 		
-		/**
-		 * Given a string, convert it to a URI.  The string could be a
-		 * full URI that is improperly escaped, a malformed URI (e.g.
-		 * missing a protocol like "www.something.com"), a relative URI,
-		 * or any variation there of.
-		 * 
-		 * <p>The intention of this function is to take anything that a
-		 * user might manually enter as a URI/URL and try to determine what
-		 * they mean.  This function differs from the URI constructor in
-		 * that it makes some assumptions to make it easy to import user
-		 * entered URI data.</p>
-		 * 
-		 * <p>This function is intended to be a helper function.
-		 * It is not all-knowning and will probably make mistakes
-		 * when attempting to parse a string of unknown origin.  If
-		 * your applicaiton is receiving input from the user, your
-		 * application should already have a good idea what the user
-		 * should  be entering, and your application should be
-		 * pre-processing the user's input to make sure it is well formed
-		 * before passing it to this function.</p>
-		 * 
-		 * <p>It is assumed that the string given to this function is
-		 * something the user may have manually entered.  Given this,
-		 * the URI string is probably unescaped or improperly escaped.
-		 * This function will attempt to properly escape the URI by
-		 * using forceEscape().  The result is that a toString() call
-		 * on a URI that was created from unknownToURI() may not match
-		 * the input string due to the difference in escaping.</p>
-		 *
-		 * @param unknown	a potental URI string that should be parsed
-		 * and loaded into this object.
-		 * @param defaultScheme	if it is determined that the passed string
-		 * looks like a URI, but it is missing the scheme part, this
-		 * string will be used as the missing scheme.
-		 * 
-		 * @return	true if the given string was successfully parsed into
-		 * a valid URI object, false otherwise.
-		 */
 		public function unknownToURI(unknown:String, defaultScheme:String = "http") : Boolean
 		{
 			var temp:String;
