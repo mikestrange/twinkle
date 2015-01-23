@@ -5,24 +5,17 @@ package
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.net.*;
-	import flash.system.ApplicationDomain;
-	import flash.system.LoaderContext;
+	import flash.system.*;
 	import flash.ui.*;
 	import flash.utils.*;
 	import game.consts.*;
-	import game.datas.obj.PlayerObj;
+	import game.GameGlobal;
 	import game.logic.WorldKidnap;
-	import game.ui.core.GpuCustom;
-	import game.ui.core.ActionType;
-	import game.ui.map.RoleSprite;
-	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
-	import org.web.sdk.gpu.Assets;
-	import org.web.sdk.gpu.BufferImage;
+	import org.web.sdk.gpu.*;
 	import org.web.sdk.gpu.texture.BaseTexture;
-	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
@@ -42,8 +35,6 @@ package
 	
 	public class Twinkle extends RawSprite
 	{
-		private var _box:RawSprite;
-		
 		public function Twinkle():void 
 		{
 			if (stage) showEvent();
@@ -59,36 +50,41 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//世界启动
 			WorldKidnap.gets().initLayer(this);
+			//最大下载
+			PerfectLoader.gets().LOAD_MAX = 5;			
+			//内存查看
+			FpsMonitor.gets().show();					
+			//启动模块和网络连接
 			WorldKidnap.gets().start();
-			//
-			ServerSocket.create(new AssignedTransfer);	//socket建立
-			PerfectLoader.gets().LOAD_MAX = 5;			//最大下载
-			FpsMonitor.gets().show();					//内存查看
-			//SoundManager.playUrl("bg.mp3");				
-			//StartLayer.gets().show();
-			//------
-			var url:String = "http://e.hiphotos.baidu.com/zhidao/pic/item/1b4c510fd9f9d72ab4b95ef0d42a2834359bbb7a.jpg";
-			/*
-			var butter:IAcceptor = VRayMap.createByUrl(url);
-			this.addDisplay(butter);
-			var bit:IAcceptor = butter.clone();
-			bit.addInto(this, 100, 100);
-			*/
-			//
-			var bits:IAcceptor = VRayMap.createBySize(100,100,0xffffff)
-			this.addDisplay(bits, 100, 100);
-			bits =  VRayMap.createBySize(100, 100, 0xffffff);
-			this.addDisplay(bits, 200, 300);
-			bits = VRayMap.createByUrl(url);
-			this.addDisplay(bits, 0, 300);
-			bits = VRayMap.createByUrl(url);
-			this.addDisplay(bits, 0, 100);
-			Clock.step(100, complete,0);
+			//登陆模块
+			//LogicLayer.gets().show();
+			//加载配置
+			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
 		}
 		
-		private function complete():void
+		private function complete(e:LoadEvent):void
 		{
-			trace("xx")
+			if (e.eventType == LoadEvent.ERROR) return;
+			var xml:XML = new XML(e.target as String);
+			var length:int = xml.res[0].ui.length();
+			for (var i:int = 0; i < length; i++)
+			{
+				var url:String = xml.res[0].ui[i].@url;
+				var names:String = xml.res[0].ui[i].@name;
+				if (url && url != "") {
+					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
+				}
+			}
+			trace("res:", length);
+		}
+		
+		private function resComplete(e:LoadEvent):void
+		{
+			if (e.eventType == LoadEvent.ERROR) return;
+			if (!PerfectLoader.gets().isLoad()) {
+				trace("res load over")
+				
+			}
 		}
 		
 		//ends

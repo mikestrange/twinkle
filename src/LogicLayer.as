@@ -18,14 +18,14 @@ package
 	import org.web.sdk.tool.Clock;
 	
 	
-	public class StartLayer extends RawSprite
+	public class LogicLayer extends RawSprite
 	{
-		private static var _ins:StartLayer;
+		private static var _ins:LogicLayer;
 		
-		public static function gets():StartLayer
+		public static function gets():LogicLayer
 		{
 			if (_ins == null) {
-				_ins = new StartLayer;
+				_ins = new LogicLayer;
 				_ins.initialization();
 			}
 			return _ins;

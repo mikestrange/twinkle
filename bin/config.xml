@@ -2,9 +2,9 @@
 <data>
 	<language path="语言包"/>
 	<res version="0.0.0.1" text="初始化需要加载的文件">
-		<ui name="" url=""/>
+		<ui name="" url="" />
 	</res>
 	<root_path text="所有路径">
-		<item id="" path="" type="" text=""/>
+		<item id="0" path="img/" type="png" text=""/>
 	</root_path>
 </data>

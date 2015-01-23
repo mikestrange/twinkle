@@ -11,12 +11,12 @@ package org.web.sdk.gpu
 	/*
 	 * 就算包含一个sprite 效率也是movieclip的2倍,如果用3D渲染，那么效率肯定更高
 	 * */
-	public class GpuMovie extends GpuSprite
+	public class GpuMovie extends GpuBase
 	{
 		private var _vector:Vector.<BaseTexture>;
 		private var _isstop:Boolean = true;
 		private var _index:int = 1;		
-		private var _fps:int = GpuSprite.RENDER_FPS;
+		private var _fps:int = GpuBase.RENDER_FPS;
 		private var _currfps:int = 0;
 		private var _totals:int = 0;
 		//添加一个粒子控制器

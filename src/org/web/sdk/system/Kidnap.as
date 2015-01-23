@@ -1,5 +1,7 @@
 package org.web.sdk.system 
 {
+	import org.web.sdk.net.socket.AssignedTransfer;
+	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.system.com.*;
@@ -166,6 +168,8 @@ package org.web.sdk.system
 			_message = notice == null ? GlobalMessage.gets() : notice;
 			addMessageFromController(this);
 			launch(_message);
+			//socket建立
+			ServerSocket.create(new AssignedTransfer);
 		}
 		
 		/*

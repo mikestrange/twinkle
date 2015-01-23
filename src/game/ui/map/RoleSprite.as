@@ -22,7 +22,7 @@ package game.ui.map
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.gpu.GpuSprite;
+	import org.web.sdk.gpu.GpuBase;
 	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.net.socket.ServerSocket;
 	/*

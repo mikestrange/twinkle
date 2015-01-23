@@ -12,7 +12,7 @@ package org.web.sdk.gpu
 	/**
 	 * GPU渲染的基类
 	 */
-	public class GpuSprite extends VRayMap implements IEscape
+	public class GpuBase extends VRayMap implements IEscape
 	{
 		//渲染速度
 		public static var RENDER_FPS:int = 4;

@@ -173,6 +173,12 @@ package org.web.sdk.gpu
 			return acceptor;
 		}
 		
+		//直接  默认移除就会被释放
+		public static function createByBitmapdata(bitmap:BitmapData, milde:Boolean = true):IAcceptor
+		{
+			return new VRayMap(new BaseTexture(bitmap, null, milde));
+		}
+		
 		public static function createByUrl(url:String):IAcceptor
 		{
 			return new BufferImage(url);
