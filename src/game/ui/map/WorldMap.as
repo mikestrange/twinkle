@@ -66,7 +66,7 @@ package game.ui.map
 		
 		public function free():void
 		{
-			map.hide();
+			map.removeFromFather();
 			playerHash.clear();
 			if (!isListener) return;
 			isListener = false;
@@ -137,7 +137,7 @@ package game.ui.map
 		//添加主角
 		private function setActor(data:PlayerObj):void
 		{
-			if (actor) actor.hide();
+			if (actor) actor.removeFromFather();
 			actor = new RoleSprite(map.grid, data);
 			//actor.addEventListener("move", sendSelf, false, 0, true);
 			actor.moveTo(data.x, data.y);
@@ -210,7 +210,7 @@ package game.ui.map
 		{
 			var key:String = uid.toString();
 			var player:RoleSprite = playerHash.remove(key);
-			if (player) player.hide();
+			if (player) player.removeFromFather();
 		}
 		
 		public function addChind(dis:DisplayObject):void

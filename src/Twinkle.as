@@ -5,6 +5,8 @@ package
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.net.*;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import flash.ui.*;
 	import flash.utils.*;
 	import game.consts.*;
@@ -13,11 +15,13 @@ package
 	import game.ui.core.GpuCustom;
 	import game.ui.core.ActionType;
 	import game.ui.map.RoleSprite;
+	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
+	import org.web.sdk.gpu.Assets;
 	import org.web.sdk.gpu.BufferImage;
-	import org.web.sdk.gpu.texture.VRayTexture;
+	import org.web.sdk.gpu.texture.BaseTexture;
 	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.*;
@@ -36,9 +40,9 @@ package
 	
 	[SWF(frameRate = "60", width = "500", height = "400")]
 	
-	public class Twinkle extends KitSprite
+	public class Twinkle extends RawSprite
 	{
-		private var _box:KitSprite;
+		private var _box:RawSprite;
 		
 		public function Twinkle():void 
 		{
@@ -60,14 +64,27 @@ package
 			ServerSocket.create(new AssignedTransfer);	//socket建立
 			PerfectLoader.gets().LOAD_MAX = 5;			//最大下载
 			FpsMonitor.gets().show();					//内存查看
-			SoundManager.playUrl("bg.mp3");				
-			//StartLayer.gets().show();
+			//SoundManager.playUrl("bg.mp3");				
+			StartLayer.gets().show();
 			//------
 			var url:String = "http://e.hiphotos.baidu.com/zhidao/pic/item/1b4c510fd9f9d72ab4b95ef0d42a2834359bbb7a.jpg";
-			var butter:BufferImage = new BufferImage(url);
+			/*
+			
+			var butter:IAcceptor = VRayMap.createByUrl(url);
 			this.addDisplay(butter);
 			var bit:IAcceptor = butter.clone();
-			bit.addInto(this,100,100)
+			bit.addInto(this, 100, 100);
+			*/
+			return
+			//
+			var bits:IAcceptor = VRayMap.createBySize(100,100,0xffffff)
+			this.addDisplay(bits, 100, 100);
+			bits =  VRayMap.createBySize(100, 100, 0xffffff);
+			this.addDisplay(bits, 200, 300);
+			bits = VRayMap.createByUrl(url);
+			this.addDisplay(bits, 0, 300);
+			bits = VRayMap.createByUrl(url);
+			this.addDisplay(bits, 0, 100);
 		}
 		
 		//ends

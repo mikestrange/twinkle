@@ -8,7 +8,7 @@ package org.web.sdk.display
 		function addToLayer(dis:DisplayObject):DisplayObject;
 		function removeToLayer(dis:DisplayObject):DisplayObject;
 		function isEmpty():Boolean;
-		function hide():void;
+		function removeFromFather():void;
 		//ends
 	}
 }

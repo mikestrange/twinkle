@@ -1,7 +1,8 @@
 package org.web.sdk.gpu
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.inters.IBuffer;
+	import org.web.sdk.gpu.texture.BaseTexture;
+	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.core.BelieveLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.utils.HashMap;
@@ -21,53 +22,55 @@ package org.web.sdk.gpu
 		
 		private var _protoKeys:HashMap = new HashMap;
 		
-		public function load(asset:IBuffer):IBuffer
+		public function load(asset:IAcceptor, complete:Function):IAcceptor
 		{
-			if (has(asset.resource)) {
-				mark(asset);
+			var resource:String = asset.resource;
+			if (resource == null) return asset;
+			if (has(resource)) {
+				mark(asset, resource);
 			}else {
-				loader.addWait(asset.resource, LoadEvent.IMG).addRespond(asset.complete);
+				loader.addWait(resource, LoadEvent.IMG).addRespond(complete);
 				loader.start();
 			}
 			return asset;
 		}
 		
 		//不用了的从这里删除下
-		public function unmark(url:String):Boolean
+		public function unmark(resource:String):Boolean
 		{
-			var image:ImageData = _protoKeys.getValue(url);
+			var image:ImageData = _protoKeys.getValue(resource);
 			if (null == image) return false;
-			if (--image.leng <= 0) {
-				_protoKeys.remove(url);
+			if (--image.length <= 0) {
+				_protoKeys.remove(resource);
 				image.dispose();
 			}
 			return true;
 		}
 		
 		//释放一个纹理
-		public function remove(url:String):void 
+		public function remove(resource:String):void 
 		{
-			var image:ImageData = _protoKeys.remove(url);
+			var image:ImageData = _protoKeys.remove(resource);
 			if (image) image.dispose();
 		}
 		
 		//是否存在这张照片
-		public function has(url:String):Boolean
+		public function has(resource:String):Boolean
 		{
-			return _protoKeys.isKey(url);
+			return _protoKeys.isKey(resource);
 		}
 		
 		//取一张图 只有在取的时候才记录备份出去了多少
-		public function mark(asset:IBuffer, bit:BitmapData = null):Boolean
+		public function mark(asset:IAcceptor, name:String, texture:BaseTexture = null):Boolean
 		{
-			if (asset.resource == null) return false;
-			var image:ImageData = _protoKeys.getValue(asset.resource);
+			var image:ImageData = _protoKeys.getValue(name);
 			if (image == null) {
-				if (bit == null) return false;
-				image = new ImageData(asset.resource, bit);
-				_protoKeys.put(asset.resource, image);
+				if (name == null || texture == null) return false;
+				image = new ImageData(name, texture);
+				texture.setName(name);
+				_protoKeys.put(name, image);
 			}
-			image.leng++;
+			image.length++;
 			asset.setTexture(image.texture);
 			return true;
 		}
@@ -87,7 +90,7 @@ package org.web.sdk.gpu
 			for (var i:int = 0; i < arr.length; i++)
 			{
 				bit = arr[i];
-				chat += "url=" + bit.url + ",len=" + bit.leng + "\n";
+				chat += "resource=" + bit.resource + ",len=" + bit.length + "\n";
 			}
 			chat += "->总共:" + arr.length + "]";
 			return chat;
@@ -103,19 +106,19 @@ package org.web.sdk.gpu
 
 
 import flash.display.BitmapData;
-import org.web.sdk.gpu.texture.VRayTexture;
+import org.web.sdk.gpu.texture.BaseTexture;
 
 class ImageData {
 	
-	public var leng:int;
-	public var url:String;
-	public var texture:VRayTexture;
+	public var length:int;
+	public var resource:String;
+	public var texture:BaseTexture;
 	
-	public function ImageData(path:String, bit:BitmapData, leng:int = 0)
+	public function ImageData(resource:String, texture:BaseTexture, leng:int = 0)
 	{
-		this.url = path;
-		this.texture = VRayTexture.fromBitmapdata(bit);
-		this.leng = leng;
+		this.resource = resource;
+		this.texture = texture;
+		this.length = leng;
 	}
 	
 	public function dispose():void

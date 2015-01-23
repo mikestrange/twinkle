@@ -18,7 +18,7 @@ package game.ui.map
 	import org.web.rpg.utils.DrawLine;
 	import org.web.rpg.utils.FormatUtils;
 	import org.web.sdk.display.engine.Steper;
-	import org.web.sdk.display.KitSprite;
+	import org.web.sdk.display.RawSprite;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
@@ -28,7 +28,7 @@ package game.ui.map
 	/*
 	 * role
 	 * */
-	public class RoleSprite extends KitSprite implements IRole
+	public class RoleSprite extends RawSprite implements IRole
 	{
 		private var _action:GpuCustom;
 		//

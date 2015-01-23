@@ -3,7 +3,7 @@ package
 	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
 	import game.GameGlobal;
-	import org.web.sdk.display.KitSprite;
+	import org.web.sdk.display.RawSprite;
 	import org.web.sdk.FrameWork;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -18,7 +18,7 @@ package
 	import org.web.sdk.tool.Clock;
 	
 	
-	public class StartLayer extends KitSprite
+	public class StartLayer extends RawSprite
 	{
 		private static var _ins:StartLayer;
 		
@@ -97,7 +97,7 @@ package
 			//
 		}
 		
-		override public function show():void 
+		public function show():void 
 		{
 			FrameWork.stage.addChild(this);
 			if (GameGlobal.isDebug) minaLine(null);
@@ -110,7 +110,7 @@ package
 		
 		private function minaLine(e:Object):void
 		{
-			this.hide();
+			this.removeFromFather();
 			SelfData.gets().uid = parseInt(idTextInput.text);
 			ServerSocket.socket.sendNotice(NoticeDefined.SET_LOGIC, [parseInt(idTextInput.text), pwTextInput.text]);
 		}

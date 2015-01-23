@@ -3,9 +3,9 @@ package org.web.sdk.display
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import org.web.sdk.display.ILayer;
-	import org.web.sdk.display.KitSprite;
+	import org.web.sdk.display.RawSprite;
 	
-	public class Layer extends KitSprite implements ILayer 
+	public class Layer extends RawSprite implements ILayer 
 	{
 		public function Layer(layerName:String, value:Boolean = false) 
 		{

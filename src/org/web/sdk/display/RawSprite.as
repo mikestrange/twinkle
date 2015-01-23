@@ -1,64 +1,41 @@
 package org.web.sdk.display 
 {
 	import flash.events.Event;
-	import flash.geom.Transform;
-	import flash.display.Stage;
-	import flash.geom.Rectangle;
 	import flash.geom.Point;
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.inters.IDisplayObject;
-	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
-	
-	public class KitSprite extends Sprite implements IBaseSprite 
+	/*
+	 * 原始的，游戏中全部继承他
+	 * */
+	public class RawSprite extends Sprite implements IBaseSprite 
 	{
 		
 		/* INTERFACE org.web.sdk.inters.IBaseSprite */
-		public function lock():void 
+		public function lock(child:Boolean = true):void 
 		{
 			this.mouseEnabled = false;
+			if (child != this.mouseChildren) this.mouseChildren = child;
 		}
 		
-		public function unlock():void 
+		public function unlock(child:Boolean = true):void 
 		{
 			this.mouseEnabled = true;
+			if (child != this.mouseChildren) this.mouseChildren = child;
 		}
 		
-		public function removeChildByName(disName:String):DisplayObject 
+		public function addDisplay(dis:IDisplayObject, mx:Number = 0, my:Number = 0, floor:int = -1):void 
 		{
-			var dis:DisplayObject = getChildByName(disName);
-			if (dis) removeChild(dis);
-			return dis;
-		}
-		
-		public function addDisplay(dis:IDisplayObject, mx:Number = NaN, my:Number = NaN):void 
-		{
-			if (!isNaN(mx)) dis.x = mx;
-			if (!isNaN(my)) dis.y = my;
-			this.addChild(dis as DisplayObject);
-		}
-		
-		public function isByName(disName:String):Boolean 
-		{
-			return getChildByName(disName) != null;
+			dis.moveTo(mx, my);
+			if (floor < 0 || floor > this.numChildren) floor = this.numChildren;
+			this.addChildAt(dis as DisplayObject, floor);
 		}
 		
 		public function clearChildren():void 
 		{
 			while (this.numChildren) removeChildAt(0);
-		}
-		
-		public function addChildByName(child:IDisplayObject, sonName:String = null, index:int = -1):IDisplayObject 
-		{
-			if (sonName != null) {
-				if (getChildByName(sonName) == child) throw Error('命名重复->' + sonName);
-				child.name = sonName;
-			}
-			if (numChildren < 1 || index <= 0||index >= numChildren) return addChild(child as DisplayObject) as IDisplayObject;
-			//
-			return addChildAt(child as DisplayObject, index) as IDisplayObject;
 		}
 		
 		public function clearFilters():void 
@@ -87,16 +64,6 @@ package org.web.sdk.display
 		public function isshow():Boolean 
 		{
 			return parent != null;
-		}
-		
-		public function show():void 
-		{
-			
-		}
-		
-		public function hide():void 
-		{
-			if (parent) parent.removeChild(this);
 		}
 		
 		public function showEvent(event:Event = null):void 
@@ -158,12 +125,10 @@ package org.web.sdk.display
 			Multiple.wipeout(this, value);
 		}
 		
-		public function removeFromParent():IBaseSprite
+		//自己会释放
+		public function removeFromFather():void
 		{
-			var father:IBaseSprite = getParent();
 			if (parent) parent.removeChild(this);
-			finality();
-			return father;
 		}
 		
 		public function setAuto(type:String = null):void 
@@ -171,12 +136,9 @@ package org.web.sdk.display
 			
 		}
 		
-		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0):void
+		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void
 		{
-			if (father) {
-				father.addChildByName(this);
-				this.moveTo(mx, my);
-			}
+			if (father) father.addDisplay(this, mx, my, floor);
 		}
 		
 		public function onResize(target:Object = null):void 

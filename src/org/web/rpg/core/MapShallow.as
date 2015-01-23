@@ -5,7 +5,7 @@ package org.web.rpg.core
 	import flash.geom.Matrix;
 	import flash.utils.Dictionary;
 	import org.web.rpg.core.MapData;
-	import org.web.sdk.display.KitSprite;
+	import org.web.sdk.display.RawSprite;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
@@ -13,7 +13,7 @@ package org.web.rpg.core
 	/*
 	 * 背景地图，完美的封装了
 	 * */
-	public class MapShallow extends KitSprite
+	public class MapShallow extends RawSprite
 	{
 		//单个地图大小
 		public var titleWidth:int;

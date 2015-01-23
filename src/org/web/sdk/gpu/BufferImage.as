@@ -5,27 +5,25 @@ package org.web.sdk.gpu
 	import flash.events.Event;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
+	import org.web.sdk.gpu.texture.BaseTexture;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.inters.IBuffer;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 	import org.web.sdk.gpu.Assets;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * */
-	public class BufferImage extends VRayMap implements IBuffer 
+	public class BufferImage extends VRayMap
 	{
 		private var _url:String;
 		private var _over:Boolean = false;
-		protected static const asset:Assets = Assets.gets();
 		
 		public function BufferImage(url:String = null)
 		{
-			_url = url;
-			asset.load(this);
+			if(url) resource = url;
 		}
 		
-		public function get resource():String
+		override public function get resource():String
 		{
 			return _url;
 		}
@@ -35,14 +33,14 @@ package org.web.sdk.gpu
 		{
 			if (_url) return;
 			_url = value;
-			asset.load(this);
+			asset.load(this, complete);
 		}
 		
 		public function complete(e:LoadEvent):void
 		{
 			_over = true;
 			if (e.eventType == LoadEvent.ERROR) return;
-			asset.mark(this, e.target as BitmapData);
+			asset.mark(this, _url, BaseTexture.fromBitmapData(e.target as BitmapData));
 			this.dispatchEvent(new Event(e.eventType));
 		}
 		

@@ -1,13 +1,13 @@
 package org.web.sdk.inters 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.gpu.texture.VRayTexture;
+	import org.web.sdk.gpu.texture.BaseTexture;
 	
 	public interface IAcceptor extends IDisplayObject 
 	{
-		//释放
+		function get resource():String;
+		function setTexture(texture:BaseTexture):void;	
 		function dispose():void;
-		function setTexture(texture:VRayTexture):void;	
 		function clone():IAcceptor;
 		//ends
 	}

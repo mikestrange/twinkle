@@ -149,7 +149,7 @@ internal class LayerData
 		
 	public function destroy():void
 	{
-		if (layer) layer.hide();
+		if (layer) layer.removeFromFather();
 		layer = null;
 	}
 	//ends

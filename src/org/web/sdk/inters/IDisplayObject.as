@@ -76,15 +76,18 @@ package org.web.sdk.inters
 		function hitTestObject(obj:DisplayObject):Boolean;
 		function hitTestPoint(x:Number, y:Number, shapeFlag:Boolean = false):Boolean;
 		//新增接口
-		function removeFromParent():IBaseSprite;
+		function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void;
 		function moveTo(mx:int = 0, my:int = 0):void;
 		function moveToPoint(value:Point):void;
-		function follow(dis:IDisplayObject, ofx:Number = 0, ofy:Number = 0, global:Boolean = false):void;
 		function setNorms(horizontal:Number = 1, vertical:Number = 1, ratio:Boolean = true):void;
+		function follow(dis:IDisplayObject, ofx:Number = 0, ofy:Number = 0, global:Boolean = false):void;
+		//
 		function render():void;
-		function setAuto(type:String = null):void;
 		function isshow():Boolean;
-		function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0):void;
+		function removeFromFather():void;
+		function setAuto(type:String = null):void;
+		function showEvent(event:Event = null):void;
+		function hideEvent(event:Event = null):void;
 		//ends
 	}
 	

@@ -12,7 +12,7 @@ package org.web.sdk.handler
 			this.target = target;
 			this.called = called;
 			this.data = data;
-			this.valid = true;
+			this.valid = called is Function;
 		}
 		
 		public function match(value:Object):Boolean

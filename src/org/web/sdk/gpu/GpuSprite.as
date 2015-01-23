@@ -67,7 +67,7 @@ package org.web.sdk.gpu
 		//释放元素
 		override public function dispose():void 
 		{
-			removeFromParent();
+			removeFromFather();
 			if (_conductor) {
 				_conductor.unmark();
 				_conductor = null;

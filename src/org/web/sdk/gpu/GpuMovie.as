@@ -7,13 +7,13 @@ package org.web.sdk.gpu
 	import org.web.sdk.display.engine.SunEngine;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.gpu.texture.VRayTexture;
+	import org.web.sdk.gpu.texture.BaseTexture;
 	/*
 	 * 就算包含一个sprite 效率也是movieclip的2倍,如果用3D渲染，那么效率肯定更高
 	 * */
 	public class GpuMovie extends GpuSprite
 	{
-		private var _vector:Vector.<VRayTexture>;
+		private var _vector:Vector.<BaseTexture>;
 		private var _isstop:Boolean = true;
 		private var _index:int = 1;		
 		private var _fps:int = GpuSprite.RENDER_FPS;
@@ -27,7 +27,7 @@ package org.web.sdk.gpu
 			_step = new Steper(this);
 		}
 		
-		public function setFrames(vector:Vector.<VRayTexture>):void
+		public function setFrames(vector:Vector.<BaseTexture>):void
 		{
 			_vector = vector;
 			if (_vector) _totals = _vector.length;

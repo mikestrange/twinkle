@@ -119,7 +119,7 @@ package org.web.sdk.load
 			var index:int = 0;
 			var list:Vector.<Observer> = _vector.slice(index, _vector.length);
 			for (;index < list.length; index++) {
-				list[index].handler(new LoadEvent(target, _url, eventType, list[index].getBody(), _type));
+				list[index].dispatch([new LoadEvent(target, _url, eventType, list[index].getBody(), _type)]);
 			}
 			list = null;
 		}
