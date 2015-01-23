@@ -65,9 +65,8 @@ package
 			PerfectLoader.gets().LOAD_MAX = 5;			//最大下载
 			FpsMonitor.gets().show();					//内存查看
 			//SoundManager.playUrl("bg.mp3");				
-			StartLayer.gets().show();
+			//StartLayer.gets().show();
 			//------
-			return;
 			var url:String = "http://e.hiphotos.baidu.com/zhidao/pic/item/1b4c510fd9f9d72ab4b95ef0d42a2834359bbb7a.jpg";
 			/*
 			var butter:IAcceptor = VRayMap.createByUrl(url);
@@ -84,6 +83,12 @@ package
 			this.addDisplay(bits, 0, 300);
 			bits = VRayMap.createByUrl(url);
 			this.addDisplay(bits, 0, 100);
+			Clock.step(100, complete,0);
+		}
+		
+		private function complete():void
+		{
+			trace("xx")
 		}
 		
 		//ends

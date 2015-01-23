@@ -1,7 +1,7 @@
-package org.web.asteroids 
+package org.web.flat 
 {
 	/**
-	 * 横版格斗
+	 * 平面,横版格斗
 	 */
 	public namespace volumesmoke = "volumesmoke.com"
 
