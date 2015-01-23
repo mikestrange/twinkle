@@ -5,11 +5,11 @@ package org.web.sdk.gpu.texture
 	import flash.display.MovieClip;
 	import flash.system.ApplicationDomain;
 	import flash.utils.getDefinitionByName;
-	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.Assets;
 	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.utils.DrawUtils;
 	/**
 	 * 单一材质  IAcceptor 这个接口才能调度
 	 */
@@ -97,7 +97,7 @@ package org.web.sdk.gpu.texture
 			var Objects:Class = getDefinitionByName(className) as Class;
 			var item:* = new Objects(); //MovieClip不处理
 			if (item == null) return null;
-			if (item is DisplayObject) return fromBitmapData(Multiple.draw(item as DisplayObject));
+			if (item is DisplayObject) return fromBitmapData(DrawUtils.draw(item as DisplayObject));
 			return fromBitmapData(item as BitmapData);
 		}
 		

@@ -60,6 +60,8 @@ package
 			//LogicLayer.gets().show();
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
+			//
+			test();
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -82,10 +84,35 @@ package
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			if (!PerfectLoader.gets().isLoad()) {
-				trace("res load over")
-				
+				trace("res load over,start game")
 			}
 		}
+		
+		private var fs:Number=0;
+		private var ips:IAcceptor;
+		private var arr:Vector.<Point>
+		
+		private function test():void
+		{
+			ips = VRayMap.createBySize(50, 50, 0xff0000);
+			this.addDisplay(ips);
+			Clock.step(100, moves, 0);
+			//
+			
+			arr = new Vector.<Point>;
+			arr[0] = new Point(100,146)
+			arr[1] = new Point(300,0)	//中间点
+			arr[2] = new Point(500, 146)
+			Bezier.drawLine(this.graphics, arr);
+		}
+		
+		private function moves():void
+		{
+			var p:Point = Bezier.dot(fs, arr);
+			ips.moveTo(p.x, p.y);
+			fs += .01;
+		}
+		
 		
 		//ends
 	}

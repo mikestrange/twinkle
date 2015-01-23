@@ -10,7 +10,7 @@ package org.web.rpg.core
 	import flash.geom.Rectangle;
 	import org.web.rpg.astar.Grid;
 	import org.web.rpg.core.MapData;
-	import org.web.rpg.utils.DrawLine;
+	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.astar.Node;
 	import org.web.sdk.display.RawSprite;
 	import org.web.sdk.display.Multiple;

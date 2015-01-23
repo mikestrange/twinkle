@@ -12,10 +12,10 @@ package game.ui.map
 	import game.ui.core.ActionType;
 	import game.ui.core.GpuCustom;
 	import game.inters.IRole;
-	import game.utils.DrawUtils;
+	import org.web.sdk.utils.DrawUtils;
 	import org.web.rpg.astar.Grid;
 	import org.web.rpg.astar.Node;
-	import org.web.rpg.utils.DrawLine;
+	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.utils.FormatUtils;
 	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.RawSprite;
@@ -66,7 +66,7 @@ package game.ui.map
 			_action.transform.matrix = matrix;
 			this.addChild(_action);
 			//名称
-			_texture = new VRayMap(DrawUtils.draw(_data.usn));
+			_texture = new VRayMap(DrawUtils.drawEditor(_data.usn));
 			_texture.x = -_texture.width >> 1;
 			_texture.y = -90 - _texture.height;
 			this.addChild(_texture);

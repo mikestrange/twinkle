@@ -8,7 +8,7 @@ package org.web.rpg.utils
 	import org.web.rpg.astar.Node;
 	import org.web.rpg.astar.NodeType;
 	
-	public class DrawLine 
+	public class GridLine 
 	{
 		//绘制矩形网格 只是网格
 		public static function drawGrid(graphics:Graphics, wleng:int, hleng:int, width:int = 30, height:int = 30, color:uint = 0xff0000, thick:Number = 1):void

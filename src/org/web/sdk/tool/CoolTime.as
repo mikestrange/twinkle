@@ -5,7 +5,9 @@ package org.web.sdk.tool
 	import flash.events.Event;
 	import flash.geom.Point;
 	
-	//一个非常好的矩形CD进度时间显示器
+	/*
+	 * 一个非常好的矩形CD进度时间显示器
+	 * */
 	public class CoolTime extends Sprite 
 	{
 		//开始时间
@@ -49,7 +51,7 @@ package org.web.sdk.tool
 		private function initMask():void
 		{
 			this.graphics.clear();
-			this.graphics.lineStyle(1,lineColor);
+			this.graphics.lineStyle(1, lineColor);
 			this.graphics.beginFill(brackColor);
 			this.graphics.drawRect(0, 0, W, H);
 			this.graphics.endFill();
@@ -59,7 +61,7 @@ package org.web.sdk.tool
 		private function showMask(middlex:Number,middley:Number,step:int=0):void
 		{
 			this.graphics.clear();
-			this.graphics.lineStyle(0,lineColor);
+			this.graphics.lineStyle(0, lineColor);
 			this.graphics.beginFill(brackColor);
 			this.graphics.moveTo(W >> 1, 0);
 			this.graphics.lineTo(W >> 1, H >> 1);
@@ -98,7 +100,7 @@ package org.web.sdk.tool
 				if (isbreak && endCalled is Function) endCalled.apply(null, onCompleteArgs);
 			}
 		}
-
+		
 		private function middleLocation(leng:Number,step:int=0):Point
 		{
 			switch(step)
@@ -111,13 +113,12 @@ package org.web.sdk.tool
 			}
 			return new Point(W >> 1, H >> 1);
 		}
-
+		
 		//直接调用消除cd
 		public function kill():void
 		{
 			gradually(LENG, false);
 		}
-		
 		//ends
 	}
 }

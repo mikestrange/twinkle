@@ -1,5 +1,6 @@
 package org.web.sdk.utils 
 {
+	import flash.geom.Point;
 	public class Maths 
 	{
 		private static const ROUND:int = 360;
@@ -72,6 +73,24 @@ package org.web.sdk.utils
 		{
 			return atanRadian(selfx, selfy, aimx, aimy);
 		}
+		
+		//两点距离
+		public static function distance(mx:Number, my:Number, dx:Number, dy:Number):Number
+		{
+			var tx:Number = mx - dx;
+			var ty:Number = my - dy;
+			return Math.sqrt(tx * tx + ty * ty);
+		}
+		
+		//合力
+		public static function resultant(angle:int, speed:Number = 1):Point
+		{
+			var dx:Number = Math.cos(angle * Math.PI / ROUND_HALF) * speed;
+			var dy:Number = Math.sin(angle * Math.PI / ROUND_HALF) * speed;
+			return new Point(dx, dy);
+		}
+		
+		
 		//ends
 	}
 

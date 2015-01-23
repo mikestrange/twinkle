@@ -64,12 +64,6 @@ package org.web.sdk.sound
 			return false;
 		}
 		
-		//继续播放
-		public static function play(type:String = null):void
-		{
-			
-		}
-		
 		//ends
 	}
 

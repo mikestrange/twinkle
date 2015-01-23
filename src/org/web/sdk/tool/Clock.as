@@ -5,7 +5,9 @@ package org.web.sdk.tool
 	import flash.utils.*;
 	import org.web.sdk.FrameWork;
 
-	//一个非常好的计时器
+	/*
+	 * 一个非常好的计时器
+	 * */
 	public class Clock
 	{
 		private static const _KEY_:String = "whoisyourdaddy";

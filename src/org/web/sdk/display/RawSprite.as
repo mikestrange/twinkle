@@ -96,7 +96,8 @@ package org.web.sdk.display
 		public function follow(dis:IDisplayObject, ofx:Number = 0, ofy:Number = 0, global:Boolean = false):void 
 		{
 			if (global) {
-				moveToPoint(dis.localToGlobal(new Point(ofx, ofy)));
+				var p:Point = dis.localToGlobal(new Point);
+				moveTo(p.x + ofx, p.y + ofy);
 			}else {
 				moveTo(dis.x + ofx, dis.y + ofy);
 			}

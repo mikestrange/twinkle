@@ -83,15 +83,6 @@ package org.web.sdk.display
 				}
 			}
         }
-		
-		//绘制对象					绘制的对象			一个偏移量					
-		public static function draw(dis:DisplayObject, setrect:Rectangle = null):BitmapData 
-		{
-			var rect:Rectangle = setrect == null ? dis.getBounds(dis) : setrect;
-			var bitmapdata:BitmapData = new BitmapData(rect.width, rect.height, true, 0);
-			bitmapdata.draw(dis, new Matrix(1, 0, 0, 1, -rect.x, -rect.y), null, null, null, true);
-			return bitmapdata;
-		}
 		//ends
 	}
 
