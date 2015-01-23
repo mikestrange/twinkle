@@ -34,8 +34,8 @@ package game.ui.map
 		//
 		private var _data:PlayerObj;
 		private var _texture:VRayMap;
-		private var speedX:int = 10;
-		private var speedY:int = 10;
+		private var speedX:int = 4;
+		private var speedY:int = 4;
 		private var path:Array;
 		private var pathIndex:int = 0;
 		private var max_leng:int = speedX + speedY;
@@ -72,7 +72,7 @@ package game.ui.map
 			this.addChild(_texture);
 			//
 			stand();
-			DrawLine.drawSkeletonLine(this.graphics);
+			//DrawLine.drawSkeletonLine(this.graphics);
 		}
 		
 		public function setPath(value:Array):void

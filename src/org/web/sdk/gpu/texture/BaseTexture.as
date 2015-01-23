@@ -11,7 +11,7 @@ package org.web.sdk.gpu.texture
 	import org.web.sdk.gpu.Assets;
 	import org.web.sdk.inters.IAcceptor;
 	/**
-	 * 材质  IAcceptor 这个接口才能调度
+	 * 单一材质  IAcceptor 这个接口才能调度
 	 */
 	public class BaseTexture
 	{

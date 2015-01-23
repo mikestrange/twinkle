@@ -120,7 +120,7 @@ package game.ui.map
 		{
 			if (map.isshow()) {
 				render();
-				actor.render();
+				//actor.render();
 				//空闲3秒发送一次自己的坐标
 				if (actor.isWait()) {
 					if (getTimer() - sendTime>STOP_TIME) {
@@ -238,7 +238,7 @@ package game.ui.map
 				}else {
 					removeUser(player.getUid());
 				}
-				//if (!player.isself()) player.render();
+				player.render();
 			}
 			//trace("一次：", getTimer() - t1);
 			if (userRoot.numChildren < 2) return;

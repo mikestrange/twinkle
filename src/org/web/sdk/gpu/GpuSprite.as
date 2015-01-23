@@ -15,7 +15,7 @@ package org.web.sdk.gpu
 	public class GpuSprite extends VRayMap implements IEscape
 	{
 		//渲染速度
-		public static var RENDER_FPS:int = 6;
+		public static var RENDER_FPS:int = 4;
 		
 		beyond_challenge var _conductor:CryRenderer;
 		

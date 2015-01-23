@@ -67,15 +67,14 @@ package
 			//SoundManager.playUrl("bg.mp3");				
 			StartLayer.gets().show();
 			//------
+			return;
 			var url:String = "http://e.hiphotos.baidu.com/zhidao/pic/item/1b4c510fd9f9d72ab4b95ef0d42a2834359bbb7a.jpg";
 			/*
-			
 			var butter:IAcceptor = VRayMap.createByUrl(url);
 			this.addDisplay(butter);
 			var bit:IAcceptor = butter.clone();
 			bit.addInto(this, 100, 100);
 			*/
-			return
 			//
 			var bits:IAcceptor = VRayMap.createBySize(100,100,0xffffff)
 			this.addDisplay(bits, 100, 100);

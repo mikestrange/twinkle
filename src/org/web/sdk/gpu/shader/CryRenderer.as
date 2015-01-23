@@ -3,7 +3,7 @@ package org.web.sdk.gpu.shader
 	import flash.display.BitmapData;
 	import org.web.sdk.inters.IEscape;
 	/**
-	 *一个资源管理的集合
+	 *一个资源管理的集合,也是一个渲染体
 	 */
 	public class CryRenderer 
 	{
