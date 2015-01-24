@@ -71,7 +71,7 @@ package org.web.sdk.utils
 		//两点之间的角度  value到other的角度,不是360 是0-180,0-(-180)
 		public static function atanAngle(selfx:Number, selfy:Number, aimx:Number = 0, aimy:Number = 0):Number
 		{
-			return atanRadian(selfx, selfy, aimx, aimy);
+			return atanRadian(selfx, selfy, aimx, aimy) * ROUND_HALF / Math.PI;
 		}
 		
 		//两点距离
@@ -89,7 +89,6 @@ package org.web.sdk.utils
 			var dy:Number = Math.sin(angle * Math.PI / ROUND_HALF) * speed;
 			return new Point(dx, dy);
 		}
-		
 		
 		//ends
 	}

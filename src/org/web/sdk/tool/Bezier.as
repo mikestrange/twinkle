@@ -59,13 +59,14 @@ package org.web.sdk.tool
 		}
 		
 		//画贝塞曲线
-		public static function drawLine(graphics:Graphics, sz:Vector.<Point>):void
+		public static function drawLine(graphics:Graphics, sz:Vector.<Point>, bezer:Boolean = true):void
 		{
 			for (var i:int = 0; i < sz.length; i++) {
 				draw_point(graphics, sz[i]);
 			}
 			draw_lines(graphics, sz);
 			graphics.lineStyle(2, 0xff0000);
+			if (!bezer) return;
 			var p:Point = P_BEZ(0, sz);
 			graphics.moveTo(p.x, p.y);
 			for (var j:Number = 0; j < 1; j += 0.01) {

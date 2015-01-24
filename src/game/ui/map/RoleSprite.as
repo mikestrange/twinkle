@@ -25,6 +25,7 @@ package game.ui.map
 	import org.web.sdk.gpu.GpuBase;
 	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.net.socket.ServerSocket;
+	import org.web.sdk.utils.Maths;
 	/*
 	 * role
 	 * */
@@ -114,6 +115,7 @@ package game.ui.map
 			endpo.y = node.y * grid.nodeHeight + (grid.nodeHeight >> 1);
 			startpo.x = this.x;
 			startpo.y = this.y;
+			
 		}
 		
 		//确定方位，注入移动  --自己猜可以用

@@ -17,6 +17,7 @@ package
 	import org.web.sdk.gpu.*;
 	import org.web.sdk.gpu.texture.BaseTexture;
 	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.inters.IDisplayObject;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
 	import org.web.sdk.net.socket.*;
@@ -88,32 +89,62 @@ package
 			}
 		}
 		
-		private var fs:Number=0;
-		private var ips:IAcceptor;
-		private var arr:Vector.<Point>
+		private var arr:Vector.<Point>;
+		private var step:Steper;
+		[Embed(source = "../bin/back.gif")]
+		private var MAP:Class;
+		//
+		private var item:IAcceptor;
+		private var index:int = 0;
 		
 		private function test():void
 		{
-			ips = VRayMap.createBySize(50, 50, 0xff0000);
-			this.addDisplay(ips);
-			Clock.step(100, moves, 0);
+			step = new Steper(this);
+			step.run();
+			arr = new Vector.<Point>
+			for (var i:int = 0; i < 30; i++) {
+				arr.push(new Point(Maths.random(0, 500), Maths.random(0, 500)));
+			}
+			item = VRayMap.createByBitmapdata(new MAP().bitmapData);
+			Bezier.drawLine(this.graphics, arr, false);
+			this.addDisplay(item, 0, 0);
 			//
+			this.stage.addEventListener(MouseEvent.MOUSE_UP, onup);
+			this.stage.addEventListener(MouseEvent.ROLL_OUT, onup);
+		}
+		
+		private function onup(e:MouseEvent):void {
+			trace("xxx",e.type)
 			
-			arr = new Vector.<Point>;
-			arr[0] = new Point(100,146)
-			arr[1] = new Point(300,0)	//中间点
-			arr[2] = new Point(500, 146)
-			Bezier.drawLine(this.graphics, arr);
 		}
 		
-		private function moves():void
+		override public function render():void 
 		{
-			var p:Point = Bezier.dot(fs, arr);
-			ips.moveTo(p.x, p.y);
-			fs += .01;
+			if (index >= arr.length) return;
+			
+			//if (renderMove(item, arr, index)) index++;
+			
+			this.graphics.clear();
+			this.graphics.lineStyle(1,0x00fff0)
+			this.graphics.moveTo(0, 0);
+			this.graphics.lineTo(this.stage.mouseX, this.stage.mouseY);
 		}
 		
-		
+		//是否
+		public static function renderMove(dis:IDisplayObject, vector:Vector.<Point>, index:int = 0, speed:int = 10):Boolean
+		{
+			if (index < 0 || index >= vector.length) return false;
+			var angle:Number = Maths.atanAngle(dis.x, dis.y, vector[index].x, vector[index].y);	//计算两点之间的角度
+			var mpo:Point = Maths.resultant(angle, speed);										//计算增量
+			dis.x -= mpo.x;
+			dis.y -= mpo.y;
+			//两点之间的长度
+			if (Maths.distance(dis.x, dis.y, vector[index].x, vector[index].y) <= speed) {
+				dis.moveTo(vector[index].x, vector[index].y);
+				return true;
+			}
+			return false;
+		}
 		//ends
 	}
 	

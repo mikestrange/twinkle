@@ -1,12 +1,10 @@
 package org.web.sdk.tool 
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.utils.*;
 	import org.web.sdk.FrameWork;
-
 	/*
 	 * 一个非常好的计时器
+	 * FrameWork.stage就是stage
 	 * */
 	public class Clock
 	{
@@ -26,12 +24,12 @@ package org.web.sdk.tool
 		{
 			if (!isStep) {
 				isStep = true;
-				FrameWork.stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+				FrameWork.stage.addEventListener("enterFrame", onEnterFrame);
 			}
 			clockList.push(new ClockData(fps, call, times,args));
 		}
 		
-		private function onEnterFrame(e:Event):void
+		private function onEnterFrame(e:Object):void
 		{
 			var data:ClockData;
 			for (var i:int = clockList.length - 1; i >= 0; i--)
@@ -76,7 +74,7 @@ package org.web.sdk.tool
 			if (isStep) {
 				trace("#闹钟暂停")
 				isStep = false;
-				FrameWork.stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				FrameWork.stage.removeEventListener("enterFrame", onEnterFrame);
 			}
 		}
 		

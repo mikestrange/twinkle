@@ -32,19 +32,26 @@ package org.web.rpg.utils
 		public static function getPoint(node:Point, other:Point):int
 		{
 			//角度
-			var point:int = atanAngle(node, other);
+			var angle:int = atanAngle(node, other);
 			//trace("方向：",point)
-			if (point < NONE) point = ROUND + point;
+			if (angle < NONE) angle = ROUND + angle;
+			
+			return getIndexByAngle(angle);
+		}
+		
+		//直接根据角度取
+		public static function getIndexByAngle(angle:Number):int
+		{
 			switch(true)
 			{
-				case UP.inThis(point): 			return UP.type;
-				case RIGHT_UP.inThis(point):	return RIGHT_UP.type;
-				case RIGHT.inThis(point):		return RIGHT.type;
-				case RIGHT_DOWN.inThis(point):	return RIGHT_DOWN.type;
-				case DOWN.inThis(point):		return DOWN.type;
-				case LEFT_DOWN.inThis(point):	return LEFT_DOWN.type;
-				case LEFT.unThis(point):		return LEFT.type;
-				case LEFT_UP.inThis(point):		return LEFT_UP.type;
+				case UP.inThis(angle): 			return UP.type;
+				case RIGHT_UP.inThis(angle):	return RIGHT_UP.type;
+				case RIGHT.inThis(angle):		return RIGHT.type;
+				case RIGHT_DOWN.inThis(angle):	return RIGHT_DOWN.type;
+				case DOWN.inThis(angle):		return DOWN.type;
+				case LEFT_DOWN.inThis(angle):	return LEFT_DOWN.type;
+				case LEFT.unThis(angle):		return LEFT.type;
+				case LEFT_UP.inThis(angle):		return LEFT_UP.type;
 			}
 			return NONE;
 		}
