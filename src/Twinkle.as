@@ -109,25 +109,18 @@ package
 			Bezier.drawLine(this.graphics, arr, false);
 			this.addDisplay(item, 0, 0);
 			//
-			this.stage.addEventListener(MouseEvent.MOUSE_UP, onup);
-			this.stage.addEventListener(MouseEvent.ROLL_OUT, onup);
-		}
-		
-		private function onup(e:MouseEvent):void {
-			trace("xxx",e.type)
-			
+			var cool:CoolTime = new CoolTime(100, 100);
+			cool.x = 100;
+			cool.y = 100;
+			this.addChild(cool)
+			cool.setup(10, 5);
 		}
 		
 		override public function render():void 
 		{
 			if (index >= arr.length) return;
 			
-			//if (renderMove(item, arr, index)) index++;
-			
-			this.graphics.clear();
-			this.graphics.lineStyle(1,0x00fff0)
-			this.graphics.moveTo(0, 0);
-			this.graphics.lineTo(this.stage.mouseX, this.stage.mouseY);
+			if (renderMove(item, arr, index)) index++;
 		}
 		
 		//是否
