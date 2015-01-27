@@ -46,6 +46,7 @@ package
 		{
 			super.showEvent(event);
 			if (event) removeEventListener(Event.ADDED_TO_STAGE, showEvent);
+			MenuTools.setMenu(this)
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
