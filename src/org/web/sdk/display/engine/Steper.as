@@ -19,7 +19,7 @@ package org.web.sdk.display.engine
 		{
 			if (isrun) return;
 			isrun = true;
-			SunEngine.run(this);
+			AtomicEngine.run(this);
 		}
 		
 		public function step(event:Object):void 
@@ -36,7 +36,7 @@ package org.web.sdk.display.engine
 		{
 			if (!isrun) return;
 			isrun = false;
-			SunEngine.cut(this);
+			AtomicEngine.cut(this);
 		}
 		//ends
 	}

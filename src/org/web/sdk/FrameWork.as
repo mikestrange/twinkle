@@ -43,8 +43,8 @@ package org.web.sdk
 		//是否启动引擎
 		public static function setEngine(value:Boolean):void
 		{
-			if (value) SunEngine.open();
-			else SunEngine.close();
+			if (value) AtomicEngine.open();
+			else AtomicEngine.close();
 		}
 		
 		//是否启用键盘

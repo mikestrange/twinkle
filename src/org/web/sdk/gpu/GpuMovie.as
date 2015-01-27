@@ -4,7 +4,7 @@ package org.web.sdk.gpu
 	import flash.utils.getTimer;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.Steper;
-	import org.web.sdk.display.engine.SunEngine;
+	import org.web.sdk.display.engine.AtomicEngine;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.texture.BaseTexture;

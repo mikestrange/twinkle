@@ -9,9 +9,9 @@ package org.web.sdk.display.engine
 	
 	use namespace beyond_challenge
 	/**
-	 * @author 太阳，一切动力来源[引擎]
+	 * @author 原动力，一切动力来源[引擎]
 	 */
-	final public class SunEngine 
+	final public class AtomicEngine 
 	{
 		public static const NONE:int = 0;
 		public static const NAN:int = -1;
@@ -24,7 +24,7 @@ package org.web.sdk.display.engine
 		//
 		beyond_challenge static var stepVector:Vector.<IStepper>;
 		
-		public function SunEngine() { throw Error('no do'); }
+		public function AtomicEngine() { throw Error('no do'); }
 		
 		/*
 		 * 开放引擎 root
@@ -83,7 +83,7 @@ package org.web.sdk.display.engine
 				_pauseTime = getTimer();
 				var step:IStepper;
 				for each(step in stepVector) {
-					_root.removeEventListener(SunEngine.ENTER_FRAME, step.step);
+					_root.removeEventListener(AtomicEngine.ENTER_FRAME, step.step);
 				}
 				return true;
 			}
@@ -102,7 +102,7 @@ package org.web.sdk.display.engine
 				_pauseTime = NAN;	//记录暂停的时间
 				var step:IStepper;
 				for each(step in stepVector) {
-					_root.addEventListener(SunEngine.ENTER_FRAME, step.step);
+					_root.addEventListener(AtomicEngine.ENTER_FRAME, step.step);
 				}
 				return true;
 			}
@@ -110,14 +110,14 @@ package org.web.sdk.display.engine
 		}
 		
 		/*
-		 * 启动一个离子	[只有启动了才注册]
+		 * 启动一个离子	[只有启动了才注册] ，不必每次添加都去检测是否注册
 		 * */
 		public static function run(step:IStepper):Boolean
 		{
 			if (_isopen && !isRegister(step)) 
 			{
 				stepVector.push(step);
-				if (_isplay) _root.addEventListener(SunEngine.ENTER_FRAME, step.step);
+				if (_isplay) _root.addEventListener(AtomicEngine.ENTER_FRAME, step.step);
 				return true;
 			}
 			return false;
@@ -134,7 +134,7 @@ package org.web.sdk.display.engine
 				if (index != -1) 
 				{
 					stepVector.splice(index, 1);
-					_root.removeEventListener(SunEngine.ENTER_FRAME, step.step);
+					_root.removeEventListener(AtomicEngine.ENTER_FRAME, step.step);
 					return true;
 				}
 				return false;
@@ -152,7 +152,7 @@ package org.web.sdk.display.engine
 				var step:IStepper;
 				for (var i:int = stepVector.length - 1; i >= NONE; i--) {
 					step = stepVector[i];
-					_root.removeEventListener(SunEngine.ENTER_FRAME, step.step);
+					_root.removeEventListener(AtomicEngine.ENTER_FRAME, step.step);
 					stepVector.splice(i, 1);
 				}
 			}
