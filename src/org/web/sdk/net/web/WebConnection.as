@@ -56,6 +56,7 @@ package org.web.sdk.net.web
 			var web:WebData = lineList.shift();
 			Log.log(this).error("Error for Http 404:请确保连接上了后台,未知端口！ url:" + web.url);
 			sendNext();
+			if (web.client is Function) web.client(null);
 		}
 		
 		/* INTERFACE org.web.sdk.net.interfaces.INetwork */

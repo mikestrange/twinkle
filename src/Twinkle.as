@@ -20,6 +20,7 @@ package
 	import org.web.sdk.inters.IDisplayObject;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
+	import org.web.sdk.net.amf.AMFRemoting;
 	import org.web.sdk.net.socket.*;
 	import org.web.sdk.sound.core.*;
 	import org.web.sdk.sound.*;
@@ -63,7 +64,7 @@ package
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
 			//
-			test();
+			//test();
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -103,7 +104,7 @@ package
 			step = new Steper(this);
 			step.run();
 			arr = new Vector.<Point>
-			for (var i:int = 0; i < 30; i++) {
+			for (var i:int = 0; i < 300; i++) {
 				arr.push(new Point(Maths.random(0, 500), Maths.random(0, 500)));
 			}
 			item = VRayMap.createByBitmapdata(new MAP().bitmapData);
@@ -122,10 +123,12 @@ package
 			if (index >= arr.length) return;
 			
 			if (renderMove(item, arr, index)) index++;
+			
+			this.graphics.lineTo(item.x, item.y);
 		}
 		
 		//是否
-		public static function renderMove(dis:IDisplayObject, vector:Vector.<Point>, index:int = 0, speed:int = 10):Boolean
+		public static function renderMove(dis:IDisplayObject, vector:Vector.<Point>, index:int = 0, speed:int = 100):Boolean
 		{
 			if (index < 0 || index >= vector.length) return false;
 			var angle:Number = Maths.atanAngle(dis.x, dis.y, vector[index].x, vector[index].y);	//计算两点之间的角度
