@@ -1,4 +1,5 @@
-twinkle	[mikestrange]
+﻿twinkle	project
+mikestrange
 =======
 actionscript 3.0 一般项目的所有基础
 
