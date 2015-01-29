@@ -87,7 +87,7 @@ package org.web.sdk.net.amf
 		{
 			var amf:AMFRemoting = new AMFRemoting;
 			amf.connectRemote("http://localhost:80/amfphp-2.2.1/Amfphp/index.php");
-			amf.sendRemoting('ExampleService.returnBla');
+			amf.sendRemoting('LogicService.logic');
 		}
 		
 		//ends

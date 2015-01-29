@@ -64,7 +64,7 @@ package
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
 			//
-			//AMFRemoting.test();
+			AMFRemoting.test();
 			//test();
 		}
 		
