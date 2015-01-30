@@ -1,5 +1,6 @@
 package org.web.sdk.net.amf
 {
+	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.NetConnection;
@@ -11,7 +12,6 @@ package org.web.sdk.net.amf
 	public class AMFRemoting extends NetConnection
 	{
 		private var _responder:Responder;
-		private var _line:Boolean = false;
 		
 		public function set responder(value:Responder):void 
 		{
@@ -20,18 +20,17 @@ package org.web.sdk.net.amf
 		
 		public function destroy():void
 		{
-			if (!_line) return;
-			_line = false;
-			this.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-			this.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
-			this.close();
+			if (this.connected) {
+				this.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+				this.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+				this.close();
+			}
 		}
 		
 		//连接远程服务
 		public function connectRemote(gateway:String, amfType:uint = ObjectEncoding.AMF3):void
 		{
-			if (_line) return;
-			_line = true;
+			if (connected) return;
 			if (null == _responder) _responder = new Responder(onResult, onFault);
 			try {
 				this.objectEncoding = amfType;
@@ -45,23 +44,31 @@ package org.web.sdk.net.amf
 		
 		private function netStatusHandler(event:NetStatusEvent):void
 		{
-			Log.log(this).error("AMF code:", event.info.code);
+			Log.log(this).debug("AMF status code:", event.info.code);
 			triggerInfocode(event.info.code);
 		}
 		
 		//回执错误或者成功
 		protected function triggerInfocode(code:String):void
 		{
-			
+			switch(code)
+			{
+				case "NetConnection.Call.BadVersion":
+					Log.log(this).error("版本错误或者回传的数据有问题");
+					break;
+				case "NetConnection.Call.Failed ":
+					Log.log(this).error("找不到远程接口或者API路径错误");
+					break;
+			}
 		}
 		
-		private function securityErrorHandler(event:SecurityErrorEvent):void
+		protected function securityErrorHandler(event:SecurityErrorEvent):void
 		{
 			Log.log(this).error("网络错误 AMF Remoting 连接错误:", event);
 		}
 		
 		//发送远程
-		public function sendRemoting(remoteMethod:String, bodyList:Array = null):void
+		public function sendRemoting(remoteMethod:String, bodyList:Array = null, called:Function = null):void
 		{
 			if (null == bodyList) bodyList = [];
 			bodyList.unshift(remoteMethod, _responder);
@@ -71,19 +78,16 @@ package org.web.sdk.net.amf
 		//回执 调用全局消息,可以通过CMD调用
 		protected function onResult(response:Object):void
 		{
-			//message,body,type
-			for each(var s:* in response) trace(s)
-			trace('AMF Server: ' + response);
+			Log.log(this).debug('AMF Server return Client: ' + response);
 		}
 		
 		//错误处理
 		protected function onFault(response:Object = null):void
 		{
-			//errorType,data
-			 trace('AMF Client error:', response);
+			Log.log(this).debug('AMF Server return Error:', response);
 		}
 		
-		
+		//
 		public static function test():void
 		{
 			var amf:AMFRemoting = new AMFRemoting;
