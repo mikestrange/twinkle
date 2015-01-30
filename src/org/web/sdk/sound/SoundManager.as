@@ -71,7 +71,11 @@ package org.web.sdk.sound
 			var data:SoundData = gets().getManager(type);
 			if (data == null) throw Error('不存在的音频管理类型');
 			var song:ISound = createSoundByHttp(url, data.repeat, data.type);
-			if (song) data.add(song).play();
+			if (song) {
+				data.add(song).play();
+			}else {
+				trace("没有声音", url);
+			}
 			return song;
 		}
 		

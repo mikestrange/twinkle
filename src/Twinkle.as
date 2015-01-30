@@ -63,9 +63,8 @@ package
 			//LogicLayer.gets().show();
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
-			//
-			AMFRemoting.test();
 			//test();
+			SoundManager.playUrl("bg.mp3");
 		}
 		
 		private function complete(e:LoadEvent):void
