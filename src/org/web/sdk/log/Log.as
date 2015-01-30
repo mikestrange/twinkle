@@ -58,10 +58,7 @@ package org.web.sdk.log
 		{
 			var chat:String = "[ " + this.className + " ] ";
 			//next
-            for (var i:int = 0; i < args.length; i++) {
-				if (i == args.length - 1) chat += args[i] + "";
-				else chat += args[i] + " , ";
-			}
+            for (var i:int = 0; i < args.length; i++) chat += args[i] + " ";
 			//输出
 			var bool:Boolean = false;
 			if (print_name == null) {

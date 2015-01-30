@@ -72,6 +72,7 @@ package org.web.sdk.net.amf
 		protected function onResult(response:Object):void
 		{
 			//message,body,type
+			for each(var s:* in response) trace(s)
 			trace('AMF Server: ' + response);
 		}
 		
