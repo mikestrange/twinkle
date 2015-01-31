@@ -1,6 +1,7 @@
 package 
 {
 	import com.greensock.*;
+	import com.greensock.data.TweenMaxVars;
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
@@ -47,10 +48,13 @@ package
 		{
 			super.showEvent(event);
 			if (event) removeEventListener(Event.ADDED_TO_STAGE, showEvent);
-			MenuTools.setMenu(this)
+			MenuTools.setMenu(this,null,MenuTools.createMenuItem("log",onLog))
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			//
+			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
 			//世界启动
 			WorldKidnap.gets().initLayer(this);
 			//最大下载
@@ -60,11 +64,18 @@ package
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//登陆模块
-			//LogicLayer.gets().show();
+			LogicLayer.gets().show();
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
 			//test();
 			SoundManager.playUrl("bg.mp3");
+			//
+			
+		}
+		
+		private function onLog(e:Object):void
+		{
+			Log.save();
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -93,8 +104,6 @@ package
 		
 		private var arr:Vector.<Point>;
 		private var step:Steper;
-		[Embed(source = "../bin/back.gif")]
-		private var MAP:Class;
 		//
 		private var item:IAcceptor;
 		private var index:int = 0;
@@ -107,7 +116,7 @@ package
 			for (var i:int = 0; i < 300; i++) {
 				arr.push(new Point(Maths.random(0, 500), Maths.random(0, 500)));
 			}
-			item = VRayMap.createByBitmapdata(new MAP().bitmapData);
+			item = VRayMap.createBySize(10,10,0xff0000);
 			Bezier.drawLine(this.graphics, arr, false);
 			this.addDisplay(item, 0, 0);
 			//

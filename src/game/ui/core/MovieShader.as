@@ -9,6 +9,8 @@ package game.ui.core
 	import org.web.sdk.gpu.texture.BaseTexture;
 	import org.web.sdk.inters.IEscape;
 	import org.web.sdk.load.LoadEvent;
+	import org.web.sdk.load.loads.ResourceLoader;
+	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
 	
 	/*
@@ -54,7 +56,7 @@ package game.ui.core
 		private function complete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			FrameWork.app.share(e.url, e.target as Loader);
+			FrameWork.app.share(e.url, e.target as ResourceLoader);
 			if (!isValid()) return;
 			render("render", e.data as IEscape, e.url);
 		}

@@ -107,10 +107,15 @@ package org.web.sdk.log
 		//保存日志文件
 		private static var _file:FileReference;
 		
-		public static function save(fileName:String='log.txt'):void
+		public static function save(fileName:String = 'log.txt'):void
+		{
+			getFile().save(getLogs(), fileName);
+		}
+		
+		public static function getFile():FileReference
 		{
 			if (null == _file) _file = new FileReference;
-			_file.save(getLogs(), fileName);
+			return _file;
 		}
 		
 		//***********

@@ -1,6 +1,8 @@
 package org.web.sdk.load.loads 
 {
 	import flash.events.ProgressEvent;
+	import flash.system.ApplicationDomain;
+	import flash.system.SecurityDomain;
 	import org.web.sdk.load.inters.ILoader;
 	import flash.display.Loader;
 	import flash.events.Event;
@@ -18,6 +20,12 @@ package org.web.sdk.load.loads
 	{
 		protected var _url:String;
 		protected var _complete:Function;
+		protected var _context:LoaderContext;
+		
+		public function getContext():LoaderContext 
+		{
+			return _context;
+		}
 		
 		public function get url():String
 		{
@@ -28,8 +36,9 @@ package org.web.sdk.load.loads
 		{
 			_url = path;
 			_complete = called;
+			_context = context;
 			eventListener();
-			this.load(new URLRequest(_url), context as LoaderContext);
+			this.load(new URLRequest(_url), _context);
 		}
 		
 		protected function eventListener():void

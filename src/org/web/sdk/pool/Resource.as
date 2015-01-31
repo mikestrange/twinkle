@@ -6,6 +6,7 @@
 	import flash.utils.getDefinitionByName;
 	import org.web.sdk.load.core.BelieveLoader;
 	import org.web.sdk.load.LoadEvent;
+	import org.web.sdk.load.loads.ResourceLoader;
 	
 	/**
 	 * ...  swf->分为主界面swf和人物动画swf
@@ -43,9 +44,11 @@
 		}
 		
 		//注册一个类型  不是Loader不会被注册
-		public function share(url:String, loader:Loader):void
+		public function share(url:String, loader:ResourceLoader):void
 		{
-			if (undefined == _typeKeys[url]) _typeKeys[url] = loader.contentLoaderInfo.applicationDomain;
+			if (undefined == _typeKeys[url]) {
+				_typeKeys[url] = loader.contentLoaderInfo.applicationDomain;
+			}
 		}
 		
 		public function has(url:String):Boolean
@@ -75,7 +78,9 @@
 				Movie = getClassByName(className);
 			}else {
 				var apk:ApplicationDomain = getAppDomain(url);
-				if (apk && apk.hasDefinition(className)) Movie = apk.getDefinition(className) as Class;
+				if (apk && apk.hasDefinition(className)) {
+					Movie = apk.getDefinition(className) as Class;
+				}
 			}
 			if (Movie) return new Movie;
 			return null;
