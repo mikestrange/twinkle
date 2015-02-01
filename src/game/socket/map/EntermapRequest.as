@@ -36,7 +36,7 @@ package game.socket.map
 		{
 			sendTest(CmdDefined.ENTER_MAP);
 			//
-			Clock.step(1500, call, 0, CmdDefined.STAND_HERE);
+			Clock.step(1000, call, 0, CmdDefined.STAND_HERE);
 			//Clock.step(5000, quit, 0, CmdDefined.QUIT_MAP);
 			//Clock.step(1000, call, 0, CmdDefined.MOVE_TO);
 			//Clock.step(1000, call, 0, CmdDefined.ACTION_ROLE);
@@ -44,7 +44,9 @@ package game.socket.map
 		
 		private function call(cmd:int):void
 		{
+			if (++index > 200) return;
 			sendTest(cmd);
+
 		}
 		
 		private function quit(cmd:int):void

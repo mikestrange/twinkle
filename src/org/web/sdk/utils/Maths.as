@@ -83,10 +83,10 @@ package org.web.sdk.utils
 		}
 		
 		//合力
-		public static function resultant(angle:int, speed:Number = 1):Point
+		public static function resultant(angle:int, speedx:Number = 1, speedy:Number = 1):Point
 		{
-			var dx:Number = Math.cos(angle * Math.PI / ROUND_HALF) * speed;
-			var dy:Number = Math.sin(angle * Math.PI / ROUND_HALF) * speed;
+			var dx:Number = Math.cos(angle * Math.PI / ROUND_HALF) * speedx;
+			var dy:Number = Math.sin(angle * Math.PI / ROUND_HALF) * speedy;
 			return new Point(dx, dy);
 		}
 		

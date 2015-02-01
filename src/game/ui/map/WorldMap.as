@@ -110,7 +110,6 @@ package game.ui.map
 			//确定第一个方向
 			if (astar.seach()) {
 				actor.setPath(astar.path);
-				actor.fetch();	//到达下一个点
 			}else {
 				actor.setPath(null);
 			}

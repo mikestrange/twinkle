@@ -12,6 +12,7 @@ package game.ui.map
 	import game.ui.core.ActionType;
 	import game.ui.core.GpuCustom;
 	import game.inters.IRole;
+	import org.web.sdk.inters.IDisplayObject;
 	import org.web.sdk.utils.DrawUtils;
 	import org.web.rpg.astar.Grid;
 	import org.web.rpg.astar.Node;
@@ -36,7 +37,7 @@ package game.ui.map
 		private var _data:PlayerObj;
 		private var _texture:VRayMap;
 		private var speedX:int = 4;
-		private var speedY:int = 4;
+		private var speedY:int = 2;
 		private var path:Array;
 		private var pathIndex:int = 0;
 		private var max_leng:int = speedX + speedY;
@@ -86,46 +87,28 @@ package game.ui.map
 		override public function render():void 
 		{
 			if (path) {
-				var node:Node = path[pathIndex];
-				if (node == null) {
+				if (pathIndex >= path.length) {
 					path = null;
 					return;
 				}
-				doplace(node);
-				if (Point.distance(endpo, startpo) < max_leng) {
-					if (_data.isself()) this.dispatchEvent(new Event("move"));
+				var node:Node = path[pathIndex];
+				var endPos:Point = new Point;
+				endPos.x = node.x * grid.nodeWidth + (grid.nodeWidth >> 1);
+				endPos.y = node.y * grid.nodeHeight + (grid.nodeHeight >> 1);
+				var angle:Number = Maths.atanAngle(this.x, this.y, endPos.x, endPos.y);	//计算两点之间的角度
+				var mpo:Point = Maths.resultant(angle, speedX, speedY);										//计算增量
+				this.x -= mpo.x;
+				this.y -= mpo.y;
+				//
+				var point:int = FormatUtils.getIndexByAngle(Maths.roundAngle(angle));
+				this.move(point);
+				//两点之间的长度
+				if (Maths.distance(this.x, this.y, endPos.x, endPos.y) <= speedX + speedY) {
+					this.moveTo(endPos.x, endPos.y);
 					pathIndex++;
-					fetch();
-					if (pathIndex >= path.length) {
-						this.stand();
-						path = null;
-						iswait = true;
-					}
-				}else {
-					this.x += (endpo.x - this.x) / speedX;
-					this.y += (endpo.y - this.y) / speedY;
+					if (pathIndex >= path.length) this.stand();
 				}
 			}
-		}
-		
-		//平添
-		private function doplace(node:Node):void
-		{
-			endpo.x = node.x * grid.nodeWidth + (grid.nodeWidth >> 1);
-			endpo.y = node.y * grid.nodeHeight + (grid.nodeHeight >> 1);
-			startpo.x = this.x;
-			startpo.y = this.y;
-			
-		}
-		
-		//确定方位，注入移动  --自己猜可以用
-		public function fetch():void
-		{
-			var node:Node = path[pathIndex];
-			if (node == null) return;
-			doplace(node);
-			var point:int = FormatUtils.getPoint(endpo, startpo);
-			this.move(point);
 		}
 		
 		public function getUid():int
