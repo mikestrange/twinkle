@@ -46,11 +46,6 @@ package org.web.sdk.display
 			}
 		}
 		
-		public function getMouse():Point 
-		{
-			return new Point(mouseX, mouseY);
-		}
-		
 		public function getParent():IBaseSprite 
 		{
 			return parent as IBaseSprite;
@@ -93,16 +88,6 @@ package org.web.sdk.display
 			this.y = value.y;
 		}
 		
-		public function follow(dis:IDisplayObject, ofx:Number = 0, ofy:Number = 0, global:Boolean = false):void 
-		{
-			if (global) {
-				var p:Point = dis.localToGlobal(new Point);
-				moveTo(p.x + ofx, p.y + ofy);
-			}else {
-				moveTo(dis.x + ofx, dis.y + ofy);
-			}
-		}
-		
 		public function setNorms(horizontal:Number = 1, vertical:Number = 1, ratio:Boolean = true):void 
 		{
 			if (ratio) {
@@ -137,7 +122,14 @@ package org.web.sdk.display
 			
 		}
 		
-		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void
+		public function removeByName(disName:String):DisplayObject
+		{
+			var dis:DisplayObject = this.getChildByName(disName);
+			if (dis) this.removeChild(dis);
+			return dis;
+		}
+		
+		public function addUnder(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void
 		{
 			if (father) father.addDisplay(this, mx, my, floor);
 		}

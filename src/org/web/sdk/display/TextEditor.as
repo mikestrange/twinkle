@@ -16,6 +16,7 @@ package org.web.sdk.display
 		public static const RIGHT:String = 'right';
 		public static const CENTER:String = 'center';
 		public static const NONE : String = "none";
+		private var format:TextFormat;
 		
 		//默认左边自动转换
 		public function TextEditor(auto:String = "left", mouse:Boolean = false, wrap:Boolean = false, wid:Number = 100, mult:Boolean = false) 
@@ -64,8 +65,8 @@ package org.web.sdk.display
 		//简易添加设置 下一个是否换行
 		public function addText(newText:String, nextwarp:Boolean = false, color:uint = 0, size:int = -1, font:String = null):void
 		{
-			if (null == newText||newText=="") return;
-			var format:TextFormat = new TextFormat;
+			if (null == newText || newText == "") return;
+			if (null == format) format = new TextFormat;
 			format.font = font == null ? defaultTextFormat.font : font;
 			format.size = size < 0 ? defaultTextFormat.size : size;
 			format.color = color;
@@ -81,7 +82,7 @@ package org.web.sdk.display
 		protected function addTextFormat(newText:String, next:Boolean = false, format:TextFormat = null):void
 		{
 			const len:int = length;
-			if (wordWrap && next) {
+			if (next) {
 				appendText(newText + NEXT);
 			}else {
 				appendText(newText);
@@ -102,27 +103,12 @@ package org.web.sdk.display
 			this.text = '';
 		}
 		
-		public function showEvent(event:Event = null):void 
-		{
-			
-		}
-		
-		public function hideEvent(event:Event = null):void 
-		{
-			
-		}
-		
 		public function clearFilters():void 
 		{
 			if (filters.length) {
 				filters = [];
 				filters = null;
 			}
-		}
-		
-		public function getMouse():Point 
-		{
-			return new Point(mouseX, mouseY);
 		}
 		
 		public function getParent():IBaseSprite 
@@ -141,16 +127,6 @@ package org.web.sdk.display
 			this.y = my;
 		}
 		
-		public function follow(dis:IDisplayObject, ofx:Number = 0, ofy:Number = 0, global:Boolean = false):void 
-		{
-			if (global) {
-				var p:Point = dis.localToGlobal(new Point);
-				moveTo(p.x + ofx, p.y + ofy);
-			}else {
-				moveTo(dis.x + ofx, dis.y + ofy);
-			}
-		}
-		
 		public function setNorms(horizontal:Number = 1, vertical:Number = 1, ratio:Boolean = true):void 
 		{
 			if (ratio) {
@@ -162,7 +138,7 @@ package org.web.sdk.display
 			}
 		}
 		
-		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void
+		public function addUnder(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void
 		{
 			if (father) father.addDisplay(this, mx, my, floor);
 		}

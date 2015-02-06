@@ -5,7 +5,7 @@ package org.web.sdk.inters
 	
 	public interface IAcceptor extends IDisplayObject 
 	{
-		function get resource():String;
+		function setLiberty(textureName:String, tag:int = 0):void;
 		function setTexture(texture:BaseTexture):void;	
 		function dispose():void;
 		function clone():IAcceptor;

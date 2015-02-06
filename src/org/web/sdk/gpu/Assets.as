@@ -3,6 +3,7 @@ package org.web.sdk.gpu
 	import flash.display.BitmapData;
 	import org.web.sdk.gpu.texture.BaseTexture;
 	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.inters.IBuffer;
 	import org.web.sdk.load.core.BelieveLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.utils.HashMap;
@@ -14,25 +15,28 @@ package org.web.sdk.gpu
 	{
 		private static var _ins:Assets;
 		
-		public static function gets():Assets
+		private static function gets():Assets
 		{
 			if (null == _ins) _ins = new Assets;
 			return _ins;
 		}
 		
+		//全局定义
+		public static const asset:Assets = Assets.gets();
+		
 		private var _protoKeys:HashMap = new HashMap;
 		
-		public function load(asset:IAcceptor, complete:Function):IAcceptor
+		public function load(buffer:IBuffer, complete:Function):IBuffer
 		{
-			var resource:String = asset.resource;
-			if (resource == null) return asset;
+			var resource:String = buffer.resource;
+			if (resource == null) return buffer;
 			if (has(resource)) {
-				mark(asset, resource);
+				mark(buffer as IAcceptor, resource);
 			}else {
 				loader.addWait(resource, LoadEvent.IMG).addRespond(complete);
 				loader.start();
 			}
-			return asset;
+			return buffer;
 		}
 		
 		//不用了的从这里删除下

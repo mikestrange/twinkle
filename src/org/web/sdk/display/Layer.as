@@ -24,6 +24,11 @@ package org.web.sdk.display
 			removeChild(dis);
 			return dis;
 		}
+		
+		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
+		{
+			throw Error("Layer不允许注册事件");
+		}
 		//ends
 	}
 }

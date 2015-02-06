@@ -64,13 +64,12 @@ package
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//登陆模块
-			LogicLayer.gets().show();
+			//LogicLayer.gets().show();
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
 			//test();
 			SoundManager.playUrl("bg.mp3");
 			//
-			
 		}
 		
 		private function onLog(e:Object):void

@@ -8,6 +8,7 @@ package org.web.sdk.gpu.texture
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.Assets;
+	import org.web.sdk.gpu.VRayMap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.utils.DrawUtils;
 	/**
@@ -19,7 +20,7 @@ package org.web.sdk.gpu.texture
 		private var _name:String;
 		private var _milde:Boolean;		//轻量的
 		
-		//不会自动释放 mild=false
+		//无名称且milde=true会自动释放
 		public function BaseTexture(bit:BitmapData, name:String = null, milde:Boolean = false) 
 		{
 			this._bitmapdata = bit;
@@ -47,6 +48,12 @@ package org.web.sdk.gpu.texture
 			return _bitmapdata;
 		}
 		
+		//被束缚的
+		public function isHamper():Boolean
+		{
+			return name != null && name != "";
+		}
+		
 		public function dispose():void {
 			if (_bitmapdata && _bitmapdata.width && _bitmapdata.height) {
 				_bitmapdata.dispose();
@@ -57,10 +64,10 @@ package org.web.sdk.gpu.texture
 		//通过它去渲染,没有保存那么直接渲染
 		public function render(mesh:IAcceptor):IAcceptor
 		{
-			if (_name == null || _name == "") {
-				mesh.setTexture(this);
+			if (isHamper()) {
+				Assets.asset.mark(mesh, name, this);
 			}else {
-				Assets.gets().mark(mesh, name);
+				mesh.setTexture(this);
 			}
 			return mesh;
 		}
@@ -71,7 +78,7 @@ package org.web.sdk.gpu.texture
 			if (_name == null || _name == "") {
 				if(_milde) dispose();
 			}else {
-				Assets.gets().unmark(_name);
+				Assets.asset.unmark(_name);
 			}
 		}
 		
