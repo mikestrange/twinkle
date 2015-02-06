@@ -9,6 +9,7 @@ package org.web.sdk.display
 		function removeToLayer(dis:DisplayObject):DisplayObject;
 		function isEmpty():Boolean;
 		function removeFromFather():void;
+		function clearChildren():void; 
 		//ends
 	}
 }

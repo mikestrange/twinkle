@@ -1,8 +1,12 @@
 package org.web.sdk.display 
 {
+	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.text.*;
+	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.inters.IDisplayObject;
 
-	public class TextEditor extends TextField 
+	public class TextEditor extends TextField implements IDisplayObject 
 	{
 		private static const DEF_FORMAT:TextFormat = new TextFormat;
 		//换行
@@ -98,6 +102,85 @@ package org.web.sdk.display
 			this.text = '';
 		}
 		
+		public function showEvent(event:Event = null):void 
+		{
+			
+		}
+		
+		public function hideEvent(event:Event = null):void 
+		{
+			
+		}
+		
+		public function clearFilters():void 
+		{
+			if (filters.length) {
+				filters = [];
+				filters = null;
+			}
+		}
+		
+		public function getMouse():Point 
+		{
+			return new Point(mouseX, mouseY);
+		}
+		
+		public function getParent():IBaseSprite 
+		{
+			return parent as IBaseSprite;
+		}
+		
+		public function removeFromFather():void
+		{
+			if (parent) parent.removeChild(this);
+		}
+		
+		public function moveTo(mx:int = 0, my:int = 0):void 
+		{
+			this.x = mx;
+			this.y = my;
+		}
+		
+		public function follow(dis:IDisplayObject, ofx:Number = 0, ofy:Number = 0, global:Boolean = false):void 
+		{
+			if (global) {
+				var p:Point = dis.localToGlobal(new Point);
+				moveTo(p.x + ofx, p.y + ofy);
+			}else {
+				moveTo(dis.x + ofx, dis.y + ofy);
+			}
+		}
+		
+		public function setNorms(horizontal:Number = 1, vertical:Number = 1, ratio:Boolean = true):void 
+		{
+			if (ratio) {
+				this.scaleX = horizontal;
+				this.scaleY = vertical;
+			}else {
+				this.width = horizontal;
+				this.height = vertical;
+			}
+		}
+		
+		public function addInto(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void
+		{
+			if (father) father.addDisplay(this, mx, my, floor);
+		}
+		
+		public function render():void 
+		{
+			
+		}
+		
+		public function setAuto(type:String = null):void 
+		{
+			
+		}
+		
+		public function isshow():Boolean 
+		{
+			return parent != null;
+		}
 		//ends
 	}
 

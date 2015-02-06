@@ -17,9 +17,15 @@ package org.web.sdk.gpu
 	{
 		private var _url:String;
 		private var _over:Boolean = false;
+		private var _wide:Number;
+		private var _heig:Number;
+		private var _def:Class;
 		
-		public function BufferImage(url:String = null)
+		public function BufferImage(url:String = null, wide:Number = 0, heig:Number = 0, classN:Class = null)
 		{
+			this._wide = wide;
+			this._heig = heig;
+			this._def = classN;
 			if(url) resource = url;
 		}
 		
@@ -39,9 +45,18 @@ package org.web.sdk.gpu
 		public function complete(e:LoadEvent):void
 		{
 			_over = true;
-			if (e.eventType == LoadEvent.ERROR) return;
-			asset.mark(this, _url, BaseTexture.fromBitmapData(e.target as BitmapData));
+			if (e.eventType == LoadEvent.ERROR) {
+				if(_def) asset.mark(this, _url, new BaseTexture(new _def));
+			}else {
+				asset.mark(this, _url, BaseTexture.fromBitmapData(e.target as BitmapData));
+			}
 			this.dispatchEvent(new Event(e.eventType));
+		}
+		
+		override public function setTexture(texture:BaseTexture):void 
+		{
+			super.setTexture(texture);
+			if (_wide+_heig != 0) this.setNorms(_wide, _heig, false);
 		}
 		
 		override public function dispose():void 

@@ -93,6 +93,12 @@ package org.web.sdk.display
 			}
 		}
 		
+		public function clearLayer(name:String):void
+		{
+			var data:LayerData = _layerHash.getValue(name);
+			if (data && data.isLayer()) data.layer.clearChildren();
+		}
+		
 		private function addLayer(value:LayerData):void
 		{
 			var layer:Layer = value.getLayer() as Layer;

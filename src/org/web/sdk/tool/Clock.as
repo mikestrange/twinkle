@@ -53,7 +53,7 @@ package org.web.sdk.tool
 		}
 		
 		//不会删除
-		public function kill(call:Function, back:Boolean = false):void
+		public function kill(call:Function, back:Boolean = false, all:Boolean = true):void
 		{
 			var data:ClockData;
 			var fun:Function;
@@ -64,7 +64,7 @@ package org.web.sdk.tool
 					fun = data.called;
 					data.free();
 					if (back) fun.apply(null, data.args);
-					break;
+					if (!all) break;
 				}
 			}
 		}
