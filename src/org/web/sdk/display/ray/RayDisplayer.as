@@ -1,9 +1,10 @@
-package org.web.sdk.gpu 
+package org.web.sdk.display.ray 
 {
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
+	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.gpu.texture.BaseTexture;
+	import org.web.sdk.display.asset.SingleTexture;
 	import org.web.sdk.inters.IDisplayObject;
 	import flash.geom.Transform;
 	import flash.display.Stage;
@@ -16,70 +17,76 @@ package org.web.sdk.gpu
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.utils.ClassUtils;
 	
+	import org.web.sdk.beyond_challenge;
+	use namespace beyond_challenge
 	/**
-	 * 贴图基类,自身释放了bitmapdata，扩展不必调用dispose
+	 * 速度更快的显示对象，基于bitmapdata
 	 */
-	public class VRayMap extends Bitmap implements IAcceptor 
+	public class RayDisplayer extends Bitmap implements IAcceptor 
 	{
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
 		//
-		private var _texture:BaseTexture;
+		private var _texture:LibRender;
 		
-		public function VRayMap(texture:BaseTexture = null) 
+		public function RayDisplayer(texture:LibRender = null) 
 		{
 			super(null, AUTO, true);
-			if (texture) {
-				if (texture.isHamper()) {
-					texture.render(this);
-				}else {
-					setTexture(texture);
-				}
-			}
+			if (texture) setTexture(texture);
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IAcceptor */
 		public function dispose():void 
 		{
-			if (_texture) _texture.relieve();
-			this._texture = null;
+			if (_texture) {
+				_texture.relieve();
+				this._texture = null;
+			}
 			this.bitmapData = null;
 		}
 		
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
-		public function setTexture(texture:BaseTexture):void 
+		public function setTexture(texture:LibRender):void 
 		{
-			if (texture == null) throw Error("材质无效"); 	//一旦材质命名，就会被解除的时候被释放
-			if (_texture == texture) return;
-			if (_texture) _texture.relieve();
-			_texture = texture;
-			this.bitmapData = _texture.texture;
+			if (_texture == texture) {
+				if (_texture) {
+					obtainMapped(_texture.render(this));
+				}
+			}else {
+				if (_texture) _texture.relieve();
+				_texture = texture;
+				if (null == texture) return;
+				obtainMapped(_texture.render(this));
+			}
+		}
+		
+		//获取必要的资源
+		protected function obtainMapped(assets:*):void
+		{
+			this.bitmapData = assets as BitmapData;
 			this.smoothing = true;
 		}
 		
 		//根据名称渲染材质,自由构造
-		public function setLiberty(textureName:String, tag:int = 0):void
+		public function setLiberty(txName:String, tag:int = 0):void
 		{
-			if (null == textureName || textureName == "") throw Error("材质名称不允许为空");
-			if (Assets.asset.has(textureName)) {
-				Assets.asset.mark(this, textureName);
+			if (null == txName || txName == "") throw Error("材质名称不允许为空");
+			if (LibRender.hasTexture(txName)) {
+				this.setTexture(LibRender.getTexture(txName));
 			}else {
-				var texture:BaseTexture = factoryTexture(textureName, tag);
-				if (texture) {
-					texture.setName(textureName);
-					texture.render(this);
-				}
+				var texture:LibRender = factoryTexture(txName, tag);
+				if (texture) this.setTexture(texture);
 			}
 		}
 		
 		//不一定设置名称给他自己,上面会设置
-		protected function factoryTexture(textureName:String, tag:int = 0):BaseTexture
+		protected function factoryTexture(textureName:String, tag:int = 0):LibRender
 		{
 			return null;
 		}
 		
 		public function clone():IAcceptor 
 		{
-			return new VRayMap(_texture);
+			return new RayDisplayer(_texture);
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IDisplayObject */
@@ -140,17 +147,15 @@ package org.web.sdk.gpu
 		}
 		
 		//static *****************************
-		//自定义渲染
+		//快速渲染一个方行
 		public static function createBySize(wide:int, heig:int, color:uint = 0):IAcceptor
 		{
-			var acceptor:IAcceptor = new VRayMap;
+			var acceptor:IAcceptor = new RayDisplayer;
 			var textureName:String = wide+"_" + heig + "_" + color + ":texture";
-			if (Assets.asset.has(textureName)) {
+			if (LibRender.hasTexture(textureName)) {
 				acceptor.setLiberty(textureName);
 			}else {
-				var texture:BaseTexture = BaseTexture.fromBitmapData(new BitmapData(wide, heig, false, color));
-				texture.setName(textureName);
-				texture.render(acceptor);
+				acceptor.setTexture(new SingleTexture(new BitmapData(wide, heig, false, color), textureName));
 			}
 			return acceptor;
 		}

@@ -1,20 +1,19 @@
-package org.web.sdk.gpu 
+package org.web.sdk.display.ray 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.gpu.texture.BaseTexture;
+	import org.web.sdk.display.asset.SingleTexture;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.inters.IBuffer;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
-	import org.web.sdk.gpu.Assets;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * */
-	public class BufferImage extends VRayMap implements IBuffer
+	public class BufferImage extends RayDisplayer
 	{
 		private var _url:String;
 		private var _over:Boolean = false;
@@ -32,16 +31,26 @@ package org.web.sdk.gpu
 		//没有释放不能重新设置
 		public function set resource(value:String):void
 		{
-			if (_url) return;
+			if (value != null && _url == value) return;
+			if (_url) dispose();
 			_url = value;
-			Assets.asset.load(this, complete);
+			if (_url) setLiberty(_url);
 		}
 		
-		public function complete(e:LoadEvent):void
+		//去下载
+		override protected function factoryTexture(textureName:String, tag:int = 0):LibRender 
+		{
+			var loader:PerfectLoader = PerfectLoader.gets();
+			loader.addWait(textureName, LoadEvent.IMG).addRespond(complete);
+			loader.start();
+			return null;
+		}
+		
+		protected function complete(e:LoadEvent):void
 		{
 			_over = true;
 			if (e.eventType == LoadEvent.COMPLETE) {
-				Assets.asset.mark(this, _url, BaseTexture.fromBitmapData(e.target as BitmapData));
+				this.setTexture(new SingleTexture(e.target as BitmapData, e.url));
 			}
 			if (e.eventType == LoadEvent.ERROR) _url = null;
 			this.dispatchEvent(new Event(e.eventType));
@@ -50,11 +59,9 @@ package org.web.sdk.gpu
 		override public function dispose():void 
 		{
 			if (_url == null) return;
-			if (_over) {
-				Assets.asset.unmark(_url);
-			}else {
-				Assets.asset.loader.removeRespond(_url, complete);
-			}
+			if (_over) super.dispose();
+			else PerfectLoader.gets().removeRespond(_url, complete);
+			_over = false;
 			_url = null;
 		}
 		

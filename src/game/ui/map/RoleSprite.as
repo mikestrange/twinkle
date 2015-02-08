@@ -24,7 +24,7 @@ package game.ui.map
 	import org.web.sdk.display.engine.AtomicEngine;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.gpu.GpuBase;
-	import org.web.sdk.gpu.VRayMap;
+	import org.web.sdk.display.ray.RayDisplayer;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.utils.Maths;
 	/*
@@ -35,7 +35,7 @@ package game.ui.map
 		private var _action:GpuCustom;
 		//
 		private var _data:PlayerObj;
-		private var _texture:VRayMap;
+		private var _texture:RayDisplayer;
 		private var speedX:int = 4;
 		private var speedY:int = 2;
 		private var path:Array;
@@ -68,7 +68,7 @@ package game.ui.map
 			_action.transform.matrix = matrix;
 			this.addChild(_action);
 			//名称
-			_texture = new VRayMap(DrawUtils.drawEditor(_data.usn));
+			_texture = new RayDisplayer(DrawUtils.drawEditor(_data.usn));
 			_texture.x = -_texture.width >> 1;
 			_texture.y = -90 - _texture.height;
 			this.addChild(_texture);

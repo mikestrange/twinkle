@@ -3,7 +3,7 @@ package org.web.sdk.utils
 	import flash.filters.GlowFilter;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.TextEditor;
-	import org.web.sdk.gpu.texture.BaseTexture;
+	import org.web.sdk.display.asset.SingleTexture;
 	import flash.display.*;
 	import flash.geom.*;
 	/*
@@ -23,12 +23,12 @@ package org.web.sdk.utils
 		
 		private static var text:TextEditor = new TextEditor; 
 		
-		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):BaseTexture
+		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):SingleTexture
 		{
 			text.empty();
 			text.filters = [new GlowFilter(0, 1, 2, 2, 5, 2)];
 			text.addText(name, false, color, -1, font);
-			return new BaseTexture(draw(text));
+			return new SingleTexture(draw(text));
 		}
 		
 		//ends

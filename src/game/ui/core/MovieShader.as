@@ -6,7 +6,7 @@ package game.ui.core
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.gpu.shader.CryRenderer;
-	import org.web.sdk.gpu.texture.BaseTexture;
+	import org.web.sdk.display.asset.SingleTexture;
 	import org.web.sdk.inters.IEscape;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.loads.ResourceLoader;
@@ -41,7 +41,7 @@ package game.ui.core
 				return;	//这里可以给他默认渲染
 			}
 			var name:String = GpuCustom(display).currentName;
-			if (!hasAction(name)) addAction(name, BaseTexture.fromVector(name + ".png", "%d", -1, url));
+			if (!hasAction(name)) addAction(name, SingleTexture.fromVector(name + ".png", "%d", -1, url));
 			//直接渲染
 			display.updateRender(getCode(), getActions(name));
 		}
@@ -62,14 +62,14 @@ package game.ui.core
 		}
 		
 		//添加动作
-		protected function addAction(action:String, vector:Vector.<BaseTexture>):void
+		protected function addAction(action:String, vector:Vector.<SingleTexture>):void
 		{
 			if (vector.length == 0) return;
 			if (actionHash.isKey(action)) throw Error('存在的动作');
 			actionHash.put(action, vector);
 		}
 		
-		protected function getActions(action:String):Vector.<BaseTexture>
+		protected function getActions(action:String):Vector.<SingleTexture>
 		{
 			return actionHash.getValue(action);
 		}
@@ -91,8 +91,8 @@ package game.ui.core
 		
 		private function eachVector(data:Object):void
 		{
-			var vector:Vector.<BaseTexture> = data as Vector.<BaseTexture>;
-			var texture:BaseTexture;
+			var vector:Vector.<SingleTexture> = data as Vector.<SingleTexture>;
+			var texture:SingleTexture;
 			while (vector.length) {
 				texture = vector.shift();
 				if(texture) texture.dispose();

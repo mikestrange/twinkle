@@ -1,7 +1,7 @@
 package org.web.sdk.gpu 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.gpu.VRayMap;
+	import org.web.sdk.display.ray.RayDisplayer;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.AtomicEngine;
 	import org.web.sdk.gpu.shader.*;
@@ -12,7 +12,7 @@ package org.web.sdk.gpu
 	/**
 	 * GPU渲染的基类
 	 */
-	public class GpuBase extends VRayMap implements IEscape
+	public class GpuBase extends RayDisplayer implements IEscape
 	{
 		//渲染速度
 		public static var RENDER_FPS:int = 4;

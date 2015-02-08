@@ -1,27 +1,31 @@
-package org.web.sdk.gpu 
+package org.web.sdk.display.ray 
 {
+	import flash.display.BitmapData;
+	import org.web.sdk.display.asset.LibRender;
+	import org.web.sdk.display.asset.VectorTexture;
 	import org.web.sdk.display.engine.Steper;
-	import org.web.sdk.display.asset.SingleTexture;
+	
 	/*
-	 * 就算包含一个sprite 效率也是movieclip的2倍,如果用3D渲染，那么效率肯定更高
+	 * 更快速度的MovieClip
 	 * */
-	public class GpuMovie extends GpuBase
+	public class RayMovieClip extends RayDisplayer 
 	{
-		private var _vector:Vector.<SingleTexture>;
+		private var _vector:Vector.<BitmapData>;
 		private var _isstop:Boolean = true;
 		private var _index:int = 1;		
-		private var _fps:int = GpuBase.RENDER_FPS;
+		private var _fps:int = 5;
 		private var _currfps:int = 0;
 		private var _totals:int = 0;
 		//添加一个粒子控制器
 		private var _step:Steper;	
 		
-		public function GpuMovie()
+		public function RayMovieClip(libs:VectorTexture = null)
 		{
 			_step = new Steper(this);
+			super(libs);
 		}
 		
-		public function setFrames(vector:Vector.<SingleTexture>):void
+		public function setFrames(vector:Vector.<BitmapData>):void
 		{
 			_vector = vector;
 			if (_vector) _totals = _vector.length;
@@ -53,6 +57,12 @@ package org.web.sdk.gpu
 			return _isstop;
 		}
 		
+		override protected function obtainMapped(assets:*):void 
+		{
+			if (assets == null) return;
+			setFrames(assets as Vector.<BitmapData>);
+		}
+		
 		//循环渲染
 		override public function render():void 
 		{
@@ -70,7 +80,8 @@ package org.web.sdk.gpu
 			if (value < 1) value = 1;
 			if (value > _totals) value = 1;
 			_index = value;
-			setTexture(_vector[_index - 1]);
+			this.bitmapData = _vector[_index - 1];
+			this.smoothing = true;
 		}
 		
 		public function get position():int
