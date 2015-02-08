@@ -12,7 +12,6 @@ package org.web.sdk.display
 	 * */
 	public class RawSprite extends Sprite implements IBaseSprite 
 	{
-		
 		/* INTERFACE org.web.sdk.inters.IBaseSprite */
 		public function lock(child:Boolean = true):void 
 		{

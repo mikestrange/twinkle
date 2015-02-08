@@ -25,7 +25,7 @@ package org.web.sdk.display
 				else if (item is Sprite) wipeout(Sprite(item));
 				//
 				if (item is MovieClip) MovieClip(item).stop();
-				if (value) if (item is Loader) Loader(item).unloadAndStop();
+				if (value && (item is Loader)) Loader(item).unloadAndStop();
 			}
 		}
 		
