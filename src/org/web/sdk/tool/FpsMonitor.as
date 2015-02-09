@@ -2,6 +2,7 @@ package org.web.sdk.tool
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -159,15 +160,16 @@ package org.web.sdk.tool
 		}
 		
 		// .. Utils
-		
 		private function hex2css( color : int ) : String
 		{
 			return "#" + color.toString(16);
 		}
 		
-		public function show():void
+		public function show(father:DisplayObjectContainer = null):void
 		{
-			FrameWork.stage.addChild(this);
+			if (parent) return;
+			if (father) father.addChild(this);
+			else FrameWork.stage.addChild(this);
 		}
 		
 		//

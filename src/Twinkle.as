@@ -1,6 +1,7 @@
 package 
 {
 	import com.greensock.*;
+	import org.web.sdk.context.ResourceContext;
 	import org.web.sdk.display.asset.SingleTexture;
 	import org.web.sdk.display.ray.RayDisplayer;
 	import org.web.sdk.display.ray.RayMovieClip;
@@ -94,7 +95,7 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			FrameWork.app.share(e.url, e.target as Loader);
+			FrameWork.app.share(e.url, e.context as ResourceContext);
 			if (!PerfectLoader.gets().isLoad()) trace("--------res load over,start game---------")
 			//登陆模块
 			//LandSprite.gets().show();

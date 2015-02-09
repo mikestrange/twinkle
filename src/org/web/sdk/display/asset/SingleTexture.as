@@ -65,23 +65,6 @@ package org.web.sdk.display.asset
 		}
 		
 		//根据一个泛型类，注入替换字符,不会被存入
-		public static function fromVector(className:String, form:String, last:int = -1, url:String = null):Vector.<SingleTexture>
-		{
-			var vector:Vector.<SingleTexture> = new Vector.<SingleTexture>;
-			var index:int = 1;	//0开始
-			var name:String;
-			var bitdata:BitmapData;
-			while (true) {
-				name = className.replace(form, index);
-				bitdata = FrameWork.getAsset(name, url);
-				if (null == bitdata) break;
-				vector.push(fromBitmapData(bitdata));
-				if (++index > last && last != -1) break;
-			}
-			return vector;
-		}
-		
-		//取bitmapdata vector
 		public static function fromBitVector(className:String, form:String, last:int = -1, url:String = null):Vector.<BitmapData>
 		{
 			var vector:Vector.<BitmapData> = new Vector.<BitmapData>;

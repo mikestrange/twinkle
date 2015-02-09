@@ -4,6 +4,7 @@ package org.web.sdk
 	import flash.utils.*;
 	import flash.display.*;
 	import flash.events.*;
+	import org.web.sdk.context.ContextManager;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.*;
@@ -125,9 +126,9 @@ package org.web.sdk
 		}
 		
 		//程序存储器
-		public static function get app():Resource
+		public static function get app():ContextManager
 		{
-			return Resource.create();
+			return ContextManager.create();
 		}
 		
 		//对象管理池

@@ -5,6 +5,7 @@
  **/ 
 package org.web.sdk.load 
 {
+	import flash.system.LoaderContext;
 	//下载回执
 	public class LoadEvent 
 	{
@@ -25,14 +26,16 @@ package org.web.sdk.load
 		private var _eventType:String;
 		private var _type:int;
 		private var _data:Object;
+		private var _context:LoaderContext;
 		//
-		public function LoadEvent(target:Object, url:String, eventType:String, data:Object = null, type:int = 0)
+		public function LoadEvent(target:Object, url:String, context:LoaderContext, eventType:String, data:Object = null, type:int = 0)
 		{
 			this._target = target;
 			this._url = url;
 			this._eventType = eventType;
 			this._type = type;
 			this._data = data;
+			this._context = context;
 		}
 		
 		public function get data():Object
@@ -60,6 +63,10 @@ package org.web.sdk.load
 			return _url;
 		}
 		
+		public function get context():LoaderContext
+		{
+			return _context;
+		}
 		//ends
 	}
 }
