@@ -1,26 +1,26 @@
 package org.web.sdk.context 
 {
+	import flash.display.Loader;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.system.SecurityDomain;
+	
 	/**
 	 *单独的资源域
 	 */
-	public class ResourceContext extends LoaderContext 
+	public class ResourceContext
 	{
-		public function ResourceContext(checkPolicyFile:Boolean = false) 
+		private var applicationDomain:ApplicationDomain;
+			
+		public function ResourceContext(checkFile:*) 
 		{
-			super(checkPolicyFile, new ApplicationDomain, null);
+			if (checkFile is Loader) applicationDomain = Loader(checkFile).contentLoaderInfo.applicationDomain;
+			if (checkFile is ApplicationDomain) applicationDomain = checkFile;
 		}
 		
 		public function hasDefinition(name:String):Boolean
 		{
 			return applicationDomain.hasDefinition(name);
-		}
-		
-		public function getDefinition(name:String):Object
-		{
-			return applicationDomain.getDefinition(name);
 		}
 		
 		public function getClass(name:String):Class
@@ -39,5 +39,4 @@ package org.web.sdk.context
 		}
 		//ends
 	}
-
 }

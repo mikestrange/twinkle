@@ -1,6 +1,7 @@
 package org.web.sdk.context 
 {
 	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
 	/**
@@ -28,7 +29,7 @@ package org.web.sdk.context
 		}
 		
 		//swf加载,这里没有使用开始
-		public function load(url:String, complete:Function, data:Object = null, context:ResourceContext = null):void
+		public function load(url:String, complete:Function, data:Object = null, context:LoaderContext = null):void
 		{
 			FrameWork.perfectLoader.addWait(url, LoadEvent.SWF, context).addRespond(complete, data);
 		}
@@ -39,6 +40,7 @@ package org.web.sdk.context
 			if (null == context) throw Error("不存在的域：" + url);
 			if (undefined == _typeKeys[url]) {
 				_typeKeys[url] = context;
+				trace("保存一个域名：", url, context);
 			}
 		}
 		
@@ -65,6 +67,7 @@ package org.web.sdk.context
 				if (apk) Obj = apk.getClass(name);
 			}
 			if (Obj) return new Obj;
+			trace("无资源:", url, name);
 			return null;
 		}
 		

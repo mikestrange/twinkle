@@ -4,6 +4,7 @@ package game.ui.core
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.asset.ActionTexture;
 	import org.web.sdk.display.asset.LibRender;
+	import org.web.sdk.display.asset.GlobalCreate;
 	import org.web.sdk.display.asset.SingleTexture;
 	import org.web.sdk.display.ray.ActionMovie;
 	
@@ -62,7 +63,7 @@ package game.ui.core
 		//没有动作就建立动作
 		override public function createAction(action:String):Vector.<BitmapData> 
 		{
-			return SingleTexture.fromBitVector(action + ".png", "%d", -1, url);
+			return GlobalCreate.fromVector(action + ".png", "%d", -1, url);
 		}
 		
 		override public function render():void 
