@@ -97,7 +97,7 @@ package
 			FrameWork.app.share(e.url, e.target as Loader);
 			if (!PerfectLoader.gets().isLoad()) trace("--------res load over,start game---------")
 			//登陆模块
-			LogicLayer.gets().show();
+			//LandSprite.gets().show();
 		}
 		//ends
 	}

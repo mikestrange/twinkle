@@ -33,7 +33,7 @@ package org.web.sdk.display.asset
 				Log.log(this).debug("注册资源:", name, texture);
 				_protoKeys.put(name, texture);
 			}else {
-				if (tx != texture) throw Error("相同名称的材质");
+				if (tx != texture) throw Error("相同名称的材质: name=" + name);
 			}
 		}
 		

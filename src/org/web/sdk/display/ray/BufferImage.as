@@ -34,22 +34,25 @@ package org.web.sdk.display.ray
 			if (value != null && _url == value) return;
 			if (_url) dispose();
 			_url = value;
-			if (_url) setLiberty(_url);
-		}
-		
-		//去下载
-		override protected function factoryTexture(textureName:String, tag:int = 0):LibRender 
-		{
-			loader.addWait(textureName, LoadEvent.IMG).addRespond(complete);
-			loader.start();
-			return null;
+			if (_url) {
+				if (LibRender.hasTexture(_url)) {
+					setTexture(LibRender.getTexture(_url));
+				}else {
+					loader.addWait(_url, LoadEvent.IMG).addRespond(complete);
+					loader.start();
+				}
+			}
 		}
 		
 		protected function complete(e:LoadEvent):void
 		{
 			_over = true;
 			if (e.eventType == LoadEvent.COMPLETE) {
-				this.setTexture(new SingleTexture(e.target as BitmapData, e.url));
+				if (LibRender.hasTexture(e.url)) {
+					setTexture(LibRender.getTexture(_url));
+				}else {
+					setTexture(new SingleTexture(e.target as BitmapData, e.url));
+				}
 			}
 			if (e.eventType == LoadEvent.ERROR) _url = null;
 			this.dispatchEvent(new Event(e.eventType));

@@ -16,16 +16,17 @@ package
 	import org.web.sdk.net.socket.AssignedTransfer;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.tool.Clock;
-	
-	
-	public class LogicLayer extends RawSprite
+	/*
+	 * 登陆模块
+	 * */
+	public class LandSprite extends RawSprite
 	{
-		private static var _ins:LogicLayer;
+		private static var _ins:LandSprite;
 		
-		public static function gets():LogicLayer
+		public static function gets():LandSprite
 		{
 			if (_ins == null) {
-				_ins = new LogicLayer;
+				_ins = new LandSprite;
 				_ins.initialization();
 			}
 			return _ins;
