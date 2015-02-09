@@ -142,8 +142,8 @@ package org.web.sdk
 			return new LoaderContext(false, ApplicationDomain.currentDomain);
 		}
 		
-		//
-		private static var perfectLoader:PerfectLoader = PerfectLoader.gets();
+		//唯一下载器
+		public static const perfectLoader:PerfectLoader = PerfectLoader.gets();
 		
 		//比较完美的下载，只需要扩展Iloader接口就能应付一切下载
 		public static function downLoad(url:String, type:int, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void

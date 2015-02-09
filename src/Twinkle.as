@@ -1,7 +1,10 @@
 package 
 {
 	import com.greensock.*;
-	import com.greensock.data.TweenMaxVars;
+	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.ray.RayDisplayer;
+	import org.web.sdk.display.ray.RayMovieClip;
+	//as3
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
@@ -9,19 +12,17 @@ package
 	import flash.system.*;
 	import flash.ui.*;
 	import flash.utils.*;
+	//game
 	import game.consts.*;
 	import game.GameGlobal;
 	import game.logic.WorldKidnap;
+	//org
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
-	import org.web.sdk.gpu.*;
-	import org.web.sdk.gpu.texture.BaseTexture;
-	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.*;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
-	import org.web.sdk.net.amf.AMFRemoting;
 	import org.web.sdk.net.socket.*;
 	import org.web.sdk.sound.core.*;
 	import org.web.sdk.sound.*;
@@ -63,13 +64,10 @@ package
 			FpsMonitor.gets().show();					
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
-			//登陆模块
-			//LogicLayer.gets().show();
 			//加载配置
 			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
 			//test();
-			SoundManager.playUrl("bg.mp3");
-			//
+			//SoundManager.playUrl("bg.mp3");
 		}
 		
 		private function onLog(e:Object):void
@@ -96,59 +94,10 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			if (!PerfectLoader.gets().isLoad()) {
-				trace("res load over,start game")
-			}
-		}
-		
-		private var arr:Vector.<Point>;
-		private var step:Steper;
-		//
-		private var item:IAcceptor;
-		private var index:int = 0;
-		
-		private function test():void
-		{
-			step = new Steper(this);
-			step.run();
-			arr = new Vector.<Point>
-			for (var i:int = 0; i < 300; i++) {
-				arr.push(new Point(Maths.random(0, 500), Maths.random(0, 500)));
-			}
-			item = VRayMap.createBySize(10,10,0xff0000);
-			Bezier.drawLine(this.graphics, arr, false);
-			this.addDisplay(item, 0, 0);
-			//
-			var cool:CoolTime = new CoolTime(100, 100);
-			cool.x = 100;
-			cool.y = 100;
-			this.addChild(cool)
-			cool.setup(10, 5);
-		}
-		
-		override public function render():void 
-		{
-			if (index >= arr.length) return;
-			
-			if (renderMove(item, arr, index)) index++;
-			
-			this.graphics.lineTo(item.x, item.y);
-		}
-		
-		//是否
-		public static function renderMove(dis:IDisplayObject, vector:Vector.<Point>, index:int = 0, speed:int = 100):Boolean
-		{
-			if (index < 0 || index >= vector.length) return false;
-			var angle:Number = Maths.atanAngle(dis.x, dis.y, vector[index].x, vector[index].y);	//计算两点之间的角度
-			var mpo:Point = Maths.resultant(angle, speed);										//计算增量
-			dis.x -= mpo.x;
-			dis.y -= mpo.y;
-			//两点之间的长度
-			if (Maths.distance(dis.x, dis.y, vector[index].x, vector[index].y) <= speed) {
-				dis.moveTo(vector[index].x, vector[index].y);
-				return true;
-			}
-			return false;
+			FrameWork.app.share(e.url, e.target as Loader);
+			if (!PerfectLoader.gets().isLoad()) trace("--------res load over,start game---------")
+			//登陆模块
+			LogicLayer.gets().show();
 		}
 		//ends
 	}

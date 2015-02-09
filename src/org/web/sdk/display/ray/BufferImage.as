@@ -40,7 +40,6 @@ package org.web.sdk.display.ray
 		//去下载
 		override protected function factoryTexture(textureName:String, tag:int = 0):LibRender 
 		{
-			var loader:PerfectLoader = PerfectLoader.gets();
 			loader.addWait(textureName, LoadEvent.IMG).addRespond(complete);
 			loader.start();
 			return null;
@@ -60,7 +59,7 @@ package org.web.sdk.display.ray
 		{
 			if (_url == null) return;
 			if (_over) super.dispose();
-			else PerfectLoader.gets().removeRespond(_url, complete);
+			else loader.removeRespond(_url, complete);
 			_over = false;
 			_url = null;
 		}

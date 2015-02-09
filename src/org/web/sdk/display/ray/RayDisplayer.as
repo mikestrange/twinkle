@@ -15,6 +15,7 @@ package org.web.sdk.display.ray
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.load.PerfectLoader;
 	import org.web.sdk.utils.ClassUtils;
 	
 	import org.web.sdk.beyond_challenge;
@@ -25,8 +26,10 @@ package org.web.sdk.display.ray
 	public class RayDisplayer extends Bitmap implements IAcceptor 
 	{
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
-		//
+		//渲染器
 		private var _texture:LibRender;
+		//自身放置一个下载器吧
+		protected static const loader:PerfectLoader = PerfectLoader.gets();
 		
 		public function RayDisplayer(texture:LibRender = null) 
 		{
@@ -73,8 +76,8 @@ package org.web.sdk.display.ray
 			if (LibRender.hasTexture(txName)) {
 				this.setTexture(LibRender.getTexture(txName));
 			}else {
-				var texture:LibRender = factoryTexture(txName, tag);
-				if (texture) this.setTexture(texture);
+				var tx:LibRender = factoryTexture(txName, tag);
+				if (tx) this.setTexture(tx);
 			}
 		}
 		
@@ -87,6 +90,11 @@ package org.web.sdk.display.ray
 		public function clone():IAcceptor 
 		{
 			return new RayDisplayer(_texture);
+		}
+		
+		public function get texture():LibRender
+		{
+			return _texture;
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IDisplayObject */

@@ -140,7 +140,7 @@ package org.web.rpg.core
 					}
 				}
 			}
-			PerfectLoader.gets().start();
+			FrameWork.perfectLoader.start();
 			//渲染位图
 			refresh();
 		}

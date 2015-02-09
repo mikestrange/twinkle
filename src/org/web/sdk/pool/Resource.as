@@ -4,9 +4,8 @@
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.getDefinitionByName;
-	import org.web.sdk.load.core.BelieveLoader;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.loads.ResourceLoader;
+	import org.web.sdk.load.PerfectLoader;
 	
 	/**
 	 * ...  swf->分为主界面swf和人物动画swf
@@ -14,9 +13,10 @@
 	 * 2，人物动画swfs（人物，怪物，npc，技能，） (动态加载，集合卸载)
 	 * ..具体实现，请扩展本类
 	 */
-	public class Resource extends BelieveLoader 
+	public class Resource
 	{
 		private static var _ins:Resource;
+		protected static const loader:PerfectLoader = PerfectLoader.gets();
 		
 		public static function create():Resource
 		{
@@ -44,7 +44,7 @@
 		}
 		
 		//注册一个类型  不是Loader不会被注册
-		public function share(url:String, loader:ResourceLoader):void
+		public function share(url:String, loader:Loader):void
 		{
 			if (undefined == _typeKeys[url]) {
 				_typeKeys[url] = loader.contentLoaderInfo.applicationDomain;

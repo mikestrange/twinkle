@@ -10,8 +10,8 @@ package game.ui.map
 	import game.datas.SelfData;
 	import game.datas.vo.ActionVo;
 	import game.ui.core.ActionType;
-	import game.ui.core.GpuCustom;
 	import game.inters.IRole;
+	import game.ui.core.RangeMotion;
 	import org.web.sdk.inters.IDisplayObject;
 	import org.web.sdk.utils.DrawUtils;
 	import org.web.rpg.astar.Grid;
@@ -23,7 +23,6 @@ package game.ui.map
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.AtomicEngine;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.gpu.GpuBase;
 	import org.web.sdk.display.ray.RayDisplayer;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.utils.Maths;
@@ -32,7 +31,7 @@ package game.ui.map
 	 * */
 	public class RoleSprite extends RawSprite implements IRole
 	{
-		private var _action:GpuCustom;
+		private var _action:RangeMotion;
 		//
 		private var _data:PlayerObj;
 		private var _texture:RayDisplayer;
@@ -61,8 +60,8 @@ package game.ui.map
 		
 		override public function initialization(value:Boolean = true):void 
 		{
-			_action = new GpuCustom("playerAction", 4, ActionType.STAND);
-			_action.play();
+			_action = new RangeMotion(0, ActionType.STAND, 4);
+			_action.setEnder(ActionType.STAND);
 			var matrix:Matrix = new Matrix;
 			matrix.translate( -20, -90)
 			_action.transform.matrix = matrix;
@@ -123,7 +122,7 @@ package game.ui.map
 		
 		public function get point():int
 		{
-			return _action.getPoint();
+			return _action.point;
 		}
 		
 		//刷新数据
@@ -140,29 +139,29 @@ package game.ui.map
 		//一系列动作
 		public function move(value:int = -1):void
 		{
-			_action.setActionAndPoint(ActionType.RUN, value);
+			_action.doAction(ActionType.RUN, value);
 		}
 		
 		public function stand(value:int = -1):void
 		{
-			_action.setActionAndPoint(ActionType.STAND, value);
+			_action.doAction(ActionType.STAND, value);
 		}
 		
 		public function attack(value:int = -1):void
 		{
-			_action.setActionAndPoint(ActionType.YEMAN, value);
+			_action.doAction(ActionType.YEMAN, value);
 			//_action.setActionAndPoint(ActionType.BEATEN, value, 1);
 			//_action.setActionAndPoint(ActionType.ATTACK, value);
 		}
 		
 		public function walk(value:int = -1):void
 		{
-			_action.setActionAndPoint(ActionType.WALK, value);
+			_action.doAction(ActionType.WALK, value);
 		}
 		
 		public function hit(value:int = -1):void
 		{
-			_action.setActionAndPoint(ActionType.HIT, value);
+			_action.doAction(ActionType.HIT, value);
 		}
 		
 		//ends

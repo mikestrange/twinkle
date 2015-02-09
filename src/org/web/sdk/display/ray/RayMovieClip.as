@@ -37,14 +37,14 @@ package org.web.sdk.display.ray
 			_currfps = 0;
 		}
 		
-		public function stop(index:int = 0):void
+		public function stop(index:int = 1):void
 		{
 			_isstop = true;
 			position = index;
 			_step.die();
 		}
 		
-		public function play(index:int = 0):void
+		public function play(index:int = 1):void
 		{
 			_isstop = false;
 			restore();

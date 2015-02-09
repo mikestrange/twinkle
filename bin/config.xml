@@ -2,7 +2,7 @@
 <data>
 	<language path="语言包"/>
 	<res version="0.0.0.1" text="初始化需要加载的文件">
-		<ui name="" url="" />
+		<ui name="player001" url="http://127.0.0.1/game/asset/ui/001_player.swf" />
 	</res>
 	<root_path text="所有路径">
 		<item id="0" path="img/" type="png" text=""/>
