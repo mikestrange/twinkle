@@ -21,7 +21,7 @@
     </source-path>
   </compiler>
   <include-classes>
-    <class>LogicLayer</class>
+    <class>LandSprite</class>
     <class>Twinkle</class>
     <class>com.adobe.crypto.HMAC</class>
     <class>com.adobe.crypto.MD5</class>
@@ -175,8 +175,7 @@
     <class>game.socket.map.recv.QuitHandler</class>
     <class>game.socket.map.recv.StandHandler</class>
     <class>game.ui.core.ActionType</class>
-    <class>game.ui.core.GpuCustom</class>
-    <class>game.ui.core.MovieShader</class>
+    <class>game.ui.core.RangeMotion</class>
     <class>game.ui.map.RoleSprite</class>
     <class>game.ui.map.WorldMap</class>
     <class>game.utils.DrivePath</class>
@@ -196,43 +195,65 @@
     <class>org.web.rpg.utils.octa.OctaPoint</class>
     <class>org.web.sdk.beyond_challenge</class>
     <class>org.web.sdk.FrameWork</class>
+    <class>org.web.sdk.context.ContextManager</class>
+    <class>org.web.sdk.context.ResourceContext</class>
     <class>org.web.sdk.display.House</class>
     <class>org.web.sdk.display.ILayer</class>
     <class>org.web.sdk.display.Layer</class>
     <class>org.web.sdk.display.Multiple</class>
-    <class>org.web.sdk.display.RawSprite</class>
-    <class>org.web.sdk.display.TextEditor</class>
     <class>org.web.sdk.display.asset.ActionTexture</class>
     <class>org.web.sdk.display.asset.Assets</class>
+    <class>org.web.sdk.display.asset.GlobalCreate</class>
     <class>org.web.sdk.display.asset.LibRender</class>
     <class>org.web.sdk.display.asset.SingleTexture</class>
     <class>org.web.sdk.display.asset.VectorTexture</class>
+    <class>org.web.sdk.display.core.ActiveSprite</class>
+    <class>org.web.sdk.display.core.BaseButton</class>
+    <class>org.web.sdk.display.core.RayDisplayer</class>
+    <class>org.web.sdk.display.core.SwitcherSprite</class>
     <class>org.web.sdk.display.engine.AtomicEngine</class>
     <class>org.web.sdk.display.engine.IEffect</class>
     <class>org.web.sdk.display.engine.IStepper</class>
     <class>org.web.sdk.display.engine.Steper</class>
     <class>org.web.sdk.display.ray.ActionMovie</class>
     <class>org.web.sdk.display.ray.BufferImage</class>
-    <class>org.web.sdk.display.ray.RayDisplayer</class>
     <class>org.web.sdk.display.ray.RayMovieClip</class>
-    <class>org.web.sdk.error.VisualError</class>
-    <class>org.web.sdk.gpu.GpuBase</class>
-    <class>org.web.sdk.gpu.GpuMovie</class>
-    <class>org.web.sdk.gpu.shader.CryRenderer</class>
-    <class>org.web.sdk.gpu.shader.ShaderManager</class>
+    <class>org.web.sdk.display.text.TextEditor</class>
+    <class>org.web.sdk.display.type.AlignType</class>
+    <class>org.web.sdk.display.type.TouchState</class>
+    <class>org.web.sdk.display.utils.Deluxe</class>
+    <class>org.web.sdk.display.utils.DrawUtils</class>
+    <class>org.web.sdk.display.utils.Swapper</class>
+    <class>org.web.sdk.fot.core.CompositeListener</class>
+    <class>org.web.sdk.fot.core.Container</class>
+    <class>org.web.sdk.fot.core.GraftMixture</class>
+    <class>org.web.sdk.fot.core.PrudentListener</class>
+    <class>org.web.sdk.fot.core.SimpleListener</class>
+    <class>org.web.sdk.fot.core.Water</class>
+    <class>org.web.sdk.fot.interfaces.IApplicationListener</class>
+    <class>org.web.sdk.fot.interfaces.ICommand</class>
+    <class>org.web.sdk.fot.interfaces.IMixture</class>
+    <class>org.web.sdk.fot.interfaces.IWrapper</class>
+    <class>org.web.sdk.fot.tracker.Tracker</class>
+    <class>org.web.sdk.fot.wrapper.ClassWrapper</class>
+    <class>org.web.sdk.fot.wrapper.MethodWrapper</class>
+    <class>org.web.sdk.fot.wrapper.MixtureWrapper</class>
     <class>org.web.sdk.handler.EventedDispatcher</class>
     <class>org.web.sdk.handler.IDispatcher</class>
     <class>org.web.sdk.handler.Observer</class>
     <class>org.web.sdk.inters.IAcceptor</class>
     <class>org.web.sdk.inters.IBaseSprite</class>
+    <class>org.web.sdk.inters.IComponent</class>
     <class>org.web.sdk.inters.IDisplayObject</class>
-    <class>org.web.sdk.inters.IEscape</class>
+    <class>org.web.sdk.inters.ISwitcher</class>
+    <class>org.web.sdk.keyset.KeyAction</class>
+    <class>org.web.sdk.keyset.KeyManager</class>
+    <class>org.web.sdk.keyset.KeyRequest</class>
     <class>org.web.sdk.lang.Lang</class>
     <class>org.web.sdk.load.LoadAnalysis</class>
     <class>org.web.sdk.load.LoadEvent</class>
     <class>org.web.sdk.load.LoadFluider</class>
     <class>org.web.sdk.load.PerfectLoader</class>
-    <class>org.web.sdk.load.core.BelieveLoader</class>
     <class>org.web.sdk.load.inters.ILoadController</class>
     <class>org.web.sdk.load.inters.ILoader</class>
     <class>org.web.sdk.load.inters.ILoadRespond</class>
@@ -262,7 +283,6 @@
     <class>org.web.sdk.net.web.WebConnection</class>
     <class>org.web.sdk.net.web.WebData</class>
     <class>org.web.sdk.pool.Pools</class>
-    <class>org.web.sdk.pool.Resource</class>
     <class>org.web.sdk.sound.SoundData</class>
     <class>org.web.sdk.sound.SoundFactory</class>
     <class>org.web.sdk.sound.SoundManager</class>
@@ -279,9 +299,6 @@
     <class>org.web.sdk.system.inter.IController</class>
     <class>org.web.sdk.system.inter.IKidnap</class>
     <class>org.web.sdk.system.inter.IMessage</class>
-    <class>org.web.sdk.system.key.KeyAction</class>
-    <class>org.web.sdk.system.key.KeyManager</class>
-    <class>org.web.sdk.system.key.KeyRequest</class>
     <class>org.web.sdk.tool.Bezier</class>
     <class>org.web.sdk.tool.Clock</class>
     <class>org.web.sdk.tool.Color</class>
@@ -296,7 +313,7 @@
     <class>org.web.sdk.tool.secret.FloatPass</class>
     <class>org.web.sdk.tool.secret.McryptEncryption</class>
     <class>org.web.sdk.utils.ClassUtils</class>
-    <class>org.web.sdk.utils.DrawUtils</class>
+    <class>org.web.sdk.utils.CofFix</class>
     <class>org.web.sdk.utils.HashMap</class>
     <class>org.web.sdk.utils.Maths</class>
     <class>org.web.sdk.utils.StringUtils</class>

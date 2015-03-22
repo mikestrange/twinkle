@@ -4,7 +4,7 @@ package org.web.sdk.display.asset
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.utils.DrawUtils;
+	import org.web.sdk.display.utils.DrawUtils;
 	import flash.utils.getDefinitionByName;
 	
 	public class GlobalCreate 

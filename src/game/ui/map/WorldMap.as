@@ -25,8 +25,6 @@ package game.ui.map
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.GlobalMessage;
-	import org.web.sdk.system.key.KeyAction;
-	import org.web.sdk.system.key.KeyManager;
 	import org.web.sdk.tool.Clock;
 	import org.web.sdk.utils.HashMap;
 	
@@ -91,7 +89,7 @@ package game.ui.map
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			map.setMapdata(MapData.create(new XML(e.target as String)));
-			if(!map.isshow()) WorldKidnap.addToLayer(map, LayerType.MAP);
+			if(!map.isAdded()) WorldKidnap.addToLayer(map, LayerType.MAP);
 			//添加主角
 			setActor(PlayerObj.gets());
 			//初始化
@@ -117,7 +115,7 @@ package game.ui.map
 		
 		private function onEnter(e:Event = null):void
 		{
-			if (map.isshow()) {
+			if (map.isAdded()) {
 				render();
 				//actor.render();
 				//空闲3秒发送一次自己的坐标
@@ -237,7 +235,7 @@ package game.ui.map
 				}else {
 					removeUser(player.getUid());
 				}
-				player.render();
+				player.frameRender();
 			}
 			//trace("一次：", getTimer() - t1);
 			if (userRoot.numChildren < 2) return;

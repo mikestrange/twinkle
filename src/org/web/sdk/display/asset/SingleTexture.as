@@ -7,9 +7,9 @@ package org.web.sdk.display.asset
 	import flash.utils.getDefinitionByName;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.display.ray.RayDisplayer;
+	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.utils.DrawUtils;
+	import org.web.sdk.display.utils.DrawUtils;
 	/**
 	 * 单一材质  IAcceptor 这个接口才能调度
 	 */

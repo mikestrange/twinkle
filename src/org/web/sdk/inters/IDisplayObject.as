@@ -17,7 +17,6 @@ package org.web.sdk.inters
 		function get cacheAsBitmap():Boolean;
 		function set cacheAsBitmap(value:Boolean):void;
 		
-		function clearFilters():void;
 		function get filters():Array;
 		function set filters(value:Array):void;
 		
@@ -32,9 +31,6 @@ package org.web.sdk.inters
 		
 		function get name():String;
 		function set name(value:String):void;
-		
-		//function get parent():DisplayObjectContainer;
-		function getParent():IBaseSprite;
 		
 		function get root():DisplayObject;
 		
@@ -67,22 +63,40 @@ package org.web.sdk.inters
 		function get y():Number;
 		function set y(value:Number):void;
 		
-		function getBounds(targetCoordinateSpace:DisplayObject):Rectangle;
-		
-		function globalToLocal(point:Point):Point;
-		function localToGlobal(point:Point):Point;
-		
 		function hitTestObject(obj:DisplayObject):Boolean;
 		function hitTestPoint(x:Number, y:Number, shapeFlag:Boolean = false):Boolean;
+		//可以不用
+		//function getBounds(targetCoordinateSpace:DisplayObject):Rectangle;
+		//坐标转换
+		function toGlobal(mx:Number = 0, my:Number = 0):Point;
+		function toLocal(mx:Number = 0, my:Number = 0):Point;
 		//新增接口
-		function addUnder(father:IBaseSprite, mx:Number = 0, my:Number = 0, floor:int = -1):void;
-		function moveTo(mx:int = 0, my:int = 0):void;
-		function setNorms(horizontal:Number = 1, vertical:Number = 1, ratio:Boolean = true):void;
-		//
-		function render():void;
-		function isshow():Boolean;
+		//是否被添加到父亲
+		function isAdded():Boolean;
+		//完全释放
+		function finality(value:Boolean = true):void;
+		//清理滤镜
+		function clearFilters():void;
+		//定义操作值
+		function getOper():int;
+		function setOper(value:int):void;
+		//限制尺寸
+		function setLimit(wide:Number = 0, heig:Number = 0):void;
+		function get limitWidth():Number;
+		function get limitHeight():Number;
+		//父类操作
+		function getFather():IBaseSprite;
 		function removeFromFather():void;
-		function setAuto(type:String = null):void;
+		//控制
+		function setDisplayIndex(floor:int = -1):void;
+		function moveTo(mx:Number = 0, my:Number = 0):void;
+		//添加
+		function addUnder(father:IBaseSprite, floor:int = -1):Boolean;
+		function reportFromFather(father:IBaseSprite):void;
+		//帧渲染
+		function frameRender(float:int = 0):void;
+		//
+		function resize():void;
 		//ends
 	}
 	

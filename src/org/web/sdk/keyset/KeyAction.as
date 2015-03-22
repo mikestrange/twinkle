@@ -1,6 +1,5 @@
-package org.web.sdk.system.key 
+package org.web.sdk.keyset 
 {
-	import adobe.utils.CustomActions;
 	import flash.utils.*;
 
 	public class KeyAction 

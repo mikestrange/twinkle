@@ -3,6 +3,7 @@ package org.web.sdk.display.ray
 	import flash.display.BitmapData;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.asset.VectorTexture;
+	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.engine.Steper;
 	
 	/*
@@ -64,7 +65,7 @@ package org.web.sdk.display.ray
 		}
 		
 		//循环渲染
-		override public function render():void 
+		override public function frameRender(float:int = 0):void 
 		{
 			if (_isstop) return;
 			if (++_currfps > _fps) {

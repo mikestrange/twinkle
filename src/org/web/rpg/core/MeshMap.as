@@ -12,20 +12,20 @@ package org.web.rpg.core
 	import org.web.rpg.core.MapData;
 	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.astar.Node;
-	import org.web.sdk.display.RawSprite;
+	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	/*
 	 * 这里作为背景和寻路算法基础
 	 * */
-	public class MeshMap extends RawSprite 
+	public class MeshMap extends ActiveSprite 
 	{
 		//地图数据
 		private var _mapdata:MapData;
 		//网格
 		private var _grid:Grid;
 		//Npc,角色,物件
-		private var _itemLayer:RawSprite;
+		private var _itemLayer:ActiveSprite;
 		//分快加载的地方
 		private var _backdrop:MapShallow;
 		
@@ -33,8 +33,8 @@ package org.web.rpg.core
 		public function MeshMap()
 		{
 			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
-			this.addChild(_itemLayer = new RawSprite);
-			_itemLayer.lock();
+			this.addChild(_itemLayer = new ActiveSprite);
+			_itemLayer.lockMouse();
 		}
 		
 		//设置所有数据
@@ -47,8 +47,9 @@ package org.web.rpg.core
 			this.addChildAt(_backdrop, 0);
 		}
 		
-		override public function hideEvent(event:Event = null):void 
+		override protected function hideEvent(e:Object = null):void 
 		{
+			super.hideEvent(e);
 			_itemLayer.clearChildren();
 			removeDesktop();
 		}

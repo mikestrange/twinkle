@@ -1,0 +1,115 @@
+package org.web.sdk.display.core 
+{
+	import org.web.sdk.inters.ISwitcher;
+	import flash.utils.Dictionary;
+	import org.web.sdk.display.type.TouchState;
+	
+	/**
+	 * 基础切换器,一种是可用和不可用的状态
+	 */
+	public class SwitcherSprite extends ActiveSprite implements ISwitcher 
+	{
+		protected var _current:String;
+		protected var _touch:Function;
+		protected var _enabled:Boolean = true;
+		private var t_map:Dictionary;
+		
+		public function SwitcherSprite(normal:*= null)
+		{
+			t_map = new Dictionary;
+			if(normal) setNormal(normal);
+			super()
+		}
+		
+		/* INTERFACE org.web.sdk.ui.interfaces.ICooperate */
+		public function defineAction(state:String, worker:*= undefined):void 
+		{
+			if (worker == null) {
+				if(t_map[state]) delete t_map[state];
+			} else{
+				t_map[state] = worker;
+			}
+		}
+		
+		public function setNormal(worker:*):void
+		{
+			defineAction(TouchState.NARMAL, worker);
+		}
+		
+		//当前状态，备用，已经是否强制刷新
+		public function setCurrent(state:String, backup:String = "normal"):void 
+		{
+			if (state == null) state = TouchState.NARMAL;
+			_current = state;
+			var worker:* = getSwitcher(state);
+			if (worker == null) {
+				worker = getSwitcher(backup);
+			}
+			updateSwitcher(worker);
+		}
+		
+		public function get current():String
+		{
+			return _current;
+		}
+		
+		public function setEnabled(value:Boolean):void 
+		{
+			_enabled = value;
+			if (!value) {
+				setCurrent(TouchState.FORBID);
+			}else {
+				setCurrent(TouchState.NARMAL);
+			}
+		}
+		
+		public function get enabled():Boolean 
+		{
+			return _enabled;
+		}
+		
+		//一个事件处理
+		public function setProvoke(touch:Function):void
+		{
+			_touch = touch;
+		}
+		
+		//protected ----------
+		protected function onTouch():void
+		{
+			if (_touch is Function) _touch(this);	
+		}
+		
+		//工作状态,子类继承,如果实际应用和当前是一样的话
+		protected function updateSwitcher(worker:*):void
+		{
+			
+		}
+		
+		protected function getSwitcher(state:String):*
+		{
+			return t_map[state];
+		}
+		
+		//如果有需要释放的话，请允许他先
+		public function forEach():void
+		{
+			for (var k:String in t_map) handlerSwitcher(t_map[k]);
+		}
+		
+		//遍历处理了
+		protected function handlerSwitcher(target:*):void
+		{
+			
+		}
+		
+		//释放
+		override public function finality(value:Boolean = true):void 
+		{
+			t_map = new Dictionary;
+			super.finality(value);
+		}
+		//end
+	}
+
+}

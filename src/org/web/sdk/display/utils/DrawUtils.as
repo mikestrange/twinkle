@@ -1,9 +1,9 @@
-package org.web.sdk.utils 
+package org.web.sdk.display.utils 
 {
 	import flash.filters.GlowFilter;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.display.TextEditor;
 	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.text.TextEditor;
 	import flash.display.*;
 	import flash.geom.*;
 	/*
@@ -11,6 +11,7 @@ package org.web.sdk.utils
 	 * */
 	public class DrawUtils 
 	{
+		
 		
 		//绘制对象					绘制的对象			一个偏移量					
 		public static function draw(dis:DisplayObject, setrect:Rectangle = null):BitmapData 
@@ -21,11 +22,11 @@ package org.web.sdk.utils
 			return bitmapdata;
 		}
 		
-		private static var text:TextEditor = new TextEditor; 
-		
+		//文本转换
+		private static const text:TextEditor = new TextEditor;
 		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):SingleTexture
 		{
-			text.empty();
+			text.finality();
 			text.filters = [new GlowFilter(0, 1, 2, 2, 5, 2)];
 			text.addText(name, false, color, -1, font);
 			return new SingleTexture(draw(text));

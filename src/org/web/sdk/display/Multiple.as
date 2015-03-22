@@ -20,8 +20,7 @@ package org.web.sdk.display
 			var item:DisplayObject;
 			while (dis.numChildren) {
 				item = dis.removeChildAt(0);
-				if (item is IBaseSprite) IBaseSprite(item).finality(value);
-				else if (item is IAcceptor) IAcceptor(item).dispose();
+				if (item is IDisplayObject) IDisplayObject(item).finality(value);
 				else if (item is Sprite) wipeout(Sprite(item));
 				//
 				if (item is MovieClip) MovieClip(item).stop();
@@ -32,19 +31,6 @@ package org.web.sdk.display
 		public static function removeForParent(dis:DisplayObject):void
 		{
 			if (dis.parent) dis.parent.removeChild(dis);
-		}
-		
-		public static function addListener(dis:IBaseSprite):void 
-		{
-			if (dis.hasEventListener(Event.ADDED_TO_STAGE)) return;
-			DisplayObject(dis).addEventListener(Event.ADDED_TO_STAGE, dis.showEvent, false, 0, true);
-			DisplayObject(dis).addEventListener(Event.REMOVED_FROM_STAGE, dis.hideEvent, false, 0, true);
-		}
-		
-		public static function removeListener(dis:IBaseSprite):void 
-		{
-			DisplayObject(dis).removeEventListener(Event.ADDED_TO_STAGE, dis.showEvent);
-			DisplayObject(dis).removeEventListener(Event.REMOVED_FROM_STAGE, dis.hideEvent);
 		}
 		
 		//初始化一个dis   不改变显示状态

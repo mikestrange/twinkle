@@ -20,7 +20,7 @@ package org.web.sdk.display.asset
 		private var _quote:int = 0;	//引用数目
 		//
 		public static const asset:Assets = Assets.gets();
-		
+		//没有名称milde=true的时候会在清楚的时候被删除
 		public function LibRender(libName:String = null, milde:Boolean = false)
 		{
 			this._libName = libName;
