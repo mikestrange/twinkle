@@ -20,7 +20,7 @@ package org.web.sdk.display.asset
 		private var _quote:int = 0;	//引用数目
 		//
 		public static const asset:Assets = Assets.gets();
-		//没有名称milde=true的时候会在清楚的时候被删除
+		//没有名称milde=true的时候会在清楚的时候被删除，默认是一个强引用
 		public function LibRender(libName:String = null, milde:Boolean = false)
 		{
 			this._libName = libName;
@@ -46,9 +46,7 @@ package org.web.sdk.display.asset
 		//可以通过自身直接释放
 		public function dispose():void 
 		{
-			if (isHamper()) {
-				asset.remove(_libName);
-			}
+			if (isHamper()) asset.remove(_libName);
 		}
 		
 		beyond_challenge function setName(value:String):void
@@ -59,18 +57,12 @@ package org.web.sdk.display.asset
 		//通过它去渲染,没有保存那么直接渲染
 		beyond_challenge function render(mesh:IAcceptor):*
 		{
-			add();	
-			return self_render(mesh);
+			addHold();	
+			return update(mesh);
 		}
 		
-		//子类复写就可以了  如果不把引用的对象传过来，那么就非常单一的回应
-		//虽然可以不传，但是为了更好的扩展，必须传
-		protected function self_render(mesh:IAcceptor):*
-		{
-			return null;
-		}
-		
-		protected function add():void
+		//增加一个引用
+		protected function addHold():void
 		{
 			if (isHamper()) {
 				_quote++;
@@ -78,7 +70,7 @@ package org.web.sdk.display.asset
 			}
 		}
 		
-		protected function pop():void
+		protected function shiftHold():void
 		{
 			//如果没有被注入，你调用这个必定被删除
 			_quote--;
@@ -94,10 +86,18 @@ package org.web.sdk.display.asset
 		public function relieve():void
 		{
 			if (isHamper()) {
-				pop();
+				shiftHold();
 			}else {
 				if (_milde) dispose();
 			}
+		}
+		
+		//子类复写就可以了  如果不把引用的对象传过来，那么就非常单一的回应
+		//虽然可以不传，但是为了更好的扩展，必须传
+		//这里只用于刷新
+		public function update(mesh:IAcceptor):*
+		{
+			return null;
 		}
 		
 		//*****************************

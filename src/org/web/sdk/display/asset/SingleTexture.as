@@ -32,7 +32,7 @@ package org.web.sdk.display.asset
 		}
 		
 		//通过它去渲染,没有保存那么直接渲染
-		override protected function self_render(mesh:IAcceptor):*
+		override public function update(mesh:IAcceptor):* 
 		{
 			return _bitmapdata;
 		}

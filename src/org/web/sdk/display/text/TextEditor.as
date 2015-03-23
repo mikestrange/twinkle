@@ -3,7 +3,7 @@ package org.web.sdk.display.text
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.text.*;
-	import org.web.sdk.display.type.AlignType;
+	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.inters.IDisplayObject;
@@ -147,7 +147,6 @@ package org.web.sdk.display.text
 		public function reportFromFather(father:IBaseSprite):void 
 		{
 			if (_align == null) return;
-			trace("文本来了没");
 			const swap:Swapper = AlignType.obtainReposition(limitWidth, limitHeight, 
 			father.limitWidth, father.limitHeight, _align);
 			this.x = swap.trimPositionX(_offsetx);

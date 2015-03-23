@@ -32,7 +32,7 @@ package org.web.sdk.display.asset
 		}
 		
 		//如果没有这个动作,那么会去加载或者去建立动作
-		override protected function self_render(mesh:IAcceptor):* 
+		override public function update(mesh:IAcceptor):* 
 		{
 			if (null == _actionHash) return null;
 			var movie:ActionMovie = mesh as ActionMovie;

@@ -5,7 +5,9 @@ package org.web.sdk
 	import flash.display.*;
 	import flash.events.*;
 	import org.web.sdk.context.*;
+	import org.web.sdk.display.asset.SingleTexture;
 	import org.web.sdk.display.engine.*;
+	import org.web.sdk.display.utils.DrawUtils;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.*;
@@ -22,6 +24,16 @@ package org.web.sdk
 		public static function get stage():Stage
 		{
 			return $stage;
+		}
+		
+		public static function addStageListener(type:String, called:Function):void
+		{
+			$stage.addEventListener(type, called);
+		}
+		
+		public static function removeStageListener(type:String, called:Function):void
+		{
+			$stage.removeEventListener(type, called);
 		}
 		
 		//启动  是否启动成功  初始化窗口
@@ -154,6 +166,15 @@ package org.web.sdk
 		public static function getAsset(className:String, url:String = null):Object
 		{
 			return appDomain.getAsset(className, url);
+		}
+		
+		//获取单一材质 ,可以截去DisplayObject
+		public static function getTexture(className:String, url:String = null):SingleTexture
+		{
+			var item:* = appDomain.getAsset(className, url);
+			if(item is BitmapData) return new SingleTexture(item as BitmapData, className);
+			if (item is DisplayObject) return new SingleTexture(DrawUtils.draw(item as DisplayObject), className);
+			return null;
 		}
 		
 		//ends

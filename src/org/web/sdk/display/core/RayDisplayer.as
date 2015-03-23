@@ -5,8 +5,9 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.asset.SingleTexture;
-	import org.web.sdk.display.type.AlignType;
+	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
+	import org.web.sdk.FrameWork;
 	import org.web.sdk.inters.IDisplayObject;
 	import flash.geom.Transform;
 	import flash.display.Stage;
@@ -41,10 +42,14 @@ package org.web.sdk.display.core
 		//自身放置一个下载器吧
 		protected static const loader:PerfectLoader = PerfectLoader.gets();
 		
-		public function RayDisplayer(texture:LibRender = null) 
+		public function RayDisplayer(texture:* = null) 
 		{
 			super(null, AUTO, true);
-			if (texture) setTexture(texture);
+			if (texture is String) {
+				setLiberty(texture as String);
+			}else if (texture is LibRender) {
+				setTexture(texture);
+			}
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IAcceptor */
@@ -60,10 +65,8 @@ package org.web.sdk.display.core
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
 		public function setTexture(texture:LibRender):void 
 		{
-			if (_texture == texture) {
-				if (_texture) {
-					obtainMapped(_texture.render(this));
-				}
+			if (_texture && _texture == texture) {
+				obtainMapped(_texture.update(this));
 			}else {
 				if (_texture) _texture.relieve();
 				_texture = texture;
@@ -91,15 +94,17 @@ package org.web.sdk.display.core
 			}
 		}
 		
-		//不一定设置名称给他自己,上面会设置
+		//不一定设置名称给他自己,上面会设置 ,默认是一个类名,你可以修改
 		protected function factoryTexture(textureName:String, tag:int = 0):LibRender
 		{
-			return null;
+			return FrameWork.getTexture(textureName);
 		}
 		
 		public function clone():IAcceptor 
 		{
-			return new RayDisplayer(_texture);
+			var ray:RayDisplayer = new RayDisplayer(_texture);
+			Multiple.initNaturo(ray);
+			return ray;
 		}
 		
 		public function get texture():LibRender

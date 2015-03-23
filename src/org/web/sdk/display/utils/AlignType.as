@@ -1,7 +1,5 @@
-package org.web.sdk.display.type 
+package org.web.sdk.display.utils 
 {
-	import org.web.sdk.display.utils.Swapper;
-	
 	public class AlignType 
 	{
 		//---------------------对齐方式---------------------

@@ -4,7 +4,7 @@ package org.web.sdk.display.core
 	import flash.geom.Point;
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.display.type.AlignType;
+	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.inters.IDisplayObject;
 	import flash.display.Sprite;
@@ -135,6 +135,7 @@ package org.web.sdk.display.core
 		public function reportFromFather(father:IBaseSprite):void 
 		{
 			if (_align == null) return;
+			trace("this=",this)
 			const swap:Swapper = AlignType.obtainReposition(limitWidth, limitHeight, 
 			father.limitWidth, father.limitHeight, _align);
 			this.x = swap.trimPositionX(_offsetx);

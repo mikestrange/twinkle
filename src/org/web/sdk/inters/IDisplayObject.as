@@ -93,10 +93,16 @@ package org.web.sdk.inters
 		//添加
 		function addUnder(father:IBaseSprite, floor:int = -1):Boolean;
 		function reportFromFather(father:IBaseSprite):void;
+		//
+		function setAlign(alignType:String, offx:Number = 0, offy:Number = 0):void
+		function get offsetx():Number;
+		function get offsety():Number;
 		//帧渲染
 		function frameRender(float:int = 0):void;
 		//
 		function resize():void;
+		//翻转
+		//function filp(type:int = 0):void;
 		//ends
 	}
 	

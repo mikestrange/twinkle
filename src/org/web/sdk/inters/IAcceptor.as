@@ -8,7 +8,7 @@ package org.web.sdk.inters
 	{
 		//通过名称直接渲染，如果名称找不到，那么就从工厂里面创立
 		function setLiberty(txName:String, tag:int = 0):void;
-		//设置资源渲染
+		//设置资源渲染   						是否主动释放上一个引用
 		function setTexture(texture:LibRender):void;
 		//取消当前资源管理和自身释放
 		function dispose():void;

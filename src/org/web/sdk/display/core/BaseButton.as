@@ -3,8 +3,8 @@ package org.web.sdk.display.core
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
-	import org.web.sdk.display.text.TextEditor;
-	import org.web.sdk.display.type.TouchState;
+	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.utils.TouchState;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.inters.IDisplayObject;
 	
@@ -13,14 +13,14 @@ package org.web.sdk.display.core
 		private var _isMouseDown:Boolean = false;
 		private var _isMouseOver:Boolean = false;
 		//按钮层
-		private var _title:TextEditor;
+		private var _title:IDisplayObject;
 		private var _bit:RayDisplayer;
 		
-		public function BaseButton(normal:*, press:*= null, over:*= null)
+		public function BaseButton(normal:String, press:String= null, over:String= null)
 		{
 			super(normal);
-			if(press) defineAction(TouchState.PRESS, press);
-			if(over) defineAction(TouchState.OVER, over);
+			defineAction(TouchState.PRESS, press);
+			defineAction(TouchState.OVER, over);
 		}
 		
 		override protected function showEvent(e:Object = null):void 
@@ -31,9 +31,6 @@ package org.web.sdk.display.core
 			this.addEventListener(MouseEvent.MOUSE_UP,onMouseAction);
 			this.addEventListener(MouseEvent.MOUSE_OVER,onMouseEffect);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseEffect);
-			_bit = new RayDisplayer;
-			this.addDisplay(_bit, 0);
-			this.setCurrent("");
 		}
 		
 		override protected function hideEvent(e:Object = null):void
@@ -46,7 +43,6 @@ package org.web.sdk.display.core
 			this.removeEventListener(MouseEvent.MOUSE_UP,onMouseAction);
 			this.removeEventListener(MouseEvent.MOUSE_OVER,onMouseEffect);
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseEffect);
-			forEach();
 			finality();
 		}
 		
@@ -87,26 +83,26 @@ package org.web.sdk.display.core
 		
 		override protected function updateSwitcher(worker:*):void 
 		{
-			if (worker) _bit.setTexture(worker);
-			if(_title) this.addDisplay(_title);
-		}
-		
-		override protected function handlerSwitcher(target:*):void 
-		{
-			
+			if (!_bit) {
+				_bit = new RayDisplayer(worker);
+				this.addDisplay(_bit, 0);
+			}else {
+				if (worker) _bit.setLiberty(worker as String);
+			}
 		}
 		
 		//三种情况，快速的对齐方式
-		public function setTitle(title:*, alige:String = "center"):IDisplayObject
+		public function setTitle(title:IDisplayObject, alige:String = "center"):void
 		{
-			if (title is String) {
-				if(!_title) _title = new TextEditor;
-				_title.addText(title, false, 0xff0000, 18);
-				_title.setAlign(alige);
-				return _title;
+			if (_title) {
+				_title.removeFromFather();
+				_title = null;
 			}
-			
-			return null;
+			_title = title;
+			if (_title) {
+				_title.setAlign(alige);
+				this.addDisplay(_title);
+			}
 		}
 		//ends
 	}

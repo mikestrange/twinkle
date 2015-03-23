@@ -9,10 +9,6 @@ package org.web.sdk.inters
 		function removeByName(childName:String):IDisplayObject;
 		function getChildrenByOper(value:int = 0):Vector.<IDisplayObject>;
 		function addDisplay(child:IDisplayObject, floor:int = -1):Boolean;
-		//
-		function setAlign(alignType:String, offx:Number = 0, offy:Number = 0):void
-		function get offsetx():Number;
-		function get offsety():Number;
 		//end
 	}
 	

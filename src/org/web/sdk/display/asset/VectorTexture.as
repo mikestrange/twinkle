@@ -24,7 +24,7 @@ package org.web.sdk.display.asset
 			}
 		}
 		
-		override protected function self_render(mesh:IAcceptor):* 
+		override public function update(mesh:IAcceptor):* 
 		{
 			return _vector;
 		}

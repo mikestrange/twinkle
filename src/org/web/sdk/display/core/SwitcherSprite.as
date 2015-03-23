@@ -2,7 +2,7 @@ package org.web.sdk.display.core
 {
 	import org.web.sdk.inters.ISwitcher;
 	import flash.utils.Dictionary;
-	import org.web.sdk.display.type.TouchState;
+	import org.web.sdk.display.utils.TouchState;
 	
 	/**
 	 * 基础切换器,一种是可用和不可用的状态
@@ -19,6 +19,12 @@ package org.web.sdk.display.core
 			t_map = new Dictionary;
 			if(normal) setNormal(normal);
 			super()
+		}
+		
+		override protected function showEvent(e:Object = null):void 
+		{
+			super.showEvent(e);
+			this.setCurrent("normal");
 		}
 		
 		/* INTERFACE org.web.sdk.ui.interfaces.ICooperate */

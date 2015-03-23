@@ -7,6 +7,7 @@ package
 	import org.web.sdk.display.core.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.ray.RayMovieClip;
+	import org.web.sdk.display.utils.AlignType;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -40,9 +41,6 @@ package
 	
 	public class Twinkle extends ActiveSprite
 	{
-		private var _index:int;
-		private var _totals:int;
-		
 		override protected function showEvent(e:Object = null):void 
 		{
 			super.showEvent(e);
@@ -58,13 +56,14 @@ package
 			//最大下载
 			PerfectLoader.gets().LOAD_MAX = 5;			
 			//内存查看
-			FpsMonitor.gets().show();					
+			//FpsMonitor.gets().show();					
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//加载配置
-			FrameWork.downLoad("config.xml", LoadEvent.TXT, complete);
+			FrameWork.downLoad("asset/config.xml", LoadEvent.TXT, complete);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
+			this.setLimit(stage.stageWidth, stage.stageHeight);
 		}
 		
 		private function onLog(e:Object):void
@@ -83,12 +82,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					_totals++;
-					if (main) {
-						FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
-					}else {
-						FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names);
-					}
+					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
 				}
 			}
 			trace("res:", length);
@@ -97,22 +91,16 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			FrameWork.app.share(e.url, new ResourceContext(e.target));
-			if (++_index >= _totals) return;
 			trace("--------res load over,start game---------")
 			//登陆模块
 			//LandSprite.gets().show();
-			var na:String = "resource/images/common/exitmenuview/btn_exit_click.png";
-			var n:BitmapData = FrameWork.getAsset(na) as BitmapData;
-			var nb:String = "resource/images/common/exitmenuview/btn_exit_off.png";
-			var p:BitmapData = FrameWork.getAsset(nb) as BitmapData;
-			var nc:String = "resource/images/common/exitmenuview/btn_exit_on.png";
-			var ov:BitmapData = FrameWork.getAsset(nc) as BitmapData;
-			
-			
-			var button:BaseButton = new BaseButton(new SingleTexture(n, na), new SingleTexture(p, nb), new SingleTexture(ov, nc));
+			var button:BaseButton = new BaseButton("btn_a_keep", "btn_a_down","btn_a_over");
 			button.moveTo(100, 100);
-			this.addDisplay(button)
+			this.addDisplay(button);
+			//
+			var ray:RayDisplayer = new RayDisplayer("shopboxbg");
+			ray.setAlign("center");
+			this.addDisplay(ray);
 		}
 		//ends
 	}
