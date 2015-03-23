@@ -44,7 +44,7 @@ package
 		override protected function showEvent(e:Object = null):void 
 		{
 			super.showEvent(e);
-			MenuTools.setMenu(this,null,MenuTools.createMenuItem("log",onLog))
+			//MenuTools.setMenu(this,null,MenuTools.createMenuItem("log",onLog))
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -94,13 +94,7 @@ package
 			trace("--------res load over,start game---------")
 			//登陆模块
 			//LandSprite.gets().show();
-			var button:BaseButton = new BaseButton("btn_a_keep", "btn_a_down","btn_a_over");
-			button.moveTo(100, 100);
-			this.addDisplay(button);
-			//
-			var ray:RayDisplayer = new RayDisplayer("shopboxbg");
-			ray.setAlign("center");
-			this.addDisplay(ray);
+			addDisplay(new TestPanel);
 		}
 		//ends
 	}

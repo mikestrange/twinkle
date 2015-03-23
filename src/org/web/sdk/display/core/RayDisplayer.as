@@ -102,9 +102,7 @@ package org.web.sdk.display.core
 		
 		public function clone():IAcceptor 
 		{
-			var ray:RayDisplayer = new RayDisplayer(_texture);
-			Multiple.initNaturo(ray);
-			return ray;
+			return new RayDisplayer(_texture);
 		}
 		
 		public function get texture():LibRender
