@@ -45,7 +45,7 @@ package org.web.sdk.load
 		}
 		
 		//设置下载器
-		public function setLoader(type:int, className:Class):void
+		public function setLoader(type:int, className:Class, reg:RegExp = null):void
 		{
 			LoaderBlueprint[type] = className;
 		}

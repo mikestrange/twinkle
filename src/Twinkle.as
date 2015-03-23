@@ -3,7 +3,9 @@ package
 	import com.greensock.*;
 	import org.web.sdk.context.ResourceContext;
 	import org.web.sdk.display.asset.SingleTexture;
-	import org.web.sdk.display.ray.RayDisplayer;
+	import org.web.sdk.display.core.ActiveSprite;
+	import org.web.sdk.display.core.BaseButton;
+	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.ray.RayMovieClip;
 	//as3
 	import flash.display.*;
@@ -29,27 +31,21 @@ package
 	import org.web.sdk.sound.*;
 	import org.web.sdk.system.com.*;
 	import org.web.sdk.system.core.*;
-	import org.web.sdk.system.key.*;
 	import org.web.sdk.system.events.*;
-	import org.web.sdk.system.key.*;
 	import org.web.sdk.system.*;
 	import org.web.sdk.tool.*;
 	import org.web.sdk.utils.*;
 	
 	[SWF(frameRate = "60", width = "500", height = "400")]
 	
-	public class Twinkle extends RawSprite
+	public class Twinkle extends ActiveSprite
 	{
-		public function Twinkle():void 
-		{
-			if (stage) showEvent();
-			else addEventListener(Event.ADDED_TO_STAGE, showEvent);
-		}
+		private var _index:int;
+		private var _totals:int;
 		
-		override public function showEvent(event:Event = null):void 
+		override protected function showEvent(e:Object = null):void 
 		{
-			super.showEvent(event);
-			if (event) removeEventListener(Event.ADDED_TO_STAGE, showEvent);
+			super.showEvent(e);
 			MenuTools.setMenu(this,null,MenuTools.createMenuItem("log",onLog))
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -85,8 +81,14 @@ package
 			{
 				var url:String = xml.res[0].ui[i].@url;
 				var names:String = xml.res[0].ui[i].@name;
+				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names);
+					_totals++;
+					if (main) {
+						FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
+					}else {
+						FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names);
+					}
 				}
 			}
 			trace("res:", length);
@@ -96,9 +98,21 @@ package
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			FrameWork.app.share(e.url, new ResourceContext(e.target));
-			if (!PerfectLoader.gets().isLoad()) trace("--------res load over,start game---------")
+			if (++_index >= _totals) return;
+			trace("--------res load over,start game---------")
 			//登陆模块
-			LandSprite.gets().show();
+			//LandSprite.gets().show();
+			var na:String = "resource/images/common/exitmenuview/btn_exit_click.png";
+			var n:BitmapData = FrameWork.getAsset(na) as BitmapData;
+			var nb:String = "resource/images/common/exitmenuview/btn_exit_off.png";
+			var p:BitmapData = FrameWork.getAsset(nb) as BitmapData;
+			var nc:String = "resource/images/common/exitmenuview/btn_exit_on.png";
+			var ov:BitmapData = FrameWork.getAsset(nc) as BitmapData;
+			
+			
+			var button:BaseButton = new BaseButton(new SingleTexture(n, na), new SingleTexture(p, nb), new SingleTexture(ov, nc));
+			button.moveTo(100, 100);
+			this.addDisplay(button)
 		}
 		//ends
 	}

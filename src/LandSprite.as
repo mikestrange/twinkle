@@ -3,7 +3,7 @@ package
 	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
 	import game.GameGlobal;
-	import org.web.sdk.display.RawSprite;
+	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.FrameWork;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -19,7 +19,7 @@ package
 	/*
 	 * 登陆模块
 	 * */
-	public class LandSprite extends RawSprite
+	public class LandSprite extends ActiveSprite
 	{
 		private static var _ins:LandSprite;
 		
@@ -35,9 +35,9 @@ package
 		private var idTextInput:TextField;
 		private var pwTextInput:TextField;
 		
-		override public function initialization(value:Boolean = true):void 
+		override protected function initialization():void 
 		{
-			super.initialization(value);
+			super.initialization();
 			idTextInput = new TextField();
 			idTextInput.type = TextFieldType.INPUT;
 			idTextInput.background = true;

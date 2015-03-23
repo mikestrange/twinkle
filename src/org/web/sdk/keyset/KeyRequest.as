@@ -1,4 +1,4 @@
-package org.web.sdk.system.key 
+package org.web.sdk.keyset 
 {
 	public class KeyRequest 
 	{

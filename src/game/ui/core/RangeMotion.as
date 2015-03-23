@@ -66,9 +66,9 @@ package game.ui.core
 			return GlobalCreate.fromVector(action + ".png", "%d", -1, url);
 		}
 		
-		override public function render():void 
+		override public function frameRender(float:int = 0):void 
 		{
-			super.render();
+			super.frameRender(float);
 			if (_playtimes > 0 && position == totals && --_playtimes <= 0) {
 				_playtimes = 0;
 				doAction(_end_order, _point, 0);

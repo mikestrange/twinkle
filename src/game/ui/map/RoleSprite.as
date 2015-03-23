@@ -12,24 +12,24 @@ package game.ui.map
 	import game.ui.core.ActionType;
 	import game.inters.IRole;
 	import game.ui.core.RangeMotion;
+	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.inters.IDisplayObject;
-	import org.web.sdk.utils.DrawUtils;
+	import org.web.sdk.display.utils.DrawUtils;
 	import org.web.rpg.astar.Grid;
 	import org.web.rpg.astar.Node;
 	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.utils.FormatUtils;
 	import org.web.sdk.display.engine.Steper;
-	import org.web.sdk.display.RawSprite;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.AtomicEngine;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.display.ray.RayDisplayer;
+	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.utils.Maths;
 	/*
 	 * role
 	 * */
-	public class RoleSprite extends RawSprite implements IRole
+	public class RoleSprite extends ActiveSprite implements IRole
 	{
 		private var _action:RangeMotion;
 		//
@@ -49,16 +49,15 @@ package game.ui.map
 		{
 			this.grid = grid;
 			this._data = data;
-			this.initialization();
-			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
+			super();
 		}
 		
-		override public function hideEvent(event:Event = null):void 
+		override protected function hideEvent(e:Object = null):void 
 		{
 			finality();
 		}
 		
-		override public function initialization(value:Boolean = true):void 
+		override protected function initialization():void 
 		{
 			_action = new RangeMotion(0, ActionType.STAND, 4);
 			_action.setEnder(ActionType.STAND);
@@ -83,7 +82,7 @@ package game.ui.map
 			iswait = (path == null);
 		}
 		
-		override public function render():void 
+		override public function frameRender(float:int = 0):void 
 		{
 			if (path) {
 				if (pathIndex >= path.length) {

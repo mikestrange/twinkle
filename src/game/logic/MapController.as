@@ -16,7 +16,6 @@ package game.logic
 	import org.web.sdk.system.core.Controller;
 	import org.web.sdk.system.events.Evented;
 	import org.web.sdk.system.inter.IMessage;
-	import org.web.sdk.system.key.KeyManager;
 	
 	public class MapController extends Controller 
 	{

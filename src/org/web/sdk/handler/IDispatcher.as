@@ -1,7 +1,5 @@
 package org.web.sdk.handler 
 {
-	import org.web.sdk.handler.EventedDispatcher;
-	
 	public interface IDispatcher 
 	{
 		function addNotice(notice:String, called:Function):void;

@@ -4,6 +4,7 @@ package org.web.sdk.display.ray
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import org.web.sdk.display.asset.LibRender;
+	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.display.asset.SingleTexture;

@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'2015/2/8 星期日'</value>
+      <value>'2015/3/22 星期日'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>

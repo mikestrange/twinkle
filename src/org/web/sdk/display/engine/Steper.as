@@ -24,7 +24,7 @@ package org.web.sdk.display.engine
 		
 		public function step(event:Object):void 
 		{
-			_target.render();
+			_target.frameRender();
 		}
 		
 		public function isRun():Boolean
