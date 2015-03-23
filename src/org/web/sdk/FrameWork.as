@@ -125,12 +125,6 @@ package org.web.sdk
 			}
 		}
 		
-		//程序存储器
-		public static function get app():ContextManager
-		{
-			return ContextManager.create();
-		}
-		
 		//对象管理池
 		public static function getpool(fileName:String):Pools
 		{
@@ -143,10 +137,13 @@ package org.web.sdk
 			return new LoaderContext(false, ApplicationDomain.currentDomain);
 		}
 		
+		//所有程序域管理
+		public static const appDomain:ContextManager = ContextManager.create();
+		
 		//唯一下载器
 		public static const perfectLoader:PerfectLoader = PerfectLoader.gets();
 		
-		//比较完美的下载，只需要扩展Iloader接口就能应付一切下载
+		//下载资源
 		public static function downLoad(url:String, type:int, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void
 		{
 			perfectLoader.addWait(url, type, context, vital).addRespond(complete, data);
@@ -156,7 +153,7 @@ package org.web.sdk
 		//两种索取素材的方法------------这种非RSL共享时候的  可能是BitmapData，所以是*
 		public static function getAsset(className:String, url:String = null):Object
 		{
-			return app.getAsset(className, url);
+			return appDomain.getAsset(className, url);
 		}
 		
 		//ends
