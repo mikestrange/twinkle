@@ -251,6 +251,15 @@ package org.web.sdk.display.text
 			clearFilters();
 			setEmpty();
 		}
+		
+		//快速建立
+		public static function quick(chat:String, parent:IBaseSprite = null, size:int = -1, color:Object = null, font:String = null):TextEditor
+		{
+			var text:TextEditor = new TextEditor();
+			text.addText(chat, false, color, size, font);
+			text.addUnder(parent);
+			return text;
+		}
 		//ends
 	}
 

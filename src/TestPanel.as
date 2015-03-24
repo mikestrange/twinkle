@@ -2,13 +2,16 @@ package
 {
 	import com.greensock.TweenLite;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import flash.utils.getTimer;
 	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.core.scale.ScaleSprite;
 	import org.web.sdk.display.text.TextEditor;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.FrameWork;
+	import org.web.sdk.tool.Scale9Bitmap;
 	
 	public class TestPanel extends ActiveSprite
 	{
@@ -16,19 +19,13 @@ package
 		override protected function showEvent(e:Object = null):void 
 		{
 			super.showEvent(e);
-			
-			var scle:ScaleSprite = new ScaleSprite(FrameWork.getAsset("panelBg2") as BitmapData);
-			scle.setPoint(200, 100);
-			scle.setSize(700, 600);
-			scle.moveTo(10,10)
-			this.addDisplay(scle);
-			var item:TextEditor = new TextEditor;
-			item.addText("英雄面板",false,0xffff00,30);
-			item.addUnder(scle);
-			item.setAlign(AlignType.CENTER_TOP, 0, 10);
-			
-			scle.scaleX=scle.scaleY = .8
-			TweenLite.to(scle, .2, { scaleX:1, scaleY:1 } );
+			var t:int = getTimer();
+			var dis:RayDisplayer = ScaleSprite.createByPointY("panelBg2", 120, 800);
+			this.addDisplay(dis);
+			trace(getTimer() - t);
+			dis.scaleX = dis.scaleY = .8;
+			//弹出方式
+			TweenLite.to(dis, .2, {x:10,y:10 , scaleX:1, scaleY:1 } );
 		}
 		
 		//end
