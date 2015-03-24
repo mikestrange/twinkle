@@ -5,7 +5,7 @@ package org.web.sdk
 	import flash.display.*;
 	import flash.events.*;
 	import org.web.sdk.context.*;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.utils.DrawUtils;
 	import org.web.sdk.keyset.*;
@@ -169,11 +169,11 @@ package org.web.sdk
 		}
 		
 		//获取单一材质 ,可以截去DisplayObject
-		public static function getTexture(className:String, url:String = null):SingleTexture
+		public static function getTexture(className:String, url:String = null):KitBitmap
 		{
 			var item:* = appDomain.getAsset(className, url);
-			if(item is BitmapData) return new SingleTexture(item as BitmapData, className);
-			if (item is DisplayObject) return new SingleTexture(DrawUtils.draw(item as DisplayObject), className);
+			if(item is BitmapData) return new KitBitmap(item as BitmapData, className);
+			if (item is DisplayObject) return new KitBitmap(DrawUtils.draw(item as DisplayObject), className);
 			return null;
 		}
 		

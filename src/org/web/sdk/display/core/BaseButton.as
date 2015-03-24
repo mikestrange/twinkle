@@ -3,7 +3,7 @@ package org.web.sdk.display.core
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.utils.TouchState;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.inters.IDisplayObject;
@@ -16,16 +16,19 @@ package org.web.sdk.display.core
 		private var _title:IDisplayObject;
 		private var _bit:RayDisplayer;
 		
-		public function BaseButton(normal:String, press:String= null, over:String= null)
+		public function BaseButton(normal:String, press:String = null, over:String = null, die:String = null)
 		{
 			super(normal);
 			defineAction(TouchState.PRESS, press);
 			defineAction(TouchState.OVER, over);
+			defineAction(TouchState.FORBID, die);
 		}
 		
 		override protected function showEvent(e:Object = null):void 
 		{
 			super.showEvent(e);
+			this.buttonMode = true;
+			this.mouseChildren = false;	
 			this.addEventListener(MouseEvent.CLICK, onClick);
 			this.addEventListener(MouseEvent.MOUSE_DOWN,onMouseAction);
 			this.addEventListener(MouseEvent.MOUSE_UP,onMouseAction);
@@ -35,8 +38,6 @@ package org.web.sdk.display.core
 		
 		override protected function hideEvent(e:Object = null):void
 		{
-			_title = null;
-			_bit = null;
 			super.hideEvent(e);
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 			this.removeEventListener(MouseEvent.MOUSE_DOWN,onMouseAction);
@@ -54,21 +55,17 @@ package org.web.sdk.display.core
 		protected function onMouseAction(e:MouseEvent):void
 		{
 			_isMouseDown = (e.type == MouseEvent.MOUSE_DOWN);
-			if(_isMouseDown){
-				this.setCurrent(TouchState.PRESS);
-			}else{
-				this.setCurrent(TouchState.NARMAL);
-			}
+			if (!enabled) return;
+			if (_isMouseDown) this.setCurrent(TouchState.PRESS);
+			else this.setCurrent(TouchState.NARMAL);
 		}
 		
 		protected function onMouseEffect(e:MouseEvent):void
 		{
-			_isMouseOver = (e.type == MouseEvent.MOUSE_OVER)
-			if(_isMouseOver){
-				this.setCurrent(TouchState.OVER);
-			}else {
-				this.setCurrent(TouchState.NARMAL);
-			}
+			_isMouseOver = (e.type == MouseEvent.MOUSE_OVER);
+			if (!enabled) return;
+			if (_isMouseOver) this.setCurrent(TouchState.OVER);
+			else this.setCurrent(TouchState.NARMAL);
 		}
 		
 		public function get isDown():Boolean

@@ -5,6 +5,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.utils.TouchState;
 	
 	/**
+	 * 一个选择器，可以选择不同的动画？
 	 * 基础切换器,一种是可用和不可用的状态
 	 */
 	public class SwitcherSprite extends ActiveSprite implements ISwitcher 
@@ -62,6 +63,7 @@ package org.web.sdk.display.core
 		public function setEnabled(value:Boolean):void 
 		{
 			_enabled = value;
+			this.mouseEnabled = _enabled;
 			if (!value) {
 				setCurrent(TouchState.FORBID);
 			}else {

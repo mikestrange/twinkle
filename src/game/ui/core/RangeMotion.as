@@ -2,10 +2,10 @@ package game.ui.core
 {
 	import flash.display.BitmapData;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.display.asset.ActionTexture;
+	import org.web.sdk.display.asset.KitAction;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.GlobalCreate;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitFactory;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.ray.ActionMovie;
 	
 	public class RangeMotion extends ActionMovie 
@@ -50,20 +50,20 @@ package game.ui.core
 			if (_order == order && _point == point && !forced) return;
 			_order = order;
 			_point = point;
-			setAction(getFormt());			//设置动作
-			this.position = 1;			//恢复到第一帧
-			this.setTexture(this.texture);	//设置自己的渲染部分
+			setAction(getFormt());				//设置动作
+			this.position = 1;					//恢复到第一帧
+			this.setTexture(this.texture, this);	//设置自己的渲染部分
 		}
 		
 		override protected function factoryTexture(textureName:String, tag:int = 0):LibRender 
 		{
-			return new ActionTexture(textureName);
+			return new KitAction(textureName);
 		}
 		
 		//没有动作就建立动作
 		override public function createAction(action:String):Vector.<BitmapData> 
 		{
-			return GlobalCreate.fromVector(action + ".png", "%d", -1, url);
+			return KitFactory.fromVector(action + ".png", "%d", -1, url);
 		}
 		
 		override public function frameRender(float:int = 0):void 

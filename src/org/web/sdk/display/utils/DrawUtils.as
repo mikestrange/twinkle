@@ -2,7 +2,7 @@ package org.web.sdk.display.utils
 {
 	import flash.filters.GlowFilter;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.text.TextEditor;
 	import flash.display.*;
 	import flash.geom.*;
@@ -24,12 +24,12 @@ package org.web.sdk.display.utils
 		
 		//文本转换
 		private static const text:TextEditor = new TextEditor;
-		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):SingleTexture
+		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):KitBitmap
 		{
 			text.finality();
 			text.filters = [new GlowFilter(0, 1, 2, 2, 5, 2)];
 			text.addText(name, false, color, -1, font);
-			return new SingleTexture(draw(text));
+			return new KitBitmap(draw(text));
 		}
 		
 		//ends

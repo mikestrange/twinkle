@@ -2,15 +2,17 @@ package org.web.sdk.display.asset
 {
 	import flash.display.BitmapData;
 	import org.web.sdk.inters.IAcceptor;
-	
-	public class VectorTexture extends LibRender 
+	/*
+	 * 动画材质列表
+	 * */
+	public class KitMovie extends LibRender 
 	{
 		private var _vector:Vector.<BitmapData>;
 		
-		public function VectorTexture(vector:Vector.<BitmapData>, libName:String = null, milde:Boolean = false) 
+		public function KitMovie(vector:Vector.<BitmapData>, libName:String = null, $lock:Boolean = false) 
 		{
 			_vector = vector;
-			super(libName, milde);
+			super(libName, $lock);
 		}
 		
 		override public function dispose():void 
@@ -24,7 +26,7 @@ package org.web.sdk.display.asset
 			}
 		}
 		
-		override public function update(mesh:IAcceptor):* 
+		override public function update(data:Object):* 
 		{
 			return _vector;
 		}

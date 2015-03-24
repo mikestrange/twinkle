@@ -15,26 +15,40 @@ package org.web.sdk.display.asset
 	 * */
 	public class LibRender 
 	{
+		private static const NONE:int = 0;
+		//
 		private var _libName:String;
-		private var _milde:Boolean;
-		private var _quote:int = 0;	//引用数目
+		private var _quote:int = NONE;	//引用数目
+		private var _lock:Boolean;
 		//
 		public static const asset:Assets = Assets.gets();
 		//没有名称milde=true的时候会在清楚的时候被删除，默认是一个强引用
-		public function LibRender(libName:String = null, milde:Boolean = false)
+		public function LibRender(libName:String = null, $lock:Boolean = false)
 		{
 			this._libName = libName;
-			this._milde = milde;
+			if ($lock) lock();
+		}
+		
+		public function lock():void
+		{
+			_lock = true;
+		}
+		
+		//如果解除，没有引用，那么就报废
+		public function unlock():void
+		{
+			_lock = false;
+			if (_quote <= NONE) this.dispose();
+		}
+		
+		public function isLock():Boolean
+		{
+			return _lock;
 		}
 		
 		public function get name():String
 		{
 			return _libName;
-		}
-		
-		public function get milde():Boolean
-		{
-			return _milde;
 		}
 		
 		//被束缚的
@@ -55,10 +69,10 @@ package org.web.sdk.display.asset
 		}
 		
 		//通过它去渲染,没有保存那么直接渲染
-		beyond_challenge function render(mesh:IAcceptor):*
+		beyond_challenge function render(mesh:IAcceptor, data:Object = null):*
 		{
 			addHold();	
-			return update(mesh);
+			return update(data);
 		}
 		
 		//增加一个引用
@@ -74,7 +88,7 @@ package org.web.sdk.display.asset
 		{
 			//如果没有被注入，你调用这个必定被删除
 			_quote--;
-			if (_quote <= 0) this.dispose();
+			if (!_lock && _quote <= NONE) this.dispose();
 		}
 		
 		public function get length():int
@@ -88,14 +102,16 @@ package org.web.sdk.display.asset
 			if (isHamper()) {
 				shiftHold();
 			}else {
-				if (_milde) dispose();
+				if (!_lock) {
+					dispose();
+				}
 			}
 		}
 		
 		//子类复写就可以了  如果不把引用的对象传过来，那么就非常单一的回应
 		//虽然可以不传，但是为了更好的扩展，必须传
 		//这里只用于刷新
-		public function update(mesh:IAcceptor):*
+		public function update(data:Object):*
 		{
 			return null;
 		}
@@ -115,7 +131,6 @@ package org.web.sdk.display.asset
 		{
 			return asset.getTexture(txName);
 		}
-		
 		
 		//ends
 	}

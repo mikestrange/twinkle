@@ -1,8 +1,7 @@
 package org.web.sdk.display.ray 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.display.asset.ActionTexture;
-	import org.web.sdk.display.asset.VectorTexture;
+	import org.web.sdk.display.asset.KitAction;
 	
 	//一个抽象的动作集合
 	public class ActionMovie extends RayMovieClip 

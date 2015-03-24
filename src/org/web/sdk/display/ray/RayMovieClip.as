@@ -2,7 +2,7 @@ package org.web.sdk.display.ray
 {
 	import flash.display.BitmapData;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.VectorTexture;
+	import org.web.sdk.display.asset.KitMovie;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.engine.Steper;
 	
@@ -20,7 +20,7 @@ package org.web.sdk.display.ray
 		//添加一个粒子控制器
 		private var _step:Steper;	
 		
-		public function RayMovieClip(libs:VectorTexture = null)
+		public function RayMovieClip(libs:KitMovie = null)
 		{
 			_step = new Steper(this);
 			super(libs);

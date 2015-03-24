@@ -4,7 +4,7 @@ package org.web.sdk.display.core
 	import flash.system.ApplicationDomain;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.Multiple;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.FrameWork;
@@ -63,15 +63,15 @@ package org.web.sdk.display.core
 		}
 		
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
-		public function setTexture(texture:LibRender):void 
+		public function setTexture(texture:LibRender, data:Object = null):void 
 		{
 			if (_texture && _texture == texture) {
-				obtainMapped(_texture.update(this));
+				obtainMapped(_texture.update(data));
 			}else {
 				if (_texture) _texture.relieve();
 				_texture = texture;
 				if (null == texture) return;
-				obtainMapped(_texture.render(this));
+				obtainMapped(_texture.render(this, data));
 			}
 		}
 		
@@ -83,11 +83,11 @@ package org.web.sdk.display.core
 		}
 		
 		//根据名称渲染材质,自由构造
-		public function setLiberty(txName:String, tag:int = 0):void
+		public function setLiberty(txName:String, data:Object = null, tag:int = 0):void
 		{
 			if (null == txName || txName == "") throw Error("材质名称不允许为空");
 			if (LibRender.hasTexture(txName)) {
-				this.setTexture(LibRender.getTexture(txName));
+				this.setTexture(LibRender.getTexture(txName), data);
 			}else {
 				var tx:LibRender = factoryTexture(txName, tag);
 				if (tx) this.setTexture(tx);
@@ -256,7 +256,7 @@ package org.web.sdk.display.core
 			if (LibRender.hasTexture(t_n)) {
 				acceptor.setLiberty(t_n);
 			}else {
-				acceptor.setTexture(new SingleTexture(new BitmapData(wide, heig, false, color), t_n));
+				acceptor.setTexture(new KitBitmap(new BitmapData(wide, heig, false, color), t_n));
 			}
 			return acceptor;
 		}

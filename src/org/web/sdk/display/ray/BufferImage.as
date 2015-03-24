@@ -7,7 +7,7 @@ package org.web.sdk.display.ray
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
@@ -52,7 +52,7 @@ package org.web.sdk.display.ray
 				if (LibRender.hasTexture(e.url)) {
 					setTexture(LibRender.getTexture(_url));
 				}else {
-					setTexture(new SingleTexture(e.target as BitmapData, e.url));
+					setTexture(new KitBitmap(e.target as BitmapData, e.url));
 				}
 			}
 			if (e.eventType == LoadEvent.ERROR) _url = null;

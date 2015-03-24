@@ -4,15 +4,17 @@ package org.web.sdk.display.asset
 	import org.web.sdk.display.ray.ActionMovie;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.utils.HashMap;
-	
-	public class ActionTexture extends LibRender 
+	/*
+	 * 这里是根据名称采集影片
+	 * */
+	public class KitAction extends LibRender 
 	{
 		private var _actionHash:HashMap;
 		
-		public function ActionTexture(libName:String = null, milde:Boolean = false) 
+		public function KitAction(libName:String = null, $lock:Boolean = false) 
 		{
 			_actionHash = new HashMap;
-			super(libName, milde);
+			super(libName, $lock);
 		}
 		
 		override public function dispose():void 
@@ -32,10 +34,10 @@ package org.web.sdk.display.asset
 		}
 		
 		//如果没有这个动作,那么会去加载或者去建立动作
-		override public function update(mesh:IAcceptor):* 
+		override public function update(data:Object):* 
 		{
 			if (null == _actionHash) return null;
-			var movie:ActionMovie = mesh as ActionMovie;
+			var movie:ActionMovie = data as ActionMovie;
 			if (movie.action == null) return null;
 			var vector:Vector.<BitmapData>;
 			if (_actionHash.isKey(movie.action)) {

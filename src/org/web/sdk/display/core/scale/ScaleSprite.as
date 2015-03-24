@@ -4,7 +4,8 @@ package org.web.sdk.display.core.scale
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.LibRender;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.FrameWork;
 	/*
@@ -22,8 +23,7 @@ package org.web.sdk.display.core.scale
 		private var beginWide:int;	
 		private var beginHeig:int;
 		//布局位图
-		private var bitVector:Vector.<Bitmap>;
-		private var rectVector:Vector.<Rectangle>;
+		private var rectVector:Vector.<ScaleRect>;
 		//当前尺寸
 		private	var currWide:int = -1;
 		private var currHeig:int = -1;
@@ -32,227 +32,158 @@ package org.web.sdk.display.core.scale
 		//切割类型
 		private var cutType:int;
 		
-		//默认是九宫切割
-		public function ScaleSprite(bit:BitmapData, rect:Rectangle = null, type:int = 0)
+		public function setRes(bitdata:BitmapData):void
 		{
-			this.resCopy = bit;
+			this.resCopy = bitdata;
 			beginWide = resCopy.width;
 			beginHeig = resCopy.height;
-			if (rect) setScale9Grid(rect, type);
 		}
 		
 		//直接根据一个点去设置
-		public function setPoint(pox:int = 0, poy:int = 0, sizew:int = -1, sizeh:int = -1):void
+		public function setPoint(pox:int, poy:int, sizew:int = 0, sizeh:int = 0):void
 		{
-			this.setScale9Grid(new Rectangle(pox, poy, 1, 1), NONE);
-			if (sizew > 0 && sizeh > 0) setSize(sizew, sizeh);
+			rectScale = new Rectangle(pox, poy, 1, 1);
+			cutScale();
+			setSize(sizew, sizeh);
+			dispose();
 		}
 		
 		//根据x切割
-		public function setPointX(value:int, size:int = -1):void
+		public function setPointX(pox:int, size:int):void
 		{
-			this.setScale9Grid(new Rectangle(value, 0, 1, beginHeig), VERTICAL);
-			if (size > 0) setWidth(size);
+			rectScale = new Rectangle(pox, 0, 1, beginHeig);
+			cutHeig();
+			updateVertical(size);
+			dispose();
 		}
 		
-		public function setPointY(value:int, size:int = -1):void
+		public function setPointY(poy:int, size:int):void
 		{
-			this.setScale9Grid(new Rectangle(0, value, beginWide, 1), ACROSS);
-			if (size > 0) setHeight(size);
-		}
-		
-		//也可以自定义切割，一旦设置不允许更改切割方式
-		public function setScale9Grid(grid:Rectangle, type:int = 0):void
-		{
-			if (resCopy == null) return;
-			cutType = type;
-			rectScale = grid;
-			//
-			switch(type)
-			{
-				case ACROSS: 	cutWide(); break;
-				case VERTICAL: 	cutHeig(); break;
-				default: cutScale(); break;
-			}
-			copyMap();
-			//释放原图
-			resCopy.dispose();
-			resCopy = null;
-			//-----设置默认
-			setSize(beginWide, beginHeig);
-		}
-		
-		private function copyMap():void
-		{
-			bitVector = new Vector.<Bitmap>;
-			bitVector.push(null);
-			var bitdata:BitmapData;
-			var bit:Bitmap;
-			const point:Point = new Point;
-			for each(var rect:Rectangle in rectVector)
-			{
-				bitdata = new BitmapData(rect.width, rect.height, true, 0);
-				bitdata.copyPixels(resCopy, rect, point);
-				bit = new Bitmap(bitdata);
-				bit.x = rect.x;
-				bit.y = rect.y;
-				bitVector.push(bit);
-				//this.addChild(bit);
-			}
+			rectScale = new Rectangle(0, poy, beginWide, 1);
+			cutWide();
+			updateAcross(size);
+			dispose();
 		}
 		
 		private function cutScale():void
 		{
-			rectVector = new Vector.<Rectangle>;
-			rectVector.push(new Rectangle(0, 0, rectScale.x, rectScale.y));
-			rectVector.push(new Rectangle(rectScale.x, 0, rectScale.width, rectScale.y));
-			rectVector.push(new Rectangle(rectScale.x + rectScale.width, 0, beginWide-(rectScale.x + rectScale.width), rectScale.y));
+			rectVector = new Vector.<ScaleRect>;
+			rectVector.push(null);
+			rectVector.push(new ScaleRect(resCopy, 0, 0, rectScale.x, rectScale.y));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x, 0, rectScale.width, rectScale.y));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x + rectScale.width, 0, beginWide-(rectScale.x + rectScale.width), rectScale.y));
 			
-			rectVector.push(new Rectangle(0, rectScale.y, rectScale.x, rectScale.height));
-			rectVector.push(new Rectangle(rectScale.x, rectScale.y, rectScale.width, rectScale.height));
-			rectVector.push(new Rectangle(rectScale.x + rectScale.width, rectScale.y, beginWide-(rectScale.x + rectScale.width), rectScale.height));
+			rectVector.push(new ScaleRect(resCopy, 0, rectScale.y, rectScale.x, rectScale.height));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x, rectScale.y, rectScale.width, rectScale.height));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x + rectScale.width, rectScale.y, beginWide-(rectScale.x + rectScale.width), rectScale.height));
 			
-			rectVector.push(new Rectangle(0, rectScale.y + rectScale.height, rectScale.x, beginHeig - (rectScale.y + rectScale.height)));
-			rectVector.push(new Rectangle(rectScale.x, rectScale.y + rectScale.height, rectScale.width, beginHeig - (rectScale.y + rectScale.height)));
-			rectVector.push(new Rectangle(rectScale.x + rectScale.width, rectScale.y + rectScale.height, beginWide-(rectScale.x + rectScale.width), beginHeig - (rectScale.y + rectScale.height)));
+			rectVector.push(new ScaleRect(resCopy, 0, rectScale.y + rectScale.height, rectScale.x, beginHeig - (rectScale.y + rectScale.height)));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x, rectScale.y + rectScale.height, rectScale.width, beginHeig - (rectScale.y + rectScale.height)));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x + rectScale.width, rectScale.y + rectScale.height, beginWide-(rectScale.x + rectScale.width), beginHeig - (rectScale.y + rectScale.height)));
 		}
 		
 		private function cutWide():void
 		{
-			rectVector = new Vector.<Rectangle>;
-			rectVector.push(new Rectangle(0, 0, beginWide, rectScale.y));
-			rectVector.push(new Rectangle(0, rectScale.y, beginWide, rectScale.height));
-			rectVector.push(new Rectangle(0, rectScale.y + rectScale.height, beginWide,beginHeig-(rectScale.y + rectScale.height)));
+			rectVector = new Vector.<ScaleRect>;
+			rectVector.push(null);
+			rectVector.push(new ScaleRect(resCopy, 0, 0, beginWide, rectScale.y));
+			rectVector.push(new ScaleRect(resCopy, 0, rectScale.y, beginWide, rectScale.height));
+			rectVector.push(new ScaleRect(resCopy, 0, rectScale.y + rectScale.height, beginWide,beginHeig-(rectScale.y + rectScale.height)));
 		}
 		
 		private function cutHeig():void
 		{
-			rectVector = new Vector.<Rectangle>;
-			rectVector.push(new Rectangle(0, 0, rectScale.x, beginHeig));
-			rectVector.push(new Rectangle(rectScale.x, 0, rectScale.width, beginHeig));
-			rectVector.push(new Rectangle(rectScale.x + rectScale.width, 0, beginWide-(rectScale.x + rectScale.width), beginHeig));
+			rectVector = new Vector.<ScaleRect>;
+			rectVector.push(null);
+			rectVector.push(new ScaleRect(resCopy, 0, 0, rectScale.x, beginHeig));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x, 0, rectScale.width, beginHeig));
+			rectVector.push(new ScaleRect(resCopy, rectScale.x + rectScale.width, 0, beginWide-(rectScale.x + rectScale.width), beginHeig));
 		}
 		
-		private function updateAcross():void
+		private function updateAcross(size_h:int):void
 		{
-			const offy:int = 0;
+			this.currHeig = beginHeig > size_h ? beginHeig : size_h;
 			this.currWide = beginWide;
 			var ch:int = currHeig - (beginHeig - rectScale.height);
-			bitVector[2].height = ch;
-			bitVector[3].y = (rectScale.y + ch) - offy;
+			rectVector[2].height = ch;
+			rectVector[3].y = rectScale.y + ch;
 		}
 		
-		private function updateVertical():void
+		private function updateVertical(size_w:int):void
 		{
-			const offx:int = 0;
+			this.currWide = beginWide > size_w ? beginWide : size_w;
 			this.currHeig = beginHeig;
 			var cw:int = currWide - (beginWide - rectScale.width);
-			bitVector[2].width = cw;
-			bitVector[3].x = (rectScale.x + cw) - offx;
-		}
-		
-		private function updateScaleHeight():void
-		{
-			const offy:int = 0;
-			var ch:int = currHeig - (beginHeig - rectScale.height);
-			bitVector[4].height = bitVector[5].height = bitVector[6].height = ch;
-			bitVector[7].y = bitVector[8].y = bitVector[9].y = (rectScale.y + ch) - offy;
-		}
-		
-		private function updateScaleWidth():void
-		{
-			const offx:int = 0;
-			var cw:int = currWide - (beginWide - rectScale.width);
-			bitVector[2].width = bitVector[5].width = bitVector[8].width = cw;
-			bitVector[3].x = bitVector[6].x = bitVector[9].x = (rectScale.x + cw) - offx;
+			rectVector[2].width = cw;
+			rectVector[3].x = rectScale.x + cw;
 		}
 		
 		//直接设置尺寸 每次只需要调整周边的位置
-		public function setSize(size_w:int, size_h:int):void
+		private function setSize(size_w:int, size_h:int):void
 		{
-			setWidth(size_w);
-			setHeight(size_h);
+			this.currWide = beginWide > size_w ? beginWide : size_w;
+			this.currHeig = beginHeig > size_h ? beginHeig : size_h;
+			updateScale();
 		}
 		
-		//设置宽度
-		public function setWidth(value:int):void
+		private function updateScale():void
 		{
-			if (this.currWide == value) return;
-			this.currWide = beginWide > value ? beginWide : value;
-			switch(cutType)
-			{
-				case VERTICAL:
-					updateVertical();
-				break;
-				case NONE:
-					updateScaleWidth();
-				break;
-			}
+			var cw:int = currWide - (beginWide - rectScale.width);
+			rectVector[2].width = rectVector[5].width = rectVector[8].width = cw;
+			rectVector[3].x = rectVector[6].x = rectVector[9].x = rectScale.x + cw;
+			//
+			var ch:int = currHeig - (beginHeig - rectScale.height);
+			rectVector[4].height = rectVector[5].height = rectVector[6].height = ch;
+			rectVector[7].y = rectVector[8].y = rectVector[9].y = rectScale.y + ch;
 		}
 		
 		//取结果,释放当前
-		public function getResult():RayDisplayer
+		public function getResult(name:String = null):RayDisplayer
 		{
 			var bitdata:BitmapData = new BitmapData(currWide, currHeig, true, 0);
 			bitdata.lock();
-			for each(var bit:Bitmap in bitVector){
-				if(bit){
-					bitdata.copyPixels(bit.bitmapData, new Rectangle(0, 0, bit.width, bit.height), new Point(bit.x, bit.y));
-				}	
+			for each(var scale:ScaleRect in rectVector) {
+				if (scale) scale.draw(bitdata);
 			}
 			bitdata.unlock();
-			this.dispose();
-			return new RayDisplayer(new SingleTexture(bitdata));
-		}
-
-		//释放所有拷贝的位图
-		public function dispose():void
-		{
-			for each(var bit:Bitmap in bitVector){
-				if(bit) bit.bitmapData.dispose();
-			}
-			bitVector = null;
-			rectVector = null;
+			return new RayDisplayer(new KitBitmap(bitdata, name));
 		}
 		
-		//设置高度
-		public function setHeight(value:int):void
+		private function dispose():void
 		{
-			if (this.currHeig == value) return;
-			this.currHeig = beginHeig > value ? beginHeig : value;
-			switch(cutType)
-			{
-				case ACROSS:
-					updateAcross();
-				break;
-				case NONE:
-					updateScaleHeight();
-				break;
-			}
+			resCopy.dispose();
+			resCopy = null;
 		}
 		
-
-		//返回九宫格
-		public static function createByPointX(name:String, pox:int, width:int):RayDisplayer
+		private static var scale:ScaleSprite = new ScaleSprite;
+		//创建单体材质的九宫格的几种方式 
+		public static function byPointX(name:String, pox:int, pow:int):RayDisplayer
 		{
-			var scale:ScaleSprite = new ScaleSprite(FrameWork.getAsset(name) as BitmapData)
-			scale.setPointX(pox, width);
-			return scale.getResult();	
+			const libName:String = name + ":" + "pox_" + pox + "_pow_" + pow;
+			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
+			scale.setRes(FrameWork.getAsset(name) as BitmapData);
+			scale.setPointX(pox, pow);
+			return scale.getResult(libName);	
 		}
-
-		public static function createByPointY(name:String, poy:int, height:int):RayDisplayer
+		
+		public static function byPointY(name:String, poy:int, poh:int):RayDisplayer
 		{
-			var scale:ScaleSprite = new ScaleSprite(FrameWork.getAsset(name) as BitmapData)
-			scale.setPointY(poy, height);
-			return scale.getResult();
+			const libName:String = name + ":" + "poy_" + poy + "_poh_" + poh;
+			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
+			scale.setRes(FrameWork.getAsset(name) as BitmapData);
+			scale.setPointY(poy, poh);
+			return scale.getResult(libName);
 		}
-
-		public static function createByPoint(name:String, rect:Rectangle):RayDisplayer
+		
+		public static function byPoint(name:String, pox:int, poy:int, pow:int, poh:int):RayDisplayer
 		{
-			var scale:ScaleSprite = new ScaleSprite(FrameWork.getAsset(name) as BitmapData)
-			scale.setPoint(rect.x, rect.y, rect.width, rect.height);
-			return scale.getResult();
+			const libName:String = name + ":pox_" + pox + "_poy_" + poy + "_pow_" + pow + "_poh_" + poh;
+			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
+			scale.setRes(FrameWork.getAsset(name) as BitmapData);
+			scale.setPoint(pox, poy, pow, poh);
+			return scale.getResult(libName);
 		}
 		//end
 	}
 }
+

@@ -2,7 +2,7 @@ package
 {
 	import com.greensock.*;
 	import org.web.sdk.context.ResourceContext;
-	import org.web.sdk.display.asset.SingleTexture;
+	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.display.core.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;

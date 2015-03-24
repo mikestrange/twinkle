@@ -7,14 +7,14 @@ package org.web.sdk.display.asset
 	import org.web.sdk.display.utils.DrawUtils;
 	import flash.utils.getDefinitionByName;
 	
-	public class GlobalCreate 
+	public class KitFactory 
 	{
 		//***这里获取的都是本地资源
 		public static function createByClass(className:String, url:String = null):LibRender
 		{
 			var item:* =  FrameWork.getAsset(className, url);
-			if (item is BitmapData) return new SingleTexture(item, className);
-			if (item is DisplayObject) return new SingleTexture(DrawUtils.draw(item), className);
+			if (item is BitmapData) return new KitBitmap(item, className);
+			if (item is DisplayObject) return new KitBitmap(DrawUtils.draw(item), className);
 			throw Error("不知道是什么类型:"+className);
 		}
 		
@@ -33,12 +33,12 @@ package org.web.sdk.display.asset
 		}
 		
 		//构造动画
-		public static function createMovie(className:String, url:String = null):VectorTexture
+		public static function createMovie(className:String, url:String = null):KitMovie
 		{
 			var item:* =  FrameWork.getAsset(className, url);
 			if (item is MovieClip) {
 				if (MovieClip(item).totalFrames == 1) throw Error("这个动画图像只有一帧，没必要用影片剪辑的形式：" + className);
-				return new VectorTexture(cloneMovie(item), className);
+				return new KitMovie(cloneMovie(item), className);
 			}
 			throw Error("改对象不是影片剪辑类：" + className);
 			return null;

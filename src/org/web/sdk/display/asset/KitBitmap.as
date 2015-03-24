@@ -13,15 +13,15 @@ package org.web.sdk.display.asset
 	/**
 	 * 单一材质  IAcceptor 这个接口才能调度
 	 */
-	public class SingleTexture extends LibRender
+	public class KitBitmap extends LibRender
 	{
 		private var _bitmapdata:BitmapData;
 		
 		//无名称且milde=true会自动释放
-		public function SingleTexture(bit:BitmapData, name:String = null, milde:Boolean = false) 
+		public function KitBitmap(bit:BitmapData, name:String = null, $lock:Boolean = false) 
 		{
 			this._bitmapdata = bit;
-			super(name, milde);
+			super(name, $lock);
 		}
 		
 		override public function dispose():void
@@ -32,7 +32,7 @@ package org.web.sdk.display.asset
 		}
 		
 		//通过它去渲染,没有保存那么直接渲染
-		override public function update(mesh:IAcceptor):* 
+		override public function update(data:Object):* 
 		{
 			return _bitmapdata;
 		}
