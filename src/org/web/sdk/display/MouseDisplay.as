@@ -10,8 +10,8 @@ package org.web.sdk.display
 	
 	public class MouseDisplay 
 	{
-		private static var down:IDisplay;
-		private static var up:IDisplay;
+		private static var downSprite:IDisplay;
+		private static var upSprite:IDisplay;
 		private static var isDown:Boolean;
 		private static var isshow:Boolean = false;
 		
@@ -19,12 +19,6 @@ package org.web.sdk.display
 		{
 			if (isshow) return;
 			isshow = !isshow;
-			up = new RayDisplayer(KitFactory.by_class("MouseNormal"));
-			FrameWork.stage.addChild(up as DisplayObject);
-			down = new RayDisplayer(KitFactory.by_class("MouseClick"));
-			down.visible = false;
-			FrameWork.stage.addChild(down as DisplayObject);
-			//up.visible = false;
 			Mouse.hide();
 			FrameWork.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
 			FrameWork.addStageListener(MouseEvent.MOUSE_DOWN, onState);
@@ -38,6 +32,8 @@ package org.web.sdk.display
 			if (!isshow) return;
 			isshow = !isshow;
 			Mouse.show();
+			if (upSprite) upSprite.removeFromFather();
+			if (downSprite) downSprite.removeFromFather();
 			FrameWork.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
 			FrameWork.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
 			FrameWork.removeStageListener(MouseEvent.MOUSE_UP, onState);
@@ -46,23 +42,43 @@ package org.web.sdk.display
 		private static function onMove(e:MouseEvent = null):void
 		{
 			if (isDown) {
-				down.moveTo(FrameWork.stage.mouseX, FrameWork.stage.mouseY);
+				if (downSprite) {
+					downSprite.moveTo(FrameWork.stage.mouseX, FrameWork.stage.mouseY);
+				}
 			}else {
-				up.moveTo(FrameWork.stage.mouseX, FrameWork.stage.mouseY);
+				if (upSprite) {
+					upSprite.moveTo(FrameWork.stage.mouseX, FrameWork.stage.mouseY);
+				}
 			}
 		}
 		
 		private static function onState(e:MouseEvent):void
 		{
-			isDown = e.type == MouseEvent.MOUSE_DOWN;
+			isDown = (e.type == MouseEvent.MOUSE_DOWN);
 			if (e.type == MouseEvent.MOUSE_DOWN) {
-				up.visible = false;
-				down.visible = true;
+				if (upSprite) upSprite.removeFromFather();
+				if (downSprite && !downSprite.isAdded()) {
+					FrameWork.stage.addChild(downSprite as DisplayObject);
+				}
 			}else {
-				up.visible = true;
-				down.visible = false;
+				if (downSprite) downSprite.removeFromFather();
+				if (upSprite && !upSprite.isAdded()) {
+					FrameWork.stage.addChild(upSprite as DisplayObject);
+				}
 			}
 			onMove();
+		}
+		
+		public static function setDown(display:IDisplay):void
+		{
+			if (downSprite) downSprite.removeFromFather(true);
+			downSprite = display;
+		}
+		
+		public static function setRelease(display:IDisplay):void
+		{
+			if (upSprite) upSprite.removeFromFather(true);
+			upSprite = display;
 		}
 		
 		public static function isMouseDown():Boolean

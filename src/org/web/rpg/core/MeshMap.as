@@ -13,7 +13,6 @@ package org.web.rpg.core
 	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.astar.Node;
 	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	/*
 	 * 这里作为背景和寻路算法基础

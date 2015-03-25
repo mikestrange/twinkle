@@ -4,11 +4,11 @@ package org.web.rpg.core
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.display.Multiple;
+	import org.web.sdk.display.core.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
-
+	
 	public class MapLump extends Bitmap
 	{
 		//连接地址

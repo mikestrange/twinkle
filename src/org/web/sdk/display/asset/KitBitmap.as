@@ -5,7 +5,6 @@ package org.web.sdk.display.asset
 	import flash.display.MovieClip;
 	import flash.system.ApplicationDomain;
 	import flash.utils.getDefinitionByName;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.inters.IAcceptor;

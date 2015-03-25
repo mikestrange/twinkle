@@ -6,7 +6,6 @@ package org.web.rpg.core
 	import flash.utils.Dictionary;
 	import org.web.rpg.core.MapData;
 	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;

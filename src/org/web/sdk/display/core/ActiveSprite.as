@@ -3,7 +3,6 @@ package org.web.sdk.display.core
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.display.DisplayObject;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.FrameWork;

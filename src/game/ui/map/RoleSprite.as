@@ -22,7 +22,6 @@ package game.ui.map
 	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.engine.IStepper;
 	import org.web.sdk.display.engine.AtomicEngine;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.utils.Maths;

@@ -1,5 +1,6 @@
 package game.logic 
 {
+	import org.web.sdk.display.core.Multiple;
 	import flash.ui.Keyboard;
 	import game.consts.CmdDefined;
 	import game.consts.ModuleType;
@@ -10,7 +11,6 @@ package game.logic
 	import game.socket.map.*;
 	import game.socket.map.recv.*;
 	import game.ui.map.WorldMap;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.core.Controller;

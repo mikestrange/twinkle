@@ -7,7 +7,6 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.display.asset.KitMovie;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;

@@ -5,7 +5,6 @@ package org.web.sdk.display.core.base
 	import flash.events.Event;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.Multiple;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.inters.IAcceptor;
