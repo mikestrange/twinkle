@@ -16,6 +16,7 @@ package
 	
 	public class TestPanel extends ActiveSprite
 	{
+		private var curret:BaseButton;
 		
 		override protected function showEvent():void 
 		{
@@ -26,17 +27,27 @@ package
 			var text:TextEditor = TextEditor.quick("HeroTie", this, 30, 0xffff00);
 			text.setAlign(AlignType.CENTER_TOP, 0, 20);
 			//
-			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over","btn_b_die");
-			this.addDisplay(btn);
-			btn.setAlign(AlignType.CENTER);
-			//
-			text = TextEditor.quick("Lable", null, 16, 0xffff00)
-			btn.setTitle(text);
-			var ontouch:Function = function(e:Object):void
-			{
-				
+			var btn:BaseButton
+			for (var i:int = 0; i < 8; i++) {
+				btn = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
+				btn.setProvoke(onTouch)
+				this.addDisplay(btn);
+				btn.setAlign(AlignType.LEFT_CENTER, 10 + i * btn.width);
+				text = TextEditor.quick("Lable", null, 16, 0xffff00)
+				btn.setTitle(text);
 			}
-			btn.setProvoke(ontouch);
+			//
+		}
+		
+		
+		private function onTouch(but:Object):void
+		{
+			if (curret) curret.setEnabled(true);
+			curret = but as BaseButton;
+			curret.setEnabled(false);
+			this.setScale(.2, .2);
+			this.moveTo(50,stage.stageHeight)
+			TweenLite.to(this,2,{x:100,y:200,scaleX:1,scaleY:1})
 		}
 		
 		//end

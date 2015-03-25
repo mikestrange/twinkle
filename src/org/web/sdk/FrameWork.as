@@ -17,6 +17,8 @@ package org.web.sdk
 
 	public class FrameWork 
 	{
+		//可以利用他来屏蔽鼠标右键
+		public static const RIGHT_MOUSE_DOWN:String = "rightMouseDown";
 		//
 		private static var $stage:Stage;
 		private static var $system:SystemScope;
