@@ -1,4 +1,4 @@
-package org.web.sdk.display.core.scale 
+package org.web.sdk.display.bar.utils 
 {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;

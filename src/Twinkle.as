@@ -4,9 +4,9 @@ package
 	import org.web.sdk.context.ResourceContext;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.display.core.BaseButton;
+	import org.web.sdk.display.bar.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.ray.RayMovieClip;
+	import org.web.sdk.display.core.base.RayMovieClip;
 	import org.web.sdk.display.utils.AlignType;
 	//as3
 	import flash.display.*;

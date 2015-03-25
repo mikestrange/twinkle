@@ -6,10 +6,10 @@ package
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.display.core.BaseButton;
+	import org.web.sdk.display.bar.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.core.scale.ScaleSprite;
-	import org.web.sdk.display.text.TextEditor;
+	import org.web.sdk.display.bar.utils.ScaleSprite;
+	import org.web.sdk.display.core.text.TextEditor;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.tool.Scale9Bitmap;

@@ -1,4 +1,4 @@
-package org.web.sdk.display.text 
+package org.web.sdk.display.core.text 
 {
 	import flash.events.Event;
 	import flash.geom.Point;

@@ -3,6 +3,9 @@ package org.web.sdk.display.asset
 	import flash.display.BitmapData;
 	import org.web.sdk.utils.HashMap;
 	//按钮方式,或者开关方式
+	/*
+	 * 为了不必要的new
+	 * */
 	public class KitButton extends LibRender 
 	{
 		private var map:HashMap;

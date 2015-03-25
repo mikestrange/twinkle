@@ -7,7 +7,7 @@ package game.ui.core
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.ray.ActionMovie;
+	import org.web.sdk.display.core.base.ActionMovie;
 	
 	public class RangeMotion extends ActionMovie 
 	{

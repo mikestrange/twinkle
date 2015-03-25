@@ -1,4 +1,4 @@
-package org.web.sdk.display.ray 
+package org.web.sdk.display.core.base 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

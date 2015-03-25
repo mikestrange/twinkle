@@ -3,7 +3,7 @@ package org.web.sdk.display.utils
 	import flash.filters.GlowFilter;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.asset.KitBitmap;
-	import org.web.sdk.display.text.TextEditor;
+	import org.web.sdk.display.core.text.TextEditor;
 	import flash.display.*;
 	import flash.geom.*;
 	/*
