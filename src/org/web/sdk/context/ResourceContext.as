@@ -25,7 +25,8 @@ package org.web.sdk.context
 		
 		public function getClass(name:String):Class
 		{
-			if (applicationDomain.hasDefinition(name)) {
+			trace(applicationDomain,name)
+				if (applicationDomain.hasDefinition(name)) {
 				return applicationDomain.getDefinition(name) as Class;
 			}
 			return null;

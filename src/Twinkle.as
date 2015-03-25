@@ -81,7 +81,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names);
+					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
 				}
 			}
 			trace("res:", length);
@@ -90,11 +90,12 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
+			//FrameWork.appDomain.share(e.url, new ResourceContext(e.target));
 			trace("--------res load over,start game---------")
 			//登陆模块
-			LandSprite.gets().show();
-			
-			//addDisplay(new TestPanel);
+			//LandSprite.gets().show();
+			//test
+			addDisplay(new TestPanel);
 		}
 		//ends
 	}

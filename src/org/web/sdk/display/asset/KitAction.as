@@ -45,6 +45,7 @@ package org.web.sdk.display.asset
 			}else {
 				//不存在的话，告诉呈现者，你需要去创造
 				vector = movie.createAction(movie.action);
+				trace("是否有动作：",vector)
 				//保存动作
 				addAction(movie.action, vector);	
 			}

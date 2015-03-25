@@ -22,7 +22,6 @@ package org.web.sdk.display.core
 			defineAction(TouchState.PRESS, press);
 			defineAction(TouchState.OVER, over);
 			defineAction(TouchState.FORBID, die);
-			trace("new")
 		}
 		
 		override protected function showEvent():void 

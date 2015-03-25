@@ -23,7 +23,6 @@ package
 			var dis:RayDisplayer = ScaleSprite.byPoint("panelBg1", 320,140, 400,400);
 			this.addDisplay(dis);
 			//
-			trace("xxx")
 			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over","btn_b_die");
 			btn.setAlign("center");
 			btn.moveTo(100, 100);

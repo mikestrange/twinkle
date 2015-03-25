@@ -20,7 +20,7 @@ package game.ui.core
 		public function RangeMotion(type:int, $order:String, $point:int = 4)
 		{
 			_type = type;
-			setLiberty("user:type_id_" + _type, RayDisplayer.ACTION_TAG);
+			setLiberty("user:type_id_" + _type, this, RayDisplayer.ACTION_TAG);
 			doAction($order, $point);
 			this.play();
 		}
@@ -53,7 +53,7 @@ package game.ui.core
 			_point = point;
 			setAction(getFormt());				//设置动作
 			this.position = 1;					//恢复到第一帧
-			this.setTexture(this.texture, this);	//设置自己的渲染部分
+			this.flush(this);	//设置自己的渲染部分
 		}
 		
 		//没有动作就建立动作
