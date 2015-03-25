@@ -8,7 +8,6 @@ package game.socket.core
 	import org.web.sdk.net.interfaces.INetwork;
 	import org.web.sdk.system.com.ICommand;
 	import org.web.sdk.system.events.Evented;
-	import org.web.sdk.system.GlobalMessage;
 	import org.web.sdk.system.inter.IMessage;
 	/**
 	 * 服务器的命令

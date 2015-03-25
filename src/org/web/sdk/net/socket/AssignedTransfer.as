@@ -12,8 +12,6 @@ package org.web.sdk.net.socket
 	import org.web.sdk.net.interfaces.INetwork;
 	import org.web.sdk.net.interfaces.INetHandler;
 	import org.web.sdk.net.utils.FtpRead;
-	import org.web.sdk.system.events.Evented;
-	import org.web.sdk.system.GlobalMessage;
 	
 	use namespace beyond_challenge
 	
