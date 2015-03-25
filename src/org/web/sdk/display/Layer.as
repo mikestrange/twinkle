@@ -4,7 +4,7 @@ package org.web.sdk.display
 	import flash.display.Sprite;
 	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.display.ILayer;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 	
 	public class Layer extends ActiveSprite implements ILayer 
 	{
@@ -17,7 +17,7 @@ package org.web.sdk.display
 		/* INTERFACE org.web.sdk.display.inters.ILayer */
 		public function addToLayer(dis:DisplayObject):DisplayObject
 		{
-			this.addDisplay(dis as IDisplayObject);
+			this.addDisplay(dis as IDisplay);
 			return dis;
 		}
 		

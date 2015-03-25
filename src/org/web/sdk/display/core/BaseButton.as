@@ -6,14 +6,14 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.asset.KitButton;
 	import org.web.sdk.display.utils.TouchState;
 	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 	
 	public class BaseButton extends SwitcherSprite 
 	{
 		private var _isMouseDown:Boolean = false;
 		private var _isMouseOver:Boolean = false;
 		//按钮层
-		private var _title:IDisplayObject;
+		private var _title:IDisplay;
 		private var _switcher:RayDisplayer;
 		
 		public function BaseButton(normal:String, press:String = null, over:String = null, die:String = null)
@@ -37,6 +37,16 @@ package org.web.sdk.display.core
 			_switcher.addUnder(this, 0);
 			_switcher.setLiberty(getSwitcher(TouchState.NARMAL), getSwitcher(TouchState.NARMAL), RayDisplayer.BUTTON_TAG);
 		}
+		
+		/*
+		public function clone():BaseButton
+		{
+			var button:BaseButton = new BaseButton()
+			button.defineAction(TouchState.NARMAL, normal);
+			button.defineAction(TouchState.PRESS, press);
+			button.defineAction(TouchState.OVER, over);
+			button.defineAction(TouchState.FORBID, die);
+		}*/
 		
 		override protected function hideEvent():void
 		{
@@ -89,7 +99,7 @@ package org.web.sdk.display.core
 		}
 		
 		//三种情况，快速的对齐方式
-		public function setTitle(title:IDisplayObject, alige:String = "center"):void
+		public function setTitle(title:IDisplay, alige:String = "center"):void
 		{
 			if (_title) {
 				_title.removeFromFather();

@@ -1,15 +1,15 @@
 package org.web.sdk.display.engine 
 {
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 	/**
 	 *渲染器
 	 */
 	public class Steper implements IStepper 
 	{
 		private var isrun:Boolean;
-		private var _target:IDisplayObject;
+		private var _target:IDisplay;
 		
-		public function Steper(target:IDisplayObject) 
+		public function Steper(target:IDisplay) 
 		{
 			_target = target;
 		}

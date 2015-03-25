@@ -1,7 +1,7 @@
 package org.web.sdk 
 {
 	import flash.geom.Point;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 	import org.web.sdk.utils.Maths;
 	/*
 	 * sdk空间

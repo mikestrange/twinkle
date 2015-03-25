@@ -4,7 +4,7 @@ package org.web.sdk.inters
 	/*
 	 * 一个接受资源的接口
 	 * */
-	public interface IAcceptor extends IDisplayObject 
+	public interface IAcceptor extends IDisplay 
 	{
 		function flush(data:Object):void;	//跟新
 		//通过名称直接渲染，如果名称找不到，那么就从工厂里面创立

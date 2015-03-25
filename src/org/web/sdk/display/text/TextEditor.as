@@ -7,9 +7,9 @@ package org.web.sdk.display.text
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.FrameWork;
 	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 
-	public class TextEditor extends TextField implements IDisplayObject 
+	public class TextEditor extends TextField implements IDisplay 
 	{
 		private static const DEF_FORMAT:TextFormat = new TextFormat;
 		//换行

@@ -12,7 +12,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 	import flash.geom.Transform;
 	import flash.display.Stage;
 	import flash.geom.Rectangle;

@@ -9,7 +9,7 @@ package org.web.sdk.inters
 	import flash.geom.Rectangle;
 	import flash.geom.Transform;
 	
-	public interface IDisplayObject extends IEventDispatcher 
+	public interface IDisplay extends IEventDispatcher 
 	{
 		function get alpha():Number;
 		function set alpha(value:Number):void;

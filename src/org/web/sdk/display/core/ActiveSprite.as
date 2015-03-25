@@ -7,7 +7,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.FrameWork;
-	import org.web.sdk.inters.IDisplayObject;
+	import org.web.sdk.inters.IDisplay;
 	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
 	/*
@@ -80,13 +80,13 @@ package org.web.sdk.display.core
 			return this.numChildren == 0;
 		}
 		
-		public function getChildrenByOper(value:int = 0):Vector.<IDisplayObject>
+		public function getChildrenByOper(value:int = 0):Vector.<IDisplay>
 		{
 			if (isEmpty()) return null;
-			const list:Vector.<IDisplayObject> = new Vector.<IDisplayObject>;
-			var sun:IDisplayObject;
+			const list:Vector.<IDisplay> = new Vector.<IDisplay>;
+			var sun:IDisplay;
 			for (var i:int = 0; i < numChildren; i++) {
-				sun = this.getChildAt(i) as IDisplayObject;
+				sun = this.getChildAt(i) as IDisplay;
 				if (sun.getOper() == value) list.push(sun);
 			}
 			return list;
@@ -104,11 +104,11 @@ package org.web.sdk.display.core
 			if (childs != mouseChildren) mouseChildren = childs;
 		}
 		
-		public function removeByName(childName:String):IDisplayObject
+		public function removeByName(childName:String):IDisplay
 		{
 			var child:DisplayObject = this.getChildByName(childName);
 			if (child) this.removeChild(child);
-			return child as IDisplayObject;
+			return child as IDisplay;
 		}
 		
 		public function clearChildren():void 
@@ -116,7 +116,7 @@ package org.web.sdk.display.core
 			while (this.numChildren) removeChildAt(0);
 		}
 		
-		public function addDisplay(child:IDisplayObject, floor:int = -1):Boolean
+		public function addDisplay(child:IDisplay, floor:int = -1):Boolean
 		{
 			if (child && child.getFather() != this) {
 				if (floor < 0 || numChildren < 1) {
