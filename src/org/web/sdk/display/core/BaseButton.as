@@ -40,13 +40,13 @@ package org.web.sdk.display.core
 		
 		override protected function hideEvent():void
 		{
+			super.hideEvent();
 			_switcher.dispose();
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 			this.removeEventListener(MouseEvent.MOUSE_DOWN,onMouseAction);
 			this.removeEventListener(MouseEvent.MOUSE_UP,onMouseAction);
 			this.removeEventListener(MouseEvent.MOUSE_OVER,onMouseEffect);
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseEffect);
-			finality();
 		}
 		
 		protected function onClick(e:MouseEvent):void

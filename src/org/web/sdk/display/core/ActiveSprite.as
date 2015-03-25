@@ -30,6 +30,18 @@ package org.web.sdk.display.core
 			initialization();
 		}
 		
+		override public function addChild(child:DisplayObject):DisplayObject 
+		{
+			throw Error("Out of date interface " + this);
+			return null;
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject 
+		{
+			throw Error("Out of date interface " + this);
+			return null;
+		}
+		
 		protected function initialization():void
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, showListener, false, 0, true);
@@ -108,10 +120,10 @@ package org.web.sdk.display.core
 		{
 			if (child && child.getFather() != this) {
 				if (floor < 0 || numChildren < 1) {
-					this.addChild(child as DisplayObject);
+					super.addChild(child as DisplayObject);
 				}else {
 					if (floor > numChildren - 1) floor = numChildren - 1;
-					this.addChildAt(child as DisplayObject, floor);
+					super.addChildAt(child as DisplayObject, floor);
 				}
 				child.reportFromFather(this);
 				return true;
@@ -191,9 +203,10 @@ package org.web.sdk.display.core
 			return this.parent != null;
 		}
 		
-		public function removeFromFather():void
+		public function removeFromFather(value:Boolean = false):void
 		{
 			if (parent) parent.removeChild(this);
+			if (value) finality();
 		}
 		
 		public function setLimit(wide:Number = 0, heig:Number = 0):void 

@@ -55,7 +55,7 @@ package
 			//最大下载
 			PerfectLoader.gets().LOAD_MAX = 5;			
 			//内存查看
-			FpsMonitor.gets().show();					
+			//FpsMonitor.gets().show();					
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//加载配置

@@ -204,9 +204,10 @@ package org.web.sdk.display.core
 			return this.parent != null;
 		}
 		
-		public function removeFromFather():void
+		public function removeFromFather(value:Boolean = false):void
 		{
 			if (parent) parent.removeChild(this);
+			if (value) this.finality();
 		}
 		
 		public function setLimit(wide:Number = 0, heig:Number = 0):void 

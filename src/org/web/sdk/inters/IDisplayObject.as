@@ -86,7 +86,7 @@ package org.web.sdk.inters
 		function get limitHeight():Number;
 		//父类操作
 		function getFather():IBaseSprite;
-		function removeFromFather():void;
+		function removeFromFather(value:Boolean = false):void;
 		//控制
 		function setDisplayIndex(floor:int = -1):void;
 		function moveTo(mx:Number = 0, my:Number = 0):void;

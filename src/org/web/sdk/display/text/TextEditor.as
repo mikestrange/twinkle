@@ -187,9 +187,10 @@ package org.web.sdk.display.text
 			return this.parent != null;
 		}
 		
-		public function removeFromFather():void
+		public function removeFromFather(value:Boolean = false):void
 		{
 			if (parent) parent.removeChild(this);
+			if (value) this.finality();
 		}
 		
 		public function setLimit(wide:Number = 0, heig:Number = 0):void 
@@ -272,7 +273,7 @@ package org.web.sdk.display.text
 		}
 		
 		//快速建立
-		public static function quick(chat:String, parent:IBaseSprite = null, size:int = -1, color:Object = null, font:String = null):TextEditor
+		public static function quick(chat:String, parent:IBaseSprite = null, size:int = 12, color:Object = null, font:String = null):TextEditor
 		{
 			var text:TextEditor = new TextEditor();
 			text.addText(chat, false, color, size, font);
