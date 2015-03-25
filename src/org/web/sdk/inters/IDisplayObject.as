@@ -101,6 +101,7 @@ package org.web.sdk.inters
 		function frameRender(float:int = 0):void;
 		//
 		function resize():void;
+		//function setScale():Point;	//和原始大小相比,增加或者减少
 		//翻转
 		//function filp(type:int = 0):void;
 		//ends

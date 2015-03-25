@@ -20,13 +20,22 @@ package
 		override protected function showEvent():void 
 		{
 			var t:int = getTimer();
-			var dis:RayDisplayer = ScaleSprite.byPoint("panelBg1", 320,140, 400,400);
+			var dis:RayDisplayer = ScaleSprite.byPoint("panelBg1", 320,140, 800,400);
 			this.addDisplay(dis);
+			var text:TextEditor = TextEditor.quick("HeroTie", this, 30, 0xffff00);
+			text.setAlign(AlignType.CENTER_TOP, 0, 20);
 			//
 			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over","btn_b_die");
 			btn.setAlign("center");
 			btn.moveTo(100, 100);
 			this.addChild(btn);
+			var ontouch:Function = function(e:Object):void
+			{
+				trace("点击")
+				this.getFather().removeFromFather();
+			}
+			btn.setProvoke(ontouch);
+			
 		}
 		
 		//end
