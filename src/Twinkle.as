@@ -41,9 +41,8 @@ package
 	
 	public class Twinkle extends ActiveSprite
 	{
-		override protected function showEvent(e:Object = null):void 
+		override protected function showEvent():void
 		{
-			super.showEvent(e);
 			//MenuTools.setMenu(this,null,MenuTools.createMenuItem("log",onLog))
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -82,7 +81,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
+					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names);
 				}
 			}
 			trace("res:", length);
@@ -93,8 +92,9 @@ package
 			if (e.eventType == LoadEvent.ERROR) return;
 			trace("--------res load over,start game---------")
 			//登陆模块
-			//LandSprite.gets().show();
-			addDisplay(new TestPanel);
+			LandSprite.gets().show();
+			
+			//addDisplay(new TestPanel);
 		}
 		//ends
 	}

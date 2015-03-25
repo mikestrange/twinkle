@@ -17,22 +17,17 @@ package
 	public class TestPanel extends ActiveSprite
 	{
 		
-		override protected function showEvent(e:Object = null):void 
+		override protected function showEvent():void 
 		{
-			super.showEvent(e);
 			var t:int = getTimer();
 			var dis:RayDisplayer = ScaleSprite.byPoint("panelBg1", 320,140, 400,400);
 			this.addDisplay(dis);
 			//
+			trace("xxx")
 			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over","btn_b_die");
 			btn.setAlign("center");
-			this.addDisplay(btn);
-			var fun:Function = function(event:Object):void
-			{
-				btn.setEnabled(false);
-				btn.setEnabled(true);
-			}
-			btn.setProvoke(fun);
+			btn.moveTo(100, 100);
+			this.addChild(btn);
 		}
 		
 		//end

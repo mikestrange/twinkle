@@ -100,6 +100,7 @@ package
 		
 		public function show():void 
 		{
+			if (isAdded()) return;
 			FrameWork.stage.addChild(this);
 			if (GameGlobal.isDebug) minaLine(null);
 		}

@@ -3,7 +3,7 @@ package org.web.sdk.display.core
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
-	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.asset.KitButton;
 	import org.web.sdk.display.utils.TouchState;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.inters.IDisplayObject;
@@ -14,19 +14,19 @@ package org.web.sdk.display.core
 		private var _isMouseOver:Boolean = false;
 		//按钮层
 		private var _title:IDisplayObject;
-		private var _bit:RayDisplayer;
+		private var _switcher:RayDisplayer;
 		
 		public function BaseButton(normal:String, press:String = null, over:String = null, die:String = null)
 		{
-			super(normal);
+			defineAction(TouchState.NARMAL, normal);
 			defineAction(TouchState.PRESS, press);
 			defineAction(TouchState.OVER, over);
 			defineAction(TouchState.FORBID, die);
+			trace("new")
 		}
 		
-		override protected function showEvent(e:Object = null):void 
+		override protected function showEvent():void 
 		{
-			super.showEvent(e);
 			this.buttonMode = true;
 			this.mouseChildren = false;	
 			this.addEventListener(MouseEvent.CLICK, onClick);
@@ -34,11 +34,14 @@ package org.web.sdk.display.core
 			this.addEventListener(MouseEvent.MOUSE_UP,onMouseAction);
 			this.addEventListener(MouseEvent.MOUSE_OVER,onMouseEffect);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseEffect);
+			_switcher = new RayDisplayer();
+			_switcher.addUnder(this, 0);
+			_switcher.setLiberty(getSwitcher(TouchState.NARMAL), getSwitcher(TouchState.NARMAL), RayDisplayer.BUTTON_TAG);
 		}
 		
-		override protected function hideEvent(e:Object = null):void
+		override protected function hideEvent():void
 		{
-			super.hideEvent(e);
+			_switcher.dispose();
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 			this.removeEventListener(MouseEvent.MOUSE_DOWN,onMouseAction);
 			this.removeEventListener(MouseEvent.MOUSE_UP,onMouseAction);
@@ -57,7 +60,10 @@ package org.web.sdk.display.core
 			_isMouseDown = (e.type == MouseEvent.MOUSE_DOWN);
 			if (!enabled) return;
 			if (_isMouseDown) this.setCurrent(TouchState.PRESS);
-			else this.setCurrent(TouchState.NARMAL);
+			else {
+				if (_isMouseOver) this.setCurrent(TouchState.OVER);
+				else this.setCurrent(TouchState.NARMAL);
+			}
 		}
 		
 		protected function onMouseEffect(e:MouseEvent):void
@@ -80,12 +86,7 @@ package org.web.sdk.display.core
 		
 		override protected function updateSwitcher(worker:*):void 
 		{
-			if (!_bit) {
-				_bit = new RayDisplayer(worker);
-				this.addDisplay(_bit, 0);
-			}else {
-				if (worker) _bit.setLiberty(worker as String);
-			}
+			if (_switcher) _switcher.flush(worker);
 		}
 		
 		//三种情况，快速的对齐方式

@@ -15,17 +15,9 @@ package org.web.sdk.display.core
 		protected var _enabled:Boolean = true;
 		private var t_map:Dictionary;
 		
-		public function SwitcherSprite(normal:*= null)
+		public function SwitcherSprite()
 		{
 			t_map = new Dictionary;
-			if(normal) setNormal(normal);
-			super()
-		}
-		
-		override protected function showEvent(e:Object = null):void 
-		{
-			super.showEvent(e);
-			this.setCurrent("normal");
 		}
 		
 		/* INTERFACE org.web.sdk.ui.interfaces.ICooperate */
@@ -94,7 +86,7 @@ package org.web.sdk.display.core
 			
 		}
 		
-		protected function getSwitcher(state:String):*
+		public function getSwitcher(state:String):*
 		{
 			return t_map[state];
 		}

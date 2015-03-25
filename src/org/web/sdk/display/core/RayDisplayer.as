@@ -2,6 +2,10 @@ package org.web.sdk.display.core
 {
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
+	import org.web.sdk.display.asset.KitAction;
+	import org.web.sdk.display.asset.KitButton;
+	import org.web.sdk.display.asset.KitFactory;
+	import org.web.sdk.display.asset.KitMovie;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.asset.KitBitmap;
@@ -28,6 +32,11 @@ package org.web.sdk.display.core
 	 */
 	public class RayDisplayer extends Bitmap implements IAcceptor 
 	{
+		public static const BIT_TAG:int = 0;
+		public static const BUTTON_TAG:int = 1;
+		public static const MOVIE_TAG:int = 2;
+		public static const ACTION_TAG:int = 3;
+		
 		//格式
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
 		//属性
@@ -65,14 +74,20 @@ package org.web.sdk.display.core
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
 		public function setTexture(texture:LibRender, data:Object = null):void 
 		{
-			if (_texture && _texture == texture) {
-				obtainMapped(_texture.update(data));
+			if (_texture == texture) {
+				flush(data);
 			}else {
 				if (_texture) _texture.relieve();
 				_texture = texture;
 				if (null == texture) return;
 				obtainMapped(_texture.render(this, data));
 			}
+		}
+		
+		//刷新显示
+		public function flush(data:Object):void
+		{
+			if (_texture) obtainMapped(_texture.update(data));
 		}
 		
 		//获取必要的资源，子类重新就可以了
@@ -90,14 +105,21 @@ package org.web.sdk.display.core
 				this.setTexture(LibRender.getTexture(txName), data);
 			}else {
 				var tx:LibRender = factoryTexture(txName, tag);
-				if (tx) this.setTexture(tx);
+				if (tx) this.setTexture(tx, data);
 			}
 		}
 		
 		//不一定设置名称给他自己,上面会设置 ,默认是一个类名,你可以修改
 		protected function factoryTexture(textureName:String, tag:int = 0):LibRender
 		{
-			return FrameWork.getTexture(textureName);
+			switch(tag)
+			{
+				case BIT_TAG: return new KitBitmap(null, textureName);
+				case BUTTON_TAG: return new KitButton(textureName);
+				case MOVIE_TAG: return new KitMovie(null, textureName);
+				case ACTION_TAG: return new KitAction(textureName)
+			}
+			return null;
 		}
 		
 		public function clone():IAcceptor 

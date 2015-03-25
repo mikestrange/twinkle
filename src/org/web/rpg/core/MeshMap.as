@@ -47,9 +47,9 @@ package org.web.rpg.core
 			this.addChildAt(_backdrop, 0);
 		}
 		
-		override protected function hideEvent(e:Object = null):void 
+		override protected function hideEvent():void 
 		{
-			super.hideEvent(e);
+			super.hideEvent();
 			_itemLayer.clearChildren();
 			removeDesktop();
 		}

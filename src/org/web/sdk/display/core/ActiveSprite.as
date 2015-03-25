@@ -21,6 +21,8 @@ package org.web.sdk.display.core
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
+		//防止事件问题 , adobe写的东西确实有问题
+		private var avert_show:Boolean = false;
 		
 		public function ActiveSprite()
 		{
@@ -29,16 +31,32 @@ package org.web.sdk.display.core
 		
 		protected function initialization():void
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, showEvent, false, 0, true);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
+			this.addEventListener(Event.ADDED_TO_STAGE, showListener, false, 0, true);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, hideListener, false, 0, true);
 		}
 		
-		protected function showEvent(e:Object = null):void
+		private function showListener(event:Event):void
+		{
+			if (avert_show) return;
+			avert_show = !avert_show;
+			showEvent();
+		}
+		
+		private function hideListener(event:Event):void
+		{
+			if (avert_show) {
+				avert_show = !avert_show;
+				hideEvent();
+			}
+		}
+		
+		//这里只会又一次处理
+		protected function showEvent():void
 		{
 			
 		}
 		
-		protected function hideEvent(e:Object = null):void
+		protected function hideEvent():void
 		{
 			
 		}
@@ -135,7 +153,6 @@ package org.web.sdk.display.core
 		public function reportFromFather(father:IBaseSprite):void 
 		{
 			if (_align == null) return;
-			trace("this=",this)
 			const swap:Swapper = AlignType.obtainReposition(limitWidth, limitHeight, 
 			father.limitWidth, father.limitHeight, _align);
 			this.x = swap.trimPositionX(_offsetx);
@@ -237,8 +254,8 @@ package org.web.sdk.display.core
 		
 		public function finality(value:Boolean = true):void
 		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, showEvent);
-			this.removeEventListener(Event.REMOVED_FROM_STAGE, hideEvent);
+			this.removeEventListener(Event.ADDED_TO_STAGE, showListener);
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, hideListener);
 			this.clearFilters();
 			Multiple.wipeout(this, value);
 		}

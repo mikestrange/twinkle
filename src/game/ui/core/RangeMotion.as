@@ -6,6 +6,7 @@ package game.ui.core
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.ray.ActionMovie;
 	
 	public class RangeMotion extends ActionMovie 
@@ -19,7 +20,7 @@ package game.ui.core
 		public function RangeMotion(type:int, $order:String, $point:int = 4)
 		{
 			_type = type;
-			setLiberty("user:type_id_" + _type);
+			setLiberty("user:type_id_" + _type, RayDisplayer.ACTION_TAG);
 			doAction($order, $point);
 			this.play();
 		}
@@ -53,11 +54,6 @@ package game.ui.core
 			setAction(getFormt());				//设置动作
 			this.position = 1;					//恢复到第一帧
 			this.setTexture(this.texture, this);	//设置自己的渲染部分
-		}
-		
-		override protected function factoryTexture(textureName:String, tag:int = 0):LibRender 
-		{
-			return new KitAction(textureName);
 		}
 		
 		//没有动作就建立动作

@@ -168,14 +168,6 @@ package org.web.sdk
 			return appDomain.getAsset(className, url);
 		}
 		
-		//获取单一材质 ,可以截去DisplayObject
-		public static function getTexture(className:String, url:String = null):KitBitmap
-		{
-			var item:* = appDomain.getAsset(className, url);
-			if(item is BitmapData) return new KitBitmap(item as BitmapData, className);
-			if (item is DisplayObject) return new KitBitmap(DrawUtils.draw(item as DisplayObject), className);
-			return null;
-		}
 		
 		//ends
 	}

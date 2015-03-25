@@ -26,6 +26,7 @@ package org.web.sdk.display.asset
 			}
 		}
 		
+		//我们可以根据一个名称来取一个链表影片
 		override public function update(data:Object):* 
 		{
 			return _vector;

@@ -41,9 +41,9 @@ package org.web.rpg.core
 			if (data) layout(data);
 		}
 		
-		override protected function hideEvent(e:Object = null):void 
+		override protected function hideEvent():void 
 		{
-			super.hideEvent(e);
+			super.hideEvent();
 			this.dispose();
 		}
 		

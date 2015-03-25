@@ -52,7 +52,7 @@ package game.ui.map
 			super();
 		}
 		
-		override protected function hideEvent(e:Object = null):void 
+		override protected function hideEvent():void 
 		{
 			finality();
 		}
