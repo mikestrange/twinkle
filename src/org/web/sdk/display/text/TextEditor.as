@@ -5,6 +5,7 @@ package org.web.sdk.display.text
 	import flash.text.*;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
+	import org.web.sdk.FrameWork;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.inters.IDisplayObject;
 
@@ -26,6 +27,7 @@ package org.web.sdk.display.text
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
+		private var _isresize:Boolean = false;
 		//文本特有
 		private var format:TextFormat;
 		
@@ -241,10 +243,27 @@ package org.web.sdk.display.text
 			return _limitStamp;
 		}
 		
-		public function resize():void
+		public function setScale(sx:Number = 1, sy:Number = 1):void
+		{
+			if (sx != scaleX) scaleX = sx;
+			if (sy != scaleY) scaleY = sy;
+		}
+		
+		public function setResize(value:Boolean = true):void
+		{
+			if (_isresize == value) return;
+			_isresize = value;
+			if (value) {
+				FrameWork.addStageListener(Event.RESIZE, onResize);
+			}else {
+				FrameWork.removeStageListener(Event.RESIZE, onResize);
+			}
+		}
+		
+		protected function onResize(e:Event = null):void
 		{
 			
-		} 
+		}
 		
 		public function finality(value:Boolean = true):void
 		{

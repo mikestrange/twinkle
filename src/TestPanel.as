@@ -20,6 +20,7 @@ package
 		override protected function showEvent():void 
 		{
 			var t:int = getTimer();
+			//没被添加到舞台就释放不了
 			var dis:RayDisplayer = ScaleSprite.byPoint("panelBg1", 320,140, 800,400);
 			this.addDisplay(dis);
 			var text:TextEditor = TextEditor.quick("HeroTie", this, 30, 0xffff00);
@@ -35,7 +36,12 @@ package
 				this.getFather().removeFromFather();
 			}
 			btn.setProvoke(ontouch);
-			
+		}
+		
+		override protected function hideEvent():void 
+		{
+			super.hideEvent();
+			this.finality();
 		}
 		
 		//end

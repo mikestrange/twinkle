@@ -58,7 +58,7 @@ package org.web.sdk.display.ray
 			return _isstop;
 		}
 		
-		override protected function obtainMapped(assets:*):void 
+		override protected function renderBuffer(assets:*):void 
 		{
 			if (assets == null) return;
 			setFrames(assets as Vector.<BitmapData>);

@@ -6,13 +6,13 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.Multiple;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
+	import org.web.sdk.FrameWork;
 	import org.web.sdk.inters.IDisplayObject;
 	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
 	/*
 	 * 原始的，游戏中全部继承他
 	 * */
-	
 	public class ActiveSprite extends Sprite implements IBaseSprite
 	{
 		private var _limitWidth:Number;
@@ -21,6 +21,7 @@ package org.web.sdk.display.core
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
+		private var _isresize:Boolean = false;
 		//防止事件问题 , adobe写的东西确实有问题
 		private var avert_show:Boolean = false;
 		
@@ -58,9 +59,8 @@ package org.web.sdk.display.core
 		
 		protected function hideEvent():void
 		{
-			
+			setResize(false);
 		}
-		
 		
 		/* INTERFACE org.web.sdk.inters.IBaseSprite */
 		public function isEmpty():Boolean
@@ -222,6 +222,13 @@ package org.web.sdk.display.core
 			if(isAdded()) reportFromFather(getFather());
 		}
 		
+		
+		public function setScale(sx:Number = 1, sy:Number = 1):void
+		{
+			if (sx != scaleX) scaleX = sx;
+			if (sy != scaleY) scaleY = sy;
+		}
+		
 		public function get alignType():String 
 		{
 			return _align;
@@ -247,10 +254,21 @@ package org.web.sdk.display.core
 			return _limitStamp;
 		}
 		
-		public function resize():void
+		public function setResize(value:Boolean = true):void
+		{
+			if (_isresize == value) return;
+			_isresize = value;
+			if (value) {
+				FrameWork.addStageListener(Event.RESIZE, onResize);
+			}else {
+				FrameWork.removeStageListener(Event.RESIZE, onResize);
+			}
+		}
+		
+		protected function onResize(e:Event = null):void
 		{
 			
-		} 
+		}
 		
 		public function finality(value:Boolean = true):void
 		{

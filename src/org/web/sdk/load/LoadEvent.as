@@ -6,6 +6,7 @@
 package org.web.sdk.load 
 {
 	import flash.system.LoaderContext;
+	import org.web.sdk.context.ResourceContext;
 	//下载回执
 	public class LoadEvent 
 	{
@@ -66,6 +67,12 @@ package org.web.sdk.load
 		public function get context():LoaderContext
 		{
 			return _context;
+		}
+		
+		//每次都会创建
+		public function getAppDomain():ResourceContext
+		{
+			return new ResourceContext(_target);
 		}
 		//ends
 	}

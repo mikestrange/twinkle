@@ -100,8 +100,9 @@ package org.web.sdk.inters
 		//帧渲染
 		function frameRender(float:int = 0):void;
 		//
-		function resize():void;
-		//function setScale():Point;	//和原始大小相比,增加或者减少
+		function setScale(sx:Number = 1, sy:Number = 1):void;	//和原始大小相比,增加或者减少
+		//舞台大小改变的时候调整
+		function setResize(value:Boolean = true):void;
 		//翻转
 		//function filp(type:int = 0):void;
 		//ends

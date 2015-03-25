@@ -46,6 +46,7 @@ package org.web.sdk.display.core
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
+		private var _isresize:Boolean = false;
 		//渲染器
 		private var _texture:LibRender;
 		//自身放置一个下载器吧
@@ -80,18 +81,18 @@ package org.web.sdk.display.core
 				if (_texture) _texture.relieve();
 				_texture = texture;
 				if (null == texture) return;
-				obtainMapped(_texture.render(this, data));
+				renderBuffer(_texture.render(this, data));
 			}
 		}
 		
 		//刷新显示
 		public function flush(data:Object):void
 		{
-			if (_texture) obtainMapped(_texture.update(data));
+			if (_texture) renderBuffer(_texture.update(data));
 		}
 		
 		//获取必要的资源，子类重新就可以了
-		protected function obtainMapped(assets:*):void
+		protected function renderBuffer(assets:*):void
 		{
 			this.bitmapData = assets as BitmapData;
 			this.smoothing = true;
@@ -259,10 +260,27 @@ package org.web.sdk.display.core
 			return _limitStamp;
 		}
 		
-		public function resize():void
+		public function setResize(value:Boolean = true):void
+		{
+			if (_isresize == value) return;
+			_isresize = value;
+			if (value) {
+				FrameWork.addStageListener(Event.RESIZE, onResize);
+			}else {
+				FrameWork.removeStageListener(Event.RESIZE, onResize);
+			}
+		}
+		
+		protected function onResize(e:Event = null):void
 		{
 			
-		} 
+		}
+		
+		public function setScale(sx:Number = 1, sy:Number = 1):void
+		{
+			if (sx != scaleX) scaleX = sx;
+			if (sy != scaleY) scaleY = sy;
+		}
 		
 		public function finality(value:Boolean = true):void
 		{

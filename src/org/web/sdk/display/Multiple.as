@@ -33,20 +33,20 @@ package org.web.sdk.display
 			if (dis.parent) dis.parent.removeChild(dis);
 		}
 		
-		//初始化一个dis   不改变显示状态
+		//初始化一个dis   
 		public static function initNaturo(dis:DisplayObject):DisplayObject
 		{
 			if (dis is MovieClip) MovieClip(dis).gotoAndStop(1);
-			//dis.visible = true;
+			dis.visible = true;
 			dis.cacheAsBitmap = false;
+			dis.transform.colorTransform = COLOR_TRANS_FORM;
+			dis.transform.matrix = MATRIX;
 			dis.mask = null;
 			dis.rotation = 0;
 			dis.alpha = 1;
 			dis.scaleX = dis.scaleY = 1;
 			dis.x = dis.y = 0;
 			dis.filters = [];
-			dis.transform.colorTransform = COLOR_TRANS_FORM;
-			dis.transform.matrix = MATRIX;
 			return dis;
 		}
 		
