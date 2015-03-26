@@ -79,6 +79,9 @@ package org.web.sdk.display
 		{
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
+			if (upSprite && !upSprite.isAdded()) {
+				FrameWork.stage.addChild(upSprite as DisplayObject);
+			}
 		}
 		
 		public static function isMouseDown():Boolean

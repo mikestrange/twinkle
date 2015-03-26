@@ -4,6 +4,7 @@ package
 	import org.web.sdk.context.ResourceContext;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.asset.KitFactory;
+	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.display.bar.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;
@@ -49,14 +50,15 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			Security.allowDomain("*");
-			Security.allowInsecureDomain("*");
+			Security.allowDomain("*")
+			Security.allowInsecureDomain("*")
+			Security.loadPolicyFile("http://127.0.0.1/crossdomain.xml")
 			//世界启动
 			WorldKidnap.gets().initLayer(this);
 			//最大下载
 			PerfectLoader.gets().LOAD_MAX = 5;			
 			//内存查看
-			FpsMonitor.gets().show();					
+			//FpsMonitor.gets().show();					
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//加载配置
@@ -64,6 +66,7 @@ package
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
+			
 		}
 		
 		private function onLog(e:Object):void
@@ -97,7 +100,9 @@ package
 			//LandSprite.gets().show();
 			//test
 			MouseDisplay.show();
-			addDisplay(new TestPanel);
+			MouseDisplay.setDown(new RayDisplayer("MouseClick"));
+			MouseDisplay.setRelease(new RayDisplayer("MouseNormal"))
+			//addDisplay(new TestPanel);
 		}
 		//ends
 	}

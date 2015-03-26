@@ -1,6 +1,6 @@
 package org.web.sdk.fot.core 
 {
-	import org.web.sdk.fot.interfaces.IMixture;
+	import org.web.sdk.fot.interfaces.ITactful;
 	import org.web.sdk.fot.wrapper.MixtureWrapper;
 	import org.web.sdk.fot.tracker.Tracker;
 	/**
@@ -8,12 +8,11 @@ package org.web.sdk.fot.core
 	 * [属于危险模式，不删除会泄露内存]
 	 * 最高级，但是不是最智能的
 	 */
-	public class PrudentListener extends CompositeListener
+	public class PrudentListener extends SimpleListener
 	{
-		
-		public function addVent(vent:IMixture, ...parameter):void
+		public function addTacter(vent:ITactful, ...parameter):void
 		{
-			if (!vent.isCumulative()) removeVent(vent);
+			if (!vent.isCumulative()) removeTacter(vent);
 			var v:Vector.<String> = vent.getLinks();
 			if (parameter.length) {
 				if (v == null) v = new Vector.<String>;
@@ -31,7 +30,7 @@ package org.web.sdk.fot.core
 			vent.setLinks(this, v);
 		}
 		
-		public function removeVent(vent:IMixture):void
+		public function removeTacter(vent:ITactful):void
 		{
 			var v:Vector.<String> = vent.getLinks();
 			if (v) {

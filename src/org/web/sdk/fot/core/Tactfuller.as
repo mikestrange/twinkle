@@ -1,12 +1,12 @@
 package org.web.sdk.fot.core 
 {
 	import org.web.sdk.fot.interfaces.IApplicationListener;
-	import org.web.sdk.fot.interfaces.IMixture;
+	import org.web.sdk.fot.interfaces.ITactful;
 	
 	/**
 	 * 只能作为嫁接
 	 */
-	public class GraftMixture implements IMixture 
+	public class Tactfuller implements ITactful 
 	{
 		private var _cumulative:Boolean = true;
 		private var _appListener:IApplicationListener;

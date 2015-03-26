@@ -33,6 +33,7 @@ package org.web.sdk.display.asset
 		//通过它去渲染,没有保存那么直接渲染
 		override public function update(data:Object):* 
 		{
+			if (_bitmapdata == null) _bitmapdata = KitFactory.getTexture(name);
 			return _bitmapdata;
 		}
 		

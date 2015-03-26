@@ -67,7 +67,7 @@ package org.web.sdk.context
 				if (apk) Obj = apk.getClass(name);
 			}
 			if (Obj) return new Obj;
-			trace("无资源:", url, name);
+			trace("不存在的定义:", url, name);
 			return null;
 		}
 		

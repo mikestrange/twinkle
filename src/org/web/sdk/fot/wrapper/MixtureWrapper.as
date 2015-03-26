@@ -1,16 +1,16 @@
 package org.web.sdk.fot.wrapper 
 {
 	import org.web.sdk.fot.interfaces.IWrapper;
-	import org.web.sdk.fot.interfaces.IMixture;
+	import org.web.sdk.fot.interfaces.ITactful;
 	
 	public class MixtureWrapper implements IWrapper 
 	{
-		private var _target:IMixture;
+		private var _target:ITactful;
 		private var _live:Boolean;
 		private var _type:int;
 		private var _name:String;
 		
-		public function MixtureWrapper(target:IMixture, name:String, type:int = 0) 
+		public function MixtureWrapper(target:ITactful, name:String, type:int = 0) 
 		{
 			this._target = target;
 			this._name = name;

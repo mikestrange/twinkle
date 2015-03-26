@@ -1,5 +1,6 @@
 package org.web.sdk.fot.core 
 {
+	import flash.utils.Dictionary;
 	import org.web.sdk.fot.interfaces.IApplicationListener;
 	import org.web.sdk.fot.interfaces.IWrapper;
 	import org.web.sdk.fot.wrapper.ClassWrapper;
@@ -12,9 +13,11 @@ package org.web.sdk.fot.core
 	public class SimpleListener implements IApplicationListener
 	{
 		private var _content:Tracker;
+		private var _contHash:Dictionary;
 		
 		public function SimpleListener(content:Tracker = null) 
 		{
+			_contHash = new Dictionary;
 			if (content == null) _content = new Tracker;
 			else this._content = content;
 		}
@@ -77,7 +80,27 @@ package org.web.sdk.fot.core
 		public function clearWrapper():void
 		{
 			_content.removeLink();
+			for (var k:String in _contHash) removeContainer(k);
+			_contHash = new Dictionary;
 		}
+		
+		//这里是生成监视器给别人
+		public function createContainer(name:String):Container
+		{
+			var container:Container = _contHash[name];
+			if (container == null) new Container(getTracker());
+			return container;
+		}
+		
+		public function removeContainer(name:String):void
+		{
+			var container:Container = _contHash[name];
+			if (container) {
+				delete _contHash[name];
+				container.clear();
+			}
+		}
+		
 		//end
 	}
 

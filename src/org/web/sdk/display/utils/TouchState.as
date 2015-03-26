@@ -12,6 +12,9 @@ package org.web.sdk.display.utils
 		//开关
 		public static const ON:String = "on";
 		public static const OFF:String = "off";
+		//选择
+		public static const SELECT:String = "select";
+		
 		//end
 	}
 

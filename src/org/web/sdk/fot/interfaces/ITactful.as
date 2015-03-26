@@ -3,7 +3,7 @@ package org.web.sdk.fot.interfaces
 	/*
 	 * 一个带消息链的对象
 	 * */
-	public interface IMixture 
+	public interface ITactful 
 	{
 		//是否累计
 		function isCumulative():Boolean;
