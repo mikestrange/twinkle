@@ -8,6 +8,7 @@ package org.web.sdk.display.core.base
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.LoadEvent;
+	import org.web.sdk.Ramt;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * */
@@ -32,23 +33,15 @@ package org.web.sdk.display.core.base
 			if (value != null && _url == value) return;
 			if (_url) dispose();
 			_url = value;
-			if (_url) {
-				if (LibRender.hasTexture(_url)) {
-					setTexture(LibRender.getTexture(_url));
-				}else {
-					loader.addWait(_url, LoadEvent.IMG).addRespond(complete);
-					loader.start();
-				}
-			}
+			//没有就让他去下载，至于他用什么形式去注册那就不管了
+			if (_url) Ramt.downLoad(_url, complete);
 		}
 		
 		protected function complete(e:LoadEvent):void
 		{
 			_over = true;
 			if (e.eventType == LoadEvent.COMPLETE) {
-				if (LibRender.hasTexture(e.url)) {
-					setTexture(LibRender.getTexture(_url));
-				}else {
+				if (!setLiberty(e.url)) {
 					setTexture(new KitBitmap(e.target as BitmapData, e.url));
 				}
 			}
@@ -60,7 +53,7 @@ package org.web.sdk.display.core.base
 		{
 			if (_url == null) return;
 			if (_over) super.dispose();
-			else loader.removeRespond(_url, complete);
+			else Ramt.loader.removeRespond(_url, complete);
 			_over = false;
 			_url = null;
 		}

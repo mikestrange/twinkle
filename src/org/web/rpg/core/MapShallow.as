@@ -5,13 +5,13 @@ package org.web.rpg.core
 	import flash.geom.Matrix;
 	import flash.utils.Dictionary;
 	import org.web.rpg.core.MapData;
-	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.display.core.BaseSprite;
+	import org.web.sdk.Ramt;
 	import org.web.sdk.load.LoadEvent;
 	/*
 	 * 背景地图，完美的封装了
 	 * */
-	public class MapShallow extends ActiveSprite
+	public class MapShallow extends BaseSprite
 	{
 		//单个地图大小
 		public var titleWidth:int;
@@ -69,7 +69,7 @@ package org.web.rpg.core
 			}
 			drawBlack();	
 			//下载小地图
-			Mentor.downLoad(data.smallUrl, complete);
+			Ramt.downLoad(data.smallUrl, complete);
 			//打开地图下载
 			this.openLoad = true;
 		}
@@ -113,11 +113,11 @@ package org.web.rpg.core
 		private function launch(x:Number,y:Number):void
 		{
 			//计算中心偏移
-			var offsetx:int = Math.ceil((Mentor.winWidth / titleWidth) >> 1) +OFF_SET;
-			var offsety:int = Math.ceil((Mentor.winHeight / titleHeight) >> 1) +OFF_SET;
+			var offsetx:int = Math.ceil((Ramt.winWidth / titleWidth) >> 1) +OFF_SET;
+			var offsety:int = Math.ceil((Ramt.winHeight / titleHeight) >> 1) +OFF_SET;
 			//计算中心点
-			var dx:int = Math.ceil((x + (Mentor.winWidth / OFF_SET)) / titleWidth);
-			var dy:int = Math.ceil((y + (Mentor.winHeight / OFF_SET)) / titleHeight);
+			var dx:int = Math.ceil((x + (Ramt.winWidth / OFF_SET)) / titleWidth);
+			var dy:int = Math.ceil((y + (Ramt.winHeight / OFF_SET)) / titleHeight);
 			//trace("偏移：",offsetx, offsety, dx, dy);
 			//分析前后需要的块数
 			var startX:int = Math.max(0, dx - offsetx);
@@ -137,7 +137,7 @@ package org.web.rpg.core
 					}
 				}
 			}
-			Mentor.loader.start();
+			Ramt.loader.start();
 			//渲染位图
 			refresh();
 		}

@@ -30,7 +30,6 @@ package org.web.sdk.log
 		//这里可以用正则
 		private static var print_name:String = null;
 		
-		
 		//[log object]
 		private var className:String;
 		

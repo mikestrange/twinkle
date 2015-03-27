@@ -12,7 +12,7 @@ package game.ui.map
 	import game.ui.core.ActionType;
 	import game.inters.IRole;
 	import game.ui.core.RangeMotion;
-	import org.web.sdk.display.core.ActiveSprite;
+	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.inters.IDisplay;
 	import org.web.sdk.display.utils.DrawUtils;
 	import org.web.rpg.astar.Grid;
@@ -28,7 +28,7 @@ package game.ui.map
 	/*
 	 * role
 	 * */
-	public class RoleSprite extends ActiveSprite implements IRole
+	public class RoleSprite extends BaseSprite implements IRole
 	{
 		private var _action:RangeMotion;
 		//

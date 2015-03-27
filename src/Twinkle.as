@@ -5,7 +5,8 @@ package
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.core.ActiveSprite;
+	import org.web.sdk.display.core.base.BufferImage;
+	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.bar.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.core.base.RayMovieClip;
@@ -42,7 +43,7 @@ package
 	
 	[SWF(frameRate = "60", width = "800", height = "600")]
 	
-	public class Twinkle extends ActiveSprite
+	public class Twinkle extends BaseSprite
 	{
 		override protected function showEvent():void
 		{
@@ -63,12 +64,12 @@ package
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//加载配置
-			Mentor.downLoad("asset/config.xml",complete);
+			Ramt.downLoad("asset/config.xml",complete);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
 			//
-			Mentor.downLoad("asset/string_CN.ini", iniComplete);
+			Ramt.downLoad("asset/string_CN.ini", iniComplete);
 		}
 		
 		private function iniComplete(e:LoadEvent):void
@@ -94,7 +95,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					Mentor.downLoad(GameGlobal.getURL(url), resComplete, names, Mentor.context);
+					Ramt.downLoad(GameGlobal.getURL(url), resComplete, names, Ramt.context);
 				}
 			}
 			trace("res:", length);
@@ -103,15 +104,18 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			//FrameWork.appDomain.share(e.url, e.getAppDomain());
+			//Mentor.appDomain.share(e.url, e.getAppDomain());
 			trace("--------res load over,start game---------")
 			//登陆模块
+			var png:BufferImage = new BufferImage("asset/header.png");
+			png.moveTo(200, 200);
+			this.addDisplay(png);
 			//LandSprite.gets().show();
 			//test
 			MouseDisplay.show();
-			MouseDisplay.setDown(new RayDisplayer("MouseClick"));
-			MouseDisplay.setRelease(new RayDisplayer("MouseNormal"));
-			addDisplay(new TestPanel);
+			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
+			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
+			//addDisplay(new TestPanel);
 		}
 		//ends
 	}

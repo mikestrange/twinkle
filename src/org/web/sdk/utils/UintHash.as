@@ -3,12 +3,12 @@ package org.web.sdk.utils
 
 	import flash.utils.Dictionary;
 	/*哈希表函数*/
-	public class UniqueHash 
+	public class UintHash 
 	{
 		private var hashKey:Dictionary;
 		private var length:uint = 0;
 		
-		public function UniqueHash() 
+		public function UintHash() 
 		{
 			hashKey = new Dictionary;
 		}
@@ -112,9 +112,9 @@ package org.web.sdk.utils
 			this.hashKey = new Dictionary;
 		}
 		
-		public function clone():UniqueHash
+		public function clone():UintHash
 		{
-			var hashmap:UniqueHash = new UniqueHash;
+			var hashmap:UintHash = new UintHash;
 			for (var num:* in hashKey) {
 				hashmap.put(num as Number, hashKey[num]);
 			}

@@ -5,7 +5,7 @@ package org.web.sdk.net.handler
 	import org.web.sdk.net.interfaces.IConverter;
 	import org.web.sdk.net.interfaces.INetHandler;
 	import org.web.sdk.system.events.Evented;
-	import org.web.sdk.utils.UniqueHash;
+	import org.web.sdk.utils.UintHash;
 	
 	/*
 	 * 处理命令的转换器，基类

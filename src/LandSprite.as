@@ -3,8 +3,8 @@ package
 	import game.consts.NoticeDefined;
 	import game.datas.SelfData;
 	import game.GameGlobal;
-	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.display.core.BaseSprite;
+	import org.web.sdk.Ramt;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -19,7 +19,7 @@ package
 	/*
 	 * 登陆模块
 	 * */
-	public class LandSprite extends ActiveSprite
+	public class LandSprite extends BaseSprite
 	{
 		private static var _ins:LandSprite;
 		
@@ -52,8 +52,8 @@ package
 			var format:TextFormat = new TextFormat("宋体",24,0,null,null,null,null,null,TextFormatAlign.CENTER,null,null,null,-5);
 			format.align = TextFormatAlign.CENTER;
 			idTextInput.defaultTextFormat = format;
-			idTextInput.x = (Mentor.stageWidth - idTextInput.width)/2;
-			idTextInput.y = (Mentor.stageHeight - idTextInput.width)/2;
+			idTextInput.x = (Ramt.stageWidth - idTextInput.width)/2;
+			idTextInput.y = (Ramt.stageHeight - idTextInput.width)/2;
 			addChild(idTextInput);
 			
 			pwTextInput = new TextField();
@@ -69,8 +69,8 @@ package
 			pwTextInput.autoSize = TextFieldAutoSize.CENTER; 
 			var format1:TextFormat = new TextFormat("宋体",24,0,null,null,null,null,null,TextFormatAlign.CENTER,null,null,null,-2);
 			pwTextInput.defaultTextFormat = format1;
-			pwTextInput.x = (Mentor.stageWidth - idTextInput.width)/2;
-			pwTextInput.y = (Mentor.stageHeight - idTextInput.width)/2 + 40;
+			pwTextInput.x = (Ramt.stageWidth - idTextInput.width)/2;
+			pwTextInput.y = (Ramt.stageHeight - idTextInput.width)/2 + 40;
 			addChild(pwTextInput);
 			
 			var spt:Sprite = new Sprite;
@@ -85,8 +85,8 @@ package
 			loginText.backgroundColor = 0x11ff11;
 			loginText.width = 120;
 			loginText.height = 30;
-			loginText.x = (Mentor.stageWidth - idTextInput.width)/2 + 40;
-			loginText.y = (Mentor.stageHeight - idTextInput.width)/2 + 80;
+			loginText.x = (Ramt.stageWidth - idTextInput.width)/2 + 40;
+			loginText.y = (Ramt.stageHeight - idTextInput.width)/2 + 80;
 			loginText.text = " login ";
 			var format2:TextFormat = new TextFormat("宋体",20);
 			loginText.defaultTextFormat = format2;
@@ -101,7 +101,7 @@ package
 		public function show():void 
 		{
 			if (isAdded()) return;
-			Mentor.stage.addChild(this);
+			Ramt.stage.addChild(this);
 			if (GameGlobal.isDebug) minaLine(null);
 		}
 		

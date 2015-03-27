@@ -5,13 +5,13 @@ package org.web.sdk.net.handler
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.net.interfaces.IConverter;
 	import org.web.sdk.system.inter.IController;
-	import org.web.sdk.utils.UniqueHash;
+	import org.web.sdk.utils.UintHash;
 	/*
 	 * 我们可以通过Type吧socket和http或者其他命令分开,也可以直接通过cmd分开
 	 * */
 	public class CmdManager 
 	{
-		private static var modules:UniqueHash = new UniqueHash;
+		private static var modules:UintHash = new UintHash;
 		private static const NONE:int = 0;
 		
 		//一个命令一个处理

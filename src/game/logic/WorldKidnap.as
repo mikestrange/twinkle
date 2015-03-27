@@ -11,7 +11,7 @@ package game.logic
 	import game.socket.logic.LogicRequest;
 	import game.consts.LayerType;
 	import org.web.sdk.display.ILayer;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 	import org.web.sdk.system.*;
 	import org.web.sdk.system.com.Invoker;
 	import org.web.sdk.system.events.Evented;
@@ -34,7 +34,7 @@ package game.logic
 			if (House.nativer.root) return;
 			//框架启动
 			//root.visible = false;
-			Mentor.utilization(root.stage, sceneWidth, sceneHeight, false, true, true);
+			Ramt.utilization(root.stage, sceneWidth, sceneHeight, false, true, true);
 			//图层初始化
 			House.nativer.root = root;
 			House.nativer.createLayer(LayerType.BACK_DROP, 1);
@@ -44,14 +44,14 @@ package game.logic
 			House.nativer.createLayer(LayerType.LOADING, 5);
 			House.nativer.createLayer(LayerType.TOP, 6);
 			//屏幕改变的时候
-			Mentor.stage.addEventListener(Event.RESIZE, onResize);
+			Ramt.stage.addEventListener(Event.RESIZE, onResize);
 			onResize();
 		}
 		
 		private function onResize(e:Event = null):void
 		{
-			Mentor.autoForWin(House.nativer.root);
-			Mentor.graphicsViewArea(FpsMonitor.gets().graphics);
+			Ramt.trim(House.nativer.root);
+			Ramt.graphicsViewArea(FpsMonitor.gets().graphics);
 		}
 		
 		//添加到图层，不进行其他操作

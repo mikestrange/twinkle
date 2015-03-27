@@ -1,7 +1,7 @@
 package org.web.sdk.tool 
 {
 	import flash.utils.*;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 	/*
 	 * 一个非常好的计时器
 	 * FrameWork.stage就是stage
@@ -9,37 +9,38 @@ package org.web.sdk.tool
 	public class Clock
 	{
 		private static const _KEY_:String = "whoisyourdaddy";
-		private static var isStep:Boolean = false;
+		//
+		private  var isstep:Boolean = false;
 		private var clockList:Vector.<ClockData>;
 		private const ZERO:int = 0;
 		
 		public function Clock(key:String = null) 
 		{
 			if (key != _KEY_) throw Error("不能自己擅自使用此类");
-			clockList = new Vector.<ClockData>;
 		}
 		
 		//添加一个监听的事务
-		public function step(fps:Number, call:Function, times:uint = 0, args:Array = null):void
+		public function step(interval:Number, call:Function, times:uint = 0, args:Array = null):void
 		{
-			if (!isStep) {
-				isStep = true;
-				Mentor.stage.addEventListener("enterFrame", onEnterFrame);
+			if (!isstep) {
+				isstep = true;
+				clockList = new Vector.<ClockData>;
+				Ramt.addStageListener("enterFrame", runEvent);
 			}
-			clockList.push(new ClockData(fps, call, times,args));
+			clockList.push(new ClockData(interval, call, times,args));
 		}
 		
-		private function onEnterFrame(e:Object):void
+		private function runEvent(e:Object):void
 		{
 			var data:ClockData;
 			for (var i:int = clockList.length - 1; i >= 0; i--)
 			{
 				data = clockList[i];
-				if (!data.file) {
+				if (!data.live) {
 					clockList.splice(i, 1);
 					continue;
 				}
-				if (getTimer() - data.gettimer >= data.fps) {
+				if (getTimer() - data.gettimer >= data.interval) {
 					data.gettimer = getTimer(); //不要等他渲染完成
 					if (data.times == ZERO) {
 						data.execute();
@@ -49,21 +50,21 @@ package org.web.sdk.tool
 					}
 				}
 			}
-			if (isEmpty()) stop();
+			if (isempty()) stop();
 		}
 		
 		//不会删除
-		public function kill(call:Function, back:Boolean = false, all:Boolean = true):void
+		public function kill(call:Function, value:Boolean = false, all:Boolean = true):void
 		{
 			var data:ClockData;
 			var fun:Function;
-			for (var i:int = clockList.length - 1; i >= 0; i--)
+			for (var i:int = 0; i < clockList.length; i++)
 			{
 				data = clockList[i];
-				if (data.file && data.called == call) {
+				if (data.live && data.called == call) {
 					fun = data.called;
 					data.free();
-					if (back) fun.apply(null, data.args);
+					if (value) fun.apply(null, data.args);
 					if (!all) break;
 				}
 			}
@@ -71,14 +72,13 @@ package org.web.sdk.tool
 		
 		private function stop():void
 		{
-			if (isStep) {
-				trace("#闹钟暂停")
-				isStep = false;
-				Mentor.stage.removeEventListener("enterFrame", onEnterFrame);
+			if (isstep) {
+				isstep = false;
+				Ramt.removeStageListener("enterFrame", runEvent);
 			}
 		}
 		
-		public function isEmpty():Boolean
+		public function isempty():Boolean
 		{
 			return clockList.length == ZERO;	
 		}
@@ -86,24 +86,31 @@ package org.web.sdk.tool
 		public function clear():void
 		{
 			stop();
-			while (clockList.length) clockList.shift().free();
+			while (clockList.length) {
+				clockList.shift().free();
+			}
 		}
 		
 		//一个全局定时器
-		private static var clocks:Clock;
+		private static var clocker:Clock;
 		
 		//添加参数 [默认无限次]
 		public static function step(delay:Number, called:Function, times:uint = 1, ...args):void
 		{
-			if (null == clocks) clocks = new Clock(Clock._KEY_);
-			clocks.step(delay, called, times, args);
+			if (null == clocker) clocker = new Clock(Clock._KEY_);
+			clocker.step(delay, called, times, args);
 		}
 		
-		public static function kill(call:Function, back:Boolean = false):void
+		public static function kill(call:Function, value:Boolean = false):void
 		{
-			if (clocks) clocks.kill(call, back);
+			if (clocker) clocker.kill(call, value);
 		}
 		
+		public static function get clock():Clock
+		{
+			if (null == clocker) clocker = new Clock(Clock._KEY_);
+			return clocker;
+		}
 		//ends
 	}
 }
@@ -114,29 +121,29 @@ class ClockData {
 	
 	public var gettimer:Number;			//当前时间
 	public var times:uint = 1; 			//0无限次，每调一次函数算一次 frame*time
-	public var fps:Number;				//帧
+	public var interval:Number;				//帧
 	public var called:Function;			//每过delay就会调用一次
 	public var args:Array;				//参数
-	public var file:Boolean;
+	public var live:Boolean;
 	
-	public function ClockData(fps:Number, call:Function, times:uint = 1, args:Array =null)
+	public function ClockData(interval:Number, call:Function, times:uint = 1, args:Array =null)
 	{
-		gettimer = getTimer();
-		this.fps = fps;
+		this.interval = interval;
 		this.called = call;
 		this.times = times;
 		this.args = args;
-		this.file = call is Function;
+		this.live = call is Function;
+		gettimer = getTimer();
 	}
 	
 	public function execute():void
 	{
-		if (file) called.apply(null, args);
+		if (live) called.apply(null, args);
 	}
 	
 	public function free():void
 	{
-		file = false;
+		live = false;
 	}
 	//ends
 }

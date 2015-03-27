@@ -2,7 +2,8 @@ package org.web.sdk.context
 {
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.log.Log;
+	import org.web.sdk.Ramt;
 	/**
 	 *域的管理
 	 */
@@ -33,7 +34,7 @@ package org.web.sdk.context
 			if (null == context) throw Error("不存在的域：" + url);
 			if (undefined == _typeKeys[url]) {
 				_typeKeys[url] = context;
-				trace("保存一个域名：", url, context);
+				Log.log(this).info("保存一个域名：", url, context);
 			}
 		}
 		
@@ -60,7 +61,7 @@ package org.web.sdk.context
 				if (apk) Obj = apk.getClass(name);
 			}
 			if (Obj) return new Obj;
-			trace("不存在的定义:", url, name);
+			Log.log(this).error("不存在的定义:", url, name);
 			return null;
 		}
 		

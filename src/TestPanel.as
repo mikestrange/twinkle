@@ -5,7 +5,7 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
-	import org.web.sdk.display.core.ActiveSprite;
+	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.bar.BaseButton;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.bar.utils.ScaleSprite;
@@ -13,7 +13,7 @@ package
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.tool.Scale9Bitmap;
 	
-	public class TestPanel extends ActiveSprite
+	public class TestPanel extends BaseSprite
 	{
 		private var curret:BaseButton;
 		

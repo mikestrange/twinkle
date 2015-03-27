@@ -103,6 +103,8 @@ package org.web.sdk.inters
 		function setScale(sx:Number = 1, sy:Number = 1):void;	//和原始大小相比,增加或者减少
 		//舞台大小改变的时候调整
 		function setResize(value:Boolean = true):void;
+		//把自己转换
+		function convertDisplay():DisplayObject;
 		//翻转
 		//function filp(type:int = 0):void;
 		//ends

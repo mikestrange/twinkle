@@ -10,7 +10,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 	import org.web.sdk.inters.IDisplay;
 	import flash.geom.Transform;
 	import flash.display.Stage;
@@ -32,7 +32,6 @@ package org.web.sdk.display.core
 		public static const BUTTON_TAG:int = 1;
 		public static const MOVIE_TAG:int = 2;
 		public static const ACTION_TAG:int = 3;
-		
 		//格式
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
 		//属性
@@ -45,17 +44,11 @@ package org.web.sdk.display.core
 		private var _isresize:Boolean = false;
 		//渲染器
 		private var _texture:LibRender;
-		//自身放置一个下载器吧
-		protected static const loader:CenterLoader = CenterLoader.gets();
 		
-		public function RayDisplayer(texture:* = null) 
+		public function RayDisplayer(texture:LibRender = null) 
 		{
 			super(null, AUTO, true);
-			if (texture is String) {
-				setLiberty(texture as String);
-			}else if (texture is LibRender) {
-				setTexture(texture);
-			}
+			if(texture) setTexture(texture);
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IAcceptor */
@@ -82,7 +75,7 @@ package org.web.sdk.display.core
 		}
 		
 		//刷新显示
-		public function flush(data:Object):void
+		public function flush(data:Object = null):void
 		{
 			if (_texture) renderBuffer(_texture.update(data));
 		}
@@ -95,15 +88,18 @@ package org.web.sdk.display.core
 		}
 		
 		//根据名称渲染材质,自由构造
-		public function setLiberty(txName:String, data:Object = null, tag:int = 0):void
+		public function setLiberty(txName:String, data:Object = null, tag:int = -1):Boolean
 		{
 			if (null == txName || txName == "") throw Error("材质名称不允许为空");
 			if (LibRender.hasTexture(txName)) {
 				this.setTexture(LibRender.getTexture(txName), data);
+				return true;
 			}else {
 				var tx:LibRender = factoryTexture(txName, tag);
 				if (tx) this.setTexture(tx, data);
+				return tx != null;
 			}
+			return false;
 		}
 		
 		//不一定设置名称给他自己,上面会设置 ,默认是一个类名,你可以修改
@@ -262,15 +258,20 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Mentor.addStageListener(Event.RESIZE, onResize);
+				Ramt.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Mentor.removeStageListener(Event.RESIZE, onResize);
+				Ramt.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		
 		protected function onResize(e:Event = null):void
 		{
 			
+		}
+		
+		public function convertDisplay():DisplayObject
+		{
+			return this as DisplayObject;
 		}
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
@@ -297,6 +298,16 @@ package org.web.sdk.display.core
 			}
 			return acceptor;
 		}
+		
+		//快速生成一种单一的材质
+		public static function quick(className:String, father:IBaseSprite = null, floor:int = -1):RayDisplayer
+		{
+			var ray:RayDisplayer = new RayDisplayer;
+			ray.setLiberty(className, null, RayDisplayer.BIT_TAG);
+			ray.addUnder(father, floor);
+			return ray;
+		}
+		
 		//ends
 	}
 }

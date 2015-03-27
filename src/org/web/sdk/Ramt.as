@@ -6,8 +6,10 @@ package org.web.sdk
 	import flash.events.*;
 	import org.web.sdk.context.*;
 	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.utils.DrawUtils;
+	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.*;
@@ -17,13 +19,14 @@ package org.web.sdk
 	/*
 	 * 要素
 	 * */
-	public final class Mentor 
+	public final class Ramt 
 	{
 		//可以利用他来屏蔽鼠标右键
 		public static const RIGHT_MOUSE_DOWN:String = "rightMouseDown";
 		//
 		private static var $stage:Stage;
 		private static var $system:SystemScope;
+		private static var $director:IBaseSprite;
 		//舞台
 		public static function get stage():Stage
 		{
@@ -40,15 +43,32 @@ package org.web.sdk
 			$stage.removeEventListener(type, called);
 		}
 		
+		//导演
+		public static function getDirector():IBaseSprite
+		{
+			return $director;
+		}
+		
 		//启动  是否启动成功  初始化窗口
 		public static function utilization(stage:Stage, width:Number = 0, height:Number = 0, sleep:Boolean = false, 
 		engine:Boolean = true, keyset:Boolean = true):void
 		{
-			if (null == Mentor.$stage) $stage = stage;
+			if (null == Ramt.$stage) $stage = stage;
 			if (null == $system) $system = new SystemScope(width, height);
+			
 			setKeyboard(keyset);
 			setEngine(engine);
 			setSleep(sleep);
+		}
+		
+		//可以建立一个导演，也可以在游戏中不建立
+		public static function createDirector(className:Class):void
+		{
+			if (className && null == $director) {
+				$director = new className() as IBaseSprite;
+				$stage.addChild($director.convertDisplay());
+				Log.log().debug("#添加导演");
+			}
 		}
 		
 		//是否允许休眠
@@ -107,7 +127,8 @@ package org.web.sdk
 			$system.setSize(w, h);	
 		}
 		
-		public static function autoForWin(root:DisplayObject, offsetx:Number = 0, offsety:Number = 0):void
+		//调整位置
+		public static function trim(root:DisplayObject, offsetx:Number = 0, offsety:Number = 0):void
 		{
 			if (root) {
 				root.x = $system.x + offsetx;

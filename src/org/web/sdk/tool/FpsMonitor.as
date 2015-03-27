@@ -11,7 +11,7 @@ package org.web.sdk.tool
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.utils.getTimer;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 
 	public class FpsMonitor extends Sprite
 	{
@@ -169,7 +169,7 @@ package org.web.sdk.tool
 		{
 			if (parent) return;
 			if (father) father.addChild(this);
-			else Mentor.stage.addChild(this);
+			else Ramt.stage.addChild(this);
 		}
 		
 		//

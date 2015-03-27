@@ -5,7 +5,7 @@ package org.web.rpg.core
 	import flash.display.DisplayObjectContainer;
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.core.Multiple;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 	import org.web.sdk.load.LoadEvent;
 	
 	public class MapLump extends Bitmap
@@ -46,7 +46,7 @@ package org.web.rpg.core
 		{
 			if (_isLoad) return;
 			_isLoad = true;
-			Mentor.loader.addWait(_url).addRespond(complete);
+			Ramt.loader.addWait(_url).addRespond(complete);
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -73,7 +73,7 @@ package org.web.rpg.core
 		{
 			hide();
 			_isLoad = false;
-			Mentor.loader.removeRespond(_url, complete);
+			Ramt.loader.removeRespond(_url, complete);
 			Multiple.dispose(this.bitmapData);
 		}
 		//ends

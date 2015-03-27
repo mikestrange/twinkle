@@ -4,8 +4,7 @@ package org.web.sdk.display
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import org.web.sdk.display.asset.KitFactory;
-	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 	import org.web.sdk.inters.IDisplay;
 	
 	public class MouseDisplay 
@@ -20,11 +19,11 @@ package org.web.sdk.display
 			if (isshow) return;
 			isshow = !isshow;
 			Mouse.hide();
-			Mentor.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			Mentor.addStageListener(MouseEvent.MOUSE_DOWN, onState);
-			Mentor.addStageListener(MouseEvent.MOUSE_UP, onState);
+			Ramt.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			Ramt.addStageListener(MouseEvent.MOUSE_DOWN, onState);
+			Ramt.addStageListener(MouseEvent.MOUSE_UP, onState);
 			//屏蔽鼠标右键
-			Mentor.addStageListener("rightMouseDown", function(event:Object):void{});
+			Ramt.addStageListener("rightMouseDown", function(event:Object):void{});
 		}
 		
 		public static function hide():void 
@@ -34,20 +33,20 @@ package org.web.sdk.display
 			Mouse.show();
 			if (upSprite) upSprite.removeFromFather();
 			if (downSprite) downSprite.removeFromFather();
-			Mentor.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			Mentor.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
-			Mentor.removeStageListener(MouseEvent.MOUSE_UP, onState);
+			Ramt.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			Ramt.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
+			Ramt.removeStageListener(MouseEvent.MOUSE_UP, onState);
 		}
 		
 		private static function onMove(e:MouseEvent = null):void
 		{
 			if (isDown) {
 				if (downSprite) {
-					downSprite.moveTo(Mentor.stage.mouseX, Mentor.stage.mouseY);
+					downSprite.moveTo(Ramt.stage.mouseX, Ramt.stage.mouseY);
 				}
 			}else {
 				if (upSprite) {
-					upSprite.moveTo(Mentor.stage.mouseX, Mentor.stage.mouseY);
+					upSprite.moveTo(Ramt.stage.mouseX, Ramt.stage.mouseY);
 				}
 			}
 		}
@@ -58,12 +57,12 @@ package org.web.sdk.display
 			if (e.type == MouseEvent.MOUSE_DOWN) {
 				if (upSprite) upSprite.removeFromFather();
 				if (downSprite && !downSprite.isAdded()) {
-					Mentor.stage.addChild(downSprite as DisplayObject);
+					Ramt.stage.addChild(downSprite as DisplayObject);
 				}
 			}else {
 				if (downSprite) downSprite.removeFromFather();
 				if (upSprite && !upSprite.isAdded()) {
-					Mentor.stage.addChild(upSprite as DisplayObject);
+					Ramt.stage.addChild(upSprite as DisplayObject);
 				}
 			}
 			onMove();
@@ -80,7 +79,7 @@ package org.web.sdk.display
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
 			if (upSprite && !upSprite.isAdded()) {
-				Mentor.stage.addChild(upSprite as DisplayObject);
+				Ramt.stage.addChild(upSprite as DisplayObject);
 			}
 		}
 		

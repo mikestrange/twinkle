@@ -5,14 +5,14 @@ package org.web.sdk.display.core
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Mentor;
+	import org.web.sdk.Ramt;
 	import org.web.sdk.inters.IDisplay;
 	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
 	/*
 	 * 原始的，游戏中全部继承他
 	 * */
-	public class ActiveSprite extends Sprite implements IBaseSprite
+	public class BaseSprite extends Sprite implements IBaseSprite
 	{
 		private var _limitWidth:Number;
 		private var _limitHeight:Number;
@@ -24,7 +24,7 @@ package org.web.sdk.display.core
 		//防止事件问题 , adobe写的东西确实有问题
 		private var avert_show:Boolean = false;
 		
-		public function ActiveSprite()
+		public function BaseSprite()
 		{
 			initialization();
 		}
@@ -271,15 +271,20 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Mentor.addStageListener(Event.RESIZE, onResize);
+				Ramt.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Mentor.removeStageListener(Event.RESIZE, onResize);
+				Ramt.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		
 		protected function onResize(e:Event = null):void
 		{
 			
+		}
+		
+		public function convertDisplay():DisplayObject
+		{
+			return this as DisplayObject;
 		}
 		
 		public function finality(value:Boolean = true):void

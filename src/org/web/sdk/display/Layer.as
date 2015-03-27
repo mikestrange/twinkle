@@ -2,11 +2,11 @@ package org.web.sdk.display
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import org.web.sdk.display.core.ActiveSprite;
+	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.ILayer;
 	import org.web.sdk.inters.IDisplay;
 	
-	public class Layer extends ActiveSprite implements ILayer 
+	public class Layer extends BaseSprite implements ILayer 
 	{
 		public function Layer(layerName:String, value:Boolean = false) 
 		{
