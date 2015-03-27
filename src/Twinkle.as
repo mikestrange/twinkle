@@ -68,15 +68,6 @@ package
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
-			//
-			Ramt.downLoad("asset/string_CN.ini", iniComplete);
-		}
-		
-		private function iniComplete(e:LoadEvent):void
-		{
-			var lang:String = e.target as String;
-			var conf:Conf = new Conf;
-			conf.decode(lang);
 		}
 		
 		private function onLog(e:Object):void
@@ -107,9 +98,6 @@ package
 			//Mentor.appDomain.share(e.url, e.getAppDomain());
 			trace("--------res load over,start game---------")
 			//登陆模块
-			var png:BufferImage = new BufferImage("asset/header.png");
-			png.moveTo(200, 200);
-			this.addDisplay(png);
 			//LandSprite.gets().show();
 			//test
 			MouseDisplay.show();
