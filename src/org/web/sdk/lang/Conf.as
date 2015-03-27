@@ -86,9 +86,8 @@ package org.web.sdk.lang
 					{
 						//[stageSize]标签行  标签转换成小写
 						tag = StringUtil.trim(lineStr.toLowerCase());
-						//截取[]里面的部分
-						tag = tag.substr(LIM);
-						tag = tag.substr(BEGIN, tag.length - LIM);
+						//截取[]里面的部分,如果里面还有也会被清理掉
+						tag = tag.replace(/[\[\]]/ig, "");
 						map = new Object;
 						_conf[tag] = map;
 					}else {
