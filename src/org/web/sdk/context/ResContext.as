@@ -8,14 +8,15 @@ package org.web.sdk.context
 	/**
 	 *单独的资源域
 	 */
-	public class ResourceContext
+	public class ResContext
 	{
 		private var applicationDomain:ApplicationDomain;
 			
-		public function ResourceContext(checkFile:*) 
+		public function ResContext(checkFile:*)
 		{
 			if (checkFile is Loader) applicationDomain = Loader(checkFile).contentLoaderInfo.applicationDomain;
-			if (checkFile is ApplicationDomain) applicationDomain = checkFile;
+			else if (checkFile is ApplicationDomain) applicationDomain = checkFile;
+			else throw Error("不存在的域解析，请提醒修改源代码！");
 		}
 		
 		public function hasDefinition(name:String):Boolean

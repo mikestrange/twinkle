@@ -1,22 +1,19 @@
 package org.web.sdk.load.loads 
 {
 	import flash.events.ProgressEvent;
-	import flash.system.ApplicationDomain;
-	import flash.system.SecurityDomain;
 	import org.web.sdk.load.inters.ILoader;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
-	import flash.system.LoaderContext;
 	import org.web.sdk.load.LoadEvent;
 	
 	/*
 	 * swf下载
 	 * 如果需要监听下载百分比，继承他就可以了,只需要扩张eventListener
 	 * */
-	public class ResourceLoader extends Loader implements ILoader
+	public class SwfLoader extends Loader implements ILoader
 	{
 		protected var _url:String;
 		protected var _complete:Function;

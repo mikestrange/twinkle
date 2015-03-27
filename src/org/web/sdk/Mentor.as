@@ -148,7 +148,7 @@ package org.web.sdk
 		}
 		
 		//当前域
-		public static function get currentContext():LoaderContext
+		public static function get context():LoaderContext
 		{
 			return new LoaderContext(false, ApplicationDomain.currentDomain);
 		}
@@ -157,13 +157,13 @@ package org.web.sdk
 		public static const appDomain:ContextManager = ContextManager.create();
 		
 		//唯一下载器
-		public static const perfectLoader:PerfectLoader = PerfectLoader.gets();
+		public static const loader:CenterLoader = CenterLoader.gets();
 		
 		//下载资源
-		public static function downLoad(url:String, type:int, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void
+		public static function downLoad(url:String, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void
 		{
-			perfectLoader.addWait(url, type, context, vital).addRespond(complete, data);
-			perfectLoader.start();
+			loader.addWait(url, context, vital).addRespond(complete, data);
+			loader.start();
 		}
 		
 		//两种索取素材的方法------------这种非RSL共享时候的  可能是BitmapData，所以是*

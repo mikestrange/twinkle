@@ -7,7 +7,6 @@ package org.web.rpg.core
 	import org.web.sdk.display.core.Multiple;
 	import org.web.sdk.Mentor;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.PerfectLoader;
 	
 	public class MapLump extends Bitmap
 	{
@@ -47,7 +46,7 @@ package org.web.rpg.core
 		{
 			if (_isLoad) return;
 			_isLoad = true;
-			Mentor.perfectLoader.addWait(_url, LoadEvent.IMG, null).addRespond(complete);
+			Mentor.loader.addWait(_url).addRespond(complete);
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -74,7 +73,7 @@ package org.web.rpg.core
 		{
 			hide();
 			_isLoad = false;
-			Mentor.perfectLoader.removeRespond(_url, complete);
+			Mentor.loader.removeRespond(_url, complete);
 			Multiple.dispose(this.bitmapData);
 		}
 		//ends

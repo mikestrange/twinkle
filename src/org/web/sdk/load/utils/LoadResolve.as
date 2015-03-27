@@ -1,11 +1,11 @@
 /** 
- *org.web.sdk.load542540443@qq.com 
+ *org.web.sdk.load.utils542540443@qq.com 
  *@version 1.0.0 
  * 创建时间：2013-12-5 下午11:46:04 
  **/ 
-package org.web.sdk.load
+package org.web.sdk.load.utils
 {
-	public class LoadAnalysis
+	public class LoadResolve
 	{
 		private var _url:String;                //加载路径
 		private var _error:Boolean;
@@ -13,7 +13,7 @@ package org.web.sdk.load
 		private var _label:String = "";   	 	//文件名(标签,在写入对象池的时候很有作用)
 		private var _suff:String = "";   		//后缀名
 		//
-		public function LoadAnalysis(path:String)
+		public function LoadResolve(path:String)
 		{
 			_url = path;
 			//解析Url
@@ -55,9 +55,9 @@ package org.web.sdk.load
 		}
 		
 		//取一个路径解析器
-		public static function getInfo(url:String):LoadAnalysis
+		public static function getInfo(url:String):LoadResolve
 		{
-			return new LoadAnalysis(url);
+			return new LoadResolve(url);
 		}
 		//ends
 	}

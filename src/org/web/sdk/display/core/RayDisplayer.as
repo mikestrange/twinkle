@@ -21,11 +21,8 @@ package org.web.sdk.display.core
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.load.PerfectLoader;
+	import org.web.sdk.load.CenterLoader;
 	import org.web.sdk.utils.ClassUtils;
-	
-	import org.web.sdk.beyond_challenge;
-	use namespace beyond_challenge
 	/**
 	 * 速度更快的显示对象，基于bitmapdata
 	 */
@@ -49,7 +46,7 @@ package org.web.sdk.display.core
 		//渲染器
 		private var _texture:LibRender;
 		//自身放置一个下载器吧
-		protected static const loader:PerfectLoader = PerfectLoader.gets();
+		protected static const loader:CenterLoader = CenterLoader.gets();
 		
 		public function RayDisplayer(texture:* = null) 
 		{

@@ -4,7 +4,7 @@ package org.web.sdk.load.loads
 	import flash.events.Event;
 	import org.web.sdk.load.LoadEvent;
 	
-	public class ImgLoader extends ResourceLoader 
+	public class ImgLoader extends SwfLoader 
 	{
 		override protected function complete(e:Event):void
 		{

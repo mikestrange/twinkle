@@ -1,4 +1,4 @@
-package org.web.sdk.handler 
+package org.web.sdk.frame.observer 
 {
 	public class Observer 
 	{

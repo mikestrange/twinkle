@@ -8,7 +8,6 @@ package org.web.sdk.display.core.base
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.PerfectLoader;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * */

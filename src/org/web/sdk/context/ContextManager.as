@@ -3,7 +3,6 @@ package org.web.sdk.context
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import org.web.sdk.Mentor;
-	import org.web.sdk.load.LoadEvent;
 	/**
 	 *域的管理
 	 */
@@ -28,14 +27,8 @@ package org.web.sdk.context
 			_app = domain;
 		}
 		
-		//swf加载,这里没有使用开始
-		public function load(url:String, complete:Function, data:Object = null, context:LoaderContext = null):void
-		{
-			Mentor.perfectLoader.addWait(url, LoadEvent.SWF, context).addRespond(complete, data);
-		}
-		
 		//注册一个类型  不是Loader不会被注册
-		public function share(url:String, context:ResourceContext):void
+		public function share(url:String, context:ResContext):void
 		{
 			if (null == context) throw Error("不存在的域：" + url);
 			if (undefined == _typeKeys[url]) {
@@ -49,7 +42,7 @@ package org.web.sdk.context
 			return undefined != _typeKeys[url];
 		}
 		
-		public function getContext(url:String):ResourceContext
+		public function getContext(url:String):ResContext
 		{
 			return _typeKeys[url];
 		}
@@ -63,7 +56,7 @@ package org.web.sdk.context
 					Obj = _app.getDefinition(name) as Class;
 				}
 			}else {
-				var apk:ResourceContext = getContext(url);
+				var apk:ResContext = getContext(url);
 				if (apk) Obj = apk.getClass(name);
 			}
 			if (Obj) return new Obj;

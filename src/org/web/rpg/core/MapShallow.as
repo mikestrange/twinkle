@@ -8,7 +8,6 @@ package org.web.rpg.core
 	import org.web.sdk.display.core.ActiveSprite;
 	import org.web.sdk.Mentor;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.load.PerfectLoader;
 	/*
 	 * 背景地图，完美的封装了
 	 * */
@@ -70,7 +69,7 @@ package org.web.rpg.core
 			}
 			drawBlack();	
 			//下载小地图
-			Mentor.downLoad(data.smallUrl, LoadEvent.IMG, complete);
+			Mentor.downLoad(data.smallUrl, complete);
 			//打开地图下载
 			this.openLoad = true;
 		}
@@ -138,7 +137,7 @@ package org.web.rpg.core
 					}
 				}
 			}
-			Mentor.perfectLoader.start();
+			Mentor.loader.start();
 			//渲染位图
 			refresh();
 		}

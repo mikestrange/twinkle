@@ -6,29 +6,27 @@
 package org.web.sdk.load 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.beyond_challenge;
-	import org.web.sdk.handler.Observer;
+	import org.web.sdk.frame.observer.Observer;
 	import org.web.sdk.load.inters.ILoadController;
 	import org.web.sdk.load.inters.ILoader;
 	import org.web.sdk.load.inters.ILoadRespond;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
 	
-	use namespace beyond_challenge;
 	//下载流体
 	internal class LoadFluider implements ILoadRespond 
 	{
 		//必须参数
-		beyond_challenge var _url:String;
-		beyond_challenge var _type:int;
-		beyond_challenge var _context:*;
+		private var _url:String;
+		private var _type:int;
+		private var _context:*;
 		//只有在下载的时候进行短暂的交易
-		beyond_challenge var _loader:ILoader;			//下载器
+		private var _loader:ILoader;			//下载器
 		//回执列表
-		beyond_challenge var _vector:Vector.<Observer>
-		beyond_challenge var _controller:ILoadController;
+		private var _vector:Vector.<Observer>
+		private var _controller:ILoadController;
+		//
 		private var _called:Function;
-		
 		
 		public function LoadFluider(controller:ILoadController, url:String, type:int = 0, context:*= undefined) 
 		{
@@ -87,17 +85,17 @@ package org.web.sdk.load
 		}
 		
 		//调用所有监听,open,opress,error,complete
-		beyond_challenge function invokes(target:Object, eventType:String):void
+		private function invokes(target:Object, eventType:String):void
 		{
-			var isEnd:Boolean = (eventType == LoadEvent.COMPLETE || eventType == LoadEvent.ERROR);
-			if (isEnd) {
+			var isover:Boolean = (eventType == LoadEvent.COMPLETE || eventType == LoadEvent.ERROR);
+			if (isover) {
 				_loader = null;
-				PerfectLoader(_controller).removeLoad(_url);
+				CenterLoader(_controller).removeLoad(_url);
 				_controller.start();
 				Log.log(this).debug('#加载完成->url:' + _url + ',context:' + _context + ",type:" + eventType);
 			}
 			eachRespond(target, eventType);
-			if (isEnd) destroy();
+			if (isover) destroy();
 		}
 		
 		//只要关闭，就不给回调,必须重新下载
@@ -119,7 +117,7 @@ package org.web.sdk.load
 			var index:int = 0;
 			var list:Vector.<Observer> = _vector.slice(index, _vector.length);
 			for (;index < list.length; index++) {
-				list[index].dispatch([new LoadEvent(target, _url, _context, eventType, list[index].getBody(), _type)]);
+				list[index].dispatch([new LoadEvent(eventType, target, _url, list[index].getBody())]);
 			}
 			list = null;
 		}

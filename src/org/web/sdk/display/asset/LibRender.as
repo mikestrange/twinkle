@@ -2,8 +2,6 @@ package org.web.sdk.display.asset
 {
 	import flash.display.BitmapData;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.beyond_challenge;
-	use namespace beyond_challenge
 	/*
 	 * 资源渲染器
 	 * 你无法通过他去渲染，只能通过IAcceptor来主动取的他的渲染物件
@@ -63,13 +61,13 @@ package org.web.sdk.display.asset
 			if (isHamper()) asset.remove(_libName);
 		}
 		
-		beyond_challenge function setName(value:String):void
+		internal function setName(value:String):void
 		{
 			this._libName = value;
 		}
 		
 		//通过它去渲染,没有保存那么直接渲染
-		beyond_challenge function render(mesh:IAcceptor, data:Object = null):*
+		public function render(mesh:IAcceptor, data:Object = null):*
 		{
 			addHold();	
 			return update(data);

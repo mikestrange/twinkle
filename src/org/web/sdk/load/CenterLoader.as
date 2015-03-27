@@ -11,55 +11,31 @@ package org.web.sdk.load
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.Log;
 	import org.web.sdk.utils.HashMap;
-	import org.web.sdk.beyond_challenge;
 	import org.web.sdk.utils.list.HashList;
 	/*
 	 * 下载管理,完美的下载管理器
 	 * */
-	use namespace beyond_challenge;
 	
-	public class PerfectLoader implements ILoadController 
+	public class CenterLoader implements ILoadController 
 	{
 		//下载列表 下载列表比较少，所以用数组，查询也很快
-		beyond_challenge var load_list:Vector.<LoadFluider> = new Vector.<LoadFluider>;
+		protected var load_list:Vector.<LoadFluider> = new Vector.<LoadFluider>;
 		//等待列表
-		beyond_challenge var wait_list:HashList = new HashList;
-		//不是下载
-		public static const NONE:int = 0;
+		protected var wait_list:HashList = new HashList;
 		//最大下载  公开
 		public var LOAD_MAX:int = 4;
-		//下载蓝图列表,默认，可以更改
-		beyond_challenge var LoaderBlueprint:Array = [];
+		//不是下载
+		private static const NONE:int = 0;
 		
-		public function PerfectLoader()
+		public function CenterLoader() 
 		{
-			this.initialization();
+			SetupLoad.setDefault();
 		}
-		
-		protected function initialization():void
-		{
-			setLoader(LoadEvent.TXT, TextLoader);
-			setLoader(LoadEvent.SWF, ResourceLoader);
-			setLoader(LoadEvent.IMG, ImgLoader);
-			setLoader(LoadEvent.BYTE, ByteLoader);
-		}
-		
-		//设置下载器
-		public function setLoader(type:int, className:Class, reg:RegExp = null):void
-		{
-			LoaderBlueprint[type] = className;
-		}
-		
-		//取一个下载器
-		beyond_challenge function getLoader(type:int):ILoader
-		{
-			return new LoaderBlueprint[type] as ILoader;
-		}
-		
+			
 		/*
 		 * 建立一个下载 vital=true表示当前所有下载完成后会下载此,重要的立刻为他腾出一个空间，否则添加到最开始
 		 * */
-		public function addWait(url:String, type:int = 0, context:*= undefined, vital:Boolean = false):ILoadRespond
+		public function addWait(url:String, context:*= undefined, vital:Boolean = false):ILoadRespond
 		{
 			//如果在下载中，直接跳出来
 			var index:int = indexOfLoad(url);
@@ -67,7 +43,7 @@ package org.web.sdk.load
 			//在等待列表
 			if (wait_list.hasNode(url)) return getWaiter(url);
 			//添加到等待列表
-			var filder:LoadFluider = new LoadFluider(this, url, type, context);
+			var filder:LoadFluider = new LoadFluider(this, url, SetupLoad.getType(url), context);
 			if (vital) {
 				wait_list.unshift(url, filder);
 			}else {
@@ -77,7 +53,7 @@ package org.web.sdk.load
 		}
 		
 		//取等待下载
-		beyond_challenge function getWaiter(url:String):LoadFluider
+		protected function getWaiter(url:String):LoadFluider
 		{
 			return wait_list.getValue(url) as LoadFluider;
 		}
@@ -172,7 +148,7 @@ package org.web.sdk.load
 			}else {
 				//添加到下载列表中去 并且开始下载
 				load_list.push(filder);
-				filder.load(getLoader(filder.type));
+				filder.load(SetupLoad.createLoader(filder.type));
 			}
 			//多个开放
 			start();
@@ -235,7 +211,7 @@ package org.web.sdk.load
 		}
 		
 		
-		beyond_challenge function stopShare(filder:LoadFluider):void
+		protected function stopShare(filder:LoadFluider):void
 		{
 			//没有下载就不添加了
 			if (filder.isLoad()) {
@@ -274,11 +250,11 @@ package org.web.sdk.load
 		}
 		
 		//利用一个全局
-		private static var _ins:PerfectLoader;
+		private static var _ins:CenterLoader;
 		
-		public static function gets():PerfectLoader
+		public static function gets():CenterLoader
 		{
-			if (_ins == null) _ins = new PerfectLoader;
+			if (_ins == null) _ins = new CenterLoader;
 			return _ins;
 		}
 		//ends

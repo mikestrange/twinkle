@@ -1,7 +1,7 @@
 package 
 {
 	import com.greensock.*;
-	import org.web.sdk.context.ResourceContext;
+	import org.web.sdk.context.ResContext;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.display.asset.LibRender;
@@ -57,18 +57,18 @@ package
 			//世界启动
 			WorldKidnap.gets().initLayer(this);
 			//最大下载
-			PerfectLoader.gets().LOAD_MAX = 5;			
+			CenterLoader.gets().LOAD_MAX = 5;			
 			//内存查看
 			//FpsMonitor.gets().show();					
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//加载配置
-			Mentor.downLoad("asset/config.xml", LoadEvent.TXT, complete);
+			Mentor.downLoad("asset/config.xml",complete);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
 			//
-			Mentor.downLoad("asset/string_CN.ini", LoadEvent.TXT, iniComplete);
+			Mentor.downLoad("asset/string_CN.ini", iniComplete);
 		}
 		
 		private function iniComplete(e:LoadEvent):void
@@ -94,7 +94,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					Mentor.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, Mentor.currentContext);
+					Mentor.downLoad(GameGlobal.getURL(url), resComplete, names, Mentor.context);
 				}
 			}
 			trace("res:", length);
@@ -110,7 +110,7 @@ package
 			//test
 			MouseDisplay.show();
 			MouseDisplay.setDown(new RayDisplayer("MouseClick"));
-			MouseDisplay.setRelease(new RayDisplayer("MouseNormal"))
+			MouseDisplay.setRelease(new RayDisplayer("MouseNormal"));
 			addDisplay(new TestPanel);
 		}
 		//ends

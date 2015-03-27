@@ -6,7 +6,7 @@
 package org.web.sdk.load 
 {
 	import flash.system.LoaderContext;
-	import org.web.sdk.context.ResourceContext;
+	import org.web.sdk.context.ResContext;
 	//下载回执
 	public class LoadEvent 
 	{
@@ -24,19 +24,16 @@ package org.web.sdk.load
 		//_target传过来的数据
 		private var _target:Object;
 		private var _url:String;
-		private var _eventType:String;
-		private var _type:int;
 		private var _data:Object;
-		private var _context:LoaderContext;
+		private var _eventType:String;
+		private var _appdomain:ResContext;
 		//
-		public function LoadEvent(target:Object, url:String, context:LoaderContext, eventType:String, data:Object = null, type:int = 0)
+		public function LoadEvent(eventType:String, target:Object, url:String, data:Object = null)
 		{
+			this._eventType = eventType;
 			this._target = target;
 			this._url = url;
-			this._eventType = eventType;
-			this._type = type;
 			this._data = data;
-			this._context = context;
 		}
 		
 		public function get data():Object
@@ -54,25 +51,16 @@ package org.web.sdk.load
 			return _eventType;
 		}
 		
-		public function get type():int
-		{
-			return _type;
-		}
-		
 		public function get url():String
 		{
 			return _url;
 		}
 		
-		public function get context():LoaderContext
+		//需要的时候创建
+		public function getContext():ResContext
 		{
-			return _context;
-		}
-		
-		//每次都会创建
-		public function getAppDomain():ResourceContext
-		{
-			return new ResourceContext(_target);
+			if (null == _appdomain) _appdomain = new ResContext(_target); 
+			return _appdomain;
 		}
 		//ends
 	}

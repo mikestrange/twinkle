@@ -1,7 +1,6 @@
 package org.web.sdk.net.handler 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.handler.Observer;
 	import org.web.sdk.net.handler.RespondEvented;
 	import org.web.sdk.net.interfaces.IConverter;
 	import org.web.sdk.net.interfaces.INetHandler;

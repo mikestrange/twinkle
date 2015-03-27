@@ -1,6 +1,7 @@
 package org.web.sdk.handler 
 {
 	import flash.utils.Dictionary;
+	import org.web.sdk.frame.observer.Observer;
 	import org.web.sdk.handler.IDispatcher;
 	/*
 	 * 一个比较好的事件拍发起

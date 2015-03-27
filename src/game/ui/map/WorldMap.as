@@ -81,7 +81,7 @@ package game.ui.map
 		public function showMap(id:uint):void
 		{
 			free();
-			Mentor.downLoad(MapPath.getMapConfig(id), LoadEvent.TXT, complete);
+			Mentor.downLoad(MapPath.getMapConfig(id), complete);
 		}
 		
 		private function complete(e:LoadEvent):void
