@@ -10,6 +10,7 @@ package
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.core.base.RayMovieClip;
 	import org.web.sdk.display.utils.AlignType;
+	import org.web.sdk.lang.Conf;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -62,11 +63,19 @@ package
 			//启动模块和网络连接
 			WorldKidnap.gets().start();
 			//加载配置
-			FrameWork.downLoad("asset/config.xml", LoadEvent.TXT, complete);
+			Mentor.downLoad("asset/config.xml", LoadEvent.TXT, complete);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
-			
+			//
+			Mentor.downLoad("asset/string_CN.ini", LoadEvent.TXT, iniComplete);
+		}
+		
+		private function iniComplete(e:LoadEvent):void
+		{
+			var lang:String = e.target as String;
+			var conf:Conf = new Conf;
+			conf.decode(lang);
 		}
 		
 		private function onLog(e:Object):void
@@ -85,7 +94,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					FrameWork.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, FrameWork.currentContext);
+					Mentor.downLoad(GameGlobal.getURL(url), LoadEvent.SWF, resComplete, names, Mentor.currentContext);
 				}
 			}
 			trace("res:", length);

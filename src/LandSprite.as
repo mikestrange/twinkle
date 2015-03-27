@@ -4,7 +4,7 @@ package
 	import game.datas.SelfData;
 	import game.GameGlobal;
 	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -52,8 +52,8 @@ package
 			var format:TextFormat = new TextFormat("宋体",24,0,null,null,null,null,null,TextFormatAlign.CENTER,null,null,null,-5);
 			format.align = TextFormatAlign.CENTER;
 			idTextInput.defaultTextFormat = format;
-			idTextInput.x = (FrameWork.stageWidth - idTextInput.width)/2;
-			idTextInput.y = (FrameWork.stageHeight - idTextInput.width)/2;
+			idTextInput.x = (Mentor.stageWidth - idTextInput.width)/2;
+			idTextInput.y = (Mentor.stageHeight - idTextInput.width)/2;
 			addChild(idTextInput);
 			
 			pwTextInput = new TextField();
@@ -69,8 +69,8 @@ package
 			pwTextInput.autoSize = TextFieldAutoSize.CENTER; 
 			var format1:TextFormat = new TextFormat("宋体",24,0,null,null,null,null,null,TextFormatAlign.CENTER,null,null,null,-2);
 			pwTextInput.defaultTextFormat = format1;
-			pwTextInput.x = (FrameWork.stageWidth - idTextInput.width)/2;
-			pwTextInput.y = (FrameWork.stageHeight - idTextInput.width)/2 + 40;
+			pwTextInput.x = (Mentor.stageWidth - idTextInput.width)/2;
+			pwTextInput.y = (Mentor.stageHeight - idTextInput.width)/2 + 40;
 			addChild(pwTextInput);
 			
 			var spt:Sprite = new Sprite;
@@ -85,8 +85,8 @@ package
 			loginText.backgroundColor = 0x11ff11;
 			loginText.width = 120;
 			loginText.height = 30;
-			loginText.x = (FrameWork.stageWidth - idTextInput.width)/2 + 40;
-			loginText.y = (FrameWork.stageHeight - idTextInput.width)/2 + 80;
+			loginText.x = (Mentor.stageWidth - idTextInput.width)/2 + 40;
+			loginText.y = (Mentor.stageHeight - idTextInput.width)/2 + 80;
 			loginText.text = " login ";
 			var format2:TextFormat = new TextFormat("宋体",20);
 			loginText.defaultTextFormat = format2;
@@ -101,7 +101,7 @@ package
 		public function show():void 
 		{
 			if (isAdded()) return;
-			FrameWork.stage.addChild(this);
+			Mentor.stage.addChild(this);
 			if (GameGlobal.isDebug) minaLine(null);
 		}
 		

@@ -14,8 +14,10 @@ package org.web.sdk
 	import org.web.sdk.pool.*;
 	import org.web.sdk.load.*;
 	import org.web.sdk.tool.*;
-
-	public class FrameWork 
+	/*
+	 * 要素
+	 * */
+	public final class Mentor 
 	{
 		//可以利用他来屏蔽鼠标右键
 		public static const RIGHT_MOUSE_DOWN:String = "rightMouseDown";
@@ -42,7 +44,7 @@ package org.web.sdk
 		public static function utilization(stage:Stage, width:Number = 0, height:Number = 0, sleep:Boolean = false, 
 		engine:Boolean = true, keyset:Boolean = true):void
 		{
-			if (null == FrameWork.$stage) $stage = stage;
+			if (null == Mentor.$stage) $stage = stage;
 			if (null == $system) $system = new SystemScope(width, height);
 			setKeyboard(keyset);
 			setEngine(engine);
@@ -100,12 +102,12 @@ package org.web.sdk
 			return stage.stageHeight;
 		}
 		
-		public static function setSize(w:Number, h:Number):void
+		public static function setWinSize(w:Number, h:Number):void
 		{
 			$system.setSize(w, h);	
 		}
 		
-		public static function followWin(root:DisplayObject, offsetx:Number = 0, offsety:Number = 0):void
+		public static function autoForWin(root:DisplayObject, offsetx:Number = 0, offsety:Number = 0):void
 		{
 			if (root) {
 				root.x = $system.x + offsetx;

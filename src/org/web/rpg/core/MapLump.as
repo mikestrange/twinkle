@@ -5,7 +5,7 @@ package org.web.rpg.core
 	import flash.display.DisplayObjectContainer;
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.core.Multiple;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 	
@@ -47,7 +47,7 @@ package org.web.rpg.core
 		{
 			if (_isLoad) return;
 			_isLoad = true;
-			FrameWork.perfectLoader.addWait(_url, LoadEvent.IMG, null).addRespond(complete);
+			Mentor.perfectLoader.addWait(_url, LoadEvent.IMG, null).addRespond(complete);
 		}
 		
 		private function complete(e:LoadEvent):void
@@ -74,7 +74,7 @@ package org.web.rpg.core
 		{
 			hide();
 			_isLoad = false;
-			FrameWork.perfectLoader.removeRespond(_url, complete);
+			Mentor.perfectLoader.removeRespond(_url, complete);
 			Multiple.dispose(this.bitmapData);
 		}
 		//ends

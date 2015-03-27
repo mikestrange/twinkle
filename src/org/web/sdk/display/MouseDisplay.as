@@ -5,7 +5,7 @@ package org.web.sdk.display
 	import flash.ui.Mouse;
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import org.web.sdk.inters.IDisplay;
 	
 	public class MouseDisplay 
@@ -20,11 +20,11 @@ package org.web.sdk.display
 			if (isshow) return;
 			isshow = !isshow;
 			Mouse.hide();
-			FrameWork.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			FrameWork.addStageListener(MouseEvent.MOUSE_DOWN, onState);
-			FrameWork.addStageListener(MouseEvent.MOUSE_UP, onState);
+			Mentor.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			Mentor.addStageListener(MouseEvent.MOUSE_DOWN, onState);
+			Mentor.addStageListener(MouseEvent.MOUSE_UP, onState);
 			//屏蔽鼠标右键
-			FrameWork.addStageListener("rightMouseDown", function(event:Object):void{});
+			Mentor.addStageListener("rightMouseDown", function(event:Object):void{});
 		}
 		
 		public static function hide():void 
@@ -34,20 +34,20 @@ package org.web.sdk.display
 			Mouse.show();
 			if (upSprite) upSprite.removeFromFather();
 			if (downSprite) downSprite.removeFromFather();
-			FrameWork.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			FrameWork.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
-			FrameWork.removeStageListener(MouseEvent.MOUSE_UP, onState);
+			Mentor.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			Mentor.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
+			Mentor.removeStageListener(MouseEvent.MOUSE_UP, onState);
 		}
 		
 		private static function onMove(e:MouseEvent = null):void
 		{
 			if (isDown) {
 				if (downSprite) {
-					downSprite.moveTo(FrameWork.stage.mouseX, FrameWork.stage.mouseY);
+					downSprite.moveTo(Mentor.stage.mouseX, Mentor.stage.mouseY);
 				}
 			}else {
 				if (upSprite) {
-					upSprite.moveTo(FrameWork.stage.mouseX, FrameWork.stage.mouseY);
+					upSprite.moveTo(Mentor.stage.mouseX, Mentor.stage.mouseY);
 				}
 			}
 		}
@@ -58,12 +58,12 @@ package org.web.sdk.display
 			if (e.type == MouseEvent.MOUSE_DOWN) {
 				if (upSprite) upSprite.removeFromFather();
 				if (downSprite && !downSprite.isAdded()) {
-					FrameWork.stage.addChild(downSprite as DisplayObject);
+					Mentor.stage.addChild(downSprite as DisplayObject);
 				}
 			}else {
 				if (downSprite) downSprite.removeFromFather();
 				if (upSprite && !upSprite.isAdded()) {
-					FrameWork.stage.addChild(upSprite as DisplayObject);
+					Mentor.stage.addChild(upSprite as DisplayObject);
 				}
 			}
 			onMove();
@@ -80,7 +80,7 @@ package org.web.sdk.display
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
 			if (upSprite && !upSprite.isAdded()) {
-				FrameWork.stage.addChild(upSprite as DisplayObject);
+				Mentor.stage.addChild(upSprite as DisplayObject);
 			}
 		}
 		

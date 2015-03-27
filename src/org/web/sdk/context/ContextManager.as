@@ -2,7 +2,7 @@ package org.web.sdk.context
 {
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import org.web.sdk.load.LoadEvent;
 	/**
 	 *域的管理
@@ -31,7 +31,7 @@ package org.web.sdk.context
 		//swf加载,这里没有使用开始
 		public function load(url:String, complete:Function, data:Object = null, context:LoaderContext = null):void
 		{
-			FrameWork.perfectLoader.addWait(url, LoadEvent.SWF, context).addRespond(complete, data);
+			Mentor.perfectLoader.addWait(url, LoadEvent.SWF, context).addRespond(complete, data);
 		}
 		
 		//注册一个类型  不是Loader不会被注册

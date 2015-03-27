@@ -1,19 +1,7 @@
 package org.web.sdk.utils 
 {
-	public class StringUtils 
+	public class CharUtils 
 	{
-		private static var regexp:RegExp;
-		//屏蔽字符
-		public static function setRegExp(chat:String):void
-		{
-			if (null == regexp) regexp = new RegExp(chat, 'ig');
-		}
-		
-		public static function shield(chat:String):String
-		{
-			return chat.replace(regexp, '*');
-		}
-		
 		//给一个数字字符墙面补0
 		public static function formatNumber(number:Number, leng:int = 32, radix:int = 10):String
         {

@@ -6,7 +6,7 @@ package org.web.rpg.core
 	import flash.utils.Dictionary;
 	import org.web.rpg.core.MapData;
 	import org.web.sdk.display.core.ActiveSprite;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.load.PerfectLoader;
 	/*
@@ -70,7 +70,7 @@ package org.web.rpg.core
 			}
 			drawBlack();	
 			//下载小地图
-			FrameWork.downLoad(data.smallUrl, LoadEvent.IMG, complete);
+			Mentor.downLoad(data.smallUrl, LoadEvent.IMG, complete);
 			//打开地图下载
 			this.openLoad = true;
 		}
@@ -114,11 +114,11 @@ package org.web.rpg.core
 		private function launch(x:Number,y:Number):void
 		{
 			//计算中心偏移
-			var offsetx:int = Math.ceil((FrameWork.winWidth / titleWidth) >> 1) +OFF_SET;
-			var offsety:int = Math.ceil((FrameWork.winHeight / titleHeight) >> 1) +OFF_SET;
+			var offsetx:int = Math.ceil((Mentor.winWidth / titleWidth) >> 1) +OFF_SET;
+			var offsety:int = Math.ceil((Mentor.winHeight / titleHeight) >> 1) +OFF_SET;
 			//计算中心点
-			var dx:int = Math.ceil((x + (FrameWork.winWidth / OFF_SET)) / titleWidth);
-			var dy:int = Math.ceil((y + (FrameWork.winHeight / OFF_SET)) / titleHeight);
+			var dx:int = Math.ceil((x + (Mentor.winWidth / OFF_SET)) / titleWidth);
+			var dy:int = Math.ceil((y + (Mentor.winHeight / OFF_SET)) / titleHeight);
 			//trace("偏移：",offsetx, offsety, dx, dy);
 			//分析前后需要的块数
 			var startX:int = Math.max(0, dx - offsetx);
@@ -138,7 +138,7 @@ package org.web.rpg.core
 					}
 				}
 			}
-			FrameWork.perfectLoader.start();
+			Mentor.perfectLoader.start();
 			//渲染位图
 			refresh();
 		}

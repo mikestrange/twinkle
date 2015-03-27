@@ -1,7 +1,6 @@
 package game.datas.vo 
 {
 	import flash.geom.Rectangle;
-	import org.web.sdk.FrameWork;
 	
 	public class ActionVo 
 	{

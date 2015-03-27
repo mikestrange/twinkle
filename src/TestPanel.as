@@ -11,7 +11,6 @@ package
 	import org.web.sdk.display.bar.utils.ScaleSprite;
 	import org.web.sdk.display.core.text.TextEditor;
 	import org.web.sdk.display.utils.AlignType;
-	import org.web.sdk.FrameWork;
 	import org.web.sdk.tool.Scale9Bitmap;
 	
 	public class TestPanel extends ActiveSprite

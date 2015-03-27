@@ -5,7 +5,7 @@ package org.web.sdk.display.core
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import org.web.sdk.inters.IDisplay;
 	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
@@ -271,9 +271,9 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				FrameWork.addStageListener(Event.RESIZE, onResize);
+				Mentor.addStageListener(Event.RESIZE, onResize);
 			}else {
-				FrameWork.removeStageListener(Event.RESIZE, onResize);
+				Mentor.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		

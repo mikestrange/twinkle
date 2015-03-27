@@ -21,7 +21,7 @@ package game.ui.map
 	import org.web.rpg.core.MeshMap;
 	import org.web.rpg.core.MapData;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.tool.Clock;
@@ -51,9 +51,9 @@ package game.ui.map
 		{
 			if (isListener) return;
 			isListener = true;
-			FrameWork.stage.addEventListener(Event.ENTER_FRAME, onEnter);
-			FrameWork.stage.addEventListener(Event.RESIZE, onResize);
-			FrameWork.stage.addEventListener(MouseEvent.CLICK, onStageClick);
+			Mentor.stage.addEventListener(Event.ENTER_FRAME, onEnter);
+			Mentor.stage.addEventListener(Event.RESIZE, onResize);
+			Mentor.stage.addEventListener(MouseEvent.CLICK, onStageClick);
 		}
 		
 		public function getMap():MeshMap
@@ -67,9 +67,9 @@ package game.ui.map
 			playerHash.clear();
 			if (!isListener) return;
 			isListener = false;
-			FrameWork.stage.removeEventListener(Event.ENTER_FRAME, onEnter);
-			FrameWork.stage.removeEventListener(Event.RESIZE, onResize);
-			FrameWork.stage.removeEventListener(MouseEvent.CLICK, onStageClick);
+			Mentor.stage.removeEventListener(Event.ENTER_FRAME, onEnter);
+			Mentor.stage.removeEventListener(Event.RESIZE, onResize);
+			Mentor.stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 		}
 			
 		private function onResize(e:Event):void
@@ -81,7 +81,7 @@ package game.ui.map
 		public function showMap(id:uint):void
 		{
 			free();
-			FrameWork.downLoad(MapPath.getMapConfig(id), LoadEvent.TXT, complete);
+			Mentor.downLoad(MapPath.getMapConfig(id), LoadEvent.TXT, complete);
 		}
 		
 		private function complete(e:LoadEvent):void

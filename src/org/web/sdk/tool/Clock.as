@@ -1,7 +1,7 @@
 package org.web.sdk.tool 
 {
 	import flash.utils.*;
-	import org.web.sdk.FrameWork;
+	import org.web.sdk.Mentor;
 	/*
 	 * 一个非常好的计时器
 	 * FrameWork.stage就是stage
@@ -24,7 +24,7 @@ package org.web.sdk.tool
 		{
 			if (!isStep) {
 				isStep = true;
-				FrameWork.stage.addEventListener("enterFrame", onEnterFrame);
+				Mentor.stage.addEventListener("enterFrame", onEnterFrame);
 			}
 			clockList.push(new ClockData(fps, call, times,args));
 		}
@@ -74,7 +74,7 @@ package org.web.sdk.tool
 			if (isStep) {
 				trace("#闹钟暂停")
 				isStep = false;
-				FrameWork.stage.removeEventListener("enterFrame", onEnterFrame);
+				Mentor.stage.removeEventListener("enterFrame", onEnterFrame);
 			}
 		}
 		

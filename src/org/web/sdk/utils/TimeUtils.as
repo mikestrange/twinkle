@@ -24,12 +24,12 @@ package org.web.sdk.utils
             }
 			
 			var year:String = String(times.fullYear);
-			var month:String = StringUtils.formatNumber((times.month + 1), 2);
-			var date:String = StringUtils.formatNumber(times.date, 2);
-			var hours:String = StringUtils.formatNumber(times.hours, 2);
-			var minutes:String = StringUtils.formatNumber(times.minutes, 2);
-			var seconds:String = StringUtils.formatNumber(times.seconds, 2);
-			var msec:String = StringUtils.formatNumber(times.milliseconds, 3);
+			var month:String = CharUtils.formatNumber((times.month + 1), 2);
+			var date:String = CharUtils.formatNumber(times.date, 2);
+			var hours:String = CharUtils.formatNumber(times.hours, 2);
+			var minutes:String = CharUtils.formatNumber(times.minutes, 2);
+			var seconds:String = CharUtils.formatNumber(times.seconds, 2);
+			var msec:String = CharUtils.formatNumber(times.milliseconds, 3);
 			//char
 			//var dat:String = year + "/" + month + "/" + date;
 			//var tm:String = hours + ":" + minutes + ":" + seconds;
