@@ -40,10 +40,11 @@ package org.web.sdk.lang
 		private function replace(chat:String, list:Array):String
 		{
 			if (list.length == BEGIN) return chat;
+			//这种方式不能通配正则？可见能够通配正则
 			var sects:Array = chat.split(_wildcard);
 			var home:String = "";
-			var len:int = sects.length - 1;
-			for (var i:int = BEGIN; i < len; i++) {
+			var leng:int = sects.length - 1;
+			for (var i:int = BEGIN; i < leng; i++) {
 				if (i >= list.length) {
 					home += sects[i];
 				}else {
@@ -91,13 +92,14 @@ package org.web.sdk.lang
 						map = new Object;
 						_conf[tag] = map;
 					}else {
+						if (lineStr.charAt() == "#") continue;
 						var cutIndex:int = lineStr.indexOf("=");
 						if (cutIndex != -1) {
 							key = StringUtil.trim(lineStr.substr(BEGIN, cutIndex));
 							value = StringUtil.trim(lineStr.substr(cutIndex + LIM));
 							if (map) map[key] = value;
 							_global[key] = value;	//全局匹配
-							trace(tag + "->[ key = " + key + ", value = " + value+"]");
+							trace(i, tag + "->[ key = " + key + ", value = " + value+"]");
 						}
 					}
 				}

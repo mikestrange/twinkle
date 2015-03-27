@@ -111,7 +111,7 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(new RayDisplayer("MouseClick"));
 			MouseDisplay.setRelease(new RayDisplayer("MouseNormal"))
-			//addDisplay(new TestPanel);
+			addDisplay(new TestPanel);
 		}
 		//ends
 	}
