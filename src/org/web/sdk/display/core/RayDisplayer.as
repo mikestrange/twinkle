@@ -111,10 +111,10 @@ package org.web.sdk.display.core
 		{
 			switch(tag)
 			{
-				case BIT_TAG: return new KitBitmap(null, textureName);
-				case BUTTON_TAG: return new KitButton(textureName);
-				case MOVIE_TAG: return new KitMovie(null, textureName);
-				case ACTION_TAG: return new KitAction(textureName)
+				case BIT_TAG: 		return new KitBitmap(null, textureName);
+				case BUTTON_TAG: 	return new KitButton(textureName);
+				case MOVIE_TAG: 	return new KitMovie(null, textureName);
+				case ACTION_TAG: 	return new KitAction(textureName);
 			}
 			return null;
 		}
@@ -214,13 +214,13 @@ package org.web.sdk.display.core
 		
 		public function get limitWidth():Number 
 		{
-			if (isNaN(_limitWidth) || _limitWidth == 0) return this.width; 
+			if (isNaN(_limitWidth)) return this.width; 
 			return _limitWidth;
 		}
 		
 		public function get limitHeight():Number 
 		{
-			if (isNaN(_limitHeight) || _limitHeight == 0) return this.height; 
+			if (isNaN(_limitHeight)) return this.height; 
 			return _limitHeight;
 		}
 		

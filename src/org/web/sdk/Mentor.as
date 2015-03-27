@@ -172,7 +172,6 @@ package org.web.sdk
 			return appDomain.getAsset(className, url);
 		}
 		
-		
 		//ends
 	}
 
