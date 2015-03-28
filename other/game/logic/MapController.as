@@ -1,6 +1,6 @@
 package game.logic 
 {
-	import org.web.sdk.display.core.Multiple;
+	import org.web.sdk.display.core.KitTool;
 	import flash.ui.Keyboard;
 	import game.consts.CmdDefined;
 	import game.consts.ModuleType;
@@ -89,7 +89,7 @@ package game.logic
 				_ismap = false;
 				_map.free();
 				_map = null;
-				Multiple.collection(10);
+				KitTool.collection(10);
 			}else {
 				_map.removeUser(player.uid);
 			}

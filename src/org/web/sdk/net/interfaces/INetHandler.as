@@ -1,11 +1,11 @@
 package org.web.sdk.net.interfaces 
 {
-	import org.web.sdk.net.handler.RespondEvented;
+	import org.web.sdk.net.RespondEvented;
 	
 	public interface INetHandler 
 	{
-		function action(event:RespondEvented):void;		//返回是否处理
-		function getMessage():Object;						//记过值
+		function netHandler(event:RespondEvented):void;		//返回是否处理
+		function action():void;								//记过值
 		//ends
 	}
 	

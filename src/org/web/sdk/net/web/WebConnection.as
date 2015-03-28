@@ -7,8 +7,8 @@ package org.web.sdk.net.web
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.handler.CmdManager;
-	import org.web.sdk.net.handler.RespondEvented;
+	import org.web.sdk.net.CmdManager;
+	import org.web.sdk.net.RespondEvented;
 	import org.web.sdk.net.interfaces.INetwork;
 	import org.web.sdk.net.interfaces.INetRequest;
 	
@@ -16,19 +16,21 @@ package org.web.sdk.net.web
 	{
 		public static const _ZERO_:int = 0;
 		//
-		private var link:String = null;
+		private var serverUrl:String = null;
 		private var loader:URLLoader;
-		private var lineList:Vector.<WebData> = new Vector.<WebData>;
+		private var lineList:Vector.<WebEvent>;
 		private var iswait:Boolean = false;
 		
 		public function WebConnection(server:String = null) 
 		{
-			if (server) link = server;
+			if (server) serverUrl = server;
+			
 			initialize();
 		}
 		
 		protected function initialize():void 
 		{
+			lineList = new Vector.<WebEvent>;
 			loader = new URLLoader;
 			loader.addEventListener(Event.COMPLETE, complete);
 			loader.addEventListener(IOErrorEvent.IO_ERROR, onerror);
@@ -36,10 +38,10 @@ package org.web.sdk.net.web
 		
 		public function getAddress():String
 		{
-			return link;
+			return serverUrl;
 		}
 		
-		public function close():void
+		public function closed():void
 		{
 			try{
 				loader.close();
@@ -47,26 +49,28 @@ package org.web.sdk.net.web
 				Log.log(this).debug('http未开始请求的断开');
 			}finally {
 				iswait = false;
-				if (lineList.length) lineList.splice(0, lineList.length);
+				if (lineList.length) {
+					lineList.splice(_ZERO_, lineList.length);
+				}
 			}
 		}
 		
 		protected function onerror(e:IOErrorEvent):void
 		{
-			var web:WebData = lineList.shift();
+			var web:WebEvent = lineList.shift();
 			Log.log(this).error("Error for Http 404:请确保连接上了后台,未知端口！ url:" + web.url);
 			sendNext();
-			if (web.client is Function) web.client(null);
+			web.onStatus(404);
 		}
 		
 		/* INTERFACE org.web.sdk.net.interfaces.INetwork */
 		public function sendNoticeRequest(request:INetRequest, message:Object = null):void 
 		{
-			request.sendRequest(message, this);	//可以自定义解析方式
+			throw Error("短连接不适用");
 		}
 		
 		//直接发送
-		public function sendWeb(cmd:int = -1, body:Object = null, client:*= undefined):void
+		public function sendTick(cmd:int, body:Object = null, result:NetResult = null):void
 		{
 			var indexUrl:String
 			if (cmd != -1) indexUrl = getAddress() + "?order=" + cmd;
@@ -83,11 +87,11 @@ package org.web.sdk.net.web
 					}
 				}
 			}
-			this.flushTerminal(new WebData(cmd, indexUrl, client));
+			this.flushPacker(new WebEvent(cmd, indexUrl, result));
 		}
 		
 		//用json打包发送
-		public function flushTerminal(pack:* = undefined):void 
+		public function flushPacker(pack:Object):void 
 		{
 			lineList.push(pack);	//添加
 			if (iswait) return;
@@ -98,7 +102,7 @@ package org.web.sdk.net.web
 		{
 			if (lineList.length) {
 				iswait = true;
-				var web:WebData = lineList[_ZERO_];
+				var web:WebEvent = lineList[_ZERO_];
 				loader.load(getRequest(web.url));
 			}else {
 				iswait = false;
@@ -109,7 +113,7 @@ package org.web.sdk.net.web
 		protected function complete(e:Event):void
 		{
 			Log.log(this).debug("->回执数据是:" + e.target.data);
-			var web:WebData = lineList.shift();
+			var web:WebEvent = lineList.shift();
 			sendNext();
 			var data:Object = null;
 			try {
@@ -117,18 +121,19 @@ package org.web.sdk.net.web
 				data = com.adobe.serialization.json.JSON.decode(e.target.data as String);
 			}catch (e:Error) {
 				Log.log(this).debug("json解析错误 Error:", e, "  ->url:" + web.url);
+				data = null;
 			}
-			/* [cmd:cmd,data:object,...]  这个是用http座位异步就可以这么处理
-			 * 不需要任何解析了，所以可以直接忽略INetHandler
-			 * 这里直接回调监听函数
-			*/
-			if (data && web.client is Function) {
-				web.client(data);		//当次回调->如果用异步，那么这里就不是这么处理了
+			
+			//当次回调->如果用异步，那么这里就不是这么处理了
+			if (data) {
+				web.onResult(data);	
 			}else {
+				web.onStatus();
 				Log.log(this).debug("#url:", web.url, "   无回调!");
 			}
 		}
 		
+		//不会关闭当前
 		public function remove(url:String):void
 		{
 			if (lineList.length == _ZERO_) return;

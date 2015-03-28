@@ -292,7 +292,7 @@ package org.web.sdk.display.core
 			this.removeEventListener(Event.ADDED_TO_STAGE, showListener);
 			this.removeEventListener(Event.REMOVED_FROM_STAGE, hideListener);
 			this.clearFilters();
-			Multiple.wipeout(this, value);
+			KitTool.wipeout(this, value);
 		}
 		
 		//设置子类的对齐格式   static

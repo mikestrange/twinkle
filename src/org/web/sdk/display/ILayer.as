@@ -7,9 +7,9 @@ package org.web.sdk.display
 	{
 		function addToLayer(dis:DisplayObject):DisplayObject;
 		function removeToLayer(dis:DisplayObject):DisplayObject;
-		function isEmpty():Boolean;
 		function removeFromFather(value:Boolean = false):void;
 		function clearChildren():void; 
+		function isEmpty():Boolean;
 		//ends
 	}
 }

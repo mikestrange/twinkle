@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <flex-config xmlns="http://www.adobe.com/2006/flex-config">
-  <output>G:\github\twinkle\.\bin\Twinkle.swc</output>
+  <output>E:\gits\twinkle\.\libs\Twinkle.swc</output>
   <use-network>true</use-network>
-  <target-player>11.0</target-player>
+  <target-player>12.0</target-player>
   <warnings>true</warnings>
   <benchmark>false</benchmark>
   <compiler>
@@ -17,11 +17,11 @@
     <use-resource-bundle-metadata>true</use-resource-bundle-metadata>
     <verbose-stacktraces>false</verbose-stacktraces>
     <source-path>
-      <path-element>g:\github\twinkle\src</path-element>
+      <path-element>e:\gits\twinkle\src</path-element>
     </source-path>
   </compiler>
   <include-classes>
-    <class>LandSprite</class>
+    <class>TestPanel</class>
     <class>Twinkle</class>
     <class>com.adobe.crypto.HMAC</class>
     <class>com.adobe.crypto.MD5</class>
@@ -146,39 +146,6 @@
     <class>com.greensock.plugins.TweenPlugin</class>
     <class>com.greensock.plugins.VisiblePlugin</class>
     <class>com.greensock.plugins.VolumePlugin</class>
-    <class>game.GameGlobal</class>
-    <class>game.consts.CmdDefined</class>
-    <class>game.consts.LayerType</class>
-    <class>game.consts.ModuleType</class>
-    <class>game.consts.NoticeDefined</class>
-    <class>game.datas.SelfData</class>
-    <class>game.datas.module.MapModule</class>
-    <class>game.datas.obj.ActionObj</class>
-    <class>game.datas.obj.EntermapObj</class>
-    <class>game.datas.obj.PlayerObj</class>
-    <class>game.datas.vo.ActionVo</class>
-    <class>game.inters.IRole</class>
-    <class>game.logic.MapController</class>
-    <class>game.logic.WorldKidnap</class>
-    <class>game.socket.GameManager</class>
-    <class>game.socket.core.CommandRequest</class>
-    <class>game.socket.keep.HeartBeat</class>
-    <class>game.socket.logic.LogicHandler</class>
-    <class>game.socket.logic.LogicRequest</class>
-    <class>game.socket.map.EntermapRequest</class>
-    <class>game.socket.map.MoveRequest</class>
-    <class>game.socket.map.QuitMapRequest</class>
-    <class>game.socket.map.StandRequest</class>
-    <class>game.socket.map.recv.ActionHandler</class>
-    <class>game.socket.map.recv.EnterHandler</class>
-    <class>game.socket.map.recv.MoveHandler</class>
-    <class>game.socket.map.recv.QuitHandler</class>
-    <class>game.socket.map.recv.StandHandler</class>
-    <class>game.ui.core.ActionType</class>
-    <class>game.ui.core.RangeMotion</class>
-    <class>game.ui.map.RoleSprite</class>
-    <class>game.ui.map.WorldMap</class>
-    <class>game.utils.DrivePath</class>
     <class>org.web.flat.volumesmoke</class>
     <class>org.web.rpg.largenetwork</class>
     <class>org.web.rpg.astar.Astar</class>
@@ -194,111 +161,102 @@
     <class>org.web.rpg.utils.MapPath</class>
     <class>org.web.rpg.utils.octa.OctaPoint</class>
     <class>org.web.sdk.beyond_challenge</class>
-    <class>org.web.sdk.FrameWork</class>
+    <class>org.web.sdk.Ramt</class>
     <class>org.web.sdk.context.ContextManager</class>
-    <class>org.web.sdk.context.ResourceContext</class>
+    <class>org.web.sdk.context.ResContext</class>
+    <class>org.web.sdk.display.Director</class>
     <class>org.web.sdk.display.House</class>
     <class>org.web.sdk.display.ILayer</class>
     <class>org.web.sdk.display.Layer</class>
-    <class>org.web.sdk.display.Multiple</class>
-    <class>org.web.sdk.display.asset.ActionTexture</class>
+    <class>org.web.sdk.display.MouseDisplay</class>
     <class>org.web.sdk.display.asset.Assets</class>
-    <class>org.web.sdk.display.asset.GlobalCreate</class>
+    <class>org.web.sdk.display.asset.KitAction</class>
+    <class>org.web.sdk.display.asset.KitBitmap</class>
+    <class>org.web.sdk.display.asset.KitButton</class>
+    <class>org.web.sdk.display.asset.KitFactory</class>
+    <class>org.web.sdk.display.asset.KitMovie</class>
     <class>org.web.sdk.display.asset.LibRender</class>
-    <class>org.web.sdk.display.asset.SingleTexture</class>
-    <class>org.web.sdk.display.asset.VectorTexture</class>
-    <class>org.web.sdk.display.core.ActiveSprite</class>
-    <class>org.web.sdk.display.core.BaseButton</class>
+    <class>org.web.sdk.display.bar.BaseButton</class>
+    <class>org.web.sdk.display.bar.utils.ScaleRect</class>
+    <class>org.web.sdk.display.bar.utils.ScaleSprite</class>
+    <class>org.web.sdk.display.core.BaseSprite</class>
+    <class>org.web.sdk.display.core.KitTool</class>
     <class>org.web.sdk.display.core.RayDisplayer</class>
     <class>org.web.sdk.display.core.SwitcherSprite</class>
+    <class>org.web.sdk.display.core.base.ActionMovie</class>
+    <class>org.web.sdk.display.core.base.BufferImage</class>
+    <class>org.web.sdk.display.core.base.RayMovieClip</class>
+    <class>org.web.sdk.display.core.text.TextEditor</class>
     <class>org.web.sdk.display.engine.AtomicEngine</class>
     <class>org.web.sdk.display.engine.IEffect</class>
     <class>org.web.sdk.display.engine.IStepper</class>
     <class>org.web.sdk.display.engine.Steper</class>
-    <class>org.web.sdk.display.ray.ActionMovie</class>
-    <class>org.web.sdk.display.ray.BufferImage</class>
-    <class>org.web.sdk.display.ray.RayMovieClip</class>
-    <class>org.web.sdk.display.text.TextEditor</class>
-    <class>org.web.sdk.display.type.AlignType</class>
-    <class>org.web.sdk.display.type.TouchState</class>
+    <class>org.web.sdk.display.interfaces.IBaseScene</class>
+    <class>org.web.sdk.display.utils.AlignType</class>
     <class>org.web.sdk.display.utils.Deluxe</class>
     <class>org.web.sdk.display.utils.DrawUtils</class>
     <class>org.web.sdk.display.utils.Swapper</class>
-    <class>org.web.sdk.fot.core.CompositeListener</class>
+    <class>org.web.sdk.display.utils.TouchState</class>
     <class>org.web.sdk.fot.core.Container</class>
-    <class>org.web.sdk.fot.core.GraftMixture</class>
     <class>org.web.sdk.fot.core.PrudentListener</class>
     <class>org.web.sdk.fot.core.SimpleListener</class>
+    <class>org.web.sdk.fot.core.Tactfuller</class>
     <class>org.web.sdk.fot.core.Water</class>
     <class>org.web.sdk.fot.interfaces.IApplicationListener</class>
     <class>org.web.sdk.fot.interfaces.ICommand</class>
-    <class>org.web.sdk.fot.interfaces.IMixture</class>
+    <class>org.web.sdk.fot.interfaces.ITactful</class>
     <class>org.web.sdk.fot.interfaces.IWrapper</class>
     <class>org.web.sdk.fot.tracker.Tracker</class>
     <class>org.web.sdk.fot.wrapper.ClassWrapper</class>
     <class>org.web.sdk.fot.wrapper.MethodWrapper</class>
     <class>org.web.sdk.fot.wrapper.MixtureWrapper</class>
-    <class>org.web.sdk.handler.EventedDispatcher</class>
-    <class>org.web.sdk.handler.IDispatcher</class>
-    <class>org.web.sdk.handler.Observer</class>
+    <class>org.web.sdk.frame.core.Venture</class>
+    <class>org.web.sdk.frame.observer.Observer</class>
     <class>org.web.sdk.inters.IAcceptor</class>
     <class>org.web.sdk.inters.IBaseSprite</class>
-    <class>org.web.sdk.inters.IComponent</class>
-    <class>org.web.sdk.inters.IDisplayObject</class>
+    <class>org.web.sdk.inters.IDisplay</class>
     <class>org.web.sdk.inters.ISwitcher</class>
     <class>org.web.sdk.keyset.KeyAction</class>
     <class>org.web.sdk.keyset.KeyManager</class>
     <class>org.web.sdk.keyset.KeyRequest</class>
+    <class>org.web.sdk.lang.Conf</class>
     <class>org.web.sdk.lang.Lang</class>
-    <class>org.web.sdk.load.LoadAnalysis</class>
+    <class>org.web.sdk.load.CenterLoader</class>
     <class>org.web.sdk.load.LoadEvent</class>
     <class>org.web.sdk.load.LoadFluider</class>
-    <class>org.web.sdk.load.PerfectLoader</class>
+    <class>org.web.sdk.load.SetupLoad</class>
     <class>org.web.sdk.load.inters.ILoadController</class>
     <class>org.web.sdk.load.inters.ILoader</class>
     <class>org.web.sdk.load.inters.ILoadRespond</class>
     <class>org.web.sdk.load.loads.ByteLoader</class>
     <class>org.web.sdk.load.loads.ImgLoader</class>
-    <class>org.web.sdk.load.loads.ResourceLoader</class>
+    <class>org.web.sdk.load.loads.SwfLoader</class>
     <class>org.web.sdk.load.loads.TextLoader</class>
+    <class>org.web.sdk.load.utils.LoadResolve</class>
     <class>org.web.sdk.log.Log</class>
     <class>org.web.sdk.log.LogData</class>
+    <class>org.web.sdk.net.CmdManager</class>
+    <class>org.web.sdk.net.RespondEvented</class>
     <class>org.web.sdk.net.amf.AMFRemoting</class>
-    <class>org.web.sdk.net.handler.CmdManager</class>
-    <class>org.web.sdk.net.handler.RespondConverter</class>
-    <class>org.web.sdk.net.handler.RespondEvented</class>
     <class>org.web.sdk.net.interfaces.IAssigned</class>
-    <class>org.web.sdk.net.interfaces.IConverter</class>
     <class>org.web.sdk.net.interfaces.INetHandler</class>
     <class>org.web.sdk.net.interfaces.INetRequest</class>
     <class>org.web.sdk.net.interfaces.INetwork</class>
     <class>org.web.sdk.net.socket.AssignedTransfer</class>
     <class>org.web.sdk.net.socket.ServerSocket</class>
-    <class>org.web.sdk.net.socket.core.ServerRequest</class>
-    <class>org.web.sdk.net.socket.core.ServerRespond</class>
     <class>org.web.sdk.net.utils.ByteSystem</class>
     <class>org.web.sdk.net.utils.FtpRead</class>
     <class>org.web.sdk.net.utils.FtpWrite</class>
     <class>org.web.sdk.net.utils.WebProto</class>
+    <class>org.web.sdk.net.web.NetResult</class>
     <class>org.web.sdk.net.web.WebConnection</class>
-    <class>org.web.sdk.net.web.WebData</class>
+    <class>org.web.sdk.net.web.WebEvent</class>
     <class>org.web.sdk.pool.Pools</class>
     <class>org.web.sdk.sound.SoundData</class>
     <class>org.web.sdk.sound.SoundFactory</class>
     <class>org.web.sdk.sound.SoundManager</class>
     <class>org.web.sdk.sound.core.ISound</class>
     <class>org.web.sdk.sound.core.Song</class>
-    <class>org.web.sdk.system.GlobalMessage</class>
-    <class>org.web.sdk.system.Kidnap</class>
-    <class>org.web.sdk.system.com.ICommand</class>
-    <class>org.web.sdk.system.com.Invoker</class>
-    <class>org.web.sdk.system.com.OrderZone</class>
-    <class>org.web.sdk.system.core.BaseMessage</class>
-    <class>org.web.sdk.system.core.Controller</class>
-    <class>org.web.sdk.system.events.Evented</class>
-    <class>org.web.sdk.system.inter.IController</class>
-    <class>org.web.sdk.system.inter.IKidnap</class>
-    <class>org.web.sdk.system.inter.IMessage</class>
     <class>org.web.sdk.tool.Bezier</class>
     <class>org.web.sdk.tool.Clock</class>
     <class>org.web.sdk.tool.Color</class>
@@ -312,13 +270,13 @@
     <class>org.web.sdk.tool.secret.Cracker</class>
     <class>org.web.sdk.tool.secret.FloatPass</class>
     <class>org.web.sdk.tool.secret.McryptEncryption</class>
+    <class>org.web.sdk.utils.CharUtils</class>
     <class>org.web.sdk.utils.ClassUtils</class>
-    <class>org.web.sdk.utils.CofFix</class>
     <class>org.web.sdk.utils.HashMap</class>
     <class>org.web.sdk.utils.Maths</class>
-    <class>org.web.sdk.utils.StringUtils</class>
+    <class>org.web.sdk.utils.StringUtil</class>
     <class>org.web.sdk.utils.TimeUtils</class>
-    <class>org.web.sdk.utils.UniqueHash</class>
+    <class>org.web.sdk.utils.UintHash</class>
     <class>org.web.sdk.utils.list.HashList</class>
     <class>org.web.sdk.utils.list.ListNode</class>
     <class>org.web.sdk.utils.point.IsoObject</class>

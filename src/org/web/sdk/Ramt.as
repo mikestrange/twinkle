@@ -5,10 +5,7 @@ package org.web.sdk
 	import flash.display.*;
 	import flash.events.*;
 	import org.web.sdk.context.*;
-	import org.web.sdk.display.asset.KitBitmap;
-	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.engine.*;
-	import org.web.sdk.display.utils.DrawUtils;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;

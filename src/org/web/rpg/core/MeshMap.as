@@ -32,7 +32,7 @@ package org.web.rpg.core
 		public function MeshMap()
 		{
 			this.addEventListener(Event.REMOVED_FROM_STAGE, hideEvent, false, 0, true);
-			this.addChild(_itemLayer = new BaseSprite);
+			this.addDisplay(_itemLayer = new BaseSprite);
 			_itemLayer.lockMouse();
 		}
 		
@@ -43,7 +43,7 @@ package org.web.rpg.core
 			_mapdata = data;
 			_grid = Grid.createByArray(data.mapArr, data.across, data.vertical, data.sizeWidth, data.sizeHeight);
 			_backdrop = new MapShallow(data);
-			this.addChildAt(_backdrop, 0);
+			this.addDisplay(_backdrop, 0);
 		}
 		
 		override protected function hideEvent():void 

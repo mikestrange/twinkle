@@ -5,7 +5,7 @@ package org.web.sdk.net.interfaces
 	 * */
 	public interface INetRequest 
 	{
-		function sendRequest(message:Object, socket:INetwork = null):void;
-		function getCmd():uint;
+		function batchProcess(message:Object, socket:INetwork = null):void;
+		function get command():uint;
 	}
 }

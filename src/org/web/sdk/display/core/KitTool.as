@@ -7,7 +7,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.inters.*;
 	import org.web.sdk.log.Log;
 	
-	public class Multiple 
+	public class KitTool 
 	{
 		public static const RECT:Rectangle = new Rectangle;
 		public static const COLOR_TRANS_FORM:ColorTransform = new ColorTransform;

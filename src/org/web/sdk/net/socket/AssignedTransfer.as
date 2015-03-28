@@ -5,15 +5,12 @@ package org.web.sdk.net.socket
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.beyond_challenge;
-	import org.web.sdk.net.handler.CmdManager;
-	import org.web.sdk.net.handler.RespondEvented;
+	import org.web.sdk.net.CmdManager;
+	import org.web.sdk.net.RespondEvented;
 	import org.web.sdk.net.interfaces.IAssigned;
 	import org.web.sdk.net.interfaces.INetwork;
-	import org.web.sdk.net.interfaces.INetHandler;
 	import org.web.sdk.net.utils.FtpRead;
-	
-	use namespace beyond_challenge
+
 	
 	public class AssignedTransfer implements IAssigned 
 	{
@@ -46,7 +43,6 @@ package org.web.sdk.net.socket
 						byteBuff.clear();
 						byteBuff.position = ZERO;
 					}
-					byteBuff.endian = socket.endian;	// 设置大小端
 					isReadTop = true;
 					btLeng = socket.readUnsignedInt();	//包长度
 					if (socket.bytesAvailable > ZERO) unpack(socket);
@@ -74,14 +70,13 @@ package org.web.sdk.net.socket
 			var cmd:uint = byte.readUnsignedInt();
 			var type:int = byte.readUnsignedShort();
 			//派发命令事务
-			CmdManager.dispatchRespond(new RespondEvented(cmd, socket as INetwork, new FtpRead(createByteArray(byte))));
+			CmdManager.respond(new RespondEvented(cmd, socket as INetwork, new FtpRead(createByteArray(byte))));
 		}
 		
 		//把长度包分装
-		beyond_challenge function createByteArray(byte:ByteArray):ByteArray
+		protected function createByteArray(byte:ByteArray):ByteArray
 		{
 			var data:ByteArray = new ByteArray;
-			data.endian = byte.endian;	//设置大小端
 			byte.readBytes(data, 0, byte.bytesAvailable);
 			data.position = ZERO;
 			return data;

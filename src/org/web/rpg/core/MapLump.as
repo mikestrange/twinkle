@@ -4,7 +4,7 @@ package org.web.rpg.core
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.display.core.Multiple;
+	import org.web.sdk.display.core.KitTool;
 	import org.web.sdk.Ramt;
 	import org.web.sdk.load.LoadEvent;
 	
@@ -38,7 +38,7 @@ package org.web.rpg.core
 		
 		public function setBitmapdata(bit:BitmapData):void 
 		{
-			Multiple.dispose(this.bitmapData);
+			KitTool.dispose(this.bitmapData);
 			this.bitmapData = bit;
 		}
 		
@@ -74,7 +74,7 @@ package org.web.rpg.core
 			hide();
 			_isLoad = false;
 			Ramt.loader.removeRespond(_url, complete);
-			Multiple.dispose(this.bitmapData);
+			KitTool.dispose(this.bitmapData);
 		}
 		//ends
 	}

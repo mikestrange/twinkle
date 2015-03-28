@@ -63,12 +63,12 @@ package game.ui.map
 			var matrix:Matrix = new Matrix;
 			matrix.translate( -20, -90)
 			_action.transform.matrix = matrix;
-			this.addChild(_action);
+			this.addDisplay(_action);
 			//名称
 			_texture = new RayDisplayer(DrawUtils.drawEditor(_data.usn));
 			_texture.x = -_texture.width >> 1;
 			_texture.y = -90 - _texture.height;
-			this.addChild(_texture);
+			this.addDisplay(_texture);
 			//
 			stand();
 			//DrawLine.drawSkeletonLine(this.graphics);
