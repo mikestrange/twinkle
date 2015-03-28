@@ -38,7 +38,7 @@ package org.web.sdk.display
 			Ramt.removeStageListener(MouseEvent.MOUSE_UP, onState);
 		}
 		
-		private static function onMove(e:MouseEvent = null):void
+		private static function onMove(event:MouseEvent = null):void
 		{
 			if (isDown) {
 				if (downSprite) {
@@ -49,12 +49,13 @@ package org.web.sdk.display
 					upSprite.moveTo(Ramt.stage.mouseX, Ramt.stage.mouseY);
 				}
 			}
+			event.updateAfterEvent();
 		}
 		
-		private static function onState(e:MouseEvent):void
+		private static function onState(event:MouseEvent):void
 		{
-			isDown = (e.type == MouseEvent.MOUSE_DOWN);
-			if (e.type == MouseEvent.MOUSE_DOWN) {
+			isDown = (event.type == MouseEvent.MOUSE_DOWN);
+			if (event.type == MouseEvent.MOUSE_DOWN) {
 				if (upSprite) upSprite.removeFromFather();
 				if (downSprite && !downSprite.isAdded()) {
 					Ramt.stage.addChild(downSprite as DisplayObject);
@@ -65,7 +66,7 @@ package org.web.sdk.display
 					Ramt.stage.addChild(upSprite as DisplayObject);
 				}
 			}
-			onMove();
+			onMove(event);
 		}
 		
 		public static function setDown(display:IDisplay):void
