@@ -55,14 +55,14 @@ package org.web.sdk.display
 		{
 			isDown = (e.type == MouseEvent.MOUSE_DOWN);
 			if (e.type == MouseEvent.MOUSE_DOWN) {
-				if (upSprite) upSprite.removeFromFather();
-				if (downSprite && !downSprite.isAdded()) {
-					Ramt.stage.addChild(downSprite as DisplayObject);
+				upSprite.removeFromFather();
+				if (!downSprite.isAdded()) {
+					Ramt.stage.addChild(downSprite.convertDisplay());
 				}
 			}else {
-				if (downSprite) downSprite.removeFromFather();
-				if (upSprite && !upSprite.isAdded()) {
-					Ramt.stage.addChild(upSprite as DisplayObject);
+				downSprite.removeFromFather();
+				if (!upSprite.isAdded()) {
+					Ramt.stage.addChild(upSprite.convertDisplay());
 				}
 			}
 			onMove();
@@ -72,15 +72,20 @@ package org.web.sdk.display
 		{
 			if (downSprite) downSprite.removeFromFather(true);
 			downSprite = display;
+			if (isDown && !downSprite.isAdded()) {
+				Ramt.stage.addChild(downSprite.convertDisplay());
+			}
+			onMove();
 		}
 		
 		public static function setRelease(display:IDisplay):void
 		{
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
-			if (upSprite && !upSprite.isAdded()) {
-				Ramt.stage.addChild(upSprite as DisplayObject);
+			if (!isDown && !upSprite.isAdded()) {
+				Ramt.stage.addChild(upSprite.convertDisplay());
 			}
+			onMove();
 		}
 		
 		public static function isMouseDown():Boolean
