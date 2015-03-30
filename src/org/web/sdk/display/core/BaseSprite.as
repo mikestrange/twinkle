@@ -5,7 +5,7 @@ package org.web.sdk.display.core
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	import org.web.sdk.inters.IDisplay;
 	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
@@ -27,18 +27,6 @@ package org.web.sdk.display.core
 		public function BaseSprite()
 		{
 			initialization();
-		}
-		
-		override public function addChild(child:DisplayObject):DisplayObject 
-		{
-			throw Error("Out of date interface " + this);
-			return null;
-		}
-		
-		override public function addChildAt(child:DisplayObject, index:int):DisplayObject 
-		{
-			throw Error("Out of date interface " + this);
-			return null;
 		}
 		
 		protected function initialization():void
@@ -77,6 +65,16 @@ package org.web.sdk.display.core
 		public function isEmpty():Boolean
 		{
 			return this.numChildren == 0;
+		}
+		
+		public function getSprite():Sprite
+		{
+			return this;
+		}
+		
+		public function getName():String
+		{
+			return this.name;
 		}
 		
 		public function getChildrenByOper(value:int = 0):Vector.<IDisplay>
@@ -132,7 +130,7 @@ package org.web.sdk.display.core
 		
 		
 		/* INTERFACE org.web.sdk.inters.IDisplayObject */
-		public function toGlobal(mx:Number = 0, my:Number = 0):Point
+		public function toAnima(mx:Number = 0, my:Number = 0):Point
 		{
 			return this.localToGlobal(new Point(mx, my));
 		}
@@ -271,9 +269,9 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Ramt.addStageListener(Event.RESIZE, onResize);
+				Crystal.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Ramt.removeStageListener(Event.RESIZE, onResize);
+				Crystal.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		

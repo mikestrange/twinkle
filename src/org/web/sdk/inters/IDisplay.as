@@ -68,7 +68,7 @@ package org.web.sdk.inters
 		//可以不用
 		//function getBounds(targetCoordinateSpace:DisplayObject):Rectangle;
 		//坐标转换
-		function toGlobal(mx:Number = 0, my:Number = 0):Point;
+		function toAnima(mx:Number = 0, my:Number = 0):Point;
 		function toLocal(mx:Number = 0, my:Number = 0):Point;
 		//新增接口
 		//是否被添加到父亲

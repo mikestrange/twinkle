@@ -19,6 +19,7 @@ package
 		
 		override protected function showEvent():void 
 		{
+			trace("怎么没有来这里 ")
 			//没被添加到舞台就释放不了
 			//var dis:RayDisplayer = ScaleSprite.byPoint("panelBg1", 320, 140, 800, 400);
 			//this.addDisplay(dis);

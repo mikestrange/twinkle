@@ -1,51 +1,77 @@
 package org.web.sdk.display 
 {
+	import flash.display.DisplayObjectContainer;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.interfaces.IBaseScene;
+	import org.web.sdk.display.interfaces.IDirector;
+	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.Crystal;
 	
-	public class Director extends BaseSprite
+	public class Director implements IDirector
 	{
-		private var _currentScene:IBaseScene;
+		private var _current:IBaseScene;
+		private var _root:DisplayObjectContainer;
 		
-		public function gotoScene(scene:IBaseScene):void
+		public function Director(root:DisplayObjectContainer)
 		{
-			if (scene == _currentScene) return;
-			if (_currentScene == null) {
-				_currentScene = scene;
-				this.addDisplay(_currentScene);
-				_currentScene.onEnter();
-			}else {
-				scene.prevScene = _currentScene;
-				_currentScene = scene;
-				_currentScene.onEnter();
-			}
+			_root = root;
 		}
 		
-		public function removeScene(scene:IBaseScene):void
+		public function getRoot():DisplayObjectContainer
+		{
+			return _root;
+		}
+		
+		public function goto(scene:IBaseScene):void
+		{
+			if (scene == null) return;
+			if (scene == _current) return;
+			if (_current) {
+				_current.onExit();
+				scene.prevScene = _current;
+			}
+			_current = scene;
+			getRoot().addChild(scene.getSprite());
+			_current.onEnter();
+		}
+		
+		//直接退出，会打断之前的排序，破坏当前层级
+		public function quit(scene:IBaseScene):void
 		{
 			if (scene) {
 				scene.onExit();
-				scene.removeFromFather(true);
-				if (_currentScene == scene) _currentScene = null;
+				if (_current == scene) _current = null;
+				//如果存在上一级，那么返回
+				if (scene.prevScene) goto(scene.prevScene);
+			}else {
+				trace("不存在的Scene");
 			}
 		}
 		
-		public function get currentScene():IBaseScene
+		public function get current():IBaseScene
         {
-            return _currentScene;
+            return _current;
         }
 		
-		//回溯
-		public function revertPrevScene():Boolean
+		//回溯，不会设置当前的上级，不破坏但却层级
+		public function black():Boolean
 		{
+			if (_current && _current.prevScene) {
+				if (_current == _current.prevScene) return false;
+				_current.onExit();
+				_current = _current.prevScene;
+				_current.onEnter();
+				return true;
+			}
 			return false;
 		}
 		
-		public function isInScene(scene:IBaseScene):Boolean
+		public function isNote(scene:IBaseScene):Boolean
         {
-            if (_currentScene == scene) return true;
+            if (_current == scene) return true;
             return false;
         }
+		
 		//end
 	}
 

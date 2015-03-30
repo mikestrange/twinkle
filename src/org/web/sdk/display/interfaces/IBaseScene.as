@@ -1,20 +1,23 @@
 package org.web.sdk.display.interfaces 
 {
+	import flash.display.Sprite;
 	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.display.Director;
 	
-	public interface IBaseScene extends IBaseSprite 
+	public interface IBaseScene
 	{
+		function getSprite():Sprite;
 		function onEnter():void;
 		function onExit():void;
 		//
 		function get prevScene():IBaseScene;
 		function get nextScene():IBaseScene;
-		function set prevScene(value:IBaseScene):void;
-		function set nextScene(value:IBaseScene):void;
+		function set prevScene(prev:IBaseScene):void;
+		function set nextScene(next:IBaseScene):void;
 		//调整
 		function updateResize():void;
-		//建立图层
-		function createLayer(name:String, floor:int = -1):IBaseSprite;
+		//快速建立
+		function createLayer(...rest):void;
 		function getLayer(name:String):IBaseSprite;
 		function addToLayer(sprite:IBaseSprite, layerName:String = null):void;
 		//end

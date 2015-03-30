@@ -35,14 +35,14 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			Ramt.utilization(this.stage, 0, 0);
+			Crystal.utilization(new Director(this), 0, 0);
 			//最大下载
-			CenterLoader.gets().LOAD_MAX = 5;			
+			Crystal.setLoadMaxLength(5)
 			//内存查看
-			FpsMonitor.gets().show();					
+			//FpsMonitor.gets().show();					
 			//启动模块和网络连接
 			//加载配置
-			Ramt.downLoad("asset/config.xml",complete);
+			Crystal.downLoad("asset/config.xml",complete);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
@@ -64,7 +64,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					Ramt.downLoad(url, resComplete, i == length - 1, Ramt.context);
+					Crystal.downLoad(url, resComplete, i == length - 1, Crystal.context);
 				}
 			}
 			trace("res:", length);
@@ -73,7 +73,7 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			Ramt.appDomain.share(e.url, e.getContext());
+			//Ramt.appDomain.share(e.url, e.getContext());
 			if (e.data == false) return;
 			trace("--------res load over,start game---------")
 			//登陆模块
@@ -81,7 +81,8 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			addDisplay(new TestPanel);
+			//
+			Crystal.director.goto(new Ascene());
 		}
 		//ends
 	}

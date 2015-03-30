@@ -6,7 +6,7 @@
 package org.web.sdk.load 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.frame.observer.Observer;
+	import org.web.sdk.load.observer.Observer;
 	import org.web.sdk.load.inters.ILoadController;
 	import org.web.sdk.load.inters.ILoader;
 	import org.web.sdk.load.inters.ILoadRespond;

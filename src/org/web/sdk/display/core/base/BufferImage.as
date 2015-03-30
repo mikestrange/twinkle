@@ -8,7 +8,7 @@ package org.web.sdk.display.core.base
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.inters.IAcceptor;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * */
@@ -34,7 +34,7 @@ package org.web.sdk.display.core.base
 			if (_url) dispose();
 			_url = value;
 			//没有就让他去下载，至于他用什么形式去注册那就不管了
-			if (_url) Ramt.downLoad(_url, complete);
+			if (_url) Crystal.downLoad(_url, complete);
 		}
 		
 		protected function complete(e:LoadEvent):void
@@ -53,7 +53,7 @@ package org.web.sdk.display.core.base
 		{
 			if (_url == null) return;
 			if (_over) super.dispose();
-			else Ramt.loader.removeRespond(_url, complete);
+			else Crystal.loader.removeRespond(_url, complete);
 			_over = false;
 			_url = null;
 		}

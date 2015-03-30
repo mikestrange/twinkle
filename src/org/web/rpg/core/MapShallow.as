@@ -6,7 +6,7 @@ package org.web.rpg.core
 	import flash.utils.Dictionary;
 	import org.web.rpg.core.MapData;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	import org.web.sdk.load.LoadEvent;
 	/*
 	 * 背景地图，完美的封装了
@@ -69,7 +69,7 @@ package org.web.rpg.core
 			}
 			drawBlack();	
 			//下载小地图
-			Ramt.downLoad(data.smallUrl, complete);
+			Crystal.downLoad(data.smallUrl, complete);
 			//打开地图下载
 			this.openLoad = true;
 		}
@@ -113,11 +113,11 @@ package org.web.rpg.core
 		private function launch(x:Number,y:Number):void
 		{
 			//计算中心偏移
-			var offsetx:int = Math.ceil((Ramt.winWidth / titleWidth) >> 1) +OFF_SET;
-			var offsety:int = Math.ceil((Ramt.winHeight / titleHeight) >> 1) +OFF_SET;
+			var offsetx:int = Math.ceil((Crystal.winWidth / titleWidth) >> 1) +OFF_SET;
+			var offsety:int = Math.ceil((Crystal.winHeight / titleHeight) >> 1) +OFF_SET;
 			//计算中心点
-			var dx:int = Math.ceil((x + (Ramt.winWidth / OFF_SET)) / titleWidth);
-			var dy:int = Math.ceil((y + (Ramt.winHeight / OFF_SET)) / titleHeight);
+			var dx:int = Math.ceil((x + (Crystal.winWidth / OFF_SET)) / titleWidth);
+			var dy:int = Math.ceil((y + (Crystal.winHeight / OFF_SET)) / titleHeight);
 			//trace("偏移：",offsetx, offsety, dx, dy);
 			//分析前后需要的块数
 			var startX:int = Math.max(0, dx - offsetx);
@@ -137,7 +137,7 @@ package org.web.rpg.core
 					}
 				}
 			}
-			Ramt.loader.start();
+			Crystal.loader.start();
 			//渲染位图
 			refresh();
 		}
