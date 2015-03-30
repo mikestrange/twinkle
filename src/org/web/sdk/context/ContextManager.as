@@ -3,7 +3,7 @@ package org.web.sdk.context
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	/**
 	 *域的管理
 	 */

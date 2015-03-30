@@ -6,7 +6,7 @@ package org.web.sdk.lang
 	public class Conf 
 	{
 		private var _conf:Object;
-		private var _global:Object;
+		private var _Anima:Object;
 		//通配标志
 		private var _wildcard:* = undefined;
 		private const LIM:int = 1;
@@ -18,9 +18,9 @@ package org.web.sdk.lang
 		}
 		
 		//也可以通过全局匹配
-		public function global(key:String, ...args):String 
+		public function Anima(key:String, ...args):String 
 		{
-			var chat:String = _global[key];
+			var chat:String = _Anima[key];
 			if (chat) return replace(chat, args);
 			return null;
 		}
@@ -69,10 +69,10 @@ package org.web.sdk.lang
 			//是否清理之前的
 			if (clear) {
 				_conf = new Object;
-				_global = new Object;
+				_Anima = new Object;
 			}else {
 				if (_conf == null) _conf = new Object;
-				if (_global == null) _global = new Object;
+				if (_Anima == null) _Anima = new Object;
 			}
 			trace("__________INI  START___________");
 			for (var i:int = BEGIN; i < list.length; i++)
@@ -97,14 +97,14 @@ package org.web.sdk.lang
 							key = StringUtil.trim(lineStr.substr(BEGIN, cutIndex));
 							value = StringUtil.trim(lineStr.substr(cutIndex + LIM));
 							if (map) map[key] = value;
-							_global[key] = value;	//全局匹配
+							_Anima[key] = value;	//全局匹配
 							trace(i, tag + "->[ key = " + key + ", value = " + value+"]");
 						}
 					}
 				}
 			}
 			trace("__________INI  END__________");
-			//trace(global("LEVEL1",1,1))
+			//trace(Anima("LEVEL1",1,1))
 			return null;
 		}
 		//end

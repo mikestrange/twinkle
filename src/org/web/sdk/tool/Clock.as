@@ -1,7 +1,7 @@
 package org.web.sdk.tool 
 {
 	import flash.utils.*;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	/*
 	 * 一个非常好的计时器
 	 * FrameWork.stage就是stage
@@ -25,7 +25,7 @@ package org.web.sdk.tool
 			if (!isstep) {
 				isstep = true;
 				clockList = new Vector.<ClockData>;
-				Ramt.addStageListener("enterFrame", runEvent);
+				Crystal.addStageListener("enterFrame", runEvent);
 			}
 			clockList.push(new ClockData(interval, call, times,args));
 		}
@@ -74,7 +74,7 @@ package org.web.sdk.tool
 		{
 			if (isstep) {
 				isstep = false;
-				Ramt.removeStageListener("enterFrame", runEvent);
+				Crystal.removeStageListener("enterFrame", runEvent);
 			}
 		}
 		

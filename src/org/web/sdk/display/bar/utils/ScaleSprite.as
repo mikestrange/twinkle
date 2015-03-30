@@ -7,7 +7,7 @@ package org.web.sdk.display.bar.utils
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	/*
 	 * 一个非常快速的九宫格的
 	 * */
@@ -162,7 +162,7 @@ package org.web.sdk.display.bar.utils
 		{
 			const libName:String = name + ":" + "pox_" + pox + "_pow_" + pow;
 			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
-			scale.setRes(Ramt.getAsset(name) as BitmapData);
+			scale.setRes(Crystal.getAsset(name) as BitmapData);
 			scale.setPointX(pox, pow);
 			return scale.getResult(libName);	
 		}
@@ -171,7 +171,7 @@ package org.web.sdk.display.bar.utils
 		{
 			const libName:String = name + ":" + "poy_" + poy + "_poh_" + poh;
 			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
-			scale.setRes(Ramt.getAsset(name) as BitmapData);
+			scale.setRes(Crystal.getAsset(name) as BitmapData);
 			scale.setPointY(poy, poh);
 			return scale.getResult(libName);
 		}
@@ -180,7 +180,7 @@ package org.web.sdk.display.bar.utils
 		{
 			const libName:String = name + ":pox_" + pox + "_poy_" + poy + "_pow_" + pow + "_poh_" + poh;
 			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
-			scale.setRes(Ramt.getAsset(name) as BitmapData);
+			scale.setRes(Crystal.getAsset(name) as BitmapData);
 			scale.setPoint(pox, poy, pow, poh);
 			return scale.getResult(libName);
 		}

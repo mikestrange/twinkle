@@ -1,7 +1,6 @@
 package game.datas.obj 
 {
 	import game.datas.SelfData;
-	import game.utils.DrivePath;
 	import org.web.rpg.astar.Node;
 	
 	public class PlayerObj 
@@ -27,7 +26,7 @@ package game.datas.obj
 		
 		public function get url():String
 		{
-			return DrivePath.getUrlByType(type);
+			return "http://127.0.0.1/game/asset/ui/001_player.swf";
 		}
 		
 		public function isself():Boolean

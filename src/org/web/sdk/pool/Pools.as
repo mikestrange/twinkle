@@ -6,7 +6,7 @@ package org.web.sdk.pool
 	{	
 		private static var hashKeys:Object = { };
 		
-		public static function create(fileName:String="global"):Pools
+		public static function create(fileName:String="Anima"):Pools
 		{
 			if (fileName == null) throw Error('this className is null');
 			if (null == Pools.hashKeys[fileName]) {

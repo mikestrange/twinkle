@@ -9,19 +9,16 @@ package game.ui.map
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	import flash.utils.getTimer;
-	import game.consts.LayerType;
-	import game.consts.NoticeDefined;
 	import game.datas.obj.ActionObj;
 	import game.datas.obj.PlayerObj;
 	import game.datas.vo.ActionVo;
-	import game.logic.WorldKidnap;
 	import game.ui.map.RoleSprite;
 	import org.web.rpg.astar.Astar;
 	import org.web.rpg.astar.Node;
 	import org.web.rpg.core.MeshMap;
 	import org.web.rpg.core.MapData;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.tool.Clock;
@@ -51,9 +48,9 @@ package game.ui.map
 		{
 			if (isListener) return;
 			isListener = true;
-			Ramt.stage.addEventListener(Event.ENTER_FRAME, onEnter);
-			Ramt.stage.addEventListener(Event.RESIZE, onResize);
-			Ramt.stage.addEventListener(MouseEvent.CLICK, onStageClick);
+			Crystal.stage.addEventListener(Event.ENTER_FRAME, onEnter);
+			Crystal.stage.addEventListener(Event.RESIZE, onResize);
+			Crystal.stage.addEventListener(MouseEvent.CLICK, onStageClick);
 		}
 		
 		public function getMap():MeshMap
@@ -67,9 +64,9 @@ package game.ui.map
 			playerHash.clear();
 			if (!isListener) return;
 			isListener = false;
-			Ramt.stage.removeEventListener(Event.ENTER_FRAME, onEnter);
-			Ramt.stage.removeEventListener(Event.RESIZE, onResize);
-			Ramt.stage.removeEventListener(MouseEvent.CLICK, onStageClick);
+			Crystal.stage.removeEventListener(Event.ENTER_FRAME, onEnter);
+			Crystal.stage.removeEventListener(Event.RESIZE, onResize);
+			Crystal.stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 		}
 			
 		private function onResize(e:Event):void
@@ -81,14 +78,14 @@ package game.ui.map
 		public function showMap(id:uint):void
 		{
 			free();
-			Ramt.downLoad(MapPath.getMapConfig(id), complete);
+			Crystal.downLoad(MapPath.getMapConfig(id), complete);
 		}
 		
 		private function complete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
 			map.setMapdata(MapData.create(new XML(e.target as String)));
-			if(!map.isAdded()) WorldKidnap.addToLayer(map, LayerType.MAP);
+			//if(!map.isAdded()) WorldKidnap.addToLayer(map, LayerType.MAP);
 			//添加主角
 			setActor(PlayerObj.gets());
 			//初始化
@@ -120,7 +117,6 @@ package game.ui.map
 				//空闲3秒发送一次自己的坐标
 				if (actor.isWait()) {
 					if (getTimer() - sendTime>STOP_TIME) {
-						ServerSocket.socket.sendNotice(NoticeDefined.STAND_HERE);
 						sendTime = getTimer();
 					}
 				}else {
@@ -161,7 +157,6 @@ package game.ui.map
 		public function sendSelf(e:Object = null):void
 		{
 			ActionVo.gets().setData(actor.point, actor.x, actor.y, map.getMapRect(actor.x, actor.y), 50, 100);
-			ServerSocket.socket.sendNotice(NoticeDefined.USER_MOVE, ActionVo.gets());
 		}
 		
 		//建立角色

@@ -4,7 +4,7 @@ package org.web.sdk.display
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import org.web.sdk.display.asset.KitFactory;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	import org.web.sdk.inters.IDisplay;
 	
 	public class MouseDisplay 
@@ -19,11 +19,11 @@ package org.web.sdk.display
 			if (isshow) return;
 			isshow = !isshow;
 			Mouse.hide();
-			Ramt.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			Ramt.addStageListener(MouseEvent.MOUSE_DOWN, onState);
-			Ramt.addStageListener(MouseEvent.MOUSE_UP, onState);
+			Crystal.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			Crystal.addStageListener(MouseEvent.MOUSE_DOWN, onState);
+			Crystal.addStageListener(MouseEvent.MOUSE_UP, onState);
 			//屏蔽鼠标右键
-			Ramt.addStageListener("rightMouseDown", function(event:Object):void{});
+			Crystal.addStageListener("rightMouseDown", function(event:Object):void{});
 		}
 		
 		public static function hide():void 
@@ -33,26 +33,28 @@ package org.web.sdk.display
 			Mouse.show();
 			if (upSprite) upSprite.removeFromFather();
 			if (downSprite) downSprite.removeFromFather();
-			Ramt.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			Ramt.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
-			Ramt.removeStageListener(MouseEvent.MOUSE_UP, onState);
+			Crystal.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			Crystal.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
+			Crystal.removeStageListener(MouseEvent.MOUSE_UP, onState);
 		}
 		
-		private static function onMove(e:MouseEvent = null):void
+		private static function onMove(event:MouseEvent = null):void
 		{
 			if (isDown) {
 				if (downSprite) {
-					downSprite.moveTo(Ramt.stage.mouseX, Ramt.stage.mouseY);
+					downSprite.moveTo(Crystal.stage.mouseX, Crystal.stage.mouseY);
 				}
 			}else {
 				if (upSprite) {
-					upSprite.moveTo(Ramt.stage.mouseX, Ramt.stage.mouseY);
+					upSprite.moveTo(Crystal.stage.mouseX, Crystal.stage.mouseY);
 				}
 			}
+			event.updateAfterEvent();
 		}
 		
-		private static function onState(e:MouseEvent):void
+		private static function onState(event:MouseEvent):void
 		{
+<<<<<<< HEAD
 			isDown = (e.type == MouseEvent.MOUSE_DOWN);
 			if (e.type == MouseEvent.MOUSE_DOWN) {
 				upSprite.removeFromFather();
@@ -63,9 +65,21 @@ package org.web.sdk.display
 				downSprite.removeFromFather();
 				if (!upSprite.isAdded()) {
 					Ramt.stage.addChild(upSprite.convertDisplay());
+=======
+			isDown = (event.type == MouseEvent.MOUSE_DOWN);
+			if (event.type == MouseEvent.MOUSE_DOWN) {
+				if (upSprite) upSprite.removeFromFather();
+				if (downSprite && !downSprite.isAdded()) {
+					Crystal.stage.addChild(downSprite as DisplayObject);
+				}
+			}else {
+				if (downSprite) downSprite.removeFromFather();
+				if (upSprite && !upSprite.isAdded()) {
+					Crystal.stage.addChild(upSprite as DisplayObject);
+>>>>>>> 003ada36d0992dfe97d4ca67e55b62d57d960214
 				}
 			}
-			onMove();
+			onMove(event);
 		}
 		
 		public static function setDown(display:IDisplay):void
@@ -82,8 +96,13 @@ package org.web.sdk.display
 		{
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
+<<<<<<< HEAD
 			if (!isDown && !upSprite.isAdded()) {
 				Ramt.stage.addChild(upSprite.convertDisplay());
+=======
+			if (upSprite && !upSprite.isAdded()) {
+				Crystal.stage.addChild(upSprite as DisplayObject);
+>>>>>>> 003ada36d0992dfe97d4ca67e55b62d57d960214
 			}
 			onMove();
 		}

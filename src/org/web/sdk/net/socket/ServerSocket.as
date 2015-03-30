@@ -5,10 +5,7 @@ package org.web.sdk.net.socket
 	import flash.net.*;
 	import flash.utils.*;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.net.interfaces.IAssigned;
-	import org.web.sdk.net.interfaces.INetwork;
-	import org.web.sdk.net.interfaces.INetRequest;
-	import org.web.sdk.system.GlobalMessage;
+	import org.web.sdk.net.interfaces.*;
 	
 	public class ServerSocket extends Socket implements INetwork
 	{
@@ -45,8 +42,8 @@ package org.web.sdk.net.socket
 			if (isListener) return;
 			isListener = true;
 			objectEncoding = ObjectEncoding.AMF3;		//控制版本为AMF3 
-			addEventListener(Event.CLOSE, eventToJava, false, 0, true);
-			addEventListener(Event.CONNECT, eventToJava, false, 0, true);
+			addEventListener(Event.CLOSE, eventServer, false, 0, true);
+			addEventListener(Event.CONNECT, eventServer, false, 0, true);
 			addEventListener(IOErrorEvent.IO_ERROR, onError, false, 0, true);
 			addEventListener(ProgressEvent.SOCKET_DATA, socketRespond, false, 0, true);
 			addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurity, false, 0, true);
@@ -57,8 +54,8 @@ package org.web.sdk.net.socket
 		{
 			if (!isListener) return;
 			isListener = false;
-			removeEventListener(Event.CONNECT, eventToJava);
-			removeEventListener(Event.CLOSE, eventToJava);
+			removeEventListener(Event.CONNECT, eventServer);
+			removeEventListener(Event.CLOSE, eventServer);
 			removeEventListener(IOErrorEvent.IO_ERROR, onError);
 			removeEventListener(ProgressEvent.SOCKET_DATA, socketRespond);
 			removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurity);
@@ -69,76 +66,70 @@ package org.web.sdk.net.socket
 		{
 			try {
 				close();
-			}catch (e:IOError) { 
+			}catch (event:IOError) { 
 				Log.log(this).debug("->socket关闭错误或端口未打开,非系统错误!");
 			}finally {
 				remove();
 			}
 		}
 		
-		protected function onSecurity(e:SecurityErrorEvent):void
+		protected function onSecurity(event:SecurityErrorEvent):void
 		{
 			Log.log(this).debug("#Error:安全沙箱错误")
 		}
 		
 		//连接错误
-		protected function onError(e:IOErrorEvent):void
+		protected function onError(event:IOErrorEvent):void
 		{
-			Log.log(this).debug("#Error:socket连接失败!", this);
+			Log.log(this).debug("#Error:socket连接失败!", event);
 		}
 		
 		//连接和关闭
-		private function eventToJava(e:Event):void
+		private function eventServer(event:Event):void
 		{
 			//无论是连接还是断开，都先清理下
 			getAssigned().restore();
 			//连接和断开
-			switch(e.type)
+			switch(event.type)
 			{
 				case Event.CONNECT:
-					if (_onLink is Function) _onLink(this);
+					if(_onLink is Function) _onLink(this);
 					Log.log(this).debug("->socket打开连接");
 					break;
 				case Event.CLOSE:
+					if(_onLink is Function) _onLink(null);
 					Log.log(this).debug("->socket关闭连接,你已和服务器断开连接！");	
 					break;
 			}
 		}
 		
 		//数据接受 
-		protected function socketRespond(e:ProgressEvent):void
+		protected function socketRespond(event:ProgressEvent):void
 		{
-			//解包
 			getAssigned().unpack(this);
-			//发送外部事件->不需要发送外部事件
 		}
 		
-		protected function writes(buff:ByteArray):void 
+		//编码格式 ,默认ByteLength
+		protected function setEncoded(base:Object):void 
 		{
+			var buff:ByteArray = base as ByteArray;
 			writeUnsignedInt(buff.length);
 			super.writeBytes(buff, 0, buff.length);
 		}
 		
-		//打包发送到服务器
-		public function flushTerminal(pack:* = undefined):void
+		//最终通过它发送给服务器
+		public function flushPacker(pack:Object):void
 		{
 			if (!connected) return;
-			//Log.log(this).debug("发送字段：", byte.length);
-			writes(pack as ByteArray);
+			setEncoded(pack);
 			flush();
 		}
 		
 		//通知调用,公开信
 		public function sendNoticeRequest(request:INetRequest, message:Object = null):void
 		{
-			Log.log(this).debug('->client 请求cmd: ' + request.getCmd());
-			request.sendRequest(message, this);
-		}
-		
-		//通过命令发送到服务器
-		public function sendNotice(noticName:String, message:Object = null):void
-		{
-			GlobalMessage.sendMessage(noticName, message, this);
+			Log.log(this).debug('->client 请求cmd: ' + request.command);
+			request.batchProcess(message, this);
 		}
 		
 		//初始化一次sockete

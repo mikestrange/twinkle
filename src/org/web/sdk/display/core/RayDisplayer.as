@@ -10,7 +10,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Ramt;
+	import org.web.sdk.Crystal;
 	import org.web.sdk.inters.IDisplay;
 	import flash.geom.Transform;
 	import flash.display.Stage;
@@ -126,7 +126,7 @@ package org.web.sdk.display.core
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IDisplayObject */
-		public function toGlobal(mx:Number = 0, my:Number = 0):Point
+		public function toAnima(mx:Number = 0, my:Number = 0):Point
 		{
 			return this.localToGlobal(new Point(mx, my));
 		}
@@ -258,9 +258,9 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Ramt.addStageListener(Event.RESIZE, onResize);
+				Crystal.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Ramt.removeStageListener(Event.RESIZE, onResize);
+				Crystal.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		

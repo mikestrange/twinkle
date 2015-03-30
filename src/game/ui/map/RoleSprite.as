@@ -5,13 +5,14 @@ package game.ui.map
 	import flash.filters.GlowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
-	import game.consts.NoticeDefined;
+	
 	import game.datas.obj.PlayerObj;
 	import game.datas.SelfData;
 	import game.datas.vo.ActionVo;
 	import game.ui.core.ActionType;
-	import game.inters.IRole;
+	import game.ui.interfaces.IRole;
 	import game.ui.core.RangeMotion;
+	
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.inters.IDisplay;
 	import org.web.sdk.display.utils.DrawUtils;
@@ -63,12 +64,12 @@ package game.ui.map
 			var matrix:Matrix = new Matrix;
 			matrix.translate( -20, -90)
 			_action.transform.matrix = matrix;
-			this.addChild(_action);
+			this.addDisplay(_action);
 			//名称
 			_texture = new RayDisplayer(DrawUtils.drawEditor(_data.usn));
 			_texture.x = -_texture.width >> 1;
 			_texture.y = -90 - _texture.height;
-			this.addChild(_texture);
+			this.addDisplay(_texture);
 			//
 			stand();
 			//DrawLine.drawSkeletonLine(this.graphics);

@@ -1251,17 +1251,17 @@ package com.greensock
 			setDirtyCache(true);
 		}
 		
-		/** Multiplier describing the speed of the root timelines where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc. The lowest globalTimeScale possible is 0.0001. **/
-		public static function get globalTimeScale():Number {
+		/** Multiplier describing the speed of the root timelines where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc. The lowest AnimaTimeScale possible is 0.0001. **/
+		public static function get AnimaTimeScale():Number {
 			return (TweenLite.rootTimeline == null) ? 1 : TweenLite.rootTimeline.cachedTimeScale;
 		}
 		
-		public static function set globalTimeScale(n:Number):void {
+		public static function set AnimaTimeScale(n:Number):void {
 			if (n == 0) { //can't allow zero because it'll throw the math off
 				n = 0.0001;
 			}
 			if (TweenLite.rootTimeline == null) {
-				TweenLite.to({}, 0, {}); //forces initialization in case globalTimeScale is set before any tweens are created.
+				TweenLite.to({}, 0, {}); //forces initialization in case AnimaTimeScale is set before any tweens are created.
 			}
 			var tl:SimpleTimeline = TweenLite.rootTimeline;
 			var curTime:Number = (getTimer() * 0.001)

@@ -1,17 +1,8 @@
 package 
 {
 	import com.greensock.*;
-	import org.web.sdk.context.ResContext;
-	import org.web.sdk.display.asset.KitBitmap;
-	import org.web.sdk.display.asset.KitFactory;
-	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.core.base.BufferImage;
-	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.bar.BaseButton;
-	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.core.base.RayMovieClip;
-	import org.web.sdk.display.utils.AlignType;
-	import org.web.sdk.lang.Conf;
+	import org.web.sdk.display.asset.*;
+	import org.web.sdk.display.core.*;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -20,10 +11,6 @@ package
 	import flash.system.*;
 	import flash.ui.*;
 	import flash.utils.*;
-	//game
-	import game.consts.*;
-	import game.GameGlobal;
-	import game.logic.WorldKidnap;
 	//org
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
@@ -34,10 +21,6 @@ package
 	import org.web.sdk.net.socket.*;
 	import org.web.sdk.sound.core.*;
 	import org.web.sdk.sound.*;
-	import org.web.sdk.system.com.*;
-	import org.web.sdk.system.core.*;
-	import org.web.sdk.system.events.*;
-	import org.web.sdk.system.*;
 	import org.web.sdk.tool.*;
 	import org.web.sdk.utils.*;
 	
@@ -52,19 +35,14 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			Security.allowDomain("*")
-			Security.allowInsecureDomain("*")
-			Security.loadPolicyFile("http://127.0.0.1/crossdomain.xml")
-			//世界启动
-			WorldKidnap.gets().initLayer(this);
+			Crystal.utilization(new Director(this), 0, 0);
 			//最大下载
-			CenterLoader.gets().LOAD_MAX = 5;			
+			Crystal.setLoadMaxLength(5)
 			//内存查看
 			//FpsMonitor.gets().show();					
 			//启动模块和网络连接
-			WorldKidnap.gets().start();
 			//加载配置
-			Ramt.downLoad("asset/config.xml",complete);
+			Crystal.downLoad("asset/config.xml",complete);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
@@ -86,7 +64,7 @@ package
 				var names:String = xml.res[0].ui[i].@name;
 				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
 				if (url && url != "") {
-					Ramt.downLoad(GameGlobal.getURL(url), resComplete, names, Ramt.context);
+					Crystal.downLoad(url, resComplete, i == length - 1, Crystal.context);
 				}
 			}
 			trace("res:", length);
@@ -95,15 +73,16 @@ package
 		private function resComplete(e:LoadEvent):void
 		{
 			if (e.eventType == LoadEvent.ERROR) return;
-			//Mentor.appDomain.share(e.url, e.getAppDomain());
+			//Ramt.appDomain.share(e.url, e.getContext());
+			if (e.data == false) return;
 			trace("--------res load over,start game---------")
 			//登陆模块
-			//LandSprite.gets().show();
 			//test
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			//addDisplay(new TestPanel);
+			//
+			Crystal.director.goto(new Ascene());
 		}
 		//ends
 	}

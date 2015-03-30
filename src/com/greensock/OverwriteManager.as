@@ -303,7 +303,7 @@ package com.greensock {
 				if (curTween == tween || curTween.gc || (!curTween.initted && startTime - curTween.cachedStartTime <= 0.0000000002)) {
 					//ignore
 				} else if (curTween.timeline != tween.timeline) {
-					if (!getGlobalPaused(curTween)) {
+					if (!getAnimaPaused(curTween)) {
 						cousins[cCount++] = curTween;
 					}
 				} else if (curTween.cachedStartTime <= startTime && curTween.cachedStartTime + curTween.totalDuration + 0.0000000001 > startTime && !curTween.cachedPaused && !(tween.cachedDuration == 0 && startTime - curTween.cachedStartTime <= 0.0000000002)) {
@@ -311,7 +311,7 @@ package com.greensock {
 				}
 			}
 			
-			if (cCount != 0) { //tweens that are nested in other timelines may have various offsets and timeScales so we need to translate them to a global/root one to see how they compare.
+			if (cCount != 0) { //tweens that are nested in other timelines may have various offsets and timeScales so we need to translate them to a Anima/root one to see how they compare.
 				var combinedTimeScale:Number = tween.cachedTimeScale, combinedStartTime:Number = startTime, cousin:TweenCore, cousinStartTime:Number, timeline:SimpleTimeline;
 				timeline = tween.timeline;
 				while (timeline) {
@@ -365,7 +365,7 @@ package com.greensock {
 		}
 		
 		/** @private **/
-		public static function getGlobalPaused(tween:TweenCore):Boolean {
+		public static function getAnimaPaused(tween:TweenCore):Boolean {
 			var paused:Boolean;
 			while (tween) {
 				if (tween.cachedPaused) {
