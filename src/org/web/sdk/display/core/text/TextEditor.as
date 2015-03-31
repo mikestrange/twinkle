@@ -118,7 +118,7 @@ package org.web.sdk.display.core.text
 		}
 		
 		/* INTERFACE org.web.sdk.inters.IDisplayObject */
-		public function toAnima(mx:Number = 0, my:Number = 0):Point
+		public function toGlobal(mx:Number = 0, my:Number = 0):Point
 		{
 			return this.localToGlobal(new Point(mx, my));
 		}
