@@ -49,23 +49,11 @@ package org.web.sdk.display
 					upSprite.moveTo(Crystal.stage.mouseX, Crystal.stage.mouseY);
 				}
 			}
-			event.updateAfterEvent();
+			if(event) event.updateAfterEvent();
 		}
 		
 		private static function onState(event:MouseEvent):void
 		{
-<<<<<<< HEAD
-			isDown = (e.type == MouseEvent.MOUSE_DOWN);
-			if (e.type == MouseEvent.MOUSE_DOWN) {
-				upSprite.removeFromFather();
-				if (!downSprite.isAdded()) {
-					Ramt.stage.addChild(downSprite.convertDisplay());
-				}
-			}else {
-				downSprite.removeFromFather();
-				if (!upSprite.isAdded()) {
-					Ramt.stage.addChild(upSprite.convertDisplay());
-=======
 			isDown = (event.type == MouseEvent.MOUSE_DOWN);
 			if (event.type == MouseEvent.MOUSE_DOWN) {
 				if (upSprite) upSprite.removeFromFather();
@@ -76,7 +64,6 @@ package org.web.sdk.display
 				if (downSprite) downSprite.removeFromFather();
 				if (upSprite && !upSprite.isAdded()) {
 					Crystal.stage.addChild(upSprite as DisplayObject);
->>>>>>> 003ada36d0992dfe97d4ca67e55b62d57d960214
 				}
 			}
 			onMove(event);
@@ -87,7 +74,7 @@ package org.web.sdk.display
 			if (downSprite) downSprite.removeFromFather(true);
 			downSprite = display;
 			if (isDown && !downSprite.isAdded()) {
-				Ramt.stage.addChild(downSprite.convertDisplay());
+				Crystal.stage.addChild(downSprite.convertDisplay());
 			}
 			onMove();
 		}
@@ -96,13 +83,8 @@ package org.web.sdk.display
 		{
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
-<<<<<<< HEAD
-			if (!isDown && !upSprite.isAdded()) {
-				Ramt.stage.addChild(upSprite.convertDisplay());
-=======
 			if (upSprite && !upSprite.isAdded()) {
 				Crystal.stage.addChild(upSprite as DisplayObject);
->>>>>>> 003ada36d0992dfe97d4ca67e55b62d57d960214
 			}
 			onMove();
 		}
