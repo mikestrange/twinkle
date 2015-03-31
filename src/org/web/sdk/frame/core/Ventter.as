@@ -14,6 +14,9 @@ package org.web.sdk.frame.core
 		}
 		
 		/* INTERFACE org.web.sdk.frame.interfaces.IVent */
+		/*
+		 * 实现公开的方法就可以了
+		 * */
 		public function invoke(method:String, data:Object = null, client:* = undefined):void 
 		{
 			
@@ -39,7 +42,7 @@ package org.web.sdk.frame.core
 			return _tableList.length == 0;
 		}
 		
-		//-------------
+		//----快速建立数据表
 		protected function createTable(tableName:String):IDataTable 
 		{
 			return null;

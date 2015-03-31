@@ -4,7 +4,9 @@ package org.web.sdk.frame.core
 	import org.web.sdk.frame.interfaces.IDataTable;
 	import org.web.sdk.frame.interfaces.IVent;
 	import org.web.sdk.frame.interfaces.IVentManager;
-	
+	/*
+	 * 通道管理器
+	 * */
 	public class VentManager implements IVentManager 
 	{
 		private var _ventMap:Dictionary;

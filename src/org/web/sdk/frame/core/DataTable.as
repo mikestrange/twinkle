@@ -2,7 +2,9 @@ package org.web.sdk.frame.core
 {
 	import org.web.sdk.frame.interfaces.IDataTable;
 	import org.web.sdk.frame.interfaces.IVent;
-	
+	/*
+	 * 通道数据表
+	 * */
 	public class DataTable implements IDataTable 
 	{
 		private var _tableName:String;

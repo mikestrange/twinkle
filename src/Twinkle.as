@@ -3,7 +3,6 @@ package
 	import com.greensock.*;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
-	import org.web.sdk.frame.core.ClientServer;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -48,8 +47,6 @@ package
 			//SoundManager.playUrl("bg.mp3");
 			this.setLimit(stage.stageWidth, stage.stageHeight);
 			//
-			var client:ClientServer = new ClientServer(null);
-			client.start();
 		}
 		
 		private function onLog(e:Object):void

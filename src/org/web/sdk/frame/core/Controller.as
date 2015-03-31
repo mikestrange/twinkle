@@ -4,11 +4,11 @@ package org.web.sdk.frame.core
 	import flash.utils.getQualifiedClassName;
 	import org.web.sdk.frame.interfaces.ILogic;
 	
-	public class BaseLogic implements ILogic 
+	public class Controller implements ILogic 
 	{
 		private var _name:String;
 		
-		public function BaseLogic(name:String = null) 
+		public function Controller(name:String = null) 
 		{
 			_name = name;
 		}
