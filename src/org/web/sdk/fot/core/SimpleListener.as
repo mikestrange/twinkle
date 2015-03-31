@@ -41,7 +41,7 @@ package org.web.sdk.fot.core
 		//public send  不同的发送方式
 		public function sendMessage(name:String, event:Object = null):void
 		{
-			_content.sendListener(event.name, event);
+			_content.sendListener(name, event);
 		}
 		
 		public function sendLink(data:Object = null, ...rest):void
@@ -51,6 +51,7 @@ package org.web.sdk.fot.core
 			}
 		}
 		
+		//固定
 		public function sendWater(name:String, ...rest):void
 		{
 			_content.sendListener(name, new Water(name, this, rest));

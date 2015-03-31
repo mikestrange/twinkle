@@ -12,7 +12,7 @@ package org.web.sdk.fot.core
 		private var _appListener:IApplicationListener;
 		private var _links:Vector.<String>
 		
-		/* INTERFACE org.web.sdk.frame.interfaces.IVent */
+		/* INTERFACE org.web.sdk.frame.interfaces.ITactful */
 		public function isCumulative():Boolean 
 		{
 			return _cumulative;

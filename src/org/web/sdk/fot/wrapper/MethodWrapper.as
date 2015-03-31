@@ -35,7 +35,7 @@ package org.web.sdk.fot.wrapper
 		
 		public function handler(event:Object):void
 		{
-			if (this._live) _target(event);
+			if (this._live) _target(_name, event);
 		}
 		
 		public function toString():String
