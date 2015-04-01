@@ -14,9 +14,13 @@ package org.web.sdk.context
 			
 		public function ResContext(checkFile:*)
 		{
-			if (checkFile is Loader) applicationDomain = Loader(checkFile).contentLoaderInfo.applicationDomain;
-			else if (checkFile is ApplicationDomain) applicationDomain = checkFile;
-			else throw Error("不存在的域解析，请提醒修改源代码！");
+			if (checkFile is Loader) {
+				applicationDomain = Loader(checkFile).contentLoaderInfo.applicationDomain;
+			}else if (checkFile is ApplicationDomain) {
+				applicationDomain = checkFile;
+			}else {
+				throw Error("不存在的域解析，请提醒修改源代码！");
+			}
 		}
 		
 		public function hasDefinition(name:String):Boolean

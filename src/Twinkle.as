@@ -3,8 +3,6 @@ package
 	import com.greensock.*;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
-	import org.web.sdk.loader.DownLoader;
-	import org.web.sdk.loader.LoadSetup;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -40,15 +38,32 @@ package
 			Crystal.utilization(new Director(this), 0, 0);
 			this.setLimit(stage.stageWidth, stage.stageHeight);
 			//最大下载
-			var time:int = getTimer();
-			Crystal.setLoadMaxLength(5)
 			//内存查看
-			//FpsMonitor.gets().show();					
+			FpsMonitor.gets().show();					
 			//加载配置
-			Crystal.downLoad("asset/config.xml", complete);
-			trace(getTimer() - time);
-			//test();
-			//SoundManager.playUrl("bg.mp3");
+			var swfLoader:DownLoader = new DownLoader;
+			swfLoader.eventHandler = function(event:LoadEvent):void
+			{
+				if (swfLoader.empty) startGame();
+			}
+			
+			//下载配置，这种下载，完成自己的责任就会被销毁，不必留在内存中 
+			var loader:DownLoader = new DownLoader();
+			loader.load("asset/config.xml");
+			loader.eventHandler = function(event:LoadEvent):void
+			{
+				var xml:XML = new XML(event.data as String);
+				var length:int = xml.res[0].ui.length();
+				for (var i:int = 0; i < length; i++)
+				{
+					var url:String = xml.res[0].ui[i].@url;
+					var names:String = xml.res[0].ui[i].@name;
+					if (url && url != "") swfLoader.load(url, Crystal.context);
+				}
+				swfLoader.start();
+			}
+			loader.start();
+			//SoundManager.playUrl("asset/bg.mp3");
 		}
 		
 		private function onLog(e:Object):void
@@ -56,31 +71,10 @@ package
 			Log.save();
 		}
 		
-		private function complete(e:LoadEvent):void
+		private function startGame():void
 		{
-			if (e.eventType == LoadEvent.ERROR) return;
-			var xml:XML = new XML(e.target as String);
-			var length:int = xml.res[0].ui.length();
-			for (var i:int = 0; i < length; i++)
-			{
-				var url:String = xml.res[0].ui[i].@url;
-				var names:String = xml.res[0].ui[i].@name;
-				var main:Boolean = parseInt(xml.res[0].ui[i].@main) == 1;
-				if (url && url != "") {
-					Crystal.downLoad(url, resComplete, i == length - 1, Crystal.context);
-				}
-			}
-			trace("res:", length);
-		}
-		
-		private function resComplete(e:LoadEvent):void
-		{
-			if (e.eventType == LoadEvent.ERROR) return;
-			//Ramt.appDomain.share(e.url, e.getContext());
-			if (e.data == false) return;
 			trace("--------res load over,start game---------")
 			//登陆模块
-			//test
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));

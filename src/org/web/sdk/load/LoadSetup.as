@@ -1,14 +1,14 @@
-package org.web.sdk.loader 
+package org.web.sdk.load 
 {
-	import org.web.sdk.loader.interfaces.ILoader;
-	import org.web.sdk.loader.loads.*;
+	import org.web.sdk.load.interfaces.ILoader;
+	import org.web.sdk.load.loads.*;
 	
 	final public class LoadSetup 
 	{
 		//定义类型
-		private static const SWF_EXP:RegExp =/.swf|.mp3/ig;
+		private static const SWF_EXP:RegExp =/.swf/ig;
 		private static const IMG_EXP:RegExp =/.jpg|.png|.jpeg|.bmp/ig;
-		private static const TXT_EXP:RegExp =/.ini|.txt|.xml/ig;
+		private static const TXT_EXP:RegExp =/.ini|.txt|.xml|.html/ig;
 		
 		private static var sheetLoader:Array = [];
 		private static const LIM:int = -1;

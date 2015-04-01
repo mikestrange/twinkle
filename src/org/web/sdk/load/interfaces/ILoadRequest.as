@@ -1,4 +1,4 @@
-package org.web.sdk.loader.interfaces 
+package org.web.sdk.load.interfaces 
 {
 	
 	public interface ILoadRequest 
@@ -6,6 +6,7 @@ package org.web.sdk.loader.interfaces
 		function get url():String;
 		function get version():String;
 		function get context():*;
+		function get type():String;
 		//end
 	}
 	

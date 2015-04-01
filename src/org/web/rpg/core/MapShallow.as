@@ -7,6 +7,7 @@ package org.web.rpg.core
 	import org.web.rpg.core.MapData;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.Crystal;
+	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	/*
 	 * 背景地图，完美的封装了
@@ -68,19 +69,24 @@ package org.web.rpg.core
 				}
 			}
 			drawBlack();	
-			//下载小地图
-			Crystal.downLoad(data.smallUrl, complete);
+			//下载小地图，这样写的不会停止，所以你要做适当的处理
+			var loader:DownLoader = new DownLoader;
+			loader.load(data.smallUrl);
+			loader.eventHandler = function(event:LoadEvent):void
+			{
+				var bitmapdata:BitmapData = null;
+				//模糊地图下载完成
+				if (event.isOver) {
+					if (!event.isError) {
+						bitmapdata = event.data as BitmapData;
+					}
+					drawBlack(bitmapdata);
+					this.dispatchEvent(new Event(Event.COMPLETE));
+				}
+			}
+			loader.start();
 			//打开地图下载
 			this.openLoad = true;
-		}
-		
-		private function complete(e:LoadEvent):void
-		{
-			var bitmapdata:BitmapData = null;
-			if (e.eventType == LoadEvent.COMPLETE) bitmapdata = e.target as BitmapData;
-			drawBlack(bitmapdata);
-			//模糊地图下载完成
-			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function drawBlack(bit:BitmapData = null):void
@@ -137,7 +143,6 @@ package org.web.rpg.core
 					}
 				}
 			}
-			Crystal.loader.start();
 			//渲染位图
 			refresh();
 		}

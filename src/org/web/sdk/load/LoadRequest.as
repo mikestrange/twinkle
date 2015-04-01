@@ -1,11 +1,10 @@
-package org.web.sdk.loader 
+package org.web.sdk.load 
 {
-	import org.web.sdk.loader.interfaces.ILoadRequest;
+	import org.web.sdk.load.interfaces.ILoadRequest;
 	
 	public class LoadRequest implements ILoadRequest 
 	{
 		private var _url:String;
-		private var _prior:Boolean;
 		private var _version:String;
 		private var _context:*;
 		
@@ -32,7 +31,10 @@ package org.web.sdk.loader
 			return _context;
 		}
 		
-		
+		public function get type():String
+		{
+			return null;
+		}
 		//end
 	}
 

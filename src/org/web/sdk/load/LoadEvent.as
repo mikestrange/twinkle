@@ -1,67 +1,43 @@
-/** 
- *org.web.sdk.load542540443@qq.com 
- *@version 1.0.0 
- * 创建时间：2013-12-5 下午11:46:04 
- **/ 
 package org.web.sdk.load 
 {
-	import flash.system.LoaderContext;
 	import org.web.sdk.context.ResContext;
-	//下载回执
 	public class LoadEvent 
 	{
+		public static const COMPLETE:String = 'complete';	//下载完成
+		public static const ERROR:String = 'error';			//下载错误
+		public static const OPEN:String = 'open';			//打开下载
+		public static const OPRESS:String = 'opress';		//下载监督
 		//下载类型
 		public static const BYTE:int = 0;	//默认下载
 		public static const SWF:int = 1;	
 		public static const TXT:int = 2;	//xml
 		public static const IMG:int = 3;
+		//不允许个人操作
+		public var url:String;
+		public var type:String;
+		public var data:* = undefined;
 		//
-		public static const COMPLETE:String = 'complete';
-		public static const ERROR:String = 'error';
-		public static const OPEN:String = 'open';
-		public static const OPRESS:String = 'opress';
-		public static const CLOSED:String = 'closed';
-		//_target传过来的数据
-		private var _target:Object;
-		private var _url:String;
-		private var _data:Object;
-		private var _eventType:String;
-		private var _appdomain:ResContext;
+		public var isOver:Boolean = false;
+		public var isError:Boolean = false;
 		//
-		public function LoadEvent(eventType:String, target:Object, url:String, data:Object = null)
+		private var _domain:ResContext;
+		//
+		public function LoadEvent(type:String, url:String, data:*= undefined)
 		{
-			this._eventType = eventType;
-			this._target = target;
-			this._url = url;
-			this._data = data;
+			this.type = type;
+			this.url = url;
+			this.data = data;
+			this.isOver = (type == COMPLETE || type == ERROR);
+			this.isError = (type == ERROR);
 		}
 		
-		public function get data():Object
+		//Loader域
+		public function getDomain():ResContext
 		{
-			return _data;
+			if (null == _domain) _domain = new ResContext(data); 
+			return _domain;
 		}
-		
-		public function get target():Object
-		{
-			return _target;
-		}
-		
-		public function get eventType():String
-		{
-			return _eventType;
-		}
-		
-		public function get url():String
-		{
-			return _url;
-		}
-		
-		//需要的时候创建
-		public function getContext():ResContext
-		{
-			if (null == _appdomain) _appdomain = new ResContext(_target); 
-			return _appdomain;
-		}
-		//ends
+		//end
 	}
+
 }

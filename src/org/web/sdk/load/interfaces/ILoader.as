@@ -1,4 +1,4 @@
-package org.web.sdk.loader.interfaces 
+package org.web.sdk.load.interfaces 
 {
 	
 	public interface ILoader 

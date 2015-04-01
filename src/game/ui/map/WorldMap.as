@@ -19,6 +19,7 @@ package game.ui.map
 	import org.web.rpg.core.MapData;
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.Crystal;
+	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
 	import org.web.sdk.tool.Clock;
@@ -35,8 +36,10 @@ package game.ui.map
 		public var playerHash:HashMap;
 		//
 		private var isListener:Boolean = false;
-		
+		//
 		private var map:MeshMap;
+		//
+		private var _loader:DownLoader;
 		
 		public function WorldMap() 
 		{
@@ -48,9 +51,9 @@ package game.ui.map
 		{
 			if (isListener) return;
 			isListener = true;
-			Crystal.stage.addEventListener(Event.ENTER_FRAME, onEnter);
-			Crystal.stage.addEventListener(Event.RESIZE, onResize);
-			Crystal.stage.addEventListener(MouseEvent.CLICK, onStageClick);
+			Crystal.addStageListener(Event.ENTER_FRAME, onEnter);
+			Crystal.addStageListener(Event.RESIZE, onResize);
+			Crystal.addStageListener(MouseEvent.CLICK, onStageClick);
 		}
 		
 		public function getMap():MeshMap
@@ -62,11 +65,15 @@ package game.ui.map
 		{
 			map.removeFromFather();
 			playerHash.clear();
+			if (_loader) {
+				_loader.clean();
+				_loader = null;
+			}
 			if (!isListener) return;
 			isListener = false;
-			Crystal.stage.removeEventListener(Event.ENTER_FRAME, onEnter);
-			Crystal.stage.removeEventListener(Event.RESIZE, onResize);
-			Crystal.stage.removeEventListener(MouseEvent.CLICK, onStageClick);
+			Crystal.removeStageListener(Event.ENTER_FRAME, onEnter);
+			Crystal.removeStageListener(Event.RESIZE, onResize);
+			Crystal.removeStageListener(MouseEvent.CLICK, onStageClick);
 		}
 			
 		private function onResize(e:Event):void
@@ -78,18 +85,20 @@ package game.ui.map
 		public function showMap(id:uint):void
 		{
 			free();
-			Crystal.downLoad(MapPath.getMapConfig(id), complete);
-		}
-		
-		private function complete(e:LoadEvent):void
-		{
-			if (e.eventType == LoadEvent.ERROR) return;
-			map.setMapdata(MapData.create(new XML(e.target as String)));
-			//if(!map.isAdded()) WorldKidnap.addToLayer(map, LayerType.MAP);
-			//添加主角
-			setActor(PlayerObj.gets());
-			//初始化
-			initialization();
+			if (_loader == null) {
+				_loader = new DownLoader;
+				_loader.load(MapPath.getMapConfig(id));
+			}
+			_loader.eventHandler = function(event:LoadEvent):void
+			{
+				map.setMapdata(MapData.create(new XML(event.data as String)));
+				//if(!map.isAdded()) WorldKidnap.addToLayer(map, LayerType.MAP);
+				//添加主角
+				setActor(PlayerObj.gets());
+				//初始化
+				initialization();
+			}
+			_loader.start();
 		}
 		
 		private function onStageClick(e:MouseEvent):void 

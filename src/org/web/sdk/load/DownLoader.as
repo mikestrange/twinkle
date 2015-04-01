@@ -1,18 +1,20 @@
-package org.web.sdk.loader 
+package org.web.sdk.load 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.loader.interfaces.ILoadRequest;
+	import org.web.sdk.load.interfaces.ILoadRequest;
 	/*
-	 * 请不要全局使用，否则url会清理不掉，要的时候new一个
+	 * 很好用的一个下载器
+	 * ##唯一要注意的是： 最好不要用单列，因为回调只有一个
 	 * */
 	public class DownLoader 
 	{
+		private static const NONE:int = 0;
 		//回调函数
 		private var _apply:Function;
 		//是否省略下载过程
 		private var _iselide:Boolean;
 		//观察表
-		private var _map:Dictionary;
+		private var _loadMap:Dictionary;
 		//未完成列表
 		private var _length:int;
 		
@@ -20,7 +22,6 @@ package org.web.sdk.loader
 		{
 			_iselide = elide;
 			_apply = called;
-			_map = new Dictionary;
 		}
 		
 		//统一资源可以使用
@@ -51,8 +52,9 @@ package org.web.sdk.loader
 		protected function loadRequest(request:ILoadRequest, prior:Boolean = false):void
 		{
 			if (isHave(request.url)) return;
-			_length++;
-			_map[request.url] = request;
+			if (null == _loadMap) _loadMap = new Dictionary;
+			_loadMap[request.url] = request;
+			++_length;
 			CheckLoader.putStack(request, this, prior);
 		}
 		
@@ -80,7 +82,8 @@ package org.web.sdk.loader
 		
 		public function isHave(url:String):Boolean
 		{
-			return _map[url] != undefined;
+			if (null == _loadMap) return false;
+			return _loadMap[url] != undefined;
 		}
 		
 		public function get length():int
@@ -88,12 +91,19 @@ package org.web.sdk.loader
 			return _length;
 		}
 		
+		public function get empty():Boolean
+		{
+			return _length == NONE;
+		}
+		
+		//移除一个下载
 		public function remove(url:String):void 
 		{
 			if (isHave(url)) 
 			{
-				_length--;
-				delete _map[url];
+				--_length;
+				delete _loadMap[url];
+				if (_length == NONE) _loadMap = null;
 				CheckLoader.removeLoader(url, this);
 			}
 		}
@@ -101,8 +111,13 @@ package org.web.sdk.loader
 		//清理自身的下载
 		public function clean():void
 		{
-			for (var url:String in _map) remove(url);
-			_length = 0;
+			if (_loadMap) {
+				for (var url:String in _loadMap) {
+					remove(url);
+				}
+				_loadMap = null;
+			}
+			_length = NONE;
 			_apply = null;
 		}
 		//

@@ -1,4 +1,4 @@
-##更容易扩展的DownLoader
+##更容易扩展的DownLoader，能够完成所有下载方式
 
 
 1，CheckLoader作为一个资源下载的管理中心，为静态方法

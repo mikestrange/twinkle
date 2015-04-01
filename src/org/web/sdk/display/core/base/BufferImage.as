@@ -7,6 +7,7 @@ package org.web.sdk.display.core.base
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.Crystal;
 	/*
@@ -15,7 +16,8 @@ package org.web.sdk.display.core.base
 	public class BufferImage extends RayDisplayer
 	{
 		private var _url:String;
-		private var _over:Boolean = false;
+		//自身分配一个下载器
+		private var _loader:DownLoader;
 		
 		public function BufferImage(url:String = null)
 		{
@@ -30,37 +32,40 @@ package org.web.sdk.display.core.base
 		//没有释放不能重新设置
 		public function set resource(value:String):void
 		{
-			if (value != null && _url == value) return;
-			if (_url) dispose();
 			_url = value;
-			//没有就让他去下载，至于他用什么形式去注册那就不管了
-			if (_url) Crystal.downLoad(_url, complete);
+			if (_url && !setLiberty(_url))
+			{
+				//因为忽略了过程，所以complete就必定是结束
+				if (null == _loader) {
+					_loader = new DownLoader(true, this.complete);
+				}
+				_loader.load(_url);
+				_loader.start();
+			}
 		}
 		
-		protected function complete(e:LoadEvent):void
+		//就算多个下载也没关系，下载后会清理前面的
+		protected function complete(event:LoadEvent):void
 		{
-			_over = true;
-			if (e.eventType == LoadEvent.COMPLETE) {
-				if (!setLiberty(e.url)) {
-					setTexture(new KitBitmap(e.target as BitmapData, e.url));
-				}
+			//成功的话就会直接设置
+			if (!event.isError && !setLiberty(event.url))
+			{
+				setTexture(new KitBitmap(event.data as BitmapData, event.url));
 			}
-			if (e.eventType == LoadEvent.ERROR) _url = null;
-			this.dispatchEvent(new Event(e.eventType));
 		}
 		
 		override public function dispose():void 
 		{
-			if (_url == null) return;
-			if (_over) super.dispose();
-			else Crystal.loader.removeRespond(_url, complete);
-			_over = false;
-			_url = null;
+			if (_loader) {
+				_loader.clean();
+				_loader = null;
+			}
+			super.dispose();
 		}
 		
 		override public function clone():IAcceptor 
 		{
-			return new BufferImage(this._url);
+			return new BufferImage(_url);
 		}
 		//ends
 	}

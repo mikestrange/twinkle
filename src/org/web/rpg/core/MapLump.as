@@ -6,6 +6,7 @@ package org.web.rpg.core
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.core.KitTool;
 	import org.web.sdk.Crystal;
+	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	
 	public class MapLump extends Bitmap
@@ -17,8 +18,8 @@ package org.web.rpg.core
 		//是否进入开放列表中
 		public var isOpen:Boolean = false;
 		//是否下载
-		private var _isLoad:Boolean = false;
-
+		private var _loader:DownLoader;
+		
 		public function MapLump(id:uint, mx:int = 0, my:int = 0, w:int = 0, h:int = 0)
 		{
 			this._x = mx;
@@ -44,18 +45,19 @@ package org.web.rpg.core
 		
 		public function startLoad():void
 		{
-			if (_isLoad) return;
-			_isLoad = true;
-			Crystal.loader.addWait(_url).addRespond(complete);
-		}
-		
-		private function complete(e:LoadEvent):void
-		{
-			if (e.eventType == LoadEvent.ERROR) {
-				_isLoad = false;
-				return;
+			if (_loader == null) {
+				_loader = new DownLoader;
+				_loader.eventHandler = function(event:LoadEvent):void
+				{
+					if (event.isError) {
+						_loader = null;
+					}else {
+						setBitmapdata(event.data as BitmapData);
+					}
+				}
+				_loader.load(_url);
+				_loader.start();
 			}
-			setBitmapdata(e.target as BitmapData);
 		}
 		
 		public function show(target:DisplayObjectContainer):void 
@@ -72,8 +74,10 @@ package org.web.rpg.core
 		public function free():void 
 		{
 			hide();
-			_isLoad = false;
-			Crystal.loader.removeRespond(_url, complete);
+			if (_loader) {
+				_loader.clean();
+				_loader = null;
+			}
 			KitTool.dispose(this.bitmapData);
 		}
 		//ends

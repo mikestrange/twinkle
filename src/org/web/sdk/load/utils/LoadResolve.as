@@ -8,7 +8,6 @@ package org.web.sdk.load.utils
 	public class LoadResolve
 	{
 		private var _url:String;                //加载路径
-		private var _error:Boolean;
 		private var _file:String = ""; 	    	//目录(完整父路径)
 		private var _label:String = "";   	 	//文件名(标签,在写入对象池的时候很有作用)
 		private var _suff:String = "";   		//后缀名
