@@ -42,8 +42,8 @@ package org.web.sdk.load.loads
 		
 		protected function eventListener():void
 		{
-			this.addEventListener(Event.COMPLETE, complete, false, 0, true);
-			this.addEventListener(IOErrorEvent.IO_ERROR, onError, false, 0, true);
+			this.addEventListener(Event.COMPLETE, complete);
+			this.addEventListener(IOErrorEvent.IO_ERROR, onError);
 		}
 		
 		protected function removeListener():void

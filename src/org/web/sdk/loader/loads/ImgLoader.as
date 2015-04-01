@@ -1,16 +1,16 @@
-package org.web.sdk.load.loads 
+package org.web.sdk.loader.loads 
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
-	import org.web.sdk.load.LoadEvent;
+	import org.web.sdk.loader.LoadEvent;
 	
 	public class ImgLoader extends SwfLoader 
 	{
 		override protected function complete(e:Event):void
 		{
 			removeListener();
-			super.invoke(Bitmap(this.content).bitmapData as BitmapData, LoadEvent.COMPLETE);
+			_isLoader = false;
+			super.invoke(LoadEvent.COMPLETE, e.target.loader.content.bitmapData as BitmapData);
 		}
 		
 		//ends

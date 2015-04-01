@@ -21,7 +21,6 @@ package org.web.sdk.display.core
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.load.CenterLoader;
 	import org.web.sdk.utils.ClassUtils;
 	/**
 	 * 速度更快的显示对象，基于bitmapdata

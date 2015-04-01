@@ -3,6 +3,8 @@ package
 	import com.greensock.*;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
+	import org.web.sdk.loader.DownLoader;
+	import org.web.sdk.loader.LoadSetup;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -36,17 +38,17 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			Crystal.utilization(new Director(this), 0, 0);
+			this.setLimit(stage.stageWidth, stage.stageHeight);
 			//最大下载
+			var time:int = getTimer();
 			Crystal.setLoadMaxLength(5)
 			//内存查看
 			//FpsMonitor.gets().show();					
-			//启动模块和网络连接
 			//加载配置
-			Crystal.downLoad("asset/config.xml",complete);
+			Crystal.downLoad("asset/config.xml", complete);
+			trace(getTimer() - time);
 			//test();
 			//SoundManager.playUrl("bg.mp3");
-			this.setLimit(stage.stageWidth, stage.stageHeight);
-			//
 		}
 		
 		private function onLog(e:Object):void

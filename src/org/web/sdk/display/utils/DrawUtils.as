@@ -10,8 +10,6 @@ package org.web.sdk.display.utils
 	 * */
 	public class DrawUtils 
 	{
-		
-		
 		//绘制对象					绘制的对象			一个偏移量					
 		public static function draw(dis:DisplayObject, setrect:Rectangle = null):BitmapData 
 		{
