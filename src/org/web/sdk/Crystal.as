@@ -169,22 +169,6 @@ package org.web.sdk
 		//所有程序域管理
 		public static const appDomain:ContextManager = ContextManager.create();
 		
-		//唯一下载器
-		/*
-		public static const loader:CenterLoader = CenterLoader.gets();
-		
-		public static function setLoadMaxLength(value:uint):void
-		{
-			loader.LOAD_MAX = value;
-		}
-		
-		//下载资源
-		public static function downLoad(url:String, complete:Function, data:Object = null, context:* = undefined, vital:Boolean = false):void
-		{
-			loader.addWait(url, context, vital).addRespond(complete, data);
-			loader.start();
-		}*/
-		
 		//两种索取素材的方法------------这种非RSL共享时候的  可能是BitmapData，所以是*
 		public static function getAsset(className:String, url:String = null):Object
 		{

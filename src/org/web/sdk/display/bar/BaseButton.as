@@ -8,7 +8,9 @@ package org.web.sdk.display.bar
 	import org.web.sdk.display.core.SwitcherSprite;
 	import org.web.sdk.display.utils.TouchState;
 	import org.web.sdk.inters.IDisplay;
-	
+	/*
+	 * 简单的按钮
+	 * */
 	public class BaseButton extends SwitcherSprite 
 	{
 		private var _isMouseDown:Boolean = false;

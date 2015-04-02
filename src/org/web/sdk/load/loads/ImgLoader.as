@@ -11,6 +11,7 @@ package org.web.sdk.load.loads
 			removeListener();
 			_isLoader = false;
 			super.invoke(LoadEvent.COMPLETE, e.target.loader.content.bitmapData as BitmapData);
+			this.unloadAndStop(false);
 		}
 		
 		//ends

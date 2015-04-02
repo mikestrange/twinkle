@@ -22,7 +22,6 @@ package game.ui.map
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
-	import org.web.sdk.tool.Clock;
 	import org.web.sdk.utils.HashMap;
 	
 	public class WorldMap

@@ -138,11 +138,13 @@ package org.web.sdk.load
 			}
 			var key:String = null;
 			//清理所有下载管理
-			var downloader:DownLoader = null;
+			var list:Vector.<DownLoader> = null;
 			for (key in _preMap) {
-				downloader = _preMap[key];
+				list = _preMap[key];
 				delete _preMap[key];
-				downloader.clean();
+				while (list.length) {
+					list.shift().clean();
+				}
 			}
 			//_preMap = new Dictionary;
 			//关闭所有下载
