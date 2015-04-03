@@ -22,7 +22,7 @@ package game.ui.map
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
-	import org.web.sdk.utils.HashMap;
+	import org.web.sdk.global.HashMap;
 	
 	public class WorldMap
 	{

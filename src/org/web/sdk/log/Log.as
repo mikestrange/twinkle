@@ -1,8 +1,8 @@
 package org.web.sdk.log 
 {
 	import flash.net.FileReference;
-	import org.web.sdk.utils.ClassUtils;
-	import org.web.sdk.utils.TimeUtils;
+	import org.web.sdk.global.string;
+	import org.web.sdk.global.DateTimer;
 	
 	public final class Log 
 	{
@@ -68,7 +68,7 @@ package org.web.sdk.log
 			if (bool) {
 				trace(chat);
 				//是否保存日子，直接文本保存
-				if (SHARE_LOG) addLog(new LogData(value, chat, TimeUtils.getTime()));
+				if (SHARE_LOG) addLog(new LogData(value, chat, DateTimer.getDateTime()));
 			}
 		}
 		
@@ -123,7 +123,7 @@ package org.web.sdk.log
 		public static function log(target:Object = null):Log
 		{
 			if (null == _log) _log = new Log;
-			if (target) _log.className = ClassUtils.getClassName(target);
+			if (target) _log.className = string.getClassName(target);
 			else _log.className = DEFAULT_NAME;
             return _log;
 		}

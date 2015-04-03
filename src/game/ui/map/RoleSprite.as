@@ -25,7 +25,7 @@ package game.ui.map
 	import org.web.sdk.display.engine.AtomicEngine;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.net.socket.ServerSocket;
-	import org.web.sdk.utils.Maths;
+	import org.web.sdk.global.maths;
 	/*
 	 * role
 	 * */
@@ -93,15 +93,15 @@ package game.ui.map
 				var endPos:Point = new Point;
 				endPos.x = node.x * grid.nodeWidth + (grid.nodeWidth >> 1);
 				endPos.y = node.y * grid.nodeHeight + (grid.nodeHeight >> 1);
-				var angle:Number = Maths.atanAngle(this.x, this.y, endPos.x, endPos.y);	//计算两点之间的角度
-				var mpo:Point = Maths.resultant(angle, speedX, speedY);										//计算增量
+				var angle:Number = maths.atanAngle(this.x, this.y, endPos.x, endPos.y);	//计算两点之间的角度
+				var mpo:Point = maths.resultant(angle, speedX, speedY);										//计算增量
 				this.x -= mpo.x;
 				this.y -= mpo.y;
 				//
-				var point:int = FormatUtils.getIndexByAngle(Maths.roundAngle(angle));
+				var point:int = FormatUtils.getIndexByAngle(maths.roundAngle(angle));
 				this.move(point);
 				//两点之间的长度
-				if (Maths.distance(this.x, this.y, endPos.x, endPos.y) <= speedX + speedY) {
+				if (maths.distance(this.x, this.y, endPos.x, endPos.y) <= speedX + speedY) {
 					this.moveTo(endPos.x, endPos.y);
 					pathIndex++;
 					if (pathIndex >= path.length) this.stand();

@@ -3,7 +3,7 @@ package org.web.sdk.net
 	import org.web.sdk.log.Log;
 	import org.web.sdk.net.interfaces.INetHandler;
 	import org.web.sdk.net.RespondEvented;
-	import org.web.sdk.utils.UintHash;
+	import org.web.sdk.global.UintHash;
 	/*
 	 * 我们可以通过Type吧socket和http或者其他命令分开,也可以直接通过cmd分开
 	 * */

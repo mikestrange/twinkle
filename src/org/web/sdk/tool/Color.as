@@ -15,12 +15,12 @@ package org.web.sdk.tool
 			this.a = a;
 		}
 		
-		public function get color():uint
+		public function argb():uint
 		{
 			return a << 24 | r << 16 | g << 8 | b;
 		}
 		
-		public function get rgbcolor():uint
+		public function rgb():uint
 		{
 			return r << 16 | g << 8 | b;
 		}
@@ -28,7 +28,7 @@ package org.web.sdk.tool
 		//
 		public static function getColor(value:uint):Color
 		{
-			return new Color(value >> 24 & 0xff, value >> 16 & 0xff, value >> 8 & 0xff, value & 0xff);
+			return new Color(value >> 16 & 0xff, value >> 8 & 0xff, value & 0xff, value >> 24 & 0xff);
 		}
 		
 		//

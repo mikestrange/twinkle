@@ -1,7 +1,7 @@
 package org.web.sdk.log 
 {
 	//日志信息
-	import org.web.sdk.utils.TimeUtils;
+	import org.web.sdk.global.DateTimer;
 	import org.web.sdk.log.Log;
 	
 	public class LogData 
@@ -19,7 +19,7 @@ package org.web.sdk.log
 		
 		public function getTimeForChat(index:int = 1):String
 		{
-			return TimeUtils.format(time, index);
+			return DateTimer.format(time, index);
 		}
 		
 		public function get html():String

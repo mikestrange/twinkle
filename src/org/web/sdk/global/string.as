@@ -1,11 +1,18 @@
-package org.web.sdk.utils 
+package org.web.sdk.global 
 {
-	public class CharUtils 
+	import flash.utils.getQualifiedClassName;
+	
+	public final class string 
 	{
-		//给一个数字字符墙面补0
+		public static function getClassName(value:*):String 
+		{
+			return getQualifiedClassName(value).replace("::", ".");
+		}
+		
+		//给一个数字字符前面补0,[radix默认十进制],不包括小数
 		public static function formatNumber(number:Number, leng:int = 32, radix:int = 10):String
         {
-			var value:String = number.toString(radix);
+			const value:String = number.toString(radix);
             if (value.length >= leng) return value;
 			const ZEOR:String = "0";
             var char:String = "";
@@ -19,11 +26,18 @@ package org.web.sdk.utils
             return char.substr(char.length - leng);
         }
 		
-		//截断 一个长度，小于这个长度则不计算
-        public static function cutRight(char:String, length:int = 1) : String
+		//截取右边多长度
+        public static function cutRight(char:String, length:int = 8) : String
         {
             if (char.length <= length) return char;
             return char.substr(char.length - length);
+        }
+		
+		//截取左变多少长度
+		public static function cutLeft(char:String, length:int = 8) : String
+        {
+            if (char.length <= length) return char;
+            return char.substr(0, length);
         }
 		
 		//10000 转换成 100,000
@@ -71,6 +85,14 @@ package org.web.sdk.utils
             }
             return str;
         }
-		//ends
+		
+		//字节替换
+		public static function format(replace:String, ...rests):String
+		{
+			return null;
+		}
+		
+		//end
 	}
+
 }

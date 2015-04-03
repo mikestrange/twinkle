@@ -1,7 +1,7 @@
 package org.web.sdk.display.asset 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.utils.HashMap;
+	import org.web.sdk.global.HashMap;
 	//按钮方式,或者开关方式
 	/*
 	 * 为了不必要的new

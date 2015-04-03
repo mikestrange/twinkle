@@ -2,7 +2,6 @@ package org.web.rpg.utils
 {
 	import flash.geom.Point;
 	import org.web.rpg.utils.octa.OctaPoint;
-	import org.web.sdk.utils.Maths;
 	/*
 	 * 根据角色返回方向
 	 * */

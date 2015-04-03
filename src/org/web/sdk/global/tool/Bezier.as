@@ -1,8 +1,8 @@
-package org.web.sdk.tool 
+package org.web.sdk.global.tool 
 {
 	import flash.display.Graphics;
 	import flash.geom.Point;
-	import org.web.sdk.utils.Maths;
+	import org.web.sdk.global.maths;
 	/*
 	 * n次贝塞尔曲线
 	 * */
@@ -54,7 +54,7 @@ package org.web.sdk.tool
 		//times 0 - 1  sz 路线点
 		public static function dot(times:Number, sz:Vector.<Point>):Point
 		{
-			var value:Number = Maths.scope(times, 0, 1);	//限制在0-1
+			var value:Number = maths.scope(times, 0, 1);	//限制在0-1
 			return P_BEZ(value, sz);
 		}
 		

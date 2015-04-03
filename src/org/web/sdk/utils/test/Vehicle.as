@@ -1,7 +1,7 @@
-package org.web.sdk.utils.point.test 
+package org.web.sdk.utils.test 
 {
 	import flash.display.Sprite;
-	import org.web.sdk.utils.point.Vector2D;
+	import org.web.sdk.utils.Vector2D;
 	
 	public class Vehicle extends Sprite 
 	{

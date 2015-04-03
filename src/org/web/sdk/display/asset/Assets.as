@@ -2,7 +2,7 @@ package org.web.sdk.display.asset
 {
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.utils.HashMap;
+	import org.web.sdk.global.HashMap;
 	//
 	import org.web.sdk.beyond_challenge;
 	use namespace beyond_challenge

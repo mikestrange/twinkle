@@ -1,4 +1,4 @@
-package org.web.sdk.tool 
+package org.web.sdk.global.tool 
 {
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;

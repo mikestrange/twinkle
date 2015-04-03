@@ -1,13 +1,14 @@
-package org.web.sdk.utils 
+package org.web.sdk.global 
 {
+
 	import flash.utils.Dictionary;
 	/*哈希表函数*/
-	public class HashMap 
+	public class UintHash 
 	{
 		private var hashKey:Dictionary;
 		private var length:uint = 0;
 		
-		public function HashMap() 
+		public function UintHash() 
 		{
 			hashKey = new Dictionary;
 		}
@@ -26,10 +27,10 @@ package org.web.sdk.utils
 		{
 			var double:Array = new Array(length);
 			var cur:int = 0;
-			var key:String;
-			for (key in hashKey)
+			var num:*;
+			for (num in hashKey)
 			{
-				double[cur] = key;
+				double[cur] = num as Number;
 				cur++;
 			}
 			return double;
@@ -48,9 +49,9 @@ package org.web.sdk.utils
 			return double;
 		}
 		
-		public function isKey(key:String):Boolean
+		public function isKey(num:Number):Boolean
 		{
-			if (undefined == hashKey[key]) return false;
+			if (undefined == hashKey[num]) return false;
 			return true;
 		}
 		
@@ -64,17 +65,16 @@ package org.web.sdk.utils
 			return false;
 		}
 		
-		public function getValue(key:String):*
+		public function getValue(num:Number):*
 		{
-			var value:*= hashKey[key];
+			var value:*= hashKey[num];
 			if (undefined === value) return null;
 			return value;
 		}
 		
 		public function eachKey(handler:Function):void
 		{
-			var key:String;
-			for (key in hashKey) handler(key);
+			for (var num:* in hashKey) handler(num);
 		}
 		
 		public function eachValue(handler:Function):void
@@ -84,24 +84,24 @@ package org.web.sdk.utils
 		}
 		
 		//允许替换,null将被删除键
-		public function put(key:String, value:*):*
+		public function put(num:Number, value:*):*
 		{
-			if (null == key) throw Error("this key is null!")
-			if (null == value) return remove(key);
-			if (!isKey(key)) {
-				hashKey[key] = value;
+			if (isNaN(num)) throw Error("this key is null!")
+			if (null == value) return remove(num);
+			if (!isKey(num)) {
+				hashKey[num] = value;
 				length++;
 			}
-			var former:* = getValue(key);
-			hashKey[key] = value;
+			var former:* = getValue(num);
+			hashKey[num] = value;
 			return former;
 		}
 		
-		public function remove(key:String):*
+		public function remove(num:Number):*
 		{
-			if (!isKey(key)) return null;
-			var value:*= hashKey[key];
-			delete hashKey[key];
+			if (!isKey(num)) return null;
+			var value:*= hashKey[num];
+			delete hashKey[num];
 			length--;
 			return value;
 		}
@@ -112,12 +112,11 @@ package org.web.sdk.utils
 			this.hashKey = new Dictionary;
 		}
 		
-		public function clone():HashMap
+		public function clone():UintHash
 		{
-			var hashmap:HashMap = new HashMap;
-			var key:String;
-			for (key in hashKey) {
-				hashmap.put(key, hashKey[key]);
+			var hashmap:UintHash = new UintHash;
+			for (var num:* in hashKey) {
+				hashmap.put(num as Number, hashKey[num]);
 			}
 			return hashmap;
 		}

@@ -1,13 +1,14 @@
-package org.web.sdk.utils 
+package org.web.sdk.global 
 {
 	import flash.geom.Point;
-	public class Maths 
+	
+	public class maths 
 	{
 		private static const ROUND:int = 360;
 		private static const ROUND_HALF:int = 180;
 		private static const RIGHT_ANGLE:int = 90;
 		
-		public function Maths() 
+		public function maths() 
 		{
 			throw Error("can not new this");
 		}

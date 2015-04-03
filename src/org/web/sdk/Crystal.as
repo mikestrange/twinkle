@@ -8,6 +8,7 @@ package org.web.sdk
 	import org.web.sdk.display.Director;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.interfaces.IDirector;
+	import org.web.sdk.global.tool.Sleep;
 	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;

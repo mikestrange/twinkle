@@ -1,6 +1,6 @@
 package org.web.sdk.sound 
 {
-	import org.web.sdk.utils.HashMap;
+	import org.web.sdk.global.HashMap;
 	public class SoundFactory 
 	{
 		public static const ACTION:String = "action";		

@@ -3,7 +3,7 @@ package org.web.sdk.display.asset
 	import flash.display.BitmapData;
 	import org.web.sdk.display.core.base.ActionMovie;
 	import org.web.sdk.inters.IAcceptor;
-	import org.web.sdk.utils.HashMap;
+	import org.web.sdk.global.HashMap;
 	/*
 	 * 这里是根据名称采集影片
 	 * */

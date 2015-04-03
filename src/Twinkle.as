@@ -64,6 +64,7 @@ package
 			}
 			loader.start();
 			//SoundManager.playUrl("asset/bg.mp3");
+			//
 		}
 		
 		private function onLog(e:Object):void
