@@ -6,7 +6,7 @@ package org.web.sdk.global.tool
 	/*
 	 * n次贝塞尔曲线
 	 * */
-	public class Bezier 
+	final public class Bezier 
 	{
 		
 		public function Bezier() 
@@ -51,7 +51,7 @@ package org.web.sdk.global.tool
 			return n;
 		}
 		
-		//times 0 - 1  sz 路线点
+		//times 0 - 1  sz 路线点,为1的时候表示结束
 		public static function dot(times:Number, sz:Vector.<Point>):Point
 		{
 			var value:Number = maths.scope(times, 0, 1);	//限制在0-1
