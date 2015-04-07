@@ -30,7 +30,7 @@ package
 			var btn:BaseButton
 			for (var i:int = 0; i < 1; i++) {
 				btn = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
-				btn.setProvoke(onTouch)
+				btn.setProvoke(onTouch);
 				this.addDisplay(btn);
 				btn.setAlign(AlignType.LEFT_CENTER, 10 + i * btn.width);
 				var text:TextEditor = TextEditor.quick("测试按钮", null, 16, 0xffff00)

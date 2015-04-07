@@ -3,6 +3,7 @@ package
 	import com.greensock.*;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
+	import org.web.sdk.display.core.base.BufferImage;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -36,10 +37,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			Crystal.utilization(new Director(this), 0, 0);
-			this.setLimit(stage.stageWidth, stage.stageHeight);
-			//最大下载
-			//内存查看
-			FpsMonitor.gets().show();					
+			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
 			swfLoader.eventHandler = function(event:LoadEvent):void
@@ -60,11 +58,9 @@ package
 					var names:String = xml.res[0].ui[i].@name;
 					if (url && url != "") swfLoader.load(url, Crystal.context);
 				}
-				swfLoader.start();
 			}
 			loader.start();
 			//SoundManager.playUrl("asset/bg.mp3");
-			//
 		}
 		
 		private function onLog(e:Object):void

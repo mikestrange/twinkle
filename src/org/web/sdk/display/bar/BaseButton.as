@@ -41,16 +41,6 @@ package org.web.sdk.display.bar
 			_switcher.setLiberty(getSwitcher(TouchState.NARMAL), getSwitcher(TouchState.NARMAL), RayDisplayer.BUTTON_TAG);
 		}
 		
-		/*
-		public function clone():BaseButton
-		{
-			var button:BaseButton = new BaseButton()
-			button.defineAction(TouchState.NARMAL, normal);
-			button.defineAction(TouchState.PRESS, press);
-			button.defineAction(TouchState.OVER, over);
-			button.defineAction(TouchState.FORBID, die);
-		}*/
-		
 		override protected function hideEvent():void
 		{
 			super.hideEvent();

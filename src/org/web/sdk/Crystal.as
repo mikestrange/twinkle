@@ -5,11 +5,9 @@ package org.web.sdk
 	import flash.display.*;
 	import flash.events.*;
 	import org.web.sdk.context.*;
-	import org.web.sdk.display.Director;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.interfaces.IDirector;
 	import org.web.sdk.global.tool.Sleep;
-	import org.web.sdk.inters.IBaseSprite;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.*;
@@ -62,6 +60,16 @@ package org.web.sdk
 			setKeyboard(keyset);
 			setEngine(engine);
 			setSleep(sleep);
+		}
+		
+		//内存查看
+		public static function lookEms(value:Boolean):void
+		{
+			if (value) {
+				FpsMonitor.gets().show();	
+			}else {
+				FpsMonitor.gets().hide();
+			}	
 		}
 		
 		//是否允许休眠

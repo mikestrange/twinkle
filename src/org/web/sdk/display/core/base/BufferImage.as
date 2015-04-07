@@ -18,6 +18,8 @@ package org.web.sdk.display.core.base
 		private var _url:String;
 		//自身分配一个下载器
 		private var _loader:DownLoader;
+		private var _wide:Number;
+		private var _heig:Number;
 		
 		public function BufferImage(url:String = null)
 		{
@@ -27,6 +29,14 @@ package org.web.sdk.display.core.base
 		public function get resource():String
 		{
 			return _url;
+		}
+		
+		//最后的尺寸
+		override public function setLimit(wide:Number = 0, heig:Number = 0):void 
+		{
+			super.setLimit(wide, heig);
+			this._wide = wide;
+			this._heig = heig;
 		}
 		
 		//没有释放不能重新设置
@@ -52,6 +62,13 @@ package org.web.sdk.display.core.base
 			{
 				setTexture(new KitBitmap(event.data as BitmapData, event.url));
 			}
+		}
+		
+		override protected function renderBuffer(assets:*):void 
+		{
+			super.renderBuffer(assets);
+			if (!isNaN(_wide)) this.width = _wide;
+			if (!isNaN(_heig)) this.height = _heig;
 		}
 		
 		override public function dispose():void 

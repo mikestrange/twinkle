@@ -172,6 +172,11 @@ package org.web.sdk.tool
 			else Crystal.stage.addChild(this);
 		}
 		
+		public function hide():void
+		{
+			if (parent) parent.removeChild(this);
+		}
+		
 		//
 		private static var _ins:FpsMonitor;
 		

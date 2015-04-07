@@ -202,13 +202,13 @@ package org.web.sdk.display.core.text
 		
 		public function get limitWidth():Number 
 		{
-			if (isNaN(_limitWidth) || _limitWidth == 0) return this.width; 
+			if (isNaN(_limitWidth) || _limitWidth == 0) return this.textWidth; 
 			return _limitWidth;
 		}
 		
 		public function get limitHeight():Number 
 		{
-			if (isNaN(_limitHeight) || _limitHeight == 0) return this.height; 
+			if (isNaN(_limitHeight) || _limitHeight == 0) return this.textHeight; 
 			return _limitHeight;
 		}
 		
