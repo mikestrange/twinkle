@@ -24,7 +24,7 @@ package org.web.sdk.frame.core
 		}
 		
 		/* INTERFACE org.web.sdk.frame.interfaces.IClientServer */
-		public function setVentManager(check:IVentManager):void
+		public function start(type:String, check:IVentManager = null):void
 		{
 			if (_check) throw Error("不允许多次设置");
 			_check = check;
@@ -81,6 +81,7 @@ package org.web.sdk.frame.core
 			}
 		}
 		
+		//最强大的事件派发器
 		public function getListener():IApplicationListener 
 		{
 			return _appListener;

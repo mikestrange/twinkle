@@ -73,7 +73,7 @@ package org.web.sdk.fot.core
 		}
 		
 		//添加一个事务日常人
-		public function addTacter(target:IRoutine, ...parameter):void
+		public function addRoutine(target:IRoutine, ...parameter):void
 		{
 			var tacter:TactVector = indexOf(target);
 			var v:Vector.<String> = tacter.getLinks();
@@ -105,7 +105,7 @@ package org.web.sdk.fot.core
 		}
 		
 		//删除一个日常事务者
-		public function removeTacter(target:IRoutine):void
+		public function removeRoutine(target:IRoutine):void
 		{
 			var tacter:TactVector = null;
 			for (var i:int = _tactList.length - 1; i >= 0; i--) 
@@ -120,13 +120,13 @@ package org.web.sdk.fot.core
 			}
 		}
 		
-		private function removeTarget(target:TactVector):void
+		private function removeTarget(tacter:TactVector):void
 		{
-			var v:Vector.<String> = target.getLinks();
+			var v:Vector.<String> = tacter.getLinks();
 			if (v) {
-				target.setLinks(null);
+				tacter.setLinks(null);
 				for each(var str:String in v) {
-					removeWrapper(str, target);
+					removeWrapper(str, tacter.target);
 				}
 			}
 		}

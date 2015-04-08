@@ -8,12 +8,16 @@ package org.web.sdk.fot.wrapper
 	public class TactVector 
 	{
 		private var _target:IRoutine;
-		private var _link:Vector.<String>
+		private var _link:Vector.<String>;
 		
 		public function TactVector(target:IRoutine) 
 		{
 			this._target = target;
-			
+		}
+		
+		public function get target():IRoutine
+		{
+			return _target;
 		}
 		
 		public function match(value:IRoutine):Boolean
