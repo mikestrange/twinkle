@@ -1,22 +1,22 @@
 package org.web.sdk.admin 
 {
-	import org.web.sdk.interfaces.rest.ITips;
+	import org.web.sdk.interfaces.rest.IAlert;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 * 小贴士管理
 	 */
-	public class TipsManager 
+	public class AlertManager 
 	{
-		private var list:Vector.<ITips>
+		private var list:Vector.<IAlert>
 		
-		public function TipsManager() 
+		public function AlertManager() 
 		{
-			list = new Vector.<ITips>;
+			list = new Vector.<IAlert>;
 		}
 		
 		//设置不同类型的tips
-		public function push(tips:ITips, data:Object = null, type:int = 0):void
+		public function push(tips:IAlert, data:Object = null, type:int = 0):void
 		{
 			list.push(tips);
 			trace("#显示tips", tips);
@@ -24,7 +24,7 @@ package org.web.sdk.admin
 		}
 		
 		//需要本身来调用，外界不管 tips.removeFromAdmin 必须调用,也只需要调用它就可以了
-		public function remove(tips:ITips):void
+		public function remove(tips:IAlert):void
 		{
 			var index:int = list.indexOf(tips);
 			if (index != -1) {
@@ -54,11 +54,11 @@ package org.web.sdk.admin
 		}
 		
 		//
-		private static var _ins:TipsManager;
+		private static var _ins:AlertManager;
 		
-		public static function gets():TipsManager
+		public static function gets():AlertManager
 		{
-			if (null == _ins) _ins = new TipsManager;
+			if (null == _ins) _ins = new AlertManager;
 			return _ins;
 		}
 		

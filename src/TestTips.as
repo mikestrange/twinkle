@@ -1,23 +1,23 @@
 package  
 {
-	import org.web.sdk.admin.TipsManager;
+	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.game.Alert;
 	import org.web.sdk.display.game.BaseButton;
-	import org.web.sdk.display.game.FewTips;
 	import org.web.sdk.display.game.utils.ScaleSprite;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.effect.DisplayEffects;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.global.tool.Ticker;
-	import org.web.sdk.interfaces.rest.ITips;
+	import org.web.sdk.interfaces.rest.IAlert;
 	
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 * 一个测试的tips
 	 */
-	public class TestTips extends FewTips
+	public class TestTips extends Alert
 	{
 		
 		override public function show(type:int, data:Object):void 

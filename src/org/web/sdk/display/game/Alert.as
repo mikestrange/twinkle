@@ -1,15 +1,15 @@
 package org.web.sdk.display.game 
 {
-	import org.web.sdk.admin.TipsManager;
+	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.interfaces.rest.ITips;
+	import org.web.sdk.interfaces.rest.IAlert;
 	
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 * 贴士的基类，因为一般体积小，所以不延迟执行
 	 */
-	public class FewTips extends BaseSprite implements ITips 
+	public class Alert extends BaseSprite implements IAlert 
 	{
 		private var _type:int;
 		
@@ -32,7 +32,7 @@ package org.web.sdk.display.game
 		
 		final public function removeFromAdmin():void 
 		{
-			TipsManager.gets().remove(this);
+			AlertManager.gets().remove(this);
 		}
 		
 		//ends

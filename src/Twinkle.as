@@ -1,11 +1,11 @@
 package 
 {
 	import com.greensock.*;
-	import org.web.sdk.admin.TipsManager;
+	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
-	import org.web.sdk.display.core.base.BufferImage;
+	import org.web.sdk.display.mouse.MouseDisplay;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -73,7 +73,7 @@ package
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			//
 			WinManager.show("test", new TestPanel);
-			//TipsManager.gets().push(new TestTips);
+			AlertManager.gets().push(new TestTips);
 		}
 		//ends
 	}

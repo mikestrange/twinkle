@@ -1,4 +1,4 @@
-package org.web.sdk.display 
+package org.web.sdk.display.mouse 
 {
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
@@ -7,7 +7,7 @@ package org.web.sdk.display
 	import org.web.sdk.AppWork;
 	import org.web.sdk.interfaces.IDisplay;
 	/*
-	 * 切换鼠标状态
+	 * 切换鼠标状态，一个简单的，根据需求再调整
 	 * */
 	public class MouseDisplay 
 	{
