@@ -24,10 +24,15 @@ package org.web.sdk.frame.core
 		}
 		
 		/* INTERFACE org.web.sdk.frame.interfaces.IClientServer */
-		public function start(type:String, check:IVentManager = null):void
+		public function start(type:String):void
 		{
-			if (_check) throw Error("不允许多次设置");
-			_check = check;
+			
+		}
+		
+		public function getVentManager():IVentManager
+		{
+			if (null == _check) _check = new VentManager;
+			return _check;
 		}
 		
 		public function addController(controller:IController):void 
@@ -59,13 +64,11 @@ package org.web.sdk.frame.core
 		{
 			var table:IDataTable = _tableMap[tableName];
 			if (table) return table;
-			if (_check) {
-				if (ventName == null) ventName = tableName;
-				table = _check.connect(ventName, tableName);
-				if (table) {
-					_tableMap[tableName] = table;
-					trace("注册数据表和一个通道:", tableName, ventName);
-				}
+			if (ventName == null) ventName = tableName;
+			table = getVentManager().connect(ventName, tableName);
+			if (table) {
+				_tableMap[tableName] = table;
+				trace("注册数据表和一个通道:", tableName, ventName);
 			}
 			return table;
 		}
@@ -76,7 +79,7 @@ package org.web.sdk.frame.core
 			var table:IDataTable = _tableMap[tableName];
 			if (table) {
 				delete _tableMap[tableName];
-				if (_check) _check.close(table);
+				getVentManager().close(table);
 				trace("删除一个数据表:", tableName);
 			}
 		}

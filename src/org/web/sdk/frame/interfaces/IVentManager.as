@@ -8,7 +8,7 @@ package org.web.sdk.frame.interfaces
 	{
 		function connect(ventName:String, tableName:String):IDataTable;
 		function close(table:IDataTable):void;
-		//protected function factoryVent(name:String):IVent;
+		function setVentClass(name:String, className:Class = null):void;
 		//end
 	}
 	

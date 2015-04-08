@@ -10,10 +10,12 @@ package org.web.sdk.frame.core
 	public class VentManager implements IVentManager 
 	{
 		private var _ventMap:Dictionary;
+		private var _classMap:Dictionary;
 		
 		public function VentManager() 
 		{
 			_ventMap = new Dictionary;
+			_classMap = new Dictionary;
 		}
 		
 		/* INTERFACE org.web.sdk.frame.interfaces.IVentManager */
@@ -49,10 +51,20 @@ package org.web.sdk.frame.core
 		
 		protected function factoryVent(name:String):IVent
 		{
-			return null;
+			return new (_classMap[name] as Class);
 		}
 		
-		
+		//这里作为外部自定义添加
+		public function setVentClass(name:String, className:Class = null):void
+		{
+			if (className == null) {
+				if (_classMap[name]) {
+					delete _classMap[name];
+				}
+			}else {
+				_classMap[name] = className;
+			}
+		}
 		
 	}//end
 

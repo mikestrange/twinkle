@@ -6,7 +6,9 @@ package org.web.sdk.frame.interfaces
 	 */
 	public interface IClientServer 
 	{
-		function start(type:String, check:IVentManager = null):void;
+		function start(type:String):void;
+		//
+		function getVentManager():IVentManager;
 		//添加模块
 		function addController(logic:IController):void;
 		function removeController(name:String):IController;

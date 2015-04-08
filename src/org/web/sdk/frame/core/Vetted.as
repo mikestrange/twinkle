@@ -3,12 +3,14 @@ package org.web.sdk.frame.core
 	import flash.utils.Dictionary;
 	import org.web.sdk.frame.interfaces.IDataTable;
 	import org.web.sdk.frame.interfaces.IVent;
-	
-	public class Ventter implements IVent 
+	/*
+	 * 通道
+	 * */
+	public class Vetted implements IVent 
 	{
 		private var _tableList:Vector.<IDataTable>;
 		
-		public function Ventter()
+		public function Vetted()
 		{
 			_tableList = new Vector.<IDataTable>;
 		}
