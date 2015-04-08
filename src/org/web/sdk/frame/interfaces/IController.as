@@ -5,7 +5,7 @@ package org.web.sdk.frame.interfaces
 	 * ------------
 	 * 他只对数据表和Command感兴趣
 	 * */
-	public interface ILogic 
+	public interface IController 
 	{
 		function getName():String;
 		function launch():void;

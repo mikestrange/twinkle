@@ -19,7 +19,11 @@ package org.web.sdk.frame.core
 		 * */
 		public function invoke(method:String, data:Object = null, client:* = undefined):void 
 		{
-			
+			//必须接受两个参数
+			if (this.hasOwnProperty(method)) 
+			{
+				this[method](data, client);
+			}
 		}
 		
 		public function register(name:String):IDataTable

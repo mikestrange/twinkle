@@ -1,6 +1,7 @@
 package 
 {
 	import com.greensock.*;
+	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
 	import org.web.sdk.display.core.base.BufferImage;
@@ -76,7 +77,7 @@ package
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			//
-			AppWork.director.goto(new Ascene());
+			WinManager.show("test", new TestPanel);
 		}
 		//ends
 	}

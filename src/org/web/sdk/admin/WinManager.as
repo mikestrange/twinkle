@@ -28,27 +28,35 @@ package org.web.sdk.admin
 		{
 			if (has(name)) return;
 			gets().put(name, panel);
+			trace("#显示窗口", name);
 			panel.onEnter(data);
 		}
 		
 		//最后一个参数，是否直接移除
-		public static function hide(name:String, direct:Boolean = true):void
+		public static function exit(name:String, direct:Boolean = true):void
 		{
 			var panel:IPanel = gets().remove(name);
-			if (panel) panel.onExit(direct);
+			if (panel) {
+				trace("#关闭窗口", name);
+				panel.onExit(direct);
+			}
 		}
 		
 		//刷新视图，不存在就不刷新
 		public static function update(name:String, data:Object = null):void
 		{
 			var panel:IPanel = gets().getValue(name);
-			if (panel) panel.update(data);
+			if (panel) {
+				trace("#刷新窗口", name);
+				panel.update(data);
+			}
 		}
 		
 		//清理所有
 		public static function clean():void
 		{
-			gets().eachKey(hide);
+			trace("#关闭所有窗口");
+			gets().eachKey(exit);
 		}
 		
 		//批量执行

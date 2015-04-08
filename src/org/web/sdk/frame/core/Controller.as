@@ -2,9 +2,9 @@ package org.web.sdk.frame.core
 {
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
-	import org.web.sdk.frame.interfaces.ILogic;
+	import org.web.sdk.frame.interfaces.IController;
 	
-	public class Controller implements ILogic 
+	public class Controller implements IController 
 	{
 		private var _name:String;
 		

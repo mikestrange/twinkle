@@ -36,6 +36,7 @@ package org.web.sdk.display.bar
 			this.addEventListener(MouseEvent.MOUSE_UP,onMouseAction);
 			this.addEventListener(MouseEvent.MOUSE_OVER,onMouseEffect);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseEffect);
+			//这个材质在添加到舞台才会被new出来
 			_switcher = new RayDisplayer();
 			_switcher.addUnder(this, 0);
 			_switcher.setLiberty(getSwitcher(TouchState.NARMAL), getSwitcher(TouchState.NARMAL), RayDisplayer.BUTTON_TAG);

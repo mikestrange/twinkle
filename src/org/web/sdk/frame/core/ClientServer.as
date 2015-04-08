@@ -5,7 +5,7 @@ package org.web.sdk.frame.core
 	import org.web.sdk.fot.interfaces.IApplicationListener;
 	import org.web.sdk.frame.interfaces.IClientServer;
 	import org.web.sdk.frame.interfaces.IDataTable;
-	import org.web.sdk.frame.interfaces.ILogic;
+	import org.web.sdk.frame.interfaces.IController;
 	import org.web.sdk.frame.interfaces.IVentManager;
 	
 	public class ClientServer implements IClientServer 
@@ -31,22 +31,22 @@ package org.web.sdk.frame.core
 			
 		}
 		
-		public function addLogic(logic:ILogic):void 
+		public function addController(controller:IController):void 
 		{
-			var name:String = logic.getName();
+			var name:String = controller.getName();
 			if (_logicMap[name]) return;
-			_logicMap[name] = logic;
-			logic.launch();
+			_logicMap[name] = controller;
+			controller.launch();
 		}
 		
-		public function removeLogic(name:String):ILogic 
+		public function removeController(name:String):IController 
 		{
-			var logic:ILogic = _logicMap[name];
-			if (logic) {
+			var controller:IController = _logicMap[name];
+			if (controller) {
 				delete _logicMap[name];
-				logic.free();
+				controller.free();
 			}
-			return logic;
+			return controller;
 		}
 		
 		public function getTable(name:String):IDataTable 

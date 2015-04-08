@@ -8,8 +8,8 @@ package org.web.sdk.frame.interfaces
 	{
 		function start(type:String = null):void;
 		//添加模块
-		function addLogic(logic:ILogic):void;
-		function removeLogic(name:String):ILogic;
+		function addController(logic:IController):void;
+		function removeController(name:String):IController;
 		//取数据表
 		function getTable(name:String):IDataTable;
 		//打开一个通道,如果不填写ventName那么他的名称就和数据表一样
