@@ -19,6 +19,7 @@ package org.web.sdk.admin
 		public function push(tips:ITips, data:Object = null, type:int = 0):void
 		{
 			list.push(tips);
+			trace("#显示tips", tips);
 			tips.show(type, data);
 		}
 		
@@ -28,6 +29,7 @@ package org.web.sdk.admin
 			var index:int = list.indexOf(tips);
 			if (index != -1) {
 				list.splice(index, 1);
+				trace("#移除tips", tips);
 				tips.hide();
 			}
 		}

@@ -29,7 +29,7 @@ package org.web.sdk.admin
 			if (has(name)) return;
 			gets().put(name, panel);
 			trace("#显示窗口", name);
-			panel.onEnter(data);
+			panel.onEnter(name, data);
 		}
 		
 		//最后一个参数，是否直接移除
@@ -50,6 +50,11 @@ package org.web.sdk.admin
 				trace("#刷新窗口", name);
 				panel.update(data);
 			}
+		}
+		
+		public static function getPanel(name:String):IPanel
+		{
+			return gets().getValue(name);
 		}
 		
 		//清理所有

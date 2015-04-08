@@ -10,9 +10,10 @@ package org.web.sdk.display.asset
 	{
 		private var map:HashMap;
 		
-		public function KitButton(btnName:String = null, $lock:Boolean = false) 
+		public function KitButton(btnName:String = null, hash:HashMap = null, $lock:Boolean = false) 
 		{
-			map = new HashMap;
+			if (hash) map = hash;
+			else map = new HashMap;
 			super(btnName, $lock);
 		}
 		

@@ -93,14 +93,14 @@ package org.web.sdk.interfaces
 		//添加
 		function addUnder(father:IBaseSprite, floor:int = -1):Boolean;
 		function reportFromFather(father:IBaseSprite):void;
-		//
+		//校正位置
 		function setAlign(alignType:String, offx:Number = 0, offy:Number = 0):void
 		function get offsetx():Number;
 		function get offsety():Number;
 		//帧渲染
 		function frameRender(float:int = 0):void;
-		//
-		function setScale(sx:Number = 1, sy:Number = 1):void;	//和原始大小相比,增加或者减少
+		//和原始大小相比,增加或者减少
+		function setScale(sx:Number = 1, sy:Number = 1):void;	
 		//舞台大小改变的时候调整
 		function setResize(value:Boolean = true):void;
 		//把自己转换

@@ -1,4 +1,4 @@
-package org.web.sdk.display.bar.utils 
+package org.web.sdk.display.game.utils 
 {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;

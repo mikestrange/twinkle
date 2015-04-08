@@ -1,9 +1,8 @@
-package org.web.sdk.display.bar 
+package org.web.sdk.display.game 
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
-	import org.web.sdk.display.asset.KitButton;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.core.SwitcherSprite;
 	import org.web.sdk.display.utils.TouchState;

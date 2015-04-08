@@ -1,6 +1,7 @@
 package 
 {
 	import com.greensock.*;
+	import org.web.sdk.admin.TipsManager;
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
@@ -32,7 +33,6 @@ package
 	{
 		override protected function showEvent():void
 		{
-			//MenuTools.setMenu(this,null,MenuTools.createMenuItem("log",onLog))
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -64,11 +64,6 @@ package
 			//SoundManager.playUrl("asset/bg.mp3");
 		}
 		
-		private function onLog(e:Object):void
-		{
-			Log.save();
-		}
-		
 		private function startGame():void
 		{
 			trace("--------res load over,start game---------")
@@ -78,6 +73,7 @@ package
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			//
 			WinManager.show("test", new TestPanel);
+			//TipsManager.gets().push(new TestTips);
 		}
 		//ends
 	}

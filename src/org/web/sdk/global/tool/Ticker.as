@@ -35,11 +35,13 @@ package org.web.sdk.global.tool
 		{
 			var data:TickerInfo;
 			var currentTime:int = getTimer();
-			for (var i:int = _stepList.length - 1; i >= ZERO; i--)
-			{
-				data = _stepList[i];
+			var index:int = 0;
+			//注册先后执行
+			while (index < _stepList.length) {
+				data = _stepList[index];
 				if (!data.isLive) {
-					_stepList.splice(i, 1);
+					_stepList.splice(index, 1);
+					continue;
 				}else {
 					if (currentTime - data.lastTick >= data.interval)
 					{
@@ -47,13 +49,13 @@ package org.web.sdk.global.tool
 						if (data.repeatCount == ZERO) {
 							data.execute();
 						}else {
-							if (--data.repeatCount <= ZERO) {
-								_stepList.splice(i, 1);
-							}
+							if (--data.repeatCount <= ZERO) _stepList.splice(index, 1);
 							data.execute();
+							if (data.repeatCount <= ZERO) continue;
 						}
 					}
 				}
+				index++;
 			}
 			if (isEmpty()) clearAll();
 		}

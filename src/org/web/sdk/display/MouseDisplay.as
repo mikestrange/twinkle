@@ -6,7 +6,9 @@ package org.web.sdk.display
 	import org.web.sdk.display.asset.KitFactory;
 	import org.web.sdk.AppWork;
 	import org.web.sdk.interfaces.IDisplay;
-	
+	/*
+	 * 切换鼠标状态
+	 * */
 	public class MouseDisplay 
 	{
 		private static var downSprite:IDisplay;
