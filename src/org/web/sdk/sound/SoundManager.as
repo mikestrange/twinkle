@@ -10,7 +10,7 @@ package org.web.sdk.sound
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.sound.core.ISound;
 	import org.web.sdk.sound.core.Song;
 	
@@ -126,7 +126,7 @@ package org.web.sdk.sound
 		//取本地声音
 		private static function createSoundByName(className:String, long:Boolean = false, type:int = 0):ISound
 		{
-			var song:Sound = Crystal.getAsset(className) as Sound;
+			var song:Sound = AppWork.getAsset(className) as Sound;
 			if (song == null) return null;
 			return new Song(song, className, long, type);
 		}

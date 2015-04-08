@@ -1,6 +1,6 @@
 package org.web.sdk.display.engine 
 {
-	import org.web.sdk.inters.IDisplay;
+	import org.web.sdk.interfaces.IDisplay;
 	/**
 	 *渲染器
 	 */

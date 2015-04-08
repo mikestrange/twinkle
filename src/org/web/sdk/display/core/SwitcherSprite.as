@@ -1,6 +1,6 @@
 package org.web.sdk.display.core 
 {
-	import org.web.sdk.inters.ISwitcher;
+	import org.web.sdk.interfaces.ISwitcher;
 	import flash.utils.Dictionary;
 	import org.web.sdk.display.utils.TouchState;
 	
@@ -69,7 +69,7 @@ package org.web.sdk.display.core
 		}
 		
 		//一个事件处理
-		public function setProvoke(touch:Function):void
+		public function set clickHandler(touch:Function):void
 		{
 			_touch = touch;
 		}
@@ -81,9 +81,15 @@ package org.web.sdk.display.core
 		}
 		
 		//工作状态,子类继承,如果实际应用和当前是一样的话
-		protected function updateSwitcher(worker:*):void
+		protected function updateSwitcher(target:*):void
 		{
 			
+		}
+		
+		//强制刷新
+		public function updateAction():void
+		{
+			setCurrent(_current);
 		}
 		
 		public function getSwitcher(state:String):*
@@ -91,24 +97,6 @@ package org.web.sdk.display.core
 			return t_map[state];
 		}
 		
-		//如果有需要释放的话，请允许他先
-		public function forEach():void
-		{
-			for (var k:String in t_map) handlerSwitcher(t_map[k]);
-		}
-		
-		//遍历处理了
-		protected function handlerSwitcher(target:*):void
-		{
-			
-		}
-		
-		//释放
-		override public function finality(value:Boolean = true):void 
-		{
-			t_map = new Dictionary;
-			super.finality(value);
-		}
 		//end
 	}
 

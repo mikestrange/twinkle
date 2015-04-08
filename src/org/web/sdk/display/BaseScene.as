@@ -5,8 +5,7 @@ package org.web.sdk.display
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.interfaces.IBaseScene;
 	import org.web.sdk.display.interfaces.IDirector;
-	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.interfaces.IBaseSprite;
 	
 	public class BaseScene extends BaseSprite implements IBaseScene 
 	{

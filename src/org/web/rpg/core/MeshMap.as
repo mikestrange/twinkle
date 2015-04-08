@@ -13,7 +13,7 @@ package org.web.rpg.core
 	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.astar.Node;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	/*
 	 * 这里作为背景和寻路算法基础
 	 * */
@@ -90,15 +90,15 @@ package org.web.rpg.core
 			var dy:int = py >= 0 ? py : -py;
 			var playerx:int = dx > _mapdata.M_width ? _mapdata.M_width - 1 : dx;
 			var playery:int = dy > _mapdata.M_height ? _mapdata.M_height - 1 : dy;
-			if (dx > _mapdata.M_width - Crystal.winWidth / 2 ) {
-				dx = _mapdata.M_width - Crystal.winWidth;
+			if (dx > _mapdata.M_width - AppWork.winWidth / 2 ) {
+				dx = _mapdata.M_width - AppWork.winWidth;
 			}else {
-				dx = ((playerx - Crystal.winWidth / 2 < 0) ? 0 : playerx - Crystal.winWidth / 2);
+				dx = ((playerx - AppWork.winWidth / 2 < 0) ? 0 : playerx - AppWork.winWidth / 2);
 			}
-			if (dy > _mapdata.M_height - Crystal.winHeight / 2) {
-				dy = _mapdata.M_height - Crystal.winHeight;
+			if (dy > _mapdata.M_height - AppWork.winHeight / 2) {
+				dy = _mapdata.M_height - AppWork.winHeight;
 			}else {
-				dy = ((playery - Crystal.winHeight / 2) < 0 ? 0 : playery - Crystal.winHeight / 2);
+				dy = ((playery - AppWork.winHeight / 2) < 0 ? 0 : playery - AppWork.winHeight / 2);
 			}
 			moveTo(-dx, -dy);
 			return new Point(playerx, playery);
@@ -119,22 +119,22 @@ package org.web.rpg.core
 			//是否在舞台中央
 			//var po:Point = $player.parent.localToAnima(new Point($player.x, $player.y));
 			if (dx < 0) {
-				if (Crystal.winWidth / 2 >= po.x) {
+				if (AppWork.winWidth / 2 >= po.x) {
 					if (this.x < 0) this.x = endx > 0 ? 0 : endx;
 				}
 			}else {
-				if (po.x >= Crystal.winWidth / 2) {
-					var rightx:Number = Crystal.winWidth - _mapdata.M_width;
+				if (po.x >= AppWork.winWidth / 2) {
+					var rightx:Number = AppWork.winWidth - _mapdata.M_width;
 					if (this.x > rightx) this.x = endx < rightx ? rightx : endx;
 				}
 			}
 			if (dy < 0) {
-				if (Crystal.winHeight / 2 >= po.y) {
+				if (AppWork.winHeight / 2 >= po.y) {
 					if (this.y < 0) this.y = endy > 0 ? 0 : endy; 
 				}
 			}else {
-				if (po.y >= Crystal.winHeight / 2) {
-					var righty:Number = Crystal.winHeight - _mapdata.M_height;
+				if (po.y >= AppWork.winHeight / 2) {
+					var righty:Number = AppWork.winHeight - _mapdata.M_height;
 					if (this.y > righty) this.y = endy < righty ? righty : endy;
 				}
 			}
@@ -149,16 +149,16 @@ package org.web.rpg.core
 		//取一个屏幕左边的基点   偏移是为了扩大屏幕
 		public function getMapRect(localx:int, localy:int):Rectangle
 		{
-			var lenx:int = Crystal.winWidth >> 1;
-			var leny:int = Crystal.winHeight >> 1;
+			var lenx:int = AppWork.winWidth >> 1;
+			var leny:int = AppWork.winHeight >> 1;
 			var dx:int = localx - lenx;
 			var dy:int = localy - leny;
 			var rightx:int = this.width - lenx;
 			var righty:int = this.height - leny;
-			currRect.width = Crystal.winWidth;
-			currRect.height = Crystal.winHeight;
-			if (localx > rightx) currRect.x = this.width - Crystal.winWidth;
-			if (localy > righty) currRect.y = this.height - Crystal.winHeight;
+			currRect.width = AppWork.winWidth;
+			currRect.height = AppWork.winHeight;
+			if (localx > rightx) currRect.x = this.width - AppWork.winWidth;
+			if (localy > righty) currRect.y = this.height - AppWork.winHeight;
 			if (localx < lenx) currRect.x = 0;
 			if (localy < leny) currRect.y = 0;
 			return currRect;
@@ -167,11 +167,11 @@ package org.web.rpg.core
 		//当前地图的显示范围
 		public function getVisibility(offx:int = 0, offy:int = 0):Rectangle
 		{
-			var tpo:Point = this.globalToLocal(new Point(Crystal.leftx, Crystal.lefty));
+			var tpo:Point = this.globalToLocal(new Point(AppWork.leftx, AppWork.lefty));
 			rect.x = tpo.x;
 			rect.y = tpo.y;
-			rect.width = Crystal.winWidth + offx;
-			rect.height = Crystal.winHeight + offy;
+			rect.width = AppWork.winWidth + offx;
+			rect.height = AppWork.winHeight + offy;
 			return rect;
 		}
 		

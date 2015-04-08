@@ -1,4 +1,4 @@
-package org.web.sdk.inters 
+package org.web.sdk.interfaces 
 {
 	import flash.display.Sprite;
 	
@@ -12,7 +12,7 @@ package org.web.sdk.inters
 		function getChildrenByOper(value:int = 0):Vector.<IDisplay>;
 		function addDisplay(child:IDisplay, floor:int = -1):Boolean;
 		function getName():String;
-		function getSprite():Sprite;
+		function convertSprite():Sprite;
 		//end
 	}
 	

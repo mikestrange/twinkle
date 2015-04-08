@@ -2,7 +2,7 @@ package org.web.sdk.tool
 {
 	import flash.events.Event;
 	import flash.geom.Rectangle;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.log.Log;
 	
 	public class SystemScope
@@ -21,15 +21,15 @@ package org.web.sdk.tool
 		{
 			maxWidth = maxw;
 			maxHeight = maxh;
-			Crystal.stage.addEventListener(Event.RESIZE, update);
+			AppWork.stage.addEventListener(Event.RESIZE, update);
 			update();
 			Log.log(this).debug("启动：窗口显示最大区域是->", maxWidth, maxHeight);
 		}
 		
 		public function update(data:Object = null):void
 		{
-			var dw:Number = Crystal.stage.stageWidth;
-			var dh:Number = Crystal.stage.stageHeight;
+			var dw:Number = AppWork.stage.stageWidth;
+			var dh:Number = AppWork.stage.stageHeight;
 			_width = maxWidth > dw ? dw : maxWidth;
 			_height = maxHeight > dh ? dh : maxHeight;
 			//重新定义位置
@@ -85,7 +85,7 @@ package org.web.sdk.tool
 			_height = 0;
 			_x = 0;
 			_y = 0;
-			Crystal.stage.removeEventListener(Event.RESIZE, update);
+			AppWork.stage.removeEventListener(Event.RESIZE, update);
 		}
 		
 		//信息

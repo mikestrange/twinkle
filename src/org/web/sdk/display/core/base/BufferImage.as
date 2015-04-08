@@ -6,10 +6,10 @@ package org.web.sdk.display.core.base
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.asset.KitBitmap;
-	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.interfaces.IAcceptor;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * */

@@ -27,28 +27,22 @@ package
 			//var text:TextEditor = TextEditor.quick("HeroTie", this, 30, 0xffff00);
 			//text.setAlign(AlignType.CENTER_TOP, 0, 20);
 			//
-			var btn:BaseButton
-			for (var i:int = 0; i < 1; i++) {
-				btn = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
-				btn.setProvoke(onTouch);
-				this.addDisplay(btn);
-				btn.setAlign(AlignType.LEFT_CENTER, 10 + i * btn.width);
-				var text:TextEditor = TextEditor.quick("测试按钮", null, 16, 0xffff00)
-				btn.setTitle(text);
+			
+			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
+			this.addDisplay(btn);
+			btn.setAlign(AlignType.LEFT_CENTER);
+			var text:TextEditor = TextEditor.quick("测试按钮", null, 16, 0xffff00)
+			btn.setTitle(text);
+			btn.clickHandler = function(event:Object):void
+			{
+				btn.setEnabled(false);
+				this.setScale(.2, .2);
+				this.moveTo(50, stage.stageHeight);
+				TweenLite.to(this, 2, { x:100, y:200, scaleX:1, scaleY:1 } );
 			}
 			//
 		}
 		
-		
-		private function onTouch(but:Object):void
-		{
-			if (curret) curret.setEnabled(true);
-			curret = but as BaseButton;
-			curret.setEnabled(false);
-			this.setScale(.2, .2);
-			this.moveTo(50,stage.stageHeight)
-			TweenLite.to(this,2,{x:100,y:200,scaleX:1,scaleY:1})
-		}
 		
 		//end
 	}

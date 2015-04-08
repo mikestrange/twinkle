@@ -16,7 +16,7 @@ package
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.display.*;
 	import org.web.sdk.*;
-	import org.web.sdk.inters.*;
+	import org.web.sdk.interfaces.*;
 	import org.web.sdk.load.*;
 	import org.web.sdk.log.*;
 	import org.web.sdk.net.socket.*;
@@ -36,7 +36,7 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			Crystal.utilization(new Director(this), 0, 0);
+			AppWork.utilization(new Director(this), 0, 0);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -56,7 +56,7 @@ package
 				{
 					var url:String = xml.res[0].ui[i].@url;
 					var names:String = xml.res[0].ui[i].@name;
-					if (url && url != "") swfLoader.load(url, Crystal.context);
+					if (url && url != "") swfLoader.load(url, AppWork.context);
 				}
 			}
 			loader.start();
@@ -76,7 +76,7 @@ package
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			//
-			Crystal.director.goto(new Ascene());
+			AppWork.director.goto(new Ascene());
 		}
 		//ends
 	}

@@ -6,9 +6,9 @@ package org.web.sdk.display.core.text
 	import flash.text.*;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Crystal;
-	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.inters.IDisplay;
+	import org.web.sdk.AppWork;
+	import org.web.sdk.interfaces.IBaseSprite;
+	import org.web.sdk.interfaces.IDisplay;
 
 	public class TextEditor extends TextField implements IDisplay 
 	{
@@ -117,7 +117,7 @@ package org.web.sdk.display.core.text
 			this.text = '';
 		}
 		
-		/* INTERFACE org.web.sdk.inters.IDisplayObject */
+		/* INTERFACE org.web.sdk.interfaces.IDisplayObject */
 		public function toGlobal(mx:Number = 0, my:Number = 0):Point
 		{
 			return this.localToGlobal(new Point(mx, my));
@@ -202,13 +202,13 @@ package org.web.sdk.display.core.text
 		
 		public function get limitWidth():Number 
 		{
-			if (isNaN(_limitWidth) || _limitWidth == 0) return this.textWidth; 
+			if (isNaN(_limitWidth) || _limitWidth == 0) return this.width; 
 			return _limitWidth;
 		}
 		
 		public function get limitHeight():Number 
 		{
-			if (isNaN(_limitHeight) || _limitHeight == 0) return this.textHeight; 
+			if (isNaN(_limitHeight) || _limitHeight == 0) return this.height; 
 			return _limitHeight;
 		}
 		
@@ -256,9 +256,9 @@ package org.web.sdk.display.core.text
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Crystal.addStageListener(Event.RESIZE, onResize);
+				AppWork.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Crystal.removeStageListener(Event.RESIZE, onResize);
+				AppWork.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		

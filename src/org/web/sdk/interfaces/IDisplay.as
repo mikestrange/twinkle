@@ -1,4 +1,4 @@
-package org.web.sdk.inters 
+package org.web.sdk.interfaces 
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;

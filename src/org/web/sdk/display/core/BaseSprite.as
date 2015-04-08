@@ -5,10 +5,10 @@ package org.web.sdk.display.core
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Crystal;
-	import org.web.sdk.inters.IDisplay;
+	import org.web.sdk.AppWork;
+	import org.web.sdk.interfaces.IDisplay;
 	import flash.display.Sprite;
-	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.interfaces.IBaseSprite;
 	/*
 	 * 原始的，游戏中全部继承他
 	 * */
@@ -61,13 +61,13 @@ package org.web.sdk.display.core
 			setResize(false);
 		}
 		
-		/* INTERFACE org.web.sdk.inters.IBaseSprite */
+		/* INTERFACE org.web.sdk.interfaces.IBaseSprite */
 		public function isEmpty():Boolean
 		{
 			return this.numChildren == 0;
 		}
 		
-		public function getSprite():Sprite
+		public function convertSprite():Sprite
 		{
 			return this;
 		}
@@ -129,7 +129,7 @@ package org.web.sdk.display.core
 		}
 		
 		
-		/* INTERFACE org.web.sdk.inters.IDisplayObject */
+		/* INTERFACE org.web.sdk.interfaces.IDisplayObject */
 		public function toGlobal(mx:Number = 0, my:Number = 0):Point
 		{
 			return this.localToGlobal(new Point(mx, my));
@@ -269,9 +269,9 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Crystal.addStageListener(Event.RESIZE, onResize);
+				AppWork.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Crystal.removeStageListener(Event.RESIZE, onResize);
+				AppWork.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		

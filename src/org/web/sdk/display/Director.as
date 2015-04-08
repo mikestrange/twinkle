@@ -4,8 +4,7 @@ package org.web.sdk.display
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.interfaces.IBaseScene;
 	import org.web.sdk.display.interfaces.IDirector;
-	import org.web.sdk.inters.IBaseSprite;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.interfaces.IBaseSprite;
 	
 	public class Director implements IDirector
 	{
@@ -31,7 +30,7 @@ package org.web.sdk.display
 				scene.prevScene = _current;
 			}
 			_current = scene;
-			getRoot().addChild(scene.getSprite());
+			getRoot().addChild(scene.convertSprite());
 			_current.onEnter();
 		}
 		
@@ -56,10 +55,12 @@ package org.web.sdk.display
 		//回溯，不会设置当前的上级，不破坏但却层级
 		public function black():Boolean
 		{
-			if (_current && _current.prevScene) {
+			if (_current && _current.prevScene) 
+			{
 				if (_current == _current.prevScene) return false;
 				_current.onExit();
 				_current = _current.prevScene;
+				getRoot().addChild(_current.convertSprite());
 				_current.onEnter();
 				return true;
 			}

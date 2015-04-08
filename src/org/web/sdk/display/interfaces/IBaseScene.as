@@ -1,12 +1,12 @@
 package org.web.sdk.display.interfaces 
 {
 	import flash.display.Sprite;
-	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.interfaces.IBaseSprite;
 	import org.web.sdk.display.Director;
 	
 	public interface IBaseScene
 	{
-		function getSprite():Sprite;
+		function convertSprite():Sprite;
 		function onEnter():void;
 		function onExit():void;
 		//

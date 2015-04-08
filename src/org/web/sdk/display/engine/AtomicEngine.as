@@ -4,7 +4,7 @@ package org.web.sdk.display.engine
 	import org.web.sdk.display.engine.IStepper;
 	import flash.utils.getTimer;
 	import org.web.sdk.beyond_challenge;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.log.Log;
 	
 	use namespace beyond_challenge
@@ -31,7 +31,7 @@ package org.web.sdk.display.engine
 		 * */
 		public static function open(root:IEventDispatcher = null):void
 		{
-			if (root == null) root = Crystal.stage;
+			if (root == null) root = AppWork.stage;
 			if (!_isopen) {
 				Log.log().debug('#启动引擎->立刻启动');
 				_root = root;

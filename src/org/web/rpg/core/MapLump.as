@@ -5,7 +5,7 @@ package org.web.rpg.core
 	import flash.display.DisplayObjectContainer;
 	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.core.KitTool;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	

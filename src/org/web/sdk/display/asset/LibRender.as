@@ -1,7 +1,7 @@
 package org.web.sdk.display.asset 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.interfaces.IAcceptor;
 	/*
 	 * 资源渲染器
 	 * 你无法通过他去渲染，只能通过IAcceptor来主动取的他的渲染物件

@@ -10,17 +10,17 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.asset.KitBitmap;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
-	import org.web.sdk.Crystal;
-	import org.web.sdk.inters.IDisplay;
+	import org.web.sdk.AppWork;
+	import org.web.sdk.interfaces.IDisplay;
 	import flash.geom.Transform;
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
-	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.interfaces.IBaseSprite;
 	import flash.geom.Point;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.interfaces.IAcceptor;
 	/**
 	 * 速度更快的显示对象，基于bitmapdata
 	 */
@@ -49,7 +49,7 @@ package org.web.sdk.display.core
 			if(texture) setTexture(texture);
 		}
 		
-		/* INTERFACE org.web.sdk.inters.IAcceptor */
+		/* INTERFACE org.web.sdk.interfaces.IAcceptor */
 		public function dispose():void 
 		{
 			if (_texture) {
@@ -123,7 +123,7 @@ package org.web.sdk.display.core
 			return _texture;
 		}
 		
-		/* INTERFACE org.web.sdk.inters.IDisplayObject */
+		/* INTERFACE org.web.sdk.interfaces.IDisplayObject */
 		public function toGlobal(mx:Number = 0, my:Number = 0):Point
 		{
 			return this.localToGlobal(new Point(mx, my));
@@ -256,9 +256,9 @@ package org.web.sdk.display.core
 			if (_isresize == value) return;
 			_isresize = value;
 			if (value) {
-				Crystal.addStageListener(Event.RESIZE, onResize);
+				AppWork.addStageListener(Event.RESIZE, onResize);
 			}else {
-				Crystal.removeStageListener(Event.RESIZE, onResize);
+				AppWork.removeStageListener(Event.RESIZE, onResize);
 			}
 		}
 		

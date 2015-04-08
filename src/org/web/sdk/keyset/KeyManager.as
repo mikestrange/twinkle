@@ -3,7 +3,7 @@ package org.web.sdk.keyset
 	import flash.net.URLRequest;
 	import flash.utils.*;
 	import flash.events.KeyboardEvent;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	
 	public class KeyManager 
 	{
@@ -20,11 +20,11 @@ package org.web.sdk.keyset
 		
 		public function set enable(value:Boolean):void
 		{
-			Crystal.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownCall);
-			Crystal.stage.removeEventListener(KeyboardEvent.KEY_UP, keyUpCall);
+			AppWork.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownCall);
+			AppWork.stage.removeEventListener(KeyboardEvent.KEY_UP, keyUpCall);
 			if (value) {
-				Crystal.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownCall);
-				Crystal.stage.addEventListener(KeyboardEvent.KEY_UP, keyUpCall);
+				AppWork.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownCall);
+				AppWork.stage.addEventListener(KeyboardEvent.KEY_UP, keyUpCall);
 			}
 		}
 		

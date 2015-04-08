@@ -23,7 +23,7 @@ package org.web.sdk.frame.core
 		}
 		
 		//没有雇主就不能访问其方法
-		public function setMaster(ventter:IVent, ventName:String, tableName:String):void
+		final public function setMaster(ventter:IVent, ventName:String, tableName:String):void
 		{
 			_ventter = ventter;
 			_ventName = ventName;

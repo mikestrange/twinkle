@@ -4,7 +4,7 @@ package org.web.sdk.display.core
 	import flash.events.Event;
 	import flash.geom.*;
 	import flash.net.LocalConnection;
-	import org.web.sdk.inters.*;
+	import org.web.sdk.interfaces.*;
 	import org.web.sdk.log.Log;
 	
 	public class KitTool 

@@ -6,7 +6,7 @@ package org.web.rpg.core
 	import flash.utils.Dictionary;
 	import org.web.rpg.core.MapData;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	/*
@@ -119,11 +119,11 @@ package org.web.rpg.core
 		private function launch(x:Number,y:Number):void
 		{
 			//计算中心偏移
-			var offsetx:int = Math.ceil((Crystal.winWidth / titleWidth) >> 1) +OFF_SET;
-			var offsety:int = Math.ceil((Crystal.winHeight / titleHeight) >> 1) +OFF_SET;
+			var offsetx:int = Math.ceil((AppWork.winWidth / titleWidth) >> 1) +OFF_SET;
+			var offsety:int = Math.ceil((AppWork.winHeight / titleHeight) >> 1) +OFF_SET;
 			//计算中心点
-			var dx:int = Math.ceil((x + (Crystal.winWidth / OFF_SET)) / titleWidth);
-			var dy:int = Math.ceil((y + (Crystal.winHeight / OFF_SET)) / titleHeight);
+			var dx:int = Math.ceil((x + (AppWork.winWidth / OFF_SET)) / titleWidth);
+			var dy:int = Math.ceil((y + (AppWork.winHeight / OFF_SET)) / titleHeight);
 			//trace("偏移：",offsetx, offsety, dx, dy);
 			//分析前后需要的块数
 			var startX:int = Math.max(0, dx - offsetx);

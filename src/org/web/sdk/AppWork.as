@@ -17,7 +17,7 @@ package org.web.sdk
 	/*
 	 * 浓缩结晶
 	 * */
-	public final class Crystal 
+	public final class AppWork
 	{
 		//可以利用他来屏蔽鼠标右键
 		public static const RIGHT_MOUSE_DOWN:String = "rightMouseDown";
@@ -176,12 +176,12 @@ package org.web.sdk
 		}
 		
 		//所有程序域管理
-		public static const appDomain:ContextManager = ContextManager.create();
+		public static const appDomains:ApplicationManager = ApplicationManager.create();
 		
 		//两种索取素材的方法------------这种非RSL共享时候的  可能是BitmapData，所以是*
 		public static function getAsset(className:String, url:String = null):Object
 		{
-			return appDomain.getAsset(className, url);
+			return appDomains.getAsset(className, url);
 		}
 		
 		//ends

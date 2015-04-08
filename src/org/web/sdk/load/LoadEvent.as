@@ -1,6 +1,6 @@
 package org.web.sdk.load 
 {
-	import org.web.sdk.context.ResContext;
+	import org.web.sdk.context.AppDomain;
 	public class LoadEvent 
 	{
 		public static const COMPLETE:String = 'complete';	//下载完成
@@ -20,7 +20,7 @@ package org.web.sdk.load
 		public var isOver:Boolean = false;
 		public var isError:Boolean = false;
 		//
-		private var _domain:ResContext;
+		private var _domain:AppDomain;
 		//
 		public function LoadEvent(type:String, url:String, data:*= undefined)
 		{
@@ -32,9 +32,9 @@ package org.web.sdk.load
 		}
 		
 		//Loader域
-		public function getDomain():ResContext
+		public function getDomain():AppDomain
 		{
-			if (null == _domain) _domain = new ResContext(data); 
+			if (null == _domain) _domain = new AppDomain(data); 
 			return _domain;
 		}
 		//end

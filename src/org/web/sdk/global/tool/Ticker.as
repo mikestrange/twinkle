@@ -1,7 +1,7 @@
 package org.web.sdk.global.tool 
 {
 	import flash.utils.*;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	/*
 	 * 一个非常好的计时器
 	 * FrameWork.stage就是stage
@@ -24,7 +24,7 @@ package org.web.sdk.global.tool
 		{
 			if (!_isstep) {
 				_isstep = true;
-				Crystal.addStageListener("enterFrame", runEvent);
+				AppWork.addStageListener("enterFrame", runEvent);
 				trace("#计时器激活");
 			}
 			if (_stepList == null) _stepList = new Vector.<TickerInfo>;
@@ -85,7 +85,7 @@ package org.web.sdk.global.tool
 		{
 			if (_isstep) {
 				_isstep = false;
-				Crystal.removeStageListener("enterFrame", runEvent);
+				AppWork.removeStageListener("enterFrame", runEvent);
 				trace("#计时器停止");
 			}
 			if (_stepList) {

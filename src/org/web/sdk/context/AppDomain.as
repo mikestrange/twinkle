@@ -8,11 +8,11 @@ package org.web.sdk.context
 	/**
 	 *单独的资源域
 	 */
-	public class ResContext
+	public class AppDomain
 	{
 		private var applicationDomain:ApplicationDomain;
 			
-		public function ResContext(checkFile:*)
+		public function AppDomain(checkFile:*)
 		{
 			if (checkFile is Loader) {
 				applicationDomain = Loader(checkFile).contentLoaderInfo.applicationDomain;

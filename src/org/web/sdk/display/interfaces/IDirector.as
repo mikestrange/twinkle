@@ -1,7 +1,7 @@
 package org.web.sdk.display.interfaces 
 {
 	import flash.display.DisplayObjectContainer;
-	import org.web.sdk.inters.IBaseSprite;
+	import org.web.sdk.interfaces.IBaseSprite;
 		
 	public interface IDirector 
 	{

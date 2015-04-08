@@ -3,18 +3,17 @@ package org.web.sdk.context
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import org.web.sdk.log.Log;
-	import org.web.sdk.Crystal;
 	/**
 	 *域的管理
 	 */
-	public class ContextManager 
+	public class ApplicationManager 
 	{
 		
-		private static var _ins:ContextManager;
+		private static var _ins:ApplicationManager;
 		
-		public static function create():ContextManager
+		public static function create():ApplicationManager
 		{
-			if (null == _ins) _ins = new ContextManager;
+			if (null == _ins) _ins = new ApplicationManager;
 			return _ins;
 		}
 		
@@ -22,14 +21,14 @@ package org.web.sdk.context
 		private var _typeKeys:Object = { };
 		private var _app:ApplicationDomain;
 		
-		public function ContextManager(domain:ApplicationDomain = null)
+		public function ApplicationManager(domain:ApplicationDomain = null)
 		{
 			if (domain == null) domain = ApplicationDomain.currentDomain;
 			_app = domain;
 		}
 		
 		//注册一个类型  不是Loader不会被注册
-		public function share(url:String, context:ResContext):void
+		public function share(url:String, context:AppDomain):void
 		{
 			if (null == context) throw Error("不存在的域：" + url);
 			if (undefined == _typeKeys[url]) {
@@ -43,7 +42,7 @@ package org.web.sdk.context
 			return undefined != _typeKeys[url];
 		}
 		
-		public function getContext(url:String):ResContext
+		public function getContext(url:String):AppDomain
 		{
 			return _typeKeys[url];
 		}
@@ -57,7 +56,7 @@ package org.web.sdk.context
 					Obj = _app.getDefinition(name) as Class;
 				}
 			}else {
-				var apk:ResContext = getContext(url);
+				var apk:AppDomain = getContext(url);
 				if (apk) Obj = apk.getClass(name);
 			}
 			if (Obj) return new Obj;

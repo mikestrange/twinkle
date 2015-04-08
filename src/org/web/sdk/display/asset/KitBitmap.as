@@ -5,7 +5,7 @@ package org.web.sdk.display.asset
 	import flash.display.MovieClip;
 	import flash.system.ApplicationDomain;
 	import flash.utils.getDefinitionByName;
-	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.interfaces.IAcceptor;
 	import org.web.sdk.display.utils.DrawUtils;
 	/**
 	 * 单一材质  IAcceptor 这个接口才能调度

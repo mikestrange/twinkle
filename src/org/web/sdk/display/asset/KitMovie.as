@@ -1,7 +1,7 @@
 package org.web.sdk.display.asset 
 {
 	import flash.display.BitmapData;
-	import org.web.sdk.inters.IAcceptor;
+	import org.web.sdk.interfaces.IAcceptor;
 	/*
 	 * 动画材质列表
 	 * */

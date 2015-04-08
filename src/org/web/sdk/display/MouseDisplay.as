@@ -4,8 +4,8 @@ package org.web.sdk.display
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import org.web.sdk.display.asset.KitFactory;
-	import org.web.sdk.Crystal;
-	import org.web.sdk.inters.IDisplay;
+	import org.web.sdk.AppWork;
+	import org.web.sdk.interfaces.IDisplay;
 	
 	public class MouseDisplay 
 	{
@@ -19,11 +19,11 @@ package org.web.sdk.display
 			if (isshow) return;
 			isshow = !isshow;
 			Mouse.hide();
-			Crystal.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			Crystal.addStageListener(MouseEvent.MOUSE_DOWN, onState);
-			Crystal.addStageListener(MouseEvent.MOUSE_UP, onState);
+			AppWork.addStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			AppWork.addStageListener(MouseEvent.MOUSE_DOWN, onState);
+			AppWork.addStageListener(MouseEvent.MOUSE_UP, onState);
 			//屏蔽鼠标右键
-			Crystal.addStageListener("rightMouseDown", function(event:Object):void{});
+			AppWork.addStageListener("rightMouseDown", function(event:Object):void{});
 		}
 		
 		public static function hide():void 
@@ -33,20 +33,20 @@ package org.web.sdk.display
 			Mouse.show();
 			if (upSprite) upSprite.removeFromFather();
 			if (downSprite) downSprite.removeFromFather();
-			Crystal.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
-			Crystal.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
-			Crystal.removeStageListener(MouseEvent.MOUSE_UP, onState);
+			AppWork.removeStageListener(MouseEvent.MOUSE_MOVE, onMove);
+			AppWork.removeStageListener(MouseEvent.MOUSE_DOWN, onState);
+			AppWork.removeStageListener(MouseEvent.MOUSE_UP, onState);
 		}
 		
 		private static function onMove(event:MouseEvent = null):void
 		{
 			if (isDown) {
 				if (downSprite) {
-					downSprite.moveTo(Crystal.stage.mouseX, Crystal.stage.mouseY);
+					downSprite.moveTo(AppWork.stage.mouseX, AppWork.stage.mouseY);
 				}
 			}else {
 				if (upSprite) {
-					upSprite.moveTo(Crystal.stage.mouseX, Crystal.stage.mouseY);
+					upSprite.moveTo(AppWork.stage.mouseX, AppWork.stage.mouseY);
 				}
 			}
 			if(event) event.updateAfterEvent();
@@ -58,12 +58,12 @@ package org.web.sdk.display
 			if (event.type == MouseEvent.MOUSE_DOWN) {
 				if (upSprite) upSprite.removeFromFather();
 				if (downSprite && !downSprite.isAdded()) {
-					Crystal.stage.addChild(downSprite as DisplayObject);
+					AppWork.stage.addChild(downSprite as DisplayObject);
 				}
 			}else {
 				if (downSprite) downSprite.removeFromFather();
 				if (upSprite && !upSprite.isAdded()) {
-					Crystal.stage.addChild(upSprite as DisplayObject);
+					AppWork.stage.addChild(upSprite as DisplayObject);
 				}
 			}
 			onMove(event);
@@ -74,7 +74,7 @@ package org.web.sdk.display
 			if (downSprite) downSprite.removeFromFather(true);
 			downSprite = display;
 			if (isDown && !downSprite.isAdded()) {
-				Crystal.stage.addChild(downSprite.convertDisplay());
+				AppWork.stage.addChild(downSprite.convertDisplay());
 			}
 			onMove();
 		}
@@ -84,7 +84,7 @@ package org.web.sdk.display
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;
 			if (upSprite && !upSprite.isAdded()) {
-				Crystal.stage.addChild(upSprite as DisplayObject);
+				AppWork.stage.addChild(upSprite as DisplayObject);
 			}
 			onMove();
 		}

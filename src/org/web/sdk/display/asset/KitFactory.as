@@ -3,7 +3,7 @@ package org.web.sdk.display.asset
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.display.utils.DrawUtils;
 	import flash.utils.getDefinitionByName;
 	
@@ -12,7 +12,7 @@ package org.web.sdk.display.asset
 		//***这里获取的都是本地资源
 		public static function by_class(className:String):LibRender
 		{
-			var item:* = Crystal.getAsset(className, null);
+			var item:* = AppWork.getAsset(className, null);
 			if(item is BitmapData) return new KitBitmap(item as BitmapData, className);
 			if (item is DisplayObject) return new KitBitmap(DrawUtils.draw(item as DisplayObject), className);
 			throw Error("不知道是什么类型:"+className);
@@ -21,7 +21,7 @@ package org.web.sdk.display.asset
 		
 		public static function getTexture(className:String):BitmapData
 		{
-			var item:* = Crystal.getAsset(className, null);
+			var item:* = AppWork.getAsset(className, null);
 			if(item is BitmapData) return item as BitmapData;
 			if (item is DisplayObject) return DrawUtils.draw(item as DisplayObject);
 			throw Error("不知道是什么类型:"+className);
@@ -45,7 +45,7 @@ package org.web.sdk.display.asset
 		//构造动画
 		public static function fromMovie(className:String, url:String = null):KitMovie
 		{
-			var item:* =  Crystal.getAsset(className, url);
+			var item:* =  AppWork.getAsset(className, url);
 			if (item is MovieClip) {
 				if (MovieClip(item).totalFrames == 1) throw Error("这个动画图像只有一帧，没必要用影片剪辑的形式：" + className);
 				return new KitMovie(by_movie(item), className);
@@ -63,7 +63,7 @@ package org.web.sdk.display.asset
 			var bitdata:BitmapData;
 			while (true) {
 				name = className.replace(form, index);
-				bitdata = Crystal.getAsset(name, url) as BitmapData;
+				bitdata = AppWork.getAsset(name, url) as BitmapData;
 				if (null == bitdata) break;
 				vector.push(bitdata);
 				if (++index > last && last != -1) break;

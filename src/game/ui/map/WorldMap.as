@@ -18,7 +18,7 @@ package game.ui.map
 	import org.web.rpg.core.MeshMap;
 	import org.web.rpg.core.MapData;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.Crystal;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.net.socket.ServerSocket;
@@ -50,9 +50,9 @@ package game.ui.map
 		{
 			if (isListener) return;
 			isListener = true;
-			Crystal.addStageListener(Event.ENTER_FRAME, onEnter);
-			Crystal.addStageListener(Event.RESIZE, onResize);
-			Crystal.addStageListener(MouseEvent.CLICK, onStageClick);
+			AppWork.addStageListener(Event.ENTER_FRAME, onEnter);
+			AppWork.addStageListener(Event.RESIZE, onResize);
+			AppWork.addStageListener(MouseEvent.CLICK, onStageClick);
 		}
 		
 		public function getMap():MeshMap
@@ -70,9 +70,9 @@ package game.ui.map
 			}
 			if (!isListener) return;
 			isListener = false;
-			Crystal.removeStageListener(Event.ENTER_FRAME, onEnter);
-			Crystal.removeStageListener(Event.RESIZE, onResize);
-			Crystal.removeStageListener(MouseEvent.CLICK, onStageClick);
+			AppWork.removeStageListener(Event.ENTER_FRAME, onEnter);
+			AppWork.removeStageListener(Event.RESIZE, onResize);
+			AppWork.removeStageListener(MouseEvent.CLICK, onStageClick);
 		}
 			
 		private function onResize(e:Event):void
