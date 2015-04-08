@@ -9,14 +9,14 @@ package org.web.sdk.display
 	public class Director implements IDirector
 	{
 		private var _current:IBaseScene;
-		private var _root:DisplayObjectContainer;
+		private var _root:IBaseSprite;
 		
-		public function Director(root:DisplayObjectContainer)
+		public function Director(root:IBaseSprite)
 		{
 			_root = root;
 		}
 		
-		public function getRoot():DisplayObjectContainer
+		public function getRoot():IBaseSprite
 		{
 			return _root;
 		}
@@ -30,7 +30,7 @@ package org.web.sdk.display
 				scene.prevScene = _current;
 			}
 			_current = scene;
-			getRoot().addChild(scene.convertSprite());
+			getRoot().addDisplay(_current);
 			_current.onEnter();
 		}
 		
@@ -60,7 +60,7 @@ package org.web.sdk.display
 				if (_current == _current.prevScene) return false;
 				_current.onExit();
 				_current = _current.prevScene;
-				getRoot().addChild(_current.convertSprite());
+				getRoot().addDisplay(_current);
 				_current.onEnter();
 				return true;
 			}

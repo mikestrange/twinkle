@@ -12,9 +12,9 @@ package game.ui.core
 	public class RangeMotion extends ActionMovie 
 	{
 		private var _point:int;
-		private var _order:String;		//动作指令
-		private var _playtimes:uint;	//动作运行次数
-		private var _end_order:String;
+		private var _order:String;			//动作指令
+		private var _playtimes:uint;		//动作运行次数
+		private var _end_order:String;		//当前结束执行
 		private var _type:int;
 		
 		public function RangeMotion(type:int, $order:String, $point:int = 4)
@@ -65,6 +65,10 @@ package game.ui.core
 		override public function frameRender(float:int = 0):void 
 		{
 			super.frameRender(float);
+		}
+		
+		override protected function handlerFrame():void 
+		{
 			if (_playtimes > 0 && position == totals && --_playtimes <= 0) {
 				_playtimes = 0;
 				doAction(_end_order, _point, 0);

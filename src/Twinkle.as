@@ -1,6 +1,9 @@
 package 
 {
 	import com.greensock.*;
+	import game.ui.core.ActionType;
+	import game.ui.core.RangeMotion;
+	import game.ui.map.RoleSprite;
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
@@ -44,6 +47,7 @@ package
 			var swfLoader:DownLoader = new DownLoader;
 			swfLoader.eventHandler = function(event:LoadEvent):void
 			{
+				AppWork.appDomains.share(event.url, event.getDomain());
 				if (swfLoader.empty) startGame();
 			}
 			
@@ -72,9 +76,14 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
+			
+			var action:RangeMotion = new RangeMotion(0, ActionType.STAND, 4);
+			action.doAction(ActionType.RUN, 4, 3);
+			this.addDisplay(action);
+			action.setAlign("center");
 			//
-			WinManager.show("test", new TestPanel);
-			//AlertManager.gets().push(new TestTips);
+			//WinManager.show("test", new TestPanel);
+			AlertManager.gets().push(new TestTips);
 		}
 		//ends
 	}

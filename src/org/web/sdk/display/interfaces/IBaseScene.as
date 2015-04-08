@@ -4,9 +4,8 @@ package org.web.sdk.display.interfaces
 	import org.web.sdk.interfaces.IBaseSprite;
 	import org.web.sdk.display.Director;
 	
-	public interface IBaseScene
+	public interface IBaseScene extends IBaseSprite
 	{
-		function convertSprite():Sprite;
 		function onEnter():void;
 		function onExit():void;
 		//

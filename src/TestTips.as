@@ -24,7 +24,7 @@ package
 		override public function show(type:int, data:Object):void 
 		{
 			super.show(type, data);
-			AppWork.director.getRoot().addChild(this);
+			AppWork.director.getRoot().addDisplay(this);
 			create_bg();
 			create_close();
 			//被添加
@@ -47,7 +47,7 @@ package
 		
 		private function create_bg():void
 		{
-			var bg:RayDisplayer = ScaleSprite.byPoint("TipsBack1", 40, 50, 300, 200);
+			var bg:RayDisplayer = ScaleSprite.byPoint("TipsBack2", 194/2, 16, 380, 350);
 			this.addDisplay(bg);
 		}
 		

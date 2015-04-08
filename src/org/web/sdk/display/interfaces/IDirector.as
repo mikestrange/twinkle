@@ -1,6 +1,5 @@
 package org.web.sdk.display.interfaces 
 {
-	import flash.display.DisplayObjectContainer;
 	import org.web.sdk.interfaces.IBaseSprite;
 		
 	public interface IDirector 
@@ -12,7 +11,7 @@ package org.web.sdk.display.interfaces
 		//是否
 		function isNote(scene:IBaseScene):Boolean;
 		//---
-		function getRoot():DisplayObjectContainer;
+		function getRoot():IBaseSprite;
 		//end
 	}
 	

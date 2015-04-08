@@ -25,11 +25,14 @@ package
 		override public function onEnter(name:String, data:Object):void 
 		{
 			super.onEnter(name, data);
-			AppWork.director.getRoot().addChild(this);
+			AppWork.director.getRoot().addDisplay(this);
 			//设置自身的宽高是很有必要的
-			setLimit(412, 500);
+			setLimit(714, 600);
 			//延迟呈现
-			delayRender(50, create_black, create_btn, create_close);
+			create_black();
+			create_btn();
+			create_close();
+			//delayRender(50, create_black, create_btn, create_close);
 			//添加到显示  算出一个偏移就可以了
 			DisplayEffects.pervasion(this);
 		}
@@ -55,15 +58,16 @@ package
 		//添加背景
 		private function create_black():void
 		{
-			var bg:RayDisplayer = ScaleSprite.byPointY("panelBg2", 120, 500);
+			var bg:RayDisplayer = ScaleSprite.byPointY("panelBg1", 150, 600);
 			this.addDisplay(bg);
 		}
 		
 		private function create_close():void
 		{
-			var btn:BaseButton = new BaseButton("a_close_up", "a_close_down", "a_close_over");
-			btn.setAlign(AlignType.RIGHT);
+			var btn:BaseButton = new BaseButton("b_close_up", "b_close_down", "b_close_over");
+			btn.setAlign(AlignType.RIGHT, 30, 40);
 			this.addDisplay(btn);
+			btn.setScale(1.2, 1.2);
 			//关闭按钮
 			btn.clickHandler = hidetween;
 		}

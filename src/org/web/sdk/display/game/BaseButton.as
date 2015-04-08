@@ -15,8 +15,8 @@ package org.web.sdk.display.game
 		private var _isMouseDown:Boolean = false;
 		private var _isMouseOver:Boolean = false;
 		//按钮层
-		private var _title:IDisplay;
-		private var _switcher:RayDisplayer;
+		protected var _title:IDisplay;
+		protected var _switcher:RayDisplayer;
 		
 		public function BaseButton(normal:String, press:String = null, over:String = null, die:String = null)
 		{

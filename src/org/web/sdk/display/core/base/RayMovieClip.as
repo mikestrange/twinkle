@@ -14,7 +14,7 @@ package org.web.sdk.display.core.base
 		private var _vector:Vector.<BitmapData>;
 		private var _isstop:Boolean = true;
 		private var _index:int = 1;		
-		private var _fps:int = 5;
+		private var _fps:int = 24;	//24帧
 		private var _currfps:int = 0;
 		private var _totals:int = 0;
 		//添加一个粒子控制器
@@ -80,9 +80,16 @@ package org.web.sdk.display.core.base
 			if (_vector == null || _vector.length < 2) return;
 			if (value < 1) value = 1;
 			if (value > _totals) value = 1;
-			_index = value;
+			this._index = value;
 			this.bitmapData = _vector[_index - 1];
 			this.smoothing = true;
+			handlerFrame();
+		}
+		
+		//自身处理一个帧函数
+		protected function handlerFrame():void
+		{
+			
 		}
 		
 		public function get position():int

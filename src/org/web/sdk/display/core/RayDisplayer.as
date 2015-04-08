@@ -26,6 +26,7 @@ package org.web.sdk.display.core
 	 */
 	public class RayDisplayer extends Bitmap implements IAcceptor 
 	{
+		//
 		public static const BIT_TAG:int = 0;
 		public static const BUTTON_TAG:int = 1;
 		public static const MOVIE_TAG:int = 2;

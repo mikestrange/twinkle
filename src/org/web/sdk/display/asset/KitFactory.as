@@ -9,7 +9,7 @@ package org.web.sdk.display.asset
 	
 	public class KitFactory 
 	{
-		//***这里获取的都是本地资源
+		//直接生成资源
 		public static function by_class(className:String):LibRender
 		{
 			var item:* = AppWork.getAsset(className, null);
@@ -19,6 +19,7 @@ package org.web.sdk.display.asset
 			return null;
 		}
 		
+		//原始素材
 		public static function getTexture(className:String):BitmapData
 		{
 			var item:* = AppWork.getAsset(className, null);
@@ -28,7 +29,7 @@ package org.web.sdk.display.asset
 			return null;
 		}
 		
-		//如果动画下面还有动画，那没得搞
+		//根据一个动画生成素材链
 		private static function by_movie(movie:MovieClip):Vector.<BitmapData>
 		{
 			var vector:Vector.<BitmapData> = new Vector.<BitmapData>;
