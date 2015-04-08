@@ -5,7 +5,7 @@ package org.web.sdk.frame.core
 	import org.web.sdk.frame.interfaces.IVent;
 	import org.web.sdk.frame.interfaces.IVentManager;
 	/*
-	 * 通道管理器
+	 * 通道管理器,唯一需要关系的模块之一
 	 * */
 	public class VentManager implements IVentManager 
 	{

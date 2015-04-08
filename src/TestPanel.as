@@ -26,9 +26,10 @@ package
 		{
 			super.onEnter(name, data);
 			AppWork.director.getRoot().addChild(this);
-			//
-			create_black();
-			create_btn();
+			//设置自身的宽高是很有必要的
+			setLimit(412, 500);
+			//延迟呈现
+			delayRender(50, create_black, create_btn, create_close);
 			//添加到显示  算出一个偏移就可以了
 			DisplayEffects.pervasion(this);
 		}
@@ -38,7 +39,8 @@ package
 			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
 			btn.setAlign("center");
 			this.addDisplay(btn);
-			var text:TextEditor = TextEditor.quick("lable", null, 16, 0xffff00)
+			//
+			var text:TextEditor = TextEditor.quick("lable", null, 16, 0xffff00);
 			btn.setTitle(text);
 			//点击处理
 			btn.clickHandler = clickHandler;
@@ -47,15 +49,28 @@ package
 		private function clickHandler(event:BaseButton):void		
 		{
 			event.setEnabled(false);
-			//注意的是this表示的是btn
-			DisplayEffects.shutting(this, .8, .1, removeFromAdmin);
+			trace("测试按钮点击");
 		}
 		
 		//添加背景
 		private function create_black():void
 		{
-			var bg:RayDisplayer = ScaleSprite.byPointY("panelBg2",120,500);
+			var bg:RayDisplayer = ScaleSprite.byPointY("panelBg2", 120, 500);
 			this.addDisplay(bg);
+		}
+		
+		private function create_close():void
+		{
+			var btn:BaseButton = new BaseButton("a_close_up", "a_close_down", "a_close_over");
+			btn.setAlign(AlignType.RIGHT);
+			this.addDisplay(btn);
+			//关闭按钮
+			btn.clickHandler = hidetween;
+		}
+		
+		private function hidetween(event:Object):void 
+		{
+			DisplayEffects.shutting(this, .8, .1, this.removeFromAdmin);	
 		}
 		
 		//ends

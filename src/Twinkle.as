@@ -6,6 +6,7 @@ package
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
 	import org.web.sdk.display.mouse.MouseDisplay;
+	import org.web.sdk.frame.core.ClientServer;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -73,7 +74,7 @@ package
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			//
 			WinManager.show("test", new TestPanel);
-			AlertManager.gets().push(new TestTips);
+			//AlertManager.gets().push(new TestTips);
 		}
 		//ends
 	}

@@ -19,8 +19,8 @@ package org.web.sdk.display.effect
 			var endx:int = AppWork.stageWidth - target.limitWidth >> 1;
 			var endy:int = AppWork.stageHeight - target.limitHeight >> 1;
 			//拉伸裁剪尺寸
-			var endwide:int = target.limitWidth * (LIM - scale) / 2;
-			var endheig:int = target.limitHeight * (LIM - scale) / 2;
+			var endwide:int = target.limitWidth * ((LIM - scale) / 2);
+			var endheig:int = target.limitHeight * ((LIM - scale) / 2);
 			//初始设置
 			target.moveTo(endx + endwide, endy + endheig);
 			target.setScale(scale, scale);
@@ -32,8 +32,8 @@ package org.web.sdk.display.effect
 		public static function shutting(target:IDisplay, scale:Number = .8, time:Number = .1, complete:Function = null):void
 		{
 			//拉伸裁剪尺寸
-			var cut_wide:int = target.limitWidth * (LIM - scale) / 2;
-			var cut_heig:int = target.limitHeight * (LIM - scale) / 2;
+			var cut_wide:int = target.limitWidth * ((LIM - scale) / 2);
+			var cut_heig:int = target.limitHeight * ((LIM - scale) / 2);
 			//结束位置
 			var endx:int = target.x + cut_wide;
 			var endy:int = target.y + cut_heig;

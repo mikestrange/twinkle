@@ -1,10 +1,13 @@
 package org.web.sdk.fot.core 
 {
 	import flash.utils.Dictionary;
+	import org.web.sdk.fot.interfaces.IRoutine;
 	import org.web.sdk.fot.interfaces.IWrapper;
 	import org.web.sdk.fot.tracker.Tracker;
 	import org.web.sdk.fot.wrapper.ClassWrapper;
 	import org.web.sdk.fot.wrapper.MethodWrapper;
+	import org.web.sdk.fot.wrapper.MixtureWrapper;
+	import org.web.sdk.fot.wrapper.TactVector;
 	/*
 	 *  [集装箱模式]
 	 * 一个对象一个集装箱模式就够了
@@ -12,12 +15,14 @@ package org.web.sdk.fot.core
 	 * */
 	public class Container 
 	{
-		private var _hash:Dictionary;
+		private var _tactList:Vector.<TactVector>;	//消息人
+		private var _hash:Dictionary;				//单一消息
 		private var _tracker:Tracker;
 		
 		public function Container(tracker:Tracker) 
 		{
 			_hash = new Dictionary;
+			_tactList = new Vector.<TactVector>;
 			register(tracker);
 		}
 		
@@ -62,8 +67,77 @@ package org.web.sdk.fot.core
 		
 		public function clear():void
 		{
+			removeAllTacter();
 			for (var k:String in _hash) removeByName(k);
 			_hash = new Dictionary;
+		}
+		
+		//添加一个事务日常人
+		public function addTacter(target:IRoutine, ...parameter):void
+		{
+			var tacter:TactVector = indexOf(target);
+			var v:Vector.<String> = tacter.getLinks();
+			if (parameter.length) {
+				if (v == null) v = new Vector.<String>;
+				var name:String = null;
+				for (var i:int = 0; i < parameter.length; i++) {
+					name = parameter[i];
+					var index:int = v.indexOf(name);
+					if (index == -1) {
+						v.push(name);
+						addWrapper(name, new MixtureWrapper(target, name));
+					}
+				}
+				tacter.setLinks(v);
+			}
+		}
+		
+		private function indexOf(value:IRoutine):TactVector
+		{
+			var tacter:TactVector = null;
+			for (var i:int = _tactList.length - 1; i >= 0; i--) {
+				tacter = _tactList[i];
+				if (tacter.match(value)) return tacter;
+			}
+			tacter = new TactVector(value);
+			_tactList.push(tacter);
+			return tacter
+		}
+		
+		//删除一个日常事务者
+		public function removeTacter(target:IRoutine):void
+		{
+			var tacter:TactVector = null;
+			for (var i:int = _tactList.length - 1; i >= 0; i--) 
+			{
+				tacter = _tactList[i];
+				if (tacter.match(target)) 
+				{
+					_tactList.splice(i, 1);
+					removeTarget(tacter);
+					break;
+				}
+			}
+		}
+		
+		private function removeTarget(target:TactVector):void
+		{
+			var v:Vector.<String> = target.getLinks();
+			if (v) {
+				target.setLinks(null);
+				for each(var str:String in v) {
+					removeWrapper(str, target);
+				}
+			}
+		}
+		
+		private function removeAllTacter():void
+		{
+			var tacter:TactVector = null;
+			while (_tactList.length) {
+				tacter = _tactList.shift();
+				removeTarget(tacter);
+			}
 		}
 		
 		//protected

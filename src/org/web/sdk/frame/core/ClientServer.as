@@ -15,20 +15,19 @@ package org.web.sdk.frame.core
 		private var _check:IVentManager;
 		private var _appListener:IApplicationListener;
 		
-		public function ClientServer(check:IVentManager, appListener:IApplicationListener = null) 
+		public function ClientServer(appListener:IApplicationListener = null) 
 		{
 			_logicMap = new Dictionary;
 			_tableMap = new Dictionary;
-			_check = check;
-			if (appListener == null) appListener = new SimpleListener;
-			_appListener = appListener;
+			if (appListener == null) _appListener = new SimpleListener;
+			else _appListener = appListener;
 		}
 		
 		/* INTERFACE org.web.sdk.frame.interfaces.IClientServer */
-		public function start(type:String = null):void
+		public function setVentManager(check:IVentManager):void
 		{
-			
-			
+			if (_check) throw Error("不允许多次设置");
+			_check = check;
 		}
 		
 		public function addController(controller:IController):void 
@@ -83,6 +82,15 @@ package org.web.sdk.frame.core
 		public function getListener():IApplicationListener 
 		{
 			return _appListener;
+		}
+		
+		//全局
+		private static var _ins:IClientServer;
+		
+		public static function gets():IClientServer
+		{
+			if (_ins == null) _ins = new ClientServer;
+			return _ins;
 		}
 		
 		//end

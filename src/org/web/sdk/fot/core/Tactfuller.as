@@ -1,12 +1,12 @@
 package org.web.sdk.fot.core 
 {
 	import org.web.sdk.fot.interfaces.IApplicationListener;
-	import org.web.sdk.fot.interfaces.ITactful;
+	import org.web.sdk.fot.interfaces.IRoutine;
 	
 	/**
 	 * 只能作为嫁接
 	 */
-	public class Tactfuller implements ITactful 
+	public class Tactfuller implements IRoutine 
 	{
 		private var _cumulative:Boolean = true;
 		private var _appListener:IApplicationListener;

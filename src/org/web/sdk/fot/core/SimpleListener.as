@@ -8,7 +8,7 @@ package org.web.sdk.fot.core
 	import org.web.sdk.fot.tracker.Tracker;
 	/**
 	 * [普通监听模式/手动模式]
-	 * 基础的事务添加和删除，非集装箱模式
+	 * 基础的事务添加和删除，非集装箱模式，他自身能够添加事务，也能生成一个集装事务器
 	 */
 	public class SimpleListener implements IApplicationListener
 	{
@@ -89,7 +89,10 @@ package org.web.sdk.fot.core
 		public function createContainer(name:String):Container
 		{
 			var container:Container = _contHash[name];
-			if (container == null) new Container(getTracker());
+			if (container == null) {
+				container = new Container(getTracker());
+				_contHash[name] = container;
+			}
 			return container;
 		}
 		
