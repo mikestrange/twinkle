@@ -35,6 +35,7 @@ package org.web.sdk.frame.core
 			var name:String = controller.getName();
 			if (_logicMap[name]) return;
 			_logicMap[name] = controller;
+			trace("#进入模块:", name);
 			controller.launch();
 		}
 		
@@ -43,6 +44,7 @@ package org.web.sdk.frame.core
 			var controller:IController = _logicMap[name];
 			if (controller) {
 				delete _logicMap[name];
+				trace("#退出模块:", name);
 				controller.free();
 			}
 			return controller;
