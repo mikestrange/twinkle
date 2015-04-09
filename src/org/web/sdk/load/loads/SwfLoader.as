@@ -18,6 +18,7 @@ package org.web.sdk.load.loads
 	public class SwfLoader extends Loader implements ILoader
 	{
 		private var _url:String;
+		private var _request:ILoadRequest;
 		protected var _isLoader:Boolean = false;
 		
 		public function get url():String
@@ -27,12 +28,13 @@ package org.web.sdk.load.loads
 		
 		public function getRequest():ILoadRequest
 		{
-			return null;
+			return _request;
 		}
 		
 		public function download(request:ILoadRequest):void
 		{
 			_url = request.url;
+			_request = request;
 			eventListener();
 			_isLoader = true;
 			this.load(new URLRequest(_url), request.context);
@@ -52,6 +54,9 @@ package org.web.sdk.load.loads
 			this.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onError);
 			this.contentLoaderInfo.removeEventListener(Event.OPEN, onOpen);
 			this.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onProgress);
+			if (this.contentLoaderInfo.hasEventListener(Event.COMPLETE)) {
+				this.contentLoaderInfo.removeEventListener(Event.COMPLETE, onNewLoadComplete);
+			}
 		}
 		
 		protected function onOpen(event:Event):void
@@ -67,8 +72,14 @@ package org.web.sdk.load.loads
 		protected function complete(event:Event):void
 		{
 			removeListener();
-			_isLoader = false;
-			invoke(LoadEvent.COMPLETE, this);
+			if (getRequest().context) {
+				//解决跨域的问题，如果资源下载到本地域，那么我们内部不会停止
+				this.loadBytes(this.contentLoaderInfo.bytes, getRequest().context);
+				this.contentLoaderInfo.addEventListener(Event.COMPLETE, onNewLoadComplete);
+			}else {
+				_isLoader = false;
+				invoke(LoadEvent.COMPLETE, this);
+			}
 		}
 		
 		protected function onError(event:IOErrorEvent):void
@@ -76,6 +87,13 @@ package org.web.sdk.load.loads
 			removeListener();
 			_isLoader = false;
 			invoke(LoadEvent.ERROR);
+		}
+		
+		protected function onNewLoadComplete(event:Event):void
+		{
+			_isLoader = false;
+			this.contentLoaderInfo.removeEventListener(Event.COMPLETE, onNewLoadComplete);
+			invoke(LoadEvent.COMPLETE, this);
 		}
 		
 		public function destroy():void 

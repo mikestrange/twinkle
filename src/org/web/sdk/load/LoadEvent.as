@@ -1,6 +1,7 @@
 package org.web.sdk.load 
 {
 	import org.web.sdk.context.AppDomain;
+	
 	public class LoadEvent 
 	{
 		public static const COMPLETE:String = 'complete';	//下载完成

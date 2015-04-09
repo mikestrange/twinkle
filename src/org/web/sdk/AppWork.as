@@ -172,6 +172,7 @@ package org.web.sdk
 		//当前域
 		public static function get context():LoaderContext
 		{
+			//, SecurityDomain.currentDomain
 			return new LoaderContext(false, ApplicationDomain.currentDomain);
 		}
 		
