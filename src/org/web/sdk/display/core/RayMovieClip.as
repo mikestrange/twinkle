@@ -1,6 +1,7 @@
 package org.web.sdk.display.core 
 {
 	import flash.display.BitmapData;
+	import flash.utils.getTimer;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.asset.MovieRender;
 	import org.web.sdk.display.core.RayDisplayer;
@@ -15,9 +16,9 @@ package org.web.sdk.display.core
 		private var _vector:Vector.<BitmapData>;
 		private var _isstop:Boolean = true;
 		private var _index:int = 1;		
-		private var _fps:int = 24;	//24帧
-		private var _currfps:int = 0;
-		private var _totals:int = 0;
+		private var _hearttime:int = 100;		//24帧
+		private var _current:int = 0;			//当前帧	
+		private var _totals:int = 1;			//总帧
 		//添加一个粒子控制器
 		private var _step:Steper;	
 		
@@ -27,16 +28,23 @@ package org.web.sdk.display.core
 			super(libs);
 		}
 		
+		//每次在重新渲染的时候会暂停或者播放
 		public function setFrames(vector:Vector.<BitmapData>):void
 		{
 			_vector = vector;
 			if (_vector) _totals = _vector.length;
 			else _totals = 1;
+			//停止的时候设置
+			if (_isstop) {
+				stop();
+			}else {
+				play();
+			}
 		}
 		
 		public function restore():void
 		{
-			_currfps = 0;
+			_current = getTimer();
 		}
 		
 		public function stop(index:int = 1):void
@@ -69,19 +77,19 @@ package org.web.sdk.display.core
 		override public function frameRender(float:int = 0):void 
 		{
 			if (_isstop) return;
-			if (++_currfps > _fps) {
-				_currfps = 0;
+			if (getTimer() - _current >= _hearttime) {
+				_current = getTimer();
 				position++;
 			}
 		}
 		
 		//动作可以初始化
-		public function set position(value:int):void
+		public function set position(index:int):void
 		{
-			if (_vector == null || _vector.length < 2) return;
-			if (value < 1) value = 1;
-			if (value > _totals) value = 1;
-			this._index = value;
+			if (_vector == null || _vector.length == 0) return;
+			if (index < 1) index = _totals;
+			if (index > _totals) index = 1;
+			this._index = index;
 			this.bitmapData = _vector[_index - 1];
 			this.smoothing = true;
 			handlerFrame();
@@ -105,12 +113,12 @@ package org.web.sdk.display.core
 		
 		public function set frameRate(value:int):void
 		{
-			_fps = value;
+			_hearttime = value;
 		}
 		
 		public function get frameRate():int
 		{
-			return _fps;
+			return _hearttime;
 		}
 		
 		override public function dispose():void 
