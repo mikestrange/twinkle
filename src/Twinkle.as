@@ -46,7 +46,8 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			AppWork.utilization(new Director(this), stage.stageWidth, stage.stageHeight);
+			AppWork.utilization(new Director(this), 3000, 2000);
+			AppWork.lookEms(true);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -86,30 +87,46 @@ package
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			
 			action = new RangeMotion(0, ActionType.STAND, 4);
-			action.doAction(ActionType.RUN, 4, 3);
+			action.doAction(ActionType.RUN, 4);
 			camera = new MapCamera;
 			
 			var loader:DownLoader = new DownLoader;
 			loader.eventHandler = function(e:LoadEvent):void
 			{
 				camera.setMap(new LandSprite(MapDatum.create(new XML(e.data))));
-				addDisplay(camera.getView());
+				addDisplay(camera.getView(), 0);
 				camera.getView().addDisplay(action);
 				camera.updateBuffer();
+				camera.getView().addEventListener(MouseEvent.CLICK, onClick);
+				camera.updateBuffer();
 			}
-			loader.load(MapPath.getMapConfig(3001));
+			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
-			stage.addEventListener(MouseEvent.CLICK, onClick);
-			//
-			//WinManager.show("test", new TestPanel);
-			//AlertManager.gets().push(new TestTips);
+			WinManager.show("test", new TestPanel);
+			AlertManager.gets().push(new TestTips);
+			//---
+			setResize();
+			Ticker.step(15000, freeMap);
+		}
+		
+		private function freeMap():void
+		{
+			camera.getView().removeFromFather();
+			SpriteTool.collection(3);
+		}
+		
+		override protected function onResize(e:Event = null):void 
+		{
+			camera.lookTo(action.x, action.y);
+			camera.updateBuffer();
 		}
 		
 		private function onClick(e:MouseEvent):void
 		{
 			//取鼠标点击的位置
 			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
-			action.moveTo(pos.x, pos.y);
+			TweenLite.to(action, .2, { x:pos.x, y:pos.y } );
+			//action.moveTo(pos.x, pos.y);
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
 		}

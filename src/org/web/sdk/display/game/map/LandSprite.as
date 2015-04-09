@@ -7,6 +7,7 @@ package org.web.sdk.display.game.map
 	import flash.geom.Matrix;
 	import flash.utils.Dictionary;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.core.BufferImage;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.display.core.BaseSprite;
@@ -29,6 +30,8 @@ package org.web.sdk.display.game.map
 		//节点长度
 		public var wLeng:int;
 		public var hLeng:int;
+		//小地图
+		public var smallUrl:String;
 		//所有节点
 		private var _mapList:Array;
 		//当前渲染部分
@@ -38,10 +41,13 @@ package org.web.sdk.display.game.map
 		//打开地图下载
 		public var openLoad:Boolean = false;
 		//缩略地图，也可以是小地图
-		private var _smallMap:DisplayObject;
+		private var _smallMap:BufferImage;
+		//地图的层
+		private var _mapRoot:BaseSprite;
 		
 		public function LandSprite(data:MapDatum = null) 
 		{
+			this.addDisplay(_mapRoot = new BaseSprite);
 			if (data) layout(data);
 		}
 		
@@ -56,6 +62,7 @@ package org.web.sdk.display.game.map
 			this.hLeng = data.hLeng;
 			this.titleWidth = data.titleWidth;
 			this.titleHeight = data.titleHeight;
+			this.smallUrl = data.smallUrl;
 			//初始化缓冲
 			_nowHash = new Dictionary;
 			_mapList = new Array;
@@ -67,18 +74,21 @@ package org.web.sdk.display.game.map
 					_mapList[i][j] = new MapItem(mapId, j, i, titleWidth, titleHeight);
 				}
 			}
-			openLoad = true;
-			//
+			//限制宽高
 			setLimit(M_width, M_height);
+			openLoad = true;
 		}
 		
-		//设置背景地图
-		private function setSmall(value:DisplayObject):DisplayObject
+		public function loadSmall():void
 		{
-			if (_smallMap && _smallMap.parent) this.removeChild(_smallMap);
-			_smallMap = value;
-			if(_smallMap) this.addChildAt(_smallMap, 0);
-			return _smallMap;
+			if (_smallMap) {
+				_smallMap.finality();
+				_smallMap.removeFromFather();
+			}
+			_smallMap = new BufferImage;
+			_smallMap.setLimit(M_width, M_height);
+			_smallMap.resource = smallUrl;
+			this.addDisplay(_smallMap, 0);
 		}
 		
 		//这里并不是移动地图
@@ -122,7 +132,7 @@ package org.web.sdk.display.game.map
 			for each(var node:MapItem in _nowHash)
 			{
 				if (!node.isOpen) removeNode(node);
-				//
+				//关闭
 				node.isOpen = false;
 			}
 		}
@@ -133,7 +143,7 @@ package org.web.sdk.display.game.map
 			node.isOpen = true;
 			if(hasNode(node)) return;
 			_nowHash[node.url] = node;
-			node.setParent(this);
+			node.setParent(_mapRoot);
 		}
 		
 		//显示列表移除

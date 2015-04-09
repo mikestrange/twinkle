@@ -9,7 +9,6 @@ package org.web.sdk.display.asset
 	
 	public class AssetFactory 
 	{
-		
 		//原始素材
 		public static function getTexture(className:String):BitmapData
 		{

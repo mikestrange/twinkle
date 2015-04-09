@@ -39,6 +39,12 @@ package org.web.sdk.display.game.utils
 			bit.draw(bitdata, matrix, null, null, chiprect);
 			bitdata.dispose();
 		}
+		
+		public function free():void
+		{
+			bitdata = null;
+			rect = null;
+		}
 		//end
 	}
 

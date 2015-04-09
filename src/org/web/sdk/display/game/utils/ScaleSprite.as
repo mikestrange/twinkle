@@ -17,13 +17,13 @@ package org.web.sdk.display.game.utils
 		public static const NONE:int = 0;		//九宫格切割
 		public static const ACROSS:int = 1;		//根据Y点上下切割
 		public static const VERTICAL:int = 2;	//根据X点左右切割
-		//
+		//拷贝
 		private var resCopy:BitmapData;
+		//布局位图
+		private var rectVector:Vector.<ScaleRect>;
 		//原始尺寸
 		private var beginWide:int;	
 		private var beginHeig:int;
-		//布局位图
-		private var rectVector:Vector.<ScaleRect>;
 		//当前尺寸
 		private	var currWide:int = -1;
 		private var currHeig:int = -1;
@@ -146,13 +146,23 @@ package org.web.sdk.display.game.utils
 				if (scale) scale.draw(bitdata);
 			}
 			bitdata.unlock();
+			//释放原图
+			if (rectVector) {
+				rectVector.shift();
+				while (rectVector.length) {
+					rectVector.shift().free();
+				}
+				rectVector = null;
+			}
 			return new RayDisplayer(new BaseRender(name, bitdata));
 		}
 		
 		private function dispose():void
 		{
-			resCopy.dispose();
-			resCopy = null;
+			if (resCopy) {
+				resCopy.dispose();
+				resCopy = null;
+			}
 		}
 		
 		//全局
@@ -185,6 +195,10 @@ package org.web.sdk.display.game.utils
 			return scale.getResult(libName);
 		}
 		
+		public static function clear():void
+		{
+			
+		}
 		//end
 	}
 }

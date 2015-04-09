@@ -64,6 +64,11 @@ package org.web.sdk.load
 			CheckLoader.startLoad();
 		}
 		
+		public function maxLength(value:int = 1):void
+		{
+			CheckLoader.maxLength = value;
+		}
+		
 		//回调
 		public function set eventHandler(value:Function):void
 		{
