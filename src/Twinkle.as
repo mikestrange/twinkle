@@ -1,9 +1,8 @@
 package 
 {
 	import com.greensock.*;
-	import game.ui.core.ActionType;
-	import game.ui.core.RangeMotion;
-	import game.ui.map.RoleSprite;
+	import game.ui.RangeMotion;
+	import game.ui.type.ActionType;
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
@@ -94,7 +93,6 @@ package
 			loader.eventHandler = function(e:LoadEvent):void
 			{
 				camera.setMap(new LandSprite(MapDatum.create(new XML(e.data))));
-				//Ticker.step(50, move, 0);
 				addDisplay(camera.getView());
 				camera.getView().addDisplay(action);
 				camera.updateBuffer();
@@ -105,25 +103,15 @@ package
 			//
 			//WinManager.show("test", new TestPanel);
 			//AlertManager.gets().push(new TestTips);
-			this.alpha = .1;
-			AppWork.addStageListener(Event.ENTER_FRAME, onFrame);
-		}
-		
-		private function onFrame(e:Event):void
-		{
-			camera.updateBuffer();
-			trace( -camera.lookx, -camera.looky);
 		}
 		
 		private function onClick(e:MouseEvent):void
 		{
+			//取鼠标点击的位置
 			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
-			
 			action.moveTo(pos.x, pos.y);
-			//camera.lookTo(pos.x, pos.y);
-			TweenLite.killTweensOf(camera);
-			TweenLite.to(camera, 1, { lookx:pos.x, looky:pos.y } );
-			trace(pos);
+			camera.lookTo(pos.x, pos.y);
+			camera.updateBuffer();
 		}
 		//ends
 	}

@@ -1,4 +1,4 @@
-package game.ui.core 
+package game.ui 
 {
 	import flash.display.BitmapData;
 	import org.web.sdk.display.asset.LibRender;

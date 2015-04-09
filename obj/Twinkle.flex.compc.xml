@@ -148,10 +148,8 @@
     <class>com.greensock.plugins.VisiblePlugin</class>
     <class>com.greensock.plugins.VolumePlugin</class>
     <class>game.consts.CmdDefined</class>
-    <class>game.ui.core.ActionType</class>
-    <class>game.ui.core.RangeMotion</class>
-    <class>game.ui.map.RoleSprite</class>
-    <class>game.ui.map.WorldMap</class>
+    <class>game.ui.RangeMotion</class>
+    <class>game.ui.type.ActionType</class>
     <class>org.web.sdk.AppWork</class>
     <class>org.web.sdk.beyond_challenge</class>
     <class>org.web.sdk.admin.AlertManager</class>

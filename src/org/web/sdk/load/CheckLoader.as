@@ -54,7 +54,7 @@ package org.web.sdk.load
 				_loadMap[url] = loader;
 				loader.download(request);
 				_currentIndex++;
-				Log.log().debug("##开始加载:", url);
+				//Log.log().debug("##开始加载:", url);
 			}
 			startLoad();
 		}
@@ -76,7 +76,7 @@ package org.web.sdk.load
 			var list:Vector.<DownLoader> = _preMap[url];
 			//这里先删除
 			if (event.isOver) {
-				Log.log().debug("##下载完成:", url, type);
+				//Log.log().debug("##下载完成:", url, type);
 				removeLoaders(url);
 			}
 			//列表遍历
@@ -98,7 +98,7 @@ package org.web.sdk.load
 				if (index != -1) {
 					list.splice(index, 1);
 					if (list.length == NONE) {
-						Log.log().debug("##关闭下载:", url);
+						//Log.log().debug("##关闭下载:", url);
 						delete _preMap[url];
 						closeLoader(url);
 					}
