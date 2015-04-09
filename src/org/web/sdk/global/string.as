@@ -86,6 +86,7 @@ package org.web.sdk.global
             return str;
         }
 		
+		
 		//字节替换
 		public static function format(replace:String, ...rests):String
 		{

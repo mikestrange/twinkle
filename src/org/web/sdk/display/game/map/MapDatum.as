@@ -1,8 +1,14 @@
-package org.web.rpg.core 
+package org.web.sdk.display.game.map 
 {
-	import org.web.rpg.utils.MapPath;
-	public class MapData 
+	import org.web.sdk.display.game.astar.Grid;
+	/**
+	 * ...
+	 * @author Mike email:542540443@qq.com
+	 * 地图的一些数据
+	 */
+	public class MapDatum 
 	{
+		//---------------map data-----------
 		//地图地址   这只是地图包路径
 		public var mapId:uint;
 		public var mapName:String;
@@ -15,6 +21,7 @@ package org.web.rpg.core
 		//节点长度
 		public var wLeng:int;
 		public var hLeng:int;
+		//----------------grid-------------
 		//节点 横 竖
 		public var across:int;
 		public var vertical:int;
@@ -23,7 +30,10 @@ package org.web.rpg.core
 		public var sizeHeight:int;
 		//节点
 		public var mapArr:Array;
+		//网格
+		public var grid:Grid;
 		
+		//通过解析xml
 		public function analyze(xml:XML):void
 		{
 			this.mapId = xml.mapdata[0].@mapId;
@@ -39,13 +49,10 @@ package org.web.rpg.core
 			this.vertical = int(xml.grid[0].@vertical);
 			this.sizeWidth = int(xml.grid[0].@nodeWidth);
 			this.sizeHeight = int(xml.grid[0].@nodeHeight);
+			//可行节点
 			this.mapArr = String(xml.grid[0].@markData).split(",");
-		}
-		
-		//地图配置路径
-		public function get url():String
-		{
-			return MapPath.getMapConfig(mapId);
+			//
+			grid = Grid.createByArray(mapArr, across, vertical, sizeWidth, sizeHeight);
 		}
 		
 		//小地图路径
@@ -55,14 +62,15 @@ package org.web.rpg.core
 		}
 		
 		//全局
-		private static var _ins:MapData;
+		private static var _ins:MapDatum;
 		
-		public static function create(xml:XML):MapData
+		public static function create(xml:XML):MapDatum
 		{
-			if (null == _ins) _ins = new MapData;
+			if (null == _ins) _ins = new MapDatum;
 			_ins.analyze(xml);
 			return _ins;
 		}
+		
 		//ends
 	}
 

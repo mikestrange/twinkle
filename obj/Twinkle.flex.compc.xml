@@ -148,29 +148,10 @@
     <class>com.greensock.plugins.VisiblePlugin</class>
     <class>com.greensock.plugins.VolumePlugin</class>
     <class>game.consts.CmdDefined</class>
-    <class>game.datas.SelfData</class>
-    <class>game.datas.module.MapModule</class>
-    <class>game.datas.obj.ActionObj</class>
-    <class>game.datas.obj.EntermapObj</class>
-    <class>game.datas.obj.PlayerObj</class>
-    <class>game.datas.vo.ActionVo</class>
     <class>game.ui.core.ActionType</class>
     <class>game.ui.core.RangeMotion</class>
-    <class>game.ui.interfaces.IRole</class>
     <class>game.ui.map.RoleSprite</class>
     <class>game.ui.map.WorldMap</class>
-    <class>org.web.rpg.astar.Astar</class>
-    <class>org.web.rpg.astar.Grid</class>
-    <class>org.web.rpg.astar.Node</class>
-    <class>org.web.rpg.astar.NodeType</class>
-    <class>org.web.rpg.core.MapData</class>
-    <class>org.web.rpg.core.MapLump</class>
-    <class>org.web.rpg.core.MapShallow</class>
-    <class>org.web.rpg.core.MeshMap</class>
-    <class>org.web.rpg.utils.FormatUtils</class>
-    <class>org.web.rpg.utils.GridLine</class>
-    <class>org.web.rpg.utils.MapPath</class>
-    <class>org.web.rpg.utils.octa.OctaPoint</class>
     <class>org.web.sdk.AppWork</class>
     <class>org.web.sdk.beyond_challenge</class>
     <class>org.web.sdk.admin.AlertManager</class>
@@ -202,6 +183,18 @@
     <class>org.web.sdk.display.game.Alert</class>
     <class>org.web.sdk.display.game.BaseButton</class>
     <class>org.web.sdk.display.game.GamePanel</class>
+    <class>org.web.sdk.display.game.astar.Astar</class>
+    <class>org.web.sdk.display.game.astar.Grid</class>
+    <class>org.web.sdk.display.game.astar.Node</class>
+    <class>org.web.sdk.display.game.astar.NodeType</class>
+    <class>org.web.sdk.display.game.debug.GridLine</class>
+    <class>org.web.sdk.display.game.geom.Aspect</class>
+    <class>org.web.sdk.display.game.geom.FormatUtils</class>
+    <class>org.web.sdk.display.game.map.LandSprite</class>
+    <class>org.web.sdk.display.game.map.MapCamera</class>
+    <class>org.web.sdk.display.game.map.MapDatum</class>
+    <class>org.web.sdk.display.game.map.MapItem</class>
+    <class>org.web.sdk.display.game.map.MapPath</class>
     <class>org.web.sdk.display.game.utils.ScaleRect</class>
     <class>org.web.sdk.display.game.utils.ScaleSprite</class>
     <class>org.web.sdk.display.interfaces.IBaseScene</class>

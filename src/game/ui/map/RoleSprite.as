@@ -5,20 +5,16 @@ package game.ui.map
 	import flash.filters.GlowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import org.web.sdk.display.game.astar.Grid;
+	import org.web.sdk.display.game.geom.FormatUtils;
 	
-	import game.datas.obj.PlayerObj;
-	import game.datas.SelfData;
-	import game.datas.vo.ActionVo;
 	import game.ui.core.ActionType;
-	import game.ui.interfaces.IRole;
 	import game.ui.core.RangeMotion;
 	
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.interfaces.IDisplay;
 	import org.web.sdk.display.utils.DrawUtils;
 	import org.web.rpg.astar.Grid;
-	import org.web.rpg.astar.Node;
-	import org.web.rpg.utils.GridLine;
 	import org.web.rpg.utils.FormatUtils;
 	import org.web.sdk.display.engine.Steper;
 	import org.web.sdk.display.engine.IStepper;
@@ -29,11 +25,10 @@ package game.ui.map
 	/*
 	 * role
 	 * */
-	public class RoleSprite extends BaseSprite implements IRole
+	public class RoleSprite extends BaseSprite
 	{
 		private var _action:RangeMotion;
 		//
-		private var _data:PlayerObj;
 		private var _texture:RayDisplayer;
 		private var speedX:int = 4;
 		private var speedY:int = 2;
@@ -45,10 +40,9 @@ package game.ui.map
 		private var startpo:Point = new Point;
 		private var iswait:Boolean = true;
 		
-		public function RoleSprite(grid:Grid, data:PlayerObj) 
+		public function RoleSprite(grid:Grid) 
 		{
 			this.grid = grid;
-			this._data = data;
 			super();
 		}
 		
@@ -66,7 +60,7 @@ package game.ui.map
 			_action.transform.matrix = matrix;
 			this.addDisplay(_action);
 			//名称
-			_texture = new RayDisplayer(DrawUtils.drawEditor(_data.usn));
+			_texture = new RayDisplayer(DrawUtils.drawEditor("无头"));
 			_texture.x = -_texture.width >> 1;
 			_texture.y = -90 - _texture.height;
 			this.addDisplay(_texture);
@@ -109,25 +103,9 @@ package game.ui.map
 			}
 		}
 		
-		public function getUid():int
-		{
-			return _data.uid;
-		}
-		
-		public function isself():Boolean
-		{
-			return _data.uid == SelfData.gets().uid;
-		}
-		
 		public function get point():int
 		{
 			return _action.point;
-		}
-		
-		//刷新数据
-		public function update(data:PlayerObj):void
-		{
-			_data = data;
 		}
 		
 		public function isWait():Boolean

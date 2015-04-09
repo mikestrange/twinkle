@@ -1,4 +1,4 @@
-package org.web.rpg.astar 
+package org.web.sdk.display.game.astar 
 {
 	public class Node 
 	{

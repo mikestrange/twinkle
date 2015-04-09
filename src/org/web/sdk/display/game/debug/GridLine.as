@@ -1,12 +1,12 @@
-package org.web.rpg.utils 
+package org.web.sdk.display.game.debug 
 {
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import org.web.rpg.astar.Grid;
-	import org.web.rpg.astar.Node;
-	import org.web.rpg.astar.NodeType;
+	import org.web.sdk.display.game.astar.Grid;
+	import org.web.sdk.display.game.astar.Node;
+	import org.web.sdk.display.game.astar.NodeType;
 	
 	public class GridLine 
 	{

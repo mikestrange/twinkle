@@ -1,12 +1,12 @@
-package org.web.rpg.utils.octa 
+package org.web.sdk.display.game.geom 
 {
-	public class OctaPoint 
+	public class Aspect 
 	{
 		private var min:int;
 		private var max:int;
 		public var type:int;
 		
-		public function OctaPoint(min:int,max:int,type:int) 
+		public function Aspect(min:int,max:int,type:int) 
 		{
 			this.min = min;
 			this.max = max;

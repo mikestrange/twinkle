@@ -8,8 +8,14 @@ package
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
+	import org.web.sdk.display.game.map.MapCamera;
+	import org.web.sdk.display.game.map.MapDatum;
+	import org.web.sdk.display.game.map.LandSprite;
+	import org.web.sdk.display.game.map.MapPath;
 	import org.web.sdk.display.mouse.MouseDisplay;
 	import org.web.sdk.frame.core.ClientServer;
+	import org.web.sdk.global.string;
+	import org.web.sdk.global.tool.Ticker;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -41,7 +47,7 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			AppWork.utilization(new Director(this), 0, 0);
+			AppWork.utilization(new Director(this), stage.stageWidth, stage.stageHeight);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -69,6 +75,9 @@ package
 			//SoundManager.playUrl("asset/bg.mp3");
 		}
 		
+		private var action:RangeMotion;
+		private var camera:MapCamera;
+		
 		private function startGame():void
 		{
 			trace("--------res load over,start game---------");
@@ -77,14 +86,44 @@ package
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			
-			var action:RangeMotion = new RangeMotion(0, ActionType.STAND, 4);
+			action = new RangeMotion(0, ActionType.STAND, 4);
 			action.doAction(ActionType.RUN, 4, 3);
-			this.addDisplay(action);
-			action.setAlign("center");
+			camera = new MapCamera;
 			
+			var loader:DownLoader = new DownLoader;
+			loader.eventHandler = function(e:LoadEvent):void
+			{
+				camera.setMap(new LandSprite(MapDatum.create(new XML(e.data))));
+				//Ticker.step(50, move, 0);
+				addDisplay(camera.getView());
+				camera.getView().addDisplay(action);
+				camera.updateBuffer();
+			}
+			loader.load(MapPath.getMapConfig(3001));
+			loader.start();
+			stage.addEventListener(MouseEvent.CLICK, onClick);
 			//
 			//WinManager.show("test", new TestPanel);
-			AlertManager.gets().push(new TestTips);
+			//AlertManager.gets().push(new TestTips);
+			this.alpha = .1;
+			AppWork.addStageListener(Event.ENTER_FRAME, onFrame);
+		}
+		
+		private function onFrame(e:Event):void
+		{
+			camera.updateBuffer();
+			trace( -camera.lookx, -camera.looky);
+		}
+		
+		private function onClick(e:MouseEvent):void
+		{
+			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
+			
+			action.moveTo(pos.x, pos.y);
+			//camera.lookTo(pos.x, pos.y);
+			TweenLite.killTweensOf(camera);
+			TweenLite.to(camera, 1, { lookx:pos.x, looky:pos.y } );
+			trace(pos);
 		}
 		//ends
 	}

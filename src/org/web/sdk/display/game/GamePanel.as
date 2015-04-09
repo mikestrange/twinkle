@@ -30,7 +30,7 @@ package org.web.sdk.display.game
 		{
 			for (var i:int = 0; i < rests.length; i++) 
 			{
-				Ticker.step(delay * i, delayHandler, 1, rests[i]);
+				Ticker.step(delay * i, delayHandler, Ticker.ONCE, rests[i]);
 			}
 		}
 		

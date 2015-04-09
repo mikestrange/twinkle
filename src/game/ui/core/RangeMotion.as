@@ -1,7 +1,6 @@
 package game.ui.core 
 {
 	import flash.display.BitmapData;
-	import org.web.rpg.utils.MapPath;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.asset.AssetFactory;
 	import org.web.sdk.display.asset.BaseRender;

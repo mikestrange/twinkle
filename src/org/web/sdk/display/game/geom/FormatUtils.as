@@ -1,7 +1,6 @@
-package org.web.rpg.utils 
+package org.web.sdk.display.game.geom 
 {
 	import flash.geom.Point;
-	import org.web.rpg.utils.octa.OctaPoint;
 	/*
 	 * 根据角色返回方向
 	 * */
@@ -12,14 +11,14 @@ package org.web.rpg.utils
 		public static const ROUND:int = 360;
 		public static const NONE:int = 0;
 		//
-		private static var UP:OctaPoint = new OctaPoint(90 - SMALL, 90 + SMALL, 0);
-		private static var RIGHT_UP:OctaPoint = new OctaPoint(90 + SMALL, 180 - SMALL, 1);
-		private static var RIGHT:OctaPoint = new OctaPoint(180 - SMALL, 180 + SMALL, 2);
-		private static var RIGHT_DOWN:OctaPoint = new OctaPoint(180 + SMALL, 270 - SMALL, 3);
-		private static var DOWN:OctaPoint = new OctaPoint(270 - SMALL, 270 + SMALL, 4);
-		private static var LEFT_DOWN:OctaPoint = new OctaPoint(270 + SMALL, 360 - SMALL, 5);
-		private static var LEFT:OctaPoint = new OctaPoint(SMALL,360 - SMALL, 6);
-		private static var LEFT_UP:OctaPoint = new OctaPoint(SMALL, 90 - SMALL, 7);
+		private static var UP:Aspect = new Aspect(90 - SMALL, 90 + SMALL, 0);
+		private static var RIGHT_UP:Aspect = new Aspect(90 + SMALL, 180 - SMALL, 1);
+		private static var RIGHT:Aspect = new Aspect(180 - SMALL, 180 + SMALL, 2);
+		private static var RIGHT_DOWN:Aspect = new Aspect(180 + SMALL, 270 - SMALL, 3);
+		private static var DOWN:Aspect = new Aspect(270 - SMALL, 270 + SMALL, 4);
+		private static var LEFT_DOWN:Aspect = new Aspect(270 + SMALL, 360 - SMALL, 5);
+		private static var LEFT:Aspect = new Aspect(SMALL,360 - SMALL, 6);
+		private static var LEFT_UP:Aspect = new Aspect(SMALL, 90 - SMALL, 7);
 		
 		 //取精确地角度   这个物体需要水平放置
 		public static function atanAngle(node:Point, other:Point):Number

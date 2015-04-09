@@ -1,9 +1,9 @@
-package org.web.rpg.utils 
+package org.web.sdk.display.game.map 
 {
-
+	//地图路径设置
 	public class MapPath 
 	{
-		public static const ROOT_URL:String = "http://127.0.0.1/game/asset/";
+		public static var ROOT_URL:String = "http://127.0.0.1/game/asset/";
 		
 		//地图碎片
 		public static function getMapURL(id:uint, name:String, suff:String = ".jpg"):String

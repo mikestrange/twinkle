@@ -10,7 +10,8 @@ package org.web.sdk.global.tool
 	{
 		private static const _KEY_:String = "whoisyourdaddy";
 		//
-		private const ZERO:int = 0;
+		public static const ONCE:int = 1;
+		private static const ZERO:int = 0;
 		private var _isstep:Boolean = false;
 		private var _stepList:Vector.<TickerInfo>;
 		
