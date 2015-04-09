@@ -2,7 +2,7 @@
 <flex-config xmlns="http://www.adobe.com/2006/flex-config">
   <output>E:\gits\twinkle\.\libs\Twinkle.swc</output>
   <use-network>true</use-network>
-  <target-player>12.0</target-player>
+  <target-player>11.1</target-player>
   <warnings>true</warnings>
   <benchmark>false</benchmark>
   <compiler>
@@ -22,6 +22,7 @@
   </compiler>
   <include-classes>
     <class>TestPanel</class>
+    <class>TestTips</class>
     <class>Twinkle</class>
     <class>com.adobe.crypto.HMAC</class>
     <class>com.adobe.crypto.MD5</class>
@@ -146,8 +147,18 @@
     <class>com.greensock.plugins.TweenPlugin</class>
     <class>com.greensock.plugins.VisiblePlugin</class>
     <class>com.greensock.plugins.VolumePlugin</class>
-    <class>org.web.flat.volumesmoke</class>
-    <class>org.web.rpg.largenetwork</class>
+    <class>game.consts.CmdDefined</class>
+    <class>game.datas.SelfData</class>
+    <class>game.datas.module.MapModule</class>
+    <class>game.datas.obj.ActionObj</class>
+    <class>game.datas.obj.EntermapObj</class>
+    <class>game.datas.obj.PlayerObj</class>
+    <class>game.datas.vo.ActionVo</class>
+    <class>game.ui.core.ActionType</class>
+    <class>game.ui.core.RangeMotion</class>
+    <class>game.ui.interfaces.IRole</class>
+    <class>game.ui.map.RoleSprite</class>
+    <class>game.ui.map.WorldMap</class>
     <class>org.web.rpg.astar.Astar</class>
     <class>org.web.rpg.astar.Grid</class>
     <class>org.web.rpg.astar.Node</class>
@@ -160,74 +171,96 @@
     <class>org.web.rpg.utils.GridLine</class>
     <class>org.web.rpg.utils.MapPath</class>
     <class>org.web.rpg.utils.octa.OctaPoint</class>
+    <class>org.web.sdk.AppWork</class>
     <class>org.web.sdk.beyond_challenge</class>
-    <class>org.web.sdk.Ramt</class>
-    <class>org.web.sdk.context.ContextManager</class>
-    <class>org.web.sdk.context.ResContext</class>
+    <class>org.web.sdk.admin.AlertManager</class>
+    <class>org.web.sdk.admin.FloatManager</class>
+    <class>org.web.sdk.admin.WinManager</class>
+    <class>org.web.sdk.context.AppDomain</class>
+    <class>org.web.sdk.context.ApplicationManager</class>
+    <class>org.web.sdk.display.BaseScene</class>
     <class>org.web.sdk.display.Director</class>
-    <class>org.web.sdk.display.House</class>
-    <class>org.web.sdk.display.ILayer</class>
-    <class>org.web.sdk.display.Layer</class>
-    <class>org.web.sdk.display.MouseDisplay</class>
-    <class>org.web.sdk.display.asset.Assets</class>
-    <class>org.web.sdk.display.asset.KitAction</class>
-    <class>org.web.sdk.display.asset.KitBitmap</class>
-    <class>org.web.sdk.display.asset.KitButton</class>
-    <class>org.web.sdk.display.asset.KitFactory</class>
-    <class>org.web.sdk.display.asset.KitMovie</class>
+    <class>org.web.sdk.display.asset.AssetFactory</class>
+    <class>org.web.sdk.display.asset.BaseRender</class>
     <class>org.web.sdk.display.asset.LibRender</class>
-    <class>org.web.sdk.display.bar.BaseButton</class>
-    <class>org.web.sdk.display.bar.utils.ScaleRect</class>
-    <class>org.web.sdk.display.bar.utils.ScaleSprite</class>
+    <class>org.web.sdk.display.asset.MapRender</class>
+    <class>org.web.sdk.display.asset.MotionRender</class>
+    <class>org.web.sdk.display.asset.MovieRender</class>
+    <class>org.web.sdk.display.asset.ResourceManager</class>
     <class>org.web.sdk.display.core.BaseSprite</class>
-    <class>org.web.sdk.display.core.KitTool</class>
+    <class>org.web.sdk.display.core.BufferImage</class>
     <class>org.web.sdk.display.core.RayDisplayer</class>
+    <class>org.web.sdk.display.core.RayMovieClip</class>
+    <class>org.web.sdk.display.core.SpriteTool</class>
     <class>org.web.sdk.display.core.SwitcherSprite</class>
-    <class>org.web.sdk.display.core.base.ActionMovie</class>
-    <class>org.web.sdk.display.core.base.BufferImage</class>
-    <class>org.web.sdk.display.core.base.RayMovieClip</class>
-    <class>org.web.sdk.display.core.text.TextEditor</class>
+    <class>org.web.sdk.display.core.TextEditor</class>
+    <class>org.web.sdk.display.effect.DisplayEffects</class>
     <class>org.web.sdk.display.engine.AtomicEngine</class>
     <class>org.web.sdk.display.engine.IEffect</class>
     <class>org.web.sdk.display.engine.IStepper</class>
     <class>org.web.sdk.display.engine.Steper</class>
+    <class>org.web.sdk.display.game.Alert</class>
+    <class>org.web.sdk.display.game.BaseButton</class>
+    <class>org.web.sdk.display.game.GamePanel</class>
+    <class>org.web.sdk.display.game.utils.ScaleRect</class>
+    <class>org.web.sdk.display.game.utils.ScaleSprite</class>
     <class>org.web.sdk.display.interfaces.IBaseScene</class>
+    <class>org.web.sdk.display.interfaces.IDirector</class>
+    <class>org.web.sdk.display.mouse.MouseDisplay</class>
     <class>org.web.sdk.display.utils.AlignType</class>
     <class>org.web.sdk.display.utils.Deluxe</class>
     <class>org.web.sdk.display.utils.DrawUtils</class>
     <class>org.web.sdk.display.utils.Swapper</class>
     <class>org.web.sdk.display.utils.TouchState</class>
     <class>org.web.sdk.fot.core.Container</class>
-    <class>org.web.sdk.fot.core.PrudentListener</class>
     <class>org.web.sdk.fot.core.SimpleListener</class>
     <class>org.web.sdk.fot.core.Tactfuller</class>
     <class>org.web.sdk.fot.core.Water</class>
     <class>org.web.sdk.fot.interfaces.IApplicationListener</class>
     <class>org.web.sdk.fot.interfaces.ICommand</class>
-    <class>org.web.sdk.fot.interfaces.ITactful</class>
+    <class>org.web.sdk.fot.interfaces.IRoutine</class>
     <class>org.web.sdk.fot.interfaces.IWrapper</class>
     <class>org.web.sdk.fot.tracker.Tracker</class>
     <class>org.web.sdk.fot.wrapper.ClassWrapper</class>
     <class>org.web.sdk.fot.wrapper.MethodWrapper</class>
     <class>org.web.sdk.fot.wrapper.MixtureWrapper</class>
-    <class>org.web.sdk.frame.core.Venture</class>
-    <class>org.web.sdk.frame.observer.Observer</class>
-    <class>org.web.sdk.inters.IAcceptor</class>
-    <class>org.web.sdk.inters.IBaseSprite</class>
-    <class>org.web.sdk.inters.IDisplay</class>
-    <class>org.web.sdk.inters.ISwitcher</class>
+    <class>org.web.sdk.fot.wrapper.TactVector</class>
+    <class>org.web.sdk.frame.core.ClientServer</class>
+    <class>org.web.sdk.frame.core.Controller</class>
+    <class>org.web.sdk.frame.core.DataTable</class>
+    <class>org.web.sdk.frame.core.VentManager</class>
+    <class>org.web.sdk.frame.core.Vetted</class>
+    <class>org.web.sdk.frame.interfaces.IClientServer</class>
+    <class>org.web.sdk.frame.interfaces.IController</class>
+    <class>org.web.sdk.frame.interfaces.IDataTable</class>
+    <class>org.web.sdk.frame.interfaces.IVent</class>
+    <class>org.web.sdk.frame.interfaces.IVentManager</class>
+    <class>org.web.sdk.global.DateTimer</class>
+    <class>org.web.sdk.global.HashMap</class>
+    <class>org.web.sdk.global.maths</class>
+    <class>org.web.sdk.global.string</class>
+    <class>org.web.sdk.global.UintHash</class>
+    <class>org.web.sdk.global.tool.Bezier</class>
+    <class>org.web.sdk.global.tool.Sleep</class>
+    <class>org.web.sdk.global.tool.Ticker</class>
+    <class>org.web.sdk.interfaces.IAcceptor</class>
+    <class>org.web.sdk.interfaces.IBaseSprite</class>
+    <class>org.web.sdk.interfaces.IDisplay</class>
+    <class>org.web.sdk.interfaces.ISwitcher</class>
+    <class>org.web.sdk.interfaces.rest.IAlert</class>
+    <class>org.web.sdk.interfaces.rest.IPanel</class>
     <class>org.web.sdk.keyset.KeyAction</class>
     <class>org.web.sdk.keyset.KeyManager</class>
     <class>org.web.sdk.keyset.KeyRequest</class>
     <class>org.web.sdk.lang.Conf</class>
     <class>org.web.sdk.lang.Lang</class>
-    <class>org.web.sdk.load.CenterLoader</class>
+    <class>org.web.sdk.load.CheckLoader</class>
+    <class>org.web.sdk.load.DownLoader</class>
     <class>org.web.sdk.load.LoadEvent</class>
-    <class>org.web.sdk.load.LoadFluider</class>
-    <class>org.web.sdk.load.SetupLoad</class>
-    <class>org.web.sdk.load.inters.ILoadController</class>
-    <class>org.web.sdk.load.inters.ILoader</class>
-    <class>org.web.sdk.load.inters.ILoadRespond</class>
+    <class>org.web.sdk.load.LoadRequest</class>
+    <class>org.web.sdk.load.LoadSetup</class>
+    <class>org.web.sdk.load.interfaces.ILoader</class>
+    <class>org.web.sdk.load.interfaces.ILoadRequest</class>
     <class>org.web.sdk.load.loads.ByteLoader</class>
     <class>org.web.sdk.load.loads.ImgLoader</class>
     <class>org.web.sdk.load.loads.SwfLoader</class>
@@ -257,34 +290,24 @@
     <class>org.web.sdk.sound.SoundManager</class>
     <class>org.web.sdk.sound.core.ISound</class>
     <class>org.web.sdk.sound.core.Song</class>
-    <class>org.web.sdk.tool.Bezier</class>
-    <class>org.web.sdk.tool.Clock</class>
     <class>org.web.sdk.tool.Color</class>
     <class>org.web.sdk.tool.CoolTime</class>
     <class>org.web.sdk.tool.FpsMonitor</class>
     <class>org.web.sdk.tool.MenuTools</class>
     <class>org.web.sdk.tool.Scale9Bitmap</class>
-    <class>org.web.sdk.tool.Sleep</class>
     <class>org.web.sdk.tool.SystemScope</class>
     <class>org.web.sdk.tool.TweenMovie</class>
-    <class>org.web.sdk.tool.secret.Cracker</class>
-    <class>org.web.sdk.tool.secret.FloatPass</class>
-    <class>org.web.sdk.tool.secret.McryptEncryption</class>
-    <class>org.web.sdk.utils.CharUtils</class>
-    <class>org.web.sdk.utils.ClassUtils</class>
-    <class>org.web.sdk.utils.HashMap</class>
-    <class>org.web.sdk.utils.Maths</class>
-    <class>org.web.sdk.utils.StringUtil</class>
-    <class>org.web.sdk.utils.TimeUtils</class>
-    <class>org.web.sdk.utils.UintHash</class>
+    <class>org.web.sdk.tool.cse.Cracker</class>
+    <class>org.web.sdk.tool.cse.FloatPass</class>
+    <class>org.web.sdk.tool.cse.McryptEncryption</class>
+    <class>org.web.sdk.utils.IsoObject</class>
+    <class>org.web.sdk.utils.IsoUtils</class>
+    <class>org.web.sdk.utils.Point3D</class>
+    <class>org.web.sdk.utils.Vector2D</class>
     <class>org.web.sdk.utils.list.HashList</class>
     <class>org.web.sdk.utils.list.ListNode</class>
-    <class>org.web.sdk.utils.point.IsoObject</class>
-    <class>org.web.sdk.utils.point.IsoUtils</class>
-    <class>org.web.sdk.utils.point.Point3D</class>
-    <class>org.web.sdk.utils.point.Vector2D</class>
-    <class>org.web.sdk.utils.point.test.Circle</class>
-    <class>org.web.sdk.utils.point.test.SteeredVehicle</class>
-    <class>org.web.sdk.utils.point.test.Vehicle</class>
+    <class>org.web.sdk.utils.test.Circle</class>
+    <class>org.web.sdk.utils.test.SteeredVehicle</class>
+    <class>org.web.sdk.utils.test.Vehicle</class>
   </include-classes>
 </flex-config>

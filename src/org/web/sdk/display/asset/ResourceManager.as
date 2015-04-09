@@ -10,13 +10,13 @@ package org.web.sdk.display.asset
 	 * ...
 	 *动态下载静态贴图
 	 */
-	public class Assets
+	public class ResourceManager
 	{
-		private static var _ins:Assets;
+		private static var _ins:ResourceManager;
 		
-		internal static function gets():Assets
+		internal static function gets():ResourceManager
 		{
-			if (null == _ins) _ins = new Assets;
+			if (null == _ins) _ins = new ResourceManager;
 			return _ins;
 		}
 		

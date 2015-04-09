@@ -2,12 +2,13 @@ package org.web.sdk.display.core
 {
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
-	import org.web.sdk.display.asset.KitAction;
-	import org.web.sdk.display.asset.KitButton;
-	import org.web.sdk.display.asset.KitFactory;
-	import org.web.sdk.display.asset.KitMovie;
+	import org.web.sdk.interfaces.IBaseSprite;
+	import org.web.sdk.display.asset.MapRender;
+	import org.web.sdk.display.asset.AssetFactory;
+	import org.web.sdk.display.asset.MotionRender;
+	import org.web.sdk.display.asset.MovieRender;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.asset.BaseRender;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.AppWork;
@@ -15,7 +16,6 @@ package org.web.sdk.display.core
 	import flash.geom.Transform;
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
-	import org.web.sdk.interfaces.IBaseSprite;
 	import flash.geom.Point;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -30,7 +30,7 @@ package org.web.sdk.display.core
 		public static const BIT_TAG:int = 0;
 		public static const BUTTON_TAG:int = 1;
 		public static const MOVIE_TAG:int = 2;
-		public static const ACTION_TAG:int = 3;
+		public static const MOTION_TAG:int = 3;
 		//格式
 		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
 		//属性
@@ -69,14 +69,14 @@ package org.web.sdk.display.core
 				if (_texture) _texture.relieve();
 				_texture = texture;
 				if (null == texture) return;
-				renderBuffer(_texture.render(this, data));
+				renderBuffer(_texture.render(data));
 			}
 		}
 		
 		//刷新显示
 		public function flush(data:Object = null):void
 		{
-			if (_texture) renderBuffer(_texture.update(data));
+			if (_texture) renderBuffer(_texture.createUpdate(data));
 		}
 		
 		//获取必要的资源，子类重新就可以了
@@ -106,10 +106,10 @@ package org.web.sdk.display.core
 		{
 			switch(tag)
 			{
-				case BIT_TAG: 		return new KitBitmap(null, textureName);
-				case BUTTON_TAG: 	return new KitButton(textureName);
-				case MOVIE_TAG: 	return new KitMovie(null, textureName);
-				case ACTION_TAG: 	return new KitAction(textureName);
+				case BIT_TAG: 		return new BaseRender(textureName);
+				case BUTTON_TAG: 	return new MapRender(textureName);
+				case MOVIE_TAG: 	return new MovieRender(textureName);
+				case MOTION_TAG:	return new MotionRender(textureName);
 			}
 			return null;
 		}
@@ -293,7 +293,7 @@ package org.web.sdk.display.core
 			if (LibRender.hasTexture(t_n)) {
 				acceptor.setLiberty(t_n);
 			}else {
-				acceptor.setTexture(new KitBitmap(new BitmapData(wide, heig, false, color), t_n));
+				acceptor.setTexture(new BaseRender(t_n, new BitmapData(wide, heig, false, color)));
 			}
 			return acceptor;
 		}

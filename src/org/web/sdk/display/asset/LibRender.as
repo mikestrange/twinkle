@@ -8,8 +8,8 @@ package org.web.sdk.display.asset
 	 * 不同渲染只需要子类去复写self_render就能改变
 	 * 
 	 * 假设不给他命名：
-	 * 1，milde = false的时候，表示不是弱引用的，relieve的时候就会被释放
-	 * 2，milde = true的时候，表示是强引用的，只能自身调用dispose才能释放
+	 * 1，_lock = false的时候，表示不是弱引用的，relieve的时候就会被释放
+	 * 2，_lock = true的时候，表示是强引用的，只能自身调用dispose才能释放
 	 * */
 	public class LibRender 
 	{
@@ -18,8 +18,9 @@ package org.web.sdk.display.asset
 		private var _libName:String;
 		private var _quote:int = NONE;	//引用数目
 		private var _lock:Boolean;
-		//
-		public static const asset:Assets = Assets.gets();
+		//资源管理器
+		public static const asset:ResourceManager = ResourceManager.gets();
+		
 		//没有名称milde=true的时候会在清楚的时候被删除，默认是一个强引用
 		public function LibRender(libName:String = null, $lock:Boolean = false)
 		{
@@ -67,10 +68,10 @@ package org.web.sdk.display.asset
 		}
 		
 		//通过它去渲染,没有保存那么直接渲染
-		public function render(mesh:IAcceptor, data:Object = null):*
+		public function render(data:Object = null):*
 		{
 			addHold();	
-			return update(data);
+			return createUpdate(data);
 		}
 		
 		//增加一个引用
@@ -109,7 +110,7 @@ package org.web.sdk.display.asset
 		//子类复写就可以了  如果不把引用的对象传过来，那么就非常单一的回应
 		//虽然可以不传，但是为了更好的扩展，必须传
 		//这里只用于刷新
-		public function update(data:Object):*
+		public function createUpdate(data:Object):*
 		{
 			return null;
 		}

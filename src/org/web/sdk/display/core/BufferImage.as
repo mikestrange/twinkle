@@ -1,17 +1,18 @@
-package org.web.sdk.display.core.base 
+package org.web.sdk.display.core 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.asset.BaseRender;
 	import org.web.sdk.interfaces.IAcceptor;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.AppWork;
 	/*
 	 * 动态贴图基类,释放完成就可以重新利用
+	 * 动态下载
 	 * */
 	public class BufferImage extends RayDisplayer
 	{
@@ -60,7 +61,7 @@ package org.web.sdk.display.core.base
 			//成功的话就会直接设置
 			if (!event.isError && !setLiberty(event.url))
 			{
-				setTexture(new KitBitmap(event.data as BitmapData, event.url));
+				setTexture(new BaseRender(event.url, event.data as BitmapData));
 			}
 		}
 		

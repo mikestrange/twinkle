@@ -5,11 +5,11 @@ package org.web.sdk.display.asset
 	/*
 	 * 动画材质列表
 	 * */
-	public class KitMovie extends LibRender 
+	public class MovieRender extends LibRender 
 	{
 		private var _vector:Vector.<BitmapData>;
 		
-		public function KitMovie(vector:Vector.<BitmapData>, libName:String = null, $lock:Boolean = false) 
+		public function MovieRender(libName:String, vector:Vector.<BitmapData> = null, $lock:Boolean = false) 
 		{
 			_vector = vector;
 			super(libName, $lock);
@@ -27,8 +27,9 @@ package org.web.sdk.display.asset
 		}
 		
 		//我们可以根据一个名称来取一个链表影片
-		override public function update(data:Object):* 
+		override public function createUpdate(data:Object):* 
 		{
+			if (null == _vector) trace("自己去建立一个动画吧");
 			return _vector;
 		}
 		

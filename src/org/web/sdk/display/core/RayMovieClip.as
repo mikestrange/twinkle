@@ -1,13 +1,14 @@
-package org.web.sdk.display.core.base 
+package org.web.sdk.display.core 
 {
 	import flash.display.BitmapData;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.KitMovie;
+	import org.web.sdk.display.asset.MovieRender;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.engine.Steper;
 	
 	/*
 	 * 更快速度的MovieClip
+	 * 
 	 * */
 	public class RayMovieClip extends RayDisplayer 
 	{
@@ -20,7 +21,7 @@ package org.web.sdk.display.core.base
 		//添加一个粒子控制器
 		private var _step:Steper;	
 		
-		public function RayMovieClip(libs:KitMovie = null)
+		public function RayMovieClip(libs:MovieRender = null)
 		{
 			_step = new Steper(this);
 			super(libs);

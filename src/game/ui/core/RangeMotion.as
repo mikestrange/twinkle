@@ -2,25 +2,25 @@ package game.ui.core
 {
 	import flash.display.BitmapData;
 	import org.web.rpg.utils.MapPath;
-	import org.web.sdk.display.asset.KitAction;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.KitFactory;
-	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.asset.AssetFactory;
+	import org.web.sdk.display.asset.BaseRender;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.core.base.ActionMovie;
+	import org.web.sdk.display.core.RayMovieClip;
 	
-	public class RangeMotion extends ActionMovie 
+	public class RangeMotion extends RayMovieClip 
 	{
+		private var _type:int;
 		private var _point:int;
 		private var _order:String;			//动作指令
 		private var _playtimes:uint;		//动作运行次数
 		private var _end_order:String;		//当前结束执行
-		private var _type:int;
+		private var _actionName:String;
 		
 		public function RangeMotion(type:int, $order:String, $point:int = 4)
 		{
 			_type = type;
-			setLiberty("user:type_id_" + _type, this, RayDisplayer.ACTION_TAG);
+			setLiberty("user:type_id_" + _type, { action:action, url:url } , RayDisplayer.MOTION_TAG);
 			doAction($order, $point);
 			this.play();
 		}
@@ -51,15 +51,9 @@ package game.ui.core
 			if (_order == order && _point == point && !forced) return;
 			_order = order;
 			_point = point;
-			setAction(getFormt());				//设置动作
-			this.position = 1;					//恢复到第一帧
-			this.flush(this);	//设置自己的渲染部分
-		}
-		
-		//没有动作就建立动作
-		override public function createAction(action:String):Vector.<BitmapData> 
-		{
-			return KitFactory.fromVector(action + ".png", "%d", -1, url);
+			setAction(getFormt());						//设置动作
+			this.position = 1;							//恢复到第一帧
+			this.flush( { action:action, url:url } );	//设置自己的渲染部分
 		}
 		
 		override public function frameRender(float:int = 0):void 
@@ -73,6 +67,21 @@ package game.ui.core
 				_playtimes = 0;
 				doAction(_end_order, _point, 0);
 			}
+		}
+		
+		public function setAction(name:String):void
+		{
+			_actionName = name;
+		}
+		
+		public function get action():String
+		{
+			return _actionName;
+		}
+		
+		public function get defName():String
+		{
+			return null;
 		}
 		
 		//可以动态下载

@@ -3,7 +3,7 @@ package org.web.sdk.display.mouse
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
-	import org.web.sdk.display.asset.KitFactory;
+	import org.web.sdk.display.asset.AssetFactory;
 	import org.web.sdk.AppWork;
 	import org.web.sdk.interfaces.IDisplay;
 	/*

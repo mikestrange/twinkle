@@ -3,12 +3,12 @@ package
 	import com.greensock.TweenLite;
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.core.TextEditor;
 	import org.web.sdk.display.game.BaseButton;
 	import org.web.sdk.display.game.GamePanel;
 	import org.web.sdk.display.game.utils.ScaleSprite;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.core.text.TextEditor;
 	import org.web.sdk.display.effect.DisplayEffects;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;

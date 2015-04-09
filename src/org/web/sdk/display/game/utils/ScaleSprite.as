@@ -5,7 +5,7 @@ package org.web.sdk.display.game.utils
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.KitBitmap;
+	import org.web.sdk.display.asset.BaseRender;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.AppWork;
 	/*
@@ -146,7 +146,7 @@ package org.web.sdk.display.game.utils
 				if (scale) scale.draw(bitdata);
 			}
 			bitdata.unlock();
-			return new RayDisplayer(new KitBitmap(bitdata, name));
+			return new RayDisplayer(new BaseRender(name, bitdata));
 		}
 		
 		private function dispose():void

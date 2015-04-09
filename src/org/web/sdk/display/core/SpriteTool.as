@@ -7,7 +7,7 @@ package org.web.sdk.display.core
 	import org.web.sdk.interfaces.*;
 	import org.web.sdk.log.Log;
 	
-	public class KitTool 
+	public class SpriteTool 
 	{
 		public static const RECT:Rectangle = new Rectangle;
 		public static const COLOR_TRANS_FORM:ColorTransform = new ColorTransform;

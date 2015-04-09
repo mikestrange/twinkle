@@ -47,6 +47,7 @@ package
 			var swfLoader:DownLoader = new DownLoader;
 			swfLoader.eventHandler = function(event:LoadEvent):void
 			{
+				AppWork.appDomains.share(event.url,event.getDomain())
 				if (swfLoader.empty) startGame();
 			}
 			
@@ -75,12 +76,12 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			/*
+			
 			var action:RangeMotion = new RangeMotion(0, ActionType.STAND, 4);
 			action.doAction(ActionType.RUN, 4, 3);
 			this.addDisplay(action);
 			action.setAlign("center");
-			*/
+			
 			//
 			//WinManager.show("test", new TestPanel);
 			AlertManager.gets().push(new TestTips);

@@ -1,4 +1,4 @@
-package org.web.sdk.display.core.text 
+package org.web.sdk.display.core 
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
