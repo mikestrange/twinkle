@@ -7,6 +7,9 @@ package
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
+	import org.web.sdk.display.core.com.scroll.ListItem;
+	import org.web.sdk.display.core.com.scroll.ScrollSprite;
+	import org.web.sdk.display.core.stock.BaseButton;
 	import org.web.sdk.display.game.map.MapCamera;
 	import org.web.sdk.display.game.map.MapDatum;
 	import org.web.sdk.display.game.map.LandSprite;
@@ -46,13 +49,12 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			AppWork.utilization(new Director(this), 3000, 2000);
-			AppWork.lookEms(true);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
 			swfLoader.completeHandler = function(event:LoadEvent):void
 			{
-				AppWork.appDomains.share(event.url, event.getDomain());
+				event.shareDomain();
 				if (swfLoader.empty) startGame();
 			}
 			
@@ -85,7 +87,7 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			
+			scroll();
 			return;
 			action = new RangeMotion(0, ActionType.STAND, 4);
 			action.doAction(ActionType.RUN, 4);
@@ -103,8 +105,8 @@ package
 			}
 			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
-			//WinManager.show("test", new TestPanel);
-			//AlertManager.gets().push(new TestTips);
+			WinManager.show("test", new TestPanel);
+			AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
 			//Ticker.step(15000, freeMap);
@@ -131,6 +133,27 @@ package
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
 		}
+		
+		
+		//test
+		private function scroll():void
+		{
+			var scroll:ScrollSprite = new ScrollSprite;
+			scroll.setLimit(100, 300);
+			scroll.setLength(10);
+			scroll.rollHandler = rollHandler;
+			scroll.lineHandler = function(index:int):Number { return 50; };
+			this.addDisplay(scroll);
+			scroll.setAlign("center");
+		}
+		
+		private function rollHandler(cell:ListItem):void
+		{
+			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
+			cell.addDisplay(btn);
+			
+		}
+		
 		//ends
 	}
 	

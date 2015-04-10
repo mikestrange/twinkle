@@ -4,6 +4,7 @@ package org.web.sdk.context
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.system.SecurityDomain;
+	import org.web.sdk.log.Log;
 	
 	/**
 	 *单独的资源域
@@ -19,7 +20,8 @@ package org.web.sdk.context
 			}else if (checkFile is ApplicationDomain) {
 				applicationDomain = checkFile;
 			}else {
-				throw Error("不存在的域解析，请提醒修改源代码！");
+				//throw Error("不存在的域解析，请提醒修改源代码！");
+				Log.log(this).error("域名类型错误：", checkFile);
 			}
 		}
 		

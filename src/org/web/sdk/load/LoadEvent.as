@@ -2,6 +2,8 @@ package org.web.sdk.load
 {
 	import flash.display.BitmapData;
 	import flash.display.Loader;
+	import flash.events.ProgressEvent;
+	import org.web.sdk.AppWork;
 	import org.web.sdk.context.AppDomain;
 	
 	public class LoadEvent 
@@ -54,6 +56,19 @@ package org.web.sdk.load
 		public function get xml():XML
 		{
 			return new XML(data as String);
+		}
+		
+		public function get progress():ProgressEvent
+		{
+			return data as ProgressEvent;
+		}
+		
+		//保存到域
+		public function shareDomain():void
+		{
+			if (data is Loader) {
+				AppWork.appDomains.share(url, getDomain());
+			}
 		}
 		
 		//Loader域
