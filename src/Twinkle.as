@@ -92,9 +92,9 @@ package
 			camera = new MapCamera;
 			
 			var loader:DownLoader = new DownLoader;
-			loader.eventHandler = function(e:LoadEvent):void
+			loader.completeHandler = function(e:LoadEvent):void
 			{
-				camera.setMap(new LandSprite(MapDatum.create(new XML(e.data))));
+				camera.setMap(new LandSprite(MapDatum.create(e.xml)));
 				addDisplay(camera.getView(), 0);
 				camera.getView().addDisplay(action);
 				camera.updateBuffer();
@@ -103,8 +103,8 @@ package
 			}
 			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
-			WinManager.show("test", new TestPanel);
-			AlertManager.gets().push(new TestTips);
+			//WinManager.show("test", new TestPanel);
+			//AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
 			//Ticker.step(15000, freeMap);
