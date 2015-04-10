@@ -2,12 +2,12 @@ package
 {
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.game.Alert;
-	import org.web.sdk.display.game.BaseButton;
-	import org.web.sdk.display.game.utils.ScaleSprite;
+	import org.web.sdk.display.core.utils.ScaleSprite;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.display.effect.DisplayEffects;
+	import org.web.sdk.display.game.Alert;
+	import org.web.sdk.display.game.BaseButton;
 	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.frame.core.ClientServer;
 	import org.web.sdk.global.tool.Ticker;

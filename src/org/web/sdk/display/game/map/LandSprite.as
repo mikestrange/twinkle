@@ -149,7 +149,8 @@ package org.web.sdk.display.game.map
 		//显示列表移除
 		private function removeNode(node:MapItem):void
 		{
-			if(hasNode(node)){
+			if (hasNode(node))
+			{
 				_nowHash[node.url] = null;
 				delete _nowHash[node.url];
 				node.setParent(null);

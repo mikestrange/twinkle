@@ -37,6 +37,13 @@ package org.web.sdk.display.game.geom
 			return getIndexByAngle(angle);
 		}
 		
+		/*
+		 *   7  0 1
+		 * 	   \|/
+		 * 	 6 - - 2
+		 * 	   /|\
+		 *    5 4 3
+		 * */  
 		//直接根据角度取
 		public static function getIndexByAngle(angle:Number):int
 		{

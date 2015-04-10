@@ -1,4 +1,4 @@
-package org.web.sdk.display.game.utils 
+package org.web.sdk.display.core.utils 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

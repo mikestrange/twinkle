@@ -106,7 +106,7 @@ package
 			AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
-			Ticker.step(15000, freeMap);
+			//Ticker.step(15000, freeMap);
 		}
 		
 		private function freeMap():void
