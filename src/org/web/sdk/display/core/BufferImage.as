@@ -48,7 +48,7 @@ package org.web.sdk.display.core
 			{
 				//因为忽略了过程，所以complete就必定是结束
 				if (null == _loader) {
-					_loader = new DownLoader(true, this.complete);
+					_loader = new DownLoader(this.complete);
 				}
 				_loader.load(_url);
 				_loader.start();
@@ -61,7 +61,7 @@ package org.web.sdk.display.core
 			//成功的话就会直接设置
 			if (!event.isError && !setLiberty(event.url))
 			{
-				setTexture(new BaseRender(event.url, event.data as BitmapData));
+				setTexture(new BaseRender(event.url, event.bitmapdata));
 			}
 		}
 		

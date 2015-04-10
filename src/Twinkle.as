@@ -50,9 +50,9 @@ package
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
-			swfLoader.eventHandler = function(event:LoadEvent):void
+			swfLoader.completeHandler = function(event:LoadEvent):void
 			{
-				//AppWork.appDomains.share(event.url,event.getDomain())
+				AppWork.appDomains.share(event.url, event.getDomain());
 				if (swfLoader.empty) startGame();
 			}
 			
@@ -60,9 +60,9 @@ package
 			var loader:DownLoader = new DownLoader();
 			//如果要下载其他域的资源，请补全路径
 			loader.load("asset/config.xml");
-			loader.eventHandler = function(event:LoadEvent):void
+			loader.completeHandler = function(event:LoadEvent):void
 			{
-				var xml:XML = new XML(event.data as String);
+				var xml:XML = event.xml;
 				var length:int = xml.res[0].ui.length();
 				for (var i:int = 0; i < length; i++)
 				{
@@ -86,6 +86,7 @@ package
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			
+			return;
 			action = new RangeMotion(0, ActionType.STAND, 4);
 			action.doAction(ActionType.RUN, 4);
 			camera = new MapCamera;

@@ -1,5 +1,7 @@
 package org.web.sdk.load 
 {
+	import flash.display.BitmapData;
+	import flash.display.Loader;
 	import org.web.sdk.context.AppDomain;
 	
 	public class LoadEvent 
@@ -18,8 +20,9 @@ package org.web.sdk.load
 		public var type:String;
 		public var data:* = undefined;
 		//结束或者错误
-		public var isOver:Boolean = false;
-		public var isError:Boolean = false;
+		public var isOver:Boolean;
+		public var isError:Boolean;
+		public var isOpen:Boolean;
 		//程序域
 		private var _domain:AppDomain;
 		
@@ -30,6 +33,27 @@ package org.web.sdk.load
 			this.data = data;
 			this.isOver = (type == COMPLETE || type == ERROR);
 			this.isError = (type == ERROR);
+			this.isOpen = (type == OPEN);
+		}
+		
+		public function get bitmapdata():BitmapData
+		{
+			return data as BitmapData;
+		}
+		
+		public function get loader():Loader
+		{
+			return data as Loader;
+		}
+		
+		public function get string():String
+		{
+			return data as String;
+		}
+		
+		public function get xml():XML
+		{
+			return new XML(data as String);
 		}
 		
 		//Loader域
@@ -38,7 +62,6 @@ package org.web.sdk.load
 			if (null == _domain) _domain = new AppDomain(data); 
 			return _domain;
 		}
-		
 		
 		//end
 	}

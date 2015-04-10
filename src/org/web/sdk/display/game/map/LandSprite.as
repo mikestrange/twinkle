@@ -170,7 +170,7 @@ package org.web.sdk.display.game.map
 		}
 		
 		//释放地图，需要手动调用
-		public function dispose():void 
+		private function dispose():void 
 		{
 			_nowHash = null;
 			if (_mapList) {
@@ -187,13 +187,18 @@ package org.web.sdk.display.game.map
 				}
 				_mapList = null;
 			}
-			this.finality();
+		}
+		
+		override public function finality(value:Boolean = true):void 
+		{
+			this.dispose();
+			super.finality(value);
 		}
 		
 		override protected function hideEvent():void 
 		{
 			super.hideEvent();
-			dispose();
+			this.finality();
 		}
 		//ends
 	}
