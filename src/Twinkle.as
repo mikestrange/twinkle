@@ -12,7 +12,6 @@ package
 	import org.web.sdk.display.game.map.LandSprite;
 	import org.web.sdk.display.game.map.MapPath;
 	import org.web.sdk.display.mouse.MouseDisplay;
-	import org.web.sdk.frame.core.ClientServer;
 	import org.web.sdk.global.string;
 	import org.web.sdk.global.tool.Ticker;
 	//as3
@@ -53,12 +52,13 @@ package
 			var swfLoader:DownLoader = new DownLoader;
 			swfLoader.eventHandler = function(event:LoadEvent):void
 			{
-				AppWork.appDomains.share(event.url,event.getDomain())
+				//AppWork.appDomains.share(event.url,event.getDomain())
 				if (swfLoader.empty) startGame();
 			}
 			
 			//下载配置，这种下载，完成自己的责任就会被销毁，不必留在内存中 
 			var loader:DownLoader = new DownLoader();
+			//如果要下载其他域的资源，请补全路径
 			loader.load("asset/config.xml");
 			loader.eventHandler = function(event:LoadEvent):void
 			{

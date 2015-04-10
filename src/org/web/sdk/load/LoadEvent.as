@@ -17,12 +17,12 @@ package org.web.sdk.load
 		public var url:String;
 		public var type:String;
 		public var data:* = undefined;
-		//
+		//结束或者错误
 		public var isOver:Boolean = false;
 		public var isError:Boolean = false;
-		//
+		//程序域
 		private var _domain:AppDomain;
-		//
+		
 		public function LoadEvent(type:String, url:String, data:*= undefined)
 		{
 			this.type = type;
@@ -38,6 +38,8 @@ package org.web.sdk.load
 			if (null == _domain) _domain = new AppDomain(data); 
 			return _domain;
 		}
+		
+		
 		//end
 	}
 

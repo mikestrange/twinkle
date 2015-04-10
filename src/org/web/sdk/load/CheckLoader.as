@@ -7,15 +7,35 @@ package org.web.sdk.load
 	
 	public class CheckLoader 
 	{
+		/*
+		 * 下载主目录
+		 * */
+		
 		private static const NONE:int = 0;
-		//设置最多下载
+		/*
+		 * 设置最多下载
+		 * */
 		public static var maxLength:int = 1;
-		//
+		/*
+		 * 缓冲列表
+		 * */
 		private static var _urls:Vector.<ILoadRequest> = new Vector.<ILoadRequest>;
+		/*
+		 * 快速缓冲区
+		 * */
 		private static var _preMap:Dictionary = new Dictionary;
+		/*
+		 * 真正下载
+		 * */
 		private static var _loadMap:Dictionary = new Dictionary;
-		private static var _currentIndex:int = 0; 
-		private static var _isset:Boolean = false;
+		/*
+		 * 当前下载个数
+		 * */
+		private static var _currentIndex:int = 0; 			
+		/*
+		 * 是否初始化下载器
+		 * */
+		private static var _isset:Boolean = false;		
 		
 		//同一个URL只会保存一个
 		internal static function putStack(request:ILoadRequest, loader:DownLoader, prior:Boolean = false):void
@@ -51,10 +71,11 @@ package org.web.sdk.load
 				var type:Number =  parseInt(request.type);
 				if (isNaN(type)) type = LoadSetup.getUrlType(url);
 				var loader:ILoader = LoadSetup.createLoader(type);
+				//如果自身没有设置全局路径，那么就补全
 				_loadMap[url] = loader;
 				loader.download(request);
 				_currentIndex++;
-				//Log.log().debug("##开始加载:", url);
+				Log.log().debug("##开始加载:", url);
 			}
 			startLoad();
 		}
@@ -76,7 +97,7 @@ package org.web.sdk.load
 			var list:Vector.<DownLoader> = _preMap[url];
 			//这里先删除
 			if (event.isOver) {
-				//Log.log().debug("##下载完成:", url, type);
+				Log.log().debug("##下载完成:", url, type);
 				removeLoaders(url);
 			}
 			//列表遍历
@@ -98,7 +119,7 @@ package org.web.sdk.load
 				if (index != -1) {
 					list.splice(index, 1);
 					if (list.length == NONE) {
-						//Log.log().debug("##关闭下载:", url);
+						Log.log().debug("##关闭下载:", url);
 						delete _preMap[url];
 						closeLoader(url);
 					}

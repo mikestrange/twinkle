@@ -44,7 +44,7 @@ package org.web.sdk.load.loads
 			eventListener();
 			this.dataFormat = getFormat();
 			this._isLoader = true;
-			this.load(new URLRequest(_url));
+			this.load(new URLRequest(request.url));
 		}
 		
 		protected function eventListener():void

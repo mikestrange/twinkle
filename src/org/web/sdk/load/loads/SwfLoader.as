@@ -37,7 +37,7 @@ package org.web.sdk.load.loads
 			_request = request;
 			eventListener();
 			_isLoader = true;
-			this.load(new URLRequest(_url), request.context);
+			this.load(new URLRequest(request.url), request.context);
 		}
 		
 		protected function eventListener():void

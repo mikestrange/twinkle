@@ -1,4 +1,4 @@
-package org.web.sdk.display.game 
+package org.web.sdk.display.core.stock 
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;

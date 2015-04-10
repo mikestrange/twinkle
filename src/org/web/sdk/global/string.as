@@ -93,6 +93,23 @@ package org.web.sdk.global
 			return null;
 		}
 		
+		//解析url  注意如果单一的本地路径就可能path是不存在的
+		private static const parse_url:RegExp = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+		private static const names:Array = ['url', 'scheme', 'slash', 'host', 'port', 'path', 'query', 'hash'];
+		
+		public static function parseUrl(url:String):Object
+		{
+			var body:Object = parse_url.exec(url);
+			var objs:Object = new Object;
+			for(var k:String in body)
+			{
+				var index:Number = parseInt(k);
+				if(isNaN(index)) continue;
+				objs[names[index]] = body[k];
+			}
+			//for(var ks:String in objs) trace(ks," = ",objs[ks])
+			return objs;
+		}
 		//end
 	}
 

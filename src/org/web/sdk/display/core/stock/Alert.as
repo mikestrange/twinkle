@@ -1,4 +1,4 @@
-package org.web.sdk.display.game 
+package org.web.sdk.display.core.stock 
 {
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.display.core.BaseSprite;

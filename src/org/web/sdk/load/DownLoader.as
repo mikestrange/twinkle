@@ -24,38 +24,23 @@ package org.web.sdk.load
 			_apply = called;
 		}
 		
-		//统一资源可以使用
-		public function loads(urls:Array, prior:Boolean = false, context:*= undefined, version:String = null):void
-		{
-			var url:String;
-			var i:int = 0;
-			if (prior) {
-				for (i = urls.length - 1; i >=0 ; i--) {
-					url = urls[i];
-					loadRequest(new LoadRequest(url, version, context), true);
-				}
-			}else {
-				for (i = 0; i < urls.length; i++) {
-					url = urls[i];
-					loadRequest(new LoadRequest(url, version, context), false);
-				}
-			}
-		}
-		
 		//固定下载
-		public function load(url:String, context:*= undefined, version:String = null, prior:Boolean = false):void
+		public function load(url:String, context:*= undefined, version:String = null, prior:Boolean = false):ILoadRequest
 		{
-			loadRequest(new LoadRequest(url, version, context), prior);
+			var request:ILoadRequest = new LoadRequest(url, version, context);
+			loadRequest(request, prior);
+			return request;
 		}
 		
 		//一个下载器不重复添加同名下载，控制版本和请求地址是不一样的
-		protected function loadRequest(request:ILoadRequest, prior:Boolean = false):void
+		public function loadRequest(request:ILoadRequest, prior:Boolean = false):ILoadRequest
 		{
-			if (isHave(request.url)) return;
+			if (isHave(request.url)) return request;
 			if (null == _loadMap) _loadMap = new Dictionary;
 			_loadMap[request.url] = request;
 			++_length;
 			CheckLoader.putStack(request, this, prior);
+			return request;
 		}
 		
 		//开始下载
@@ -85,10 +70,10 @@ package org.web.sdk.load
 			if (_apply is Function) _apply(event);
 		}
 		
-		public function isHave(url:String):Boolean
+		public function isHave(path:String):Boolean
 		{
 			if (null == _loadMap) return false;
-			return _loadMap[url] != undefined;
+			return _loadMap[path] != undefined;
 		}
 		
 		public function get length():int
@@ -102,14 +87,14 @@ package org.web.sdk.load
 		}
 		
 		//移除一个下载
-		public function remove(url:String):void 
+		public function remove(path:String):void 
 		{
-			if (isHave(url)) 
+			if (isHave(path)) 
 			{
 				--_length;
-				delete _loadMap[url];
+				delete _loadMap[path];
 				if (_length == NONE) _loadMap = null;
-				CheckLoader.removeLoader(url, this);
+				CheckLoader.removeLoader(path, this);
 			}
 		}
 		
@@ -117,13 +102,34 @@ package org.web.sdk.load
 		public function clean():void
 		{
 			if (_loadMap) {
-				for (var url:String in _loadMap) {
-					remove(url);
+				for (var path:String in _loadMap) {
+					remove(path);
 				}
 				_loadMap = null;
 			}
 			_length = NONE;
 			_apply = null;
+		}
+		
+		//---------------static-----------------
+		//统一资源可以使用，省略了下载计时
+		public static function loads(paths:Array, prior:Boolean = false, context:*= undefined, version:String = null):DownLoader
+		{
+			var loader:DownLoader = new DownLoader();
+			var path:String;
+			var i:int = 0;
+			if (prior) {
+				for (i = paths.length - 1; i >=0 ; i--) {
+					path = paths[i];
+					loader.loadRequest(new LoadRequest(path, version, context), true);
+				}
+			}else {
+				for (i = 0; i < paths.length; i++) {
+					path = paths[i];
+					loader.loadRequest(new LoadRequest(path, version, context), false);
+				}
+			}
+			return loader;
 		}
 		//
 	}
