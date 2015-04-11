@@ -165,7 +165,7 @@ package org.web.sdk.display.core.com.scroll
 				if (getPositionY() > NONE && speed > NONE) speed *= _eccentricity;
 				else if (_isEnd && speed < NONE) speed *= _eccentricity;
 				//先绘制，如果使用强制，那么性能会急速下降，所以放到帧事件里面
-				setOffsetY(speed);
+				scrollApeak(speed);
 				//重新设置
 				_currentY = AppWork.stage.mouseY;
 			}
@@ -273,12 +273,13 @@ package org.web.sdk.display.core.com.scroll
 			return Vector.<IElement>(_itemMap.getValues());
 		}
 		
-		public function setOffsetY(value:Number):void
+		//垂直滚动
+		public function scrollApeak(value:Number):void
 		{
 			setPositionY(getLoader().y + value);
 		}
 		
-		//这里是浮标
+		//设置最终位置
 		public function setPositionY(value:Number):void
 		{
 			if (value == getPositionY()) return;

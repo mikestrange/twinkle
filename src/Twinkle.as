@@ -7,8 +7,11 @@ package
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
+	import org.web.sdk.display.core.com.Chooser;
 	import org.web.sdk.display.core.com.interfaces.IElement;
+	import org.web.sdk.display.core.com.interfaces.ITouch;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
+	import org.web.sdk.display.core.com.test.TouchTest;
 	import org.web.sdk.display.core.stock.BaseButton;
 	import org.web.sdk.display.game.map.MapCamera;
 	import org.web.sdk.display.game.map.MapDatum;
@@ -91,7 +94,9 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
+			//
 			
+			return;
 			var ray:RayDisplayer = new RayDisplayer;
 			ray.setLiberty("lines1", null, RayDisplayer.BIT_TAG);
 			this.addDisplay(ray);

@@ -62,7 +62,7 @@ package org.web.sdk.display.core.com
 		//选择
 		public function select(value:int):Boolean
 		{
-			if (null == _itemList) return;
+			if (null == _itemList) return false;
 			var index:int = _selects.indexOf(value);
 			if (index != -1) {
 				_selects.splice(index, 1);

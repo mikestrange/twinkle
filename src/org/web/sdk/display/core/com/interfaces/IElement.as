@@ -4,6 +4,7 @@ package org.web.sdk.display.core.com.interfaces
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
+	 * 元素
 	 */
 	public interface IElement extends IBaseSprite
 	{
