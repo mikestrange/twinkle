@@ -3,9 +3,12 @@ package org.web.sdk.display.core.com.scroll
 	import com.greensock.TweenLite;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.utils.getTimer;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.core.com.interfaces.IListItem;
+	import org.web.sdk.display.core.com.item.ListItem;
 	import org.web.sdk.global.UintHash;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.core.RayDisplayer;
@@ -20,13 +23,18 @@ package org.web.sdk.display.core.com.scroll
 	{
 		private static const NONE:int = 0;
 		private static const LIMT:int = 200;
+		private static const TWEEN_TIME:int = 200;
+		private static const SEC:int = 1000;
 		
 		//当前状态
 		private var _isEnd:Boolean;
 		private var _totalSize:int;
 		private var _length:int;
+		//上一个位置
+		private var _beforY:Number = 0;
 		//
 		private var _eccentricity:Number = 0.1;	//离心率
+		private var _threshold:Number = 80;
 		//跟随
 		private var _upY:Number;
 		private var _downY:Number;
@@ -95,36 +103,56 @@ package org.web.sdk.display.core.com.scroll
 			_isDown = true;
 			_downTime = getTimer();
 			_currentY = _downY = AppWork.stage.mouseY;
+			this.setRunning(true);
 		}
 		
 		private function _onStageUp(e:MouseEvent):void
 		{
+			this.setRunning();
 			_isDown = false;
 			_tickTime = getTimer() - _downTime;
 			_upY = AppWork.stage.mouseY;
 			_currentY = 0;
-			_interval = Math.abs(_upY - _downY);
-			_isMove = _interval < 5;
+			_interval = _upY - _downY;
+			_isMove = Math.abs(_interval) > 5;
 			if (_tickTime < LIMT) {
-				trace(" tick:", _tickTime, _interval);
+				const dist:Number = (LIMT - _tickTime) * _interval / _threshold;
+				tweenLite(getPositionY() + dist, _tickTime * 5, tweenOver);
 			}
+			renderTrim();
+		}
+		
+		private function renderTrim():void
+		{
 			//底部回弹
 			if (_isEnd ) {
 				if (_totalSize - limitHeight > NONE) {
-					tweenLite(limitHeight - _totalSize);
+					tweenLite(limitHeight - _totalSize, TWEEN_TIME, setRunning);
 				}else {
-					tweenLite(NONE);
+					tweenLite(NONE, TWEEN_TIME, setRunning);
 				}
 			}
 			//顶部回弹
-			if (getPositionY() > NONE) tweenLite(NONE);
+			if (getPositionY() > NONE) tweenLite(NONE, TWEEN_TIME, setRunning);
 		}
 		
-		private function tweenLite(endy:Number, complete:Function = null):void 
+		private function tweenOver():void
+		{
+			this.setRunning();
+			renderTrim();
+		}
+		
+		private function tweenLite(endy:Number, time:int = TWEEN_TIME, complete:Function = null):void
 		{
 			var loader:IBaseSprite = getLoader();
+			this.setRunning(true);
 			TweenLite.killTweensOf(loader);
-			TweenLite.to(loader, .2, { y: endy,onComplete:complete} );
+			TweenLite.to(loader, time / SEC, { y: endy, onComplete:complete } );
+		}
+		
+		override protected function runEnter(e:Event = null):void 
+		{
+			updateScroll(false);
 		}
 			
 		//mouse move
@@ -135,24 +163,27 @@ package org.web.sdk.display.core.com.scroll
 				var speed:Number = AppWork.stage.mouseY - _currentY;
 				//离心力
 				if (getPositionY() > NONE && speed > NONE) speed *= _eccentricity;
-				if (_isEnd && speed < NONE) speed *= _eccentricity;
-				//先绘制
-				setPositionY(getPositionY() + speed);
+				else if (_isEnd && speed < NONE) speed *= _eccentricity;
+				//先绘制，如果使用强制，那么性能会急速下降，所以放到帧事件里面
+				setOffsetY(speed);
 				//重新设置
 				_currentY = AppWork.stage.mouseY;
 			}
 		}
 		
 		//刷新显示
-		public function updateScroll():void
+		public function updateScroll(value:Boolean = true):void
 		{
-			const locationY:int = -getPositionY();
+			const locationY:Number = -getPositionY();
+			//避免不动的情况
+			if (!value && _beforY == locationY) return;
+			_beforY = locationY;
 			_totalSize = 0;
-			var beginHigh:Number = 0;			//
+			var beginHigh:Number = 0;
 			var showHigh:Number = this.limitHeight;
 			if (locationY < NONE) showHigh = this.limitHeight + locationY;
 			//trace("当前限定高度：", showHigh);
-			var item:ListItem;
+			var item:IListItem;
 			_length = _lengApply();
 			for (var i:int = 0; i < _length ; i++) 
 			{
@@ -161,13 +192,11 @@ package org.web.sdk.display.core.com.scroll
 				if (locationY > _totalSize) continue;
 				if (beginHigh > showHigh) break;
 				beginHigh += currHigh;
-				const bool:Boolean = hasIndex(i);
 				item = getItem(i);
-				item.setLimit(limitWidth, currHigh);
-				if (!bool)
+				if (null == item)
 				{
-					_rollApply(item);
-					item.y = _totalSize - currHigh;
+					item = putItem(i, _rollApply(this, i));
+					item.moveTo(item.x, _totalSize - currHigh);
 					getLoader().addDisplay(item);
 				}
 				item.setOpen(true);
@@ -181,7 +210,7 @@ package org.web.sdk.display.core.com.scroll
 		private function refresh():void
 		{
 			//重绘
-			var renders:Function = function(item:ListItem):void
+			var renders:Function = function(item:IListItem):void
 			{
 				if (!item.isOpen()) {
 					removeItem(item.floor);
@@ -198,29 +227,30 @@ package org.web.sdk.display.core.com.scroll
 			return _itemMap.isKey(floor);
 		}
 		
-		public function getItem(floor:int):ListItem
+		public function getItem(floor:int):IListItem
 		{
-			if (null == _itemMap) _itemMap = new UintHash;
-			var item:ListItem = _itemMap.getValue(floor);
-			if (null == item) 
-			{
-				item = getQueue();
-				_itemMap.put(floor, item);
-				item.setFloor(floor);
-			}
-			return item;
+			if (_itemMap == null) return null;
+			return _itemMap.getValue(floor) as IListItem;
 		}
 		
-		private function getQueue():ListItem
+		private function putItem(floor:int, item:IListItem):IListItem
 		{
-			return new ListItem;
+			if (null == _itemMap) _itemMap = new UintHash;
+			item.setFloor(floor);
+			_itemMap.put(floor, item);
+			return item;
 		}
 		
 		private function removeItem(floor:int):void
 		{
 			if (null == _itemMap) return;
-			var item:ListItem = _itemMap.remove(floor);
+			var item:IListItem = _itemMap.remove(floor);
 			if(item) item.removeFromFather(true);
+		}
+		
+		public function getQueue(index:int = 0):IListItem
+		{
+			return new ListItem(index);
 		}
 		
 		//设置停留的位置
@@ -234,6 +264,18 @@ package org.web.sdk.display.core.com.scroll
 				pointy += _spaceApply(i);
 			}
 			setPositionY( -pointy);
+			updateScroll();
+		}
+		
+		//当前所有显示
+		public function getIterator():Vector.<IListItem>
+		{
+			return Vector.<IListItem>(_itemMap.getValues());
+		}
+		
+		public function setOffsetY(value:Number):void
+		{
+			setPositionY(getLoader().y + value);
 		}
 		
 		//这里是浮标
@@ -241,7 +283,6 @@ package org.web.sdk.display.core.com.scroll
 		{
 			if (value == getPositionY()) return;
 			getLoader().y = value;
-			updateScroll();
 		}
 		
 		//真实位置

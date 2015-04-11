@@ -7,7 +7,7 @@ package
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
-	import org.web.sdk.display.core.com.scroll.ListItem;
+	import org.web.sdk.display.core.com.interfaces.IListItem;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
 	import org.web.sdk.display.core.stock.BaseButton;
 	import org.web.sdk.display.game.map.MapCamera;
@@ -90,9 +90,9 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			
 			scrollView();
 			
+			return;
 			var downA:Function = function(...rest):void
 			{
 				scroll.selectByFloor(10);
@@ -146,20 +146,29 @@ package
 		{
 			scroll = new ScrollSprite;
 			scroll.setLimit(100, 300);
-			scroll.sizeHandler = function():int { return 40; };
-			scroll.spaceHandler = function(index:int):Number { return 30; };
+			scroll.alpha = .3;
+			scroll.sizeHandler = function():int 
+			{ 
+				return 10;
+			}
+			scroll.spaceHandler = function(index:int):Number
+			{ 
+				return 60; 
+			}
 			scroll.rollHandler = rollHandler;
+			scroll.setAlign("center", 0, -100);
 			this.addDisplay(scroll);
-			scroll.setAlign("center",0,-100);
 			scroll.updateScroll();
 		}
 		
-		private function rollHandler(cell:ListItem):void
+		private function rollHandler(scroll:ScrollSprite, index:int):IListItem
 		{
-			var btn:BaseButton = new BaseButton("btn_a_down", "btn_a_keep", "btn_a_over", "btn_a_die");
-			cell.addDisplay(btn);
-			TextEditor.quick(cell.floor.toString(), cell, 13, 0xffff00).setAlign("center");
-			
+			var cell:IListItem = scroll.getQueue(index);
+			var ray:RayDisplayer = new RayDisplayer();
+			ray.setLiberty("btn_b_keep.png", null, RayDisplayer.BIT_TAG);
+			cell.addDisplay(ray);
+			TextEditor.quick(index.toString(), cell, 20, 0xffff00).setAlign("center");
+			return cell;
 		}
 		
 		//ends

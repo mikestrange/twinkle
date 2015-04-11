@@ -40,7 +40,8 @@ package org.web.sdk.display.core
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
-		private var _isresize:Boolean = false;
+		private var _isresize:Boolean;
+		protected var _isrun:Boolean;
 		//渲染器
 		private var _texture:LibRender;
 		
@@ -94,9 +95,9 @@ package org.web.sdk.display.core
 				this.setTexture(LibRender.getTexture(txName), data);
 				return true;
 			}else {
-				var tx:LibRender = factoryTexture(txName, tag);
-				if (tx) this.setTexture(tx, data);
-				return tx != null;
+				var asset:LibRender = factoryTexture(txName, tag);
+				if (asset) this.setTexture(asset, data);
+				return asset != null;
 			}
 			return false;
 		}
@@ -261,6 +262,22 @@ package org.web.sdk.display.core
 			}else {
 				AppWork.removeStageListener(Event.RESIZE, onResize);
 			}
+		}
+		
+		public function setRunning(value:Boolean = false):void
+		{
+			if (_isrun == value) return;
+			_isrun = value;
+			if (value) {
+				AppWork.addStageListener(Event.ENTER_FRAME, runEnter);
+			}else {
+				AppWork.removeStageListener(Event.ENTER_FRAME, runEnter);
+			}
+		}
+		
+		protected function runEnter(e:Event = null):void
+		{
+			
 		}
 		
 		protected function onResize(e:Event = null):void

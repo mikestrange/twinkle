@@ -28,7 +28,8 @@ package org.web.sdk.display.core
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
-		private var _isresize:Boolean = false;
+		private var _isresize:Boolean;
+		private var _isrun:Boolean;
 		//文本特有
 		private var format:TextFormat;
 		
@@ -260,6 +261,22 @@ package org.web.sdk.display.core
 			}else {
 				AppWork.removeStageListener(Event.RESIZE, onResize);
 			}
+		}
+		
+		public function setRunning(value:Boolean = false):void
+		{
+			if (_isrun == value) return;
+			_isrun = value;
+			if (value) {
+				AppWork.addStageListener(Event.ENTER_FRAME, runEnter);
+			}else {
+				AppWork.removeStageListener(Event.ENTER_FRAME, runEnter);
+			}
+		}
+		
+		protected function runEnter(e:Event = null):void
+		{
+			
 		}
 		
 		protected function onResize(e:Event = null):void

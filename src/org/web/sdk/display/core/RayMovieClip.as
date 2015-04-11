@@ -1,11 +1,11 @@
 package org.web.sdk.display.core 
 {
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.utils.getTimer;
 	import org.web.sdk.display.asset.LibRender;
 	import org.web.sdk.display.asset.MovieRender;
 	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.engine.Steper;
 	
 	/*
 	 * 更快速度的MovieClip
@@ -14,17 +14,14 @@ package org.web.sdk.display.core
 	public class RayMovieClip extends RayDisplayer 
 	{
 		private var _vector:Vector.<BitmapData>;
-		private var _isstop:Boolean = true;
 		private var _index:int = 1;		
 		private var _hearttime:int = 100;		//24帧
 		private var _current:int = 0;			//当前帧	
 		private var _totals:int = 1;			//总帧
 		//添加一个粒子控制器
-		private var _step:Steper;	
 		
 		public function RayMovieClip(libs:MovieRender = null)
 		{
-			_step = new Steper(this);
 			super(libs);
 		}
 		
@@ -35,7 +32,7 @@ package org.web.sdk.display.core
 			if (_vector) _totals = _vector.length;
 			else _totals = 1;
 			//停止的时候设置
-			if (_isstop) {
+			if (isStop()) {
 				stop();
 			}else {
 				play();
@@ -49,22 +46,20 @@ package org.web.sdk.display.core
 		
 		public function stop(index:int = 1):void
 		{
-			_isstop = true;
 			position = index;
-			_step.die();
+			setRunning();
 		}
 		
 		public function play(index:int = 1):void
 		{
-			_isstop = false;
 			restore();
 			position = index;
-			_step.run();
+			setRunning(true);
 		}
 		
 		public function isStop():Boolean
 		{
-			return _isstop;
+			return !_isrun;
 		}
 		
 		override protected function renderBuffer(assets:*):void 
@@ -74,9 +69,8 @@ package org.web.sdk.display.core
 		}
 		
 		//循环渲染
-		override public function frameRender(float:int = 0):void 
+		override protected function runEnter(e:Event = null):void 
 		{
-			if (_isstop) return;
 			if (getTimer() - _current >= _hearttime) {
 				_current = getTimer();
 				position++;

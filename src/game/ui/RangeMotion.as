@@ -55,11 +55,6 @@ package game.ui
 			this.flush( { action:action, url:url } );	//设置自己的渲染部分
 		}
 		
-		override public function frameRender(float:int = 0):void 
-		{
-			super.frameRender(float);
-		}
-		
 		override protected function handlerFrame():void 
 		{
 			if (_playtimes > 0 && position == totals && --_playtimes <= 0) {

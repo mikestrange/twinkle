@@ -15,7 +15,7 @@ package org.web.sdk.display.asset
 			var item:* = AppWork.getAsset(className, null);
 			if(item is BitmapData) return item as BitmapData;
 			if (item is DisplayObject) return DrawUtils.draw(item as DisplayObject);
-			throw Error("不知道是什么类型:"+className);
+			//throw Error("不知道是什么类型:"+className);
 			return null;
 		}
 		

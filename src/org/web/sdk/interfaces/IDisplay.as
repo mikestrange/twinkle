@@ -105,8 +105,8 @@ package org.web.sdk.interfaces
 		function setResize(value:Boolean = true):void;
 		//把自己转换
 		function convertDisplay():DisplayObject;
-		//翻转
-		//function filp(type:int = 0):void;
+		//帧事件
+		function setRunning(value:Boolean = false):void;
 		//ends
 	}
 	

@@ -20,9 +20,10 @@ package org.web.sdk.display.core
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
 		private var _align:String = null;
-		private var _isresize:Boolean = false;
+		protected var _isresize:Boolean;
+		protected var _isrun:Boolean;
 		//防止事件问题 , adobe写的东西确实有问题
-		private var avert_show:Boolean = false;
+		private var avert_show:Boolean;
 		
 		public function BaseSprite()
 		{
@@ -59,6 +60,7 @@ package org.web.sdk.display.core
 		protected function hideEvent():void
 		{
 			setResize(false);
+			setRunning(false);
 		}
 		
 		/* INTERFACE org.web.sdk.interfaces.IBaseSprite */
@@ -232,7 +234,6 @@ package org.web.sdk.display.core
 			if(isAdded()) reportFromFather(getFather());
 		}
 		
-		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
 		{
 			if (sx != scaleX) scaleX = sx;
@@ -273,6 +274,22 @@ package org.web.sdk.display.core
 			}else {
 				AppWork.removeStageListener(Event.RESIZE, onResize);
 			}
+		}
+		
+		public function setRunning(value:Boolean = false):void
+		{
+			if (_isrun == value) return;
+			_isrun = value;
+			if (value) {
+				AppWork.addStageListener(Event.ENTER_FRAME, runEnter);
+			}else {
+				AppWork.removeStageListener(Event.ENTER_FRAME, runEnter);
+			}
+		}
+		
+		protected function runEnter(e:Event = null):void
+		{
+			
 		}
 		
 		protected function onResize(e:Event = null):void
