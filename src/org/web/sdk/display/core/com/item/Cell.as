@@ -1,18 +1,19 @@
 package org.web.sdk.display.core.com.item 
 {
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.core.com.interfaces.IListItem;
+	import org.web.sdk.display.core.com.interfaces.IElement;
 	
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
+	 * 
 	 */
-	public class ListItem extends BaseSprite implements IListItem
+	public class Cell extends BaseSprite implements IElement
 	{
 		private var _floor:int;
 		private var _isopen:Boolean;
 		
-		public function ListItem(index:int = 0)
+		public function Cell(index:int = 0)
 		{
 			setFloor(index);
 		}

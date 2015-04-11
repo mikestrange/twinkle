@@ -5,10 +5,10 @@ package org.web.sdk.display.core.com.interfaces
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 */
-	public interface IListItem extends IBaseSprite
+	public interface IElement extends IBaseSprite
 	{
-		function setFloor(value:int):void;
 		function get floor():int;
+		function setFloor(value:int):void;
 		function setOpen(value:Boolean):void;
 		function isOpen():Boolean;
 		//ends

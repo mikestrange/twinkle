@@ -7,7 +7,7 @@ package
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
-	import org.web.sdk.display.core.com.interfaces.IListItem;
+	import org.web.sdk.display.core.com.interfaces.IElement;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
 	import org.web.sdk.display.core.stock.BaseButton;
 	import org.web.sdk.display.game.map.MapCamera;

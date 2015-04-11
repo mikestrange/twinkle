@@ -7,8 +7,8 @@ package org.web.sdk.display.core.com.scroll
 	import flash.events.MouseEvent;
 	import flash.utils.getTimer;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.core.com.interfaces.IListItem;
-	import org.web.sdk.display.core.com.item.ListItem;
+	import org.web.sdk.display.core.com.interfaces.IElement;
+	import org.web.sdk.display.core.com.item.Cell;
 	import org.web.sdk.global.UintHash;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.core.RayDisplayer;
@@ -183,7 +183,7 @@ package org.web.sdk.display.core.com.scroll
 			var showHigh:Number = this.limitHeight;
 			if (locationY < NONE) showHigh = this.limitHeight + locationY;
 			//trace("当前限定高度：", showHigh);
-			var item:IListItem;
+			var item:IElement;
 			_length = _lengApply();
 			for (var i:int = 0; i < _length ; i++) 
 			{
@@ -210,7 +210,7 @@ package org.web.sdk.display.core.com.scroll
 		private function refresh():void
 		{
 			//重绘
-			var renders:Function = function(item:IListItem):void
+			var renders:Function = function(item:IElement):void
 			{
 				if (!item.isOpen()) {
 					removeItem(item.floor);
@@ -227,13 +227,13 @@ package org.web.sdk.display.core.com.scroll
 			return _itemMap.isKey(floor);
 		}
 		
-		public function getItem(floor:int):IListItem
+		public function getItem(floor:int):IElement
 		{
 			if (_itemMap == null) return null;
-			return _itemMap.getValue(floor) as IListItem;
+			return _itemMap.getValue(floor) as IElement;
 		}
 		
-		private function putItem(floor:int, item:IListItem):IListItem
+		private function putItem(floor:int, item:IElement):IElement
 		{
 			if (null == _itemMap) _itemMap = new UintHash;
 			item.setFloor(floor);
@@ -244,13 +244,13 @@ package org.web.sdk.display.core.com.scroll
 		private function removeItem(floor:int):void
 		{
 			if (null == _itemMap) return;
-			var item:IListItem = _itemMap.remove(floor);
+			var item:IElement = _itemMap.remove(floor);
 			if(item) item.removeFromFather(true);
 		}
 		
-		public function getQueue(index:int = 0):IListItem
+		public function getQueue(index:int = 0):IElement
 		{
-			return new ListItem(index);
+			return new Cell(index);
 		}
 		
 		//设置停留的位置
@@ -268,9 +268,9 @@ package org.web.sdk.display.core.com.scroll
 		}
 		
 		//当前所有显示
-		public function getIterator():Vector.<IListItem>
+		public function getIterator():Vector.<IElement>
 		{
-			return Vector.<IListItem>(_itemMap.getValues());
+			return Vector.<IElement>(_itemMap.getValues());
 		}
 		
 		public function setOffsetY(value:Number):void
