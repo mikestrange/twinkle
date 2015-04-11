@@ -51,7 +51,7 @@ package org.web.sdk.display.mouse
 					upSprite.moveTo(AppWork.stage.mouseX, AppWork.stage.mouseY);
 				}
 			}
-			if(event) event.updateAfterEvent();
+			//if(event) event.updateAfterEvent();
 		}
 		
 		private static function onState(event:MouseEvent):void

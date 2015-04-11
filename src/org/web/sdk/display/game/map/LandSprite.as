@@ -77,6 +77,7 @@ package org.web.sdk.display.game.map
 			//限制宽高
 			setLimit(M_width, M_height);
 			openLoad = true;
+			//loadSmall();
 		}
 		
 		public function loadSmall():void

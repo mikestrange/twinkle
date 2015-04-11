@@ -8,19 +8,8 @@ package org.web.sdk.display.core.com.scroll
 	 */
 	public class ListItem extends BaseSprite 
 	{
-		private var _itemHeig:int;
 		private var _floor:int;
-		
-		public function setItemSize(h:int, w:int = 0):void
-		{
-			setLimit(w, h);
-			_itemHeig = h;
-		}
-		
-		public function getItemHeight():int
-		{
-			return _itemHeig;
-		}
+		private var _isopen:Boolean;
 		
 		public function setFloor(value:int):void
 		{
@@ -32,6 +21,15 @@ package org.web.sdk.display.core.com.scroll
 			return _floor;
 		}
 		
+		public function setOpen(value:Boolean):void
+		{
+			_isopen = value;
+		}
+		
+		public function isOpen():Boolean
+		{
+			return _isopen;
+		}
 		//ends
 	}
 

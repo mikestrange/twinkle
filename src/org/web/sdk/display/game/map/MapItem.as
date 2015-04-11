@@ -48,12 +48,12 @@ package org.web.sdk.display.game.map
 		{
 			if (_loader == null) {
 				_loader = new DownLoader;
-				_loader.eventHandler = function(event:LoadEvent):void
+				_loader.completeHandler = function(event:LoadEvent):void
 				{
 					if (event.isError) {
 						_loader = null;
 					}else {
-						setTextures(event.data as BitmapData);
+						setTextures(event.bitmapdata);
 					}
 				}
 				_loader.load(_url);

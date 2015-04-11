@@ -17,6 +17,7 @@ package
 	import org.web.sdk.display.mouse.MouseDisplay;
 	import org.web.sdk.global.string;
 	import org.web.sdk.global.tool.Ticker;
+	import org.web.sdk.keyset.KeyManager;
 	//as3
 	import flash.display.*;
 	import flash.events.*;
@@ -49,6 +50,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			AppWork.utilization(new Director(this), 3000, 2000);
+			AppWork.lookEms(true);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -84,11 +86,19 @@ package
 		{
 			trace("--------res load over,start game---------");
 			//登陆模块
+			
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			scroll();
-			return;
+			
+			scrollView();
+			
+			var downA:Function = function(...rest):void
+			{
+				scroll.selectByFloor(10);
+			}
+			KeyManager.keyListener(Keyboard.A, "entera", downA);
+			//return;
 			action = new RangeMotion(0, ActionType.STAND, 4);
 			action.doAction(ActionType.RUN, 4);
 			camera = new MapCamera;
@@ -97,25 +107,17 @@ package
 			loader.completeHandler = function(e:LoadEvent):void
 			{
 				camera.setMap(new LandSprite(MapDatum.create(e.xml)));
-				addDisplay(camera.getView(), 0);
 				camera.getView().addDisplay(action);
 				camera.updateBuffer();
 				camera.getView().addEventListener(MouseEvent.CLICK, onClick);
-				camera.updateBuffer();
+				addDisplay(camera.getView(), 0);
 			}
 			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
-			WinManager.show("test", new TestPanel);
-			AlertManager.gets().push(new TestTips);
+			//WinManager.show("test", new TestPanel);
+			//AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
-			//Ticker.step(15000, freeMap);
-		}
-		
-		private function freeMap():void
-		{
-			camera.getView().removeFromFather();
-			SpriteTool.collection(3);
 		}
 		
 		override protected function onResize(e:Event = null):void 
@@ -130,27 +132,33 @@ package
 			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
 			TweenLite.to(action, .2, { x:pos.x, y:pos.y } );
 			//action.moveTo(pos.x, pos.y);
+			var time:int = getTimer();
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
+			trace("地图渲染时间：", getTimer()-time);
 		}
 		
 		
 		//test
-		private function scroll():void
+		private var scroll:ScrollSprite;
+		
+		private function scrollView():void
 		{
-			var scroll:ScrollSprite = new ScrollSprite;
+			scroll = new ScrollSprite;
 			scroll.setLimit(100, 300);
-			scroll.setLength(10);
+			scroll.sizeHandler = function():int { return 40; };
+			scroll.spaceHandler = function(index:int):Number { return 30; };
 			scroll.rollHandler = rollHandler;
-			scroll.lineHandler = function(index:int):Number { return 50; };
 			this.addDisplay(scroll);
-			scroll.setAlign("center");
+			scroll.setAlign("center",0,-100);
+			scroll.updateScroll();
 		}
 		
 		private function rollHandler(cell:ListItem):void
 		{
-			var btn:BaseButton = new BaseButton("btn_b_down", "btn_b_keep", "btn_b_over", "btn_b_die");
+			var btn:BaseButton = new BaseButton("btn_a_down", "btn_a_keep", "btn_a_over", "btn_a_die");
 			cell.addDisplay(btn);
+			TextEditor.quick(cell.floor.toString(), cell, 13, 0xffff00).setAlign("center");
 			
 		}
 		

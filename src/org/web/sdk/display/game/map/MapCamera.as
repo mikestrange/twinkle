@@ -72,7 +72,7 @@ package org.web.sdk.display.game.map
 		public function updateBuffer():void
 		{
 			TweenLite.killTweensOf(_root);
-			TweenLite.to(_root, .2, { x: -_lookx, y: -_looky });
+			TweenLite.to(_root, 5, { x: -_lookx, y: -_looky });
 			//_root.moveTo(-_lookx, -_looky);
 			_root.setRenderPosition(_lookx, _looky);
 		}
