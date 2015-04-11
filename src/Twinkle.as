@@ -15,6 +15,7 @@ package
 	import org.web.sdk.display.game.map.LandSprite;
 	import org.web.sdk.display.game.map.MapPath;
 	import org.web.sdk.display.mouse.MouseDisplay;
+	import org.web.sdk.global.DateTimer;
 	import org.web.sdk.global.string;
 	import org.web.sdk.global.tool.Ticker;
 	import org.web.sdk.keyset.KeyManager;
@@ -72,7 +73,7 @@ package
 				{
 					var url:String = xml.res[0].ui[i].@url;
 					var names:String = xml.res[0].ui[i].@name;
-					if (url && url != "") swfLoader.load(url, AppWork.context);
+					if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
 				}
 			}
 			loader.start();
@@ -90,12 +91,14 @@ package
 			MouseDisplay.show();
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
-			scrollView();
 			
+			var ray:RayDisplayer = new RayDisplayer;
+			ray.setLiberty("lines1", null, RayDisplayer.BIT_TAG);
+			this.addDisplay(ray);
 			return;
 			var downA:Function = function(...rest):void
 			{
-				scroll.selectByFloor(10);
+				
 			}
 			KeyManager.keyListener(Keyboard.A, "entera", downA);
 			//return;
@@ -136,39 +139,6 @@ package
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
 			trace("地图渲染时间：", getTimer()-time);
-		}
-		
-		
-		//test
-		private var scroll:ScrollSprite;
-		
-		private function scrollView():void
-		{
-			scroll = new ScrollSprite;
-			scroll.setLimit(100, 300);
-			scroll.alpha = .3;
-			scroll.sizeHandler = function():int 
-			{ 
-				return 10;
-			}
-			scroll.spaceHandler = function(index:int):Number
-			{ 
-				return 60; 
-			}
-			scroll.rollHandler = rollHandler;
-			scroll.setAlign("center", 0, -100);
-			this.addDisplay(scroll);
-			scroll.updateScroll();
-		}
-		
-		private function rollHandler(scroll:ScrollSprite, index:int):IListItem
-		{
-			var cell:IListItem = scroll.getQueue(index);
-			var ray:RayDisplayer = new RayDisplayer();
-			ray.setLiberty("btn_b_keep.png", null, RayDisplayer.BIT_TAG);
-			cell.addDisplay(ray);
-			TextEditor.quick(index.toString(), cell, 20, 0xffff00).setAlign("center");
-			return cell;
 		}
 		
 		//ends

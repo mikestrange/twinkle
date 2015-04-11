@@ -1,16 +1,17 @@
 package org.web.sdk.load 
 {
+	import org.web.sdk.global.DateTimer;
 	import org.web.sdk.load.interfaces.ILoadRequest;
 	
 	public class LoadRequest implements ILoadRequest 
 	{
-		private var _loadUrl:String;
+		private var _url:String;
 		private var _version:String;
 		private var _context:*;
 		
 		public function LoadRequest(url:String, version:String = null, context:*= undefined) 
 		{
-			_loadUrl = url;
+			_url = url;
 			_version = version;
 			_context = context;
 		}
@@ -33,13 +34,28 @@ package org.web.sdk.load
 		
 		public function get url():String
 		{
-			return _loadUrl;
+			return _url;
 		}
 		
-		public function set url(value:String):void
+		//loader url
+		public function get loadUrl():String
 		{
-			_loadUrl = value;	
+			if (_version) {
+				var index:int = _url.indexOf("?");
+				if (index == -1) return _url + "?" + getVersion(_version);
+				return _url + "&" + getVersion(_version);
+			}
+			return _url;
 		}
+		
+		//
+		private static const VERSION:String = "ver=%s";
+		
+		private static function getVersion(value:String):String
+		{
+			return VERSION.replace("%s", value);
+		}
+		
 		//end
 	}
 

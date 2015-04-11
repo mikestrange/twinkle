@@ -11,6 +11,7 @@ package org.web.sdk.load.loads
 	import org.web.sdk.load.interfaces.ILoader;
 	import org.web.sdk.load.interfaces.ILoadRequest;
 	import org.web.sdk.load.LoadEvent;
+	import org.web.sdk.log.Log;
 	
 	/*
 	 * 数据加载，包括文本或二进制
@@ -19,7 +20,7 @@ package org.web.sdk.load.loads
 	
 	public class TextLoader extends URLLoader implements ILoader 
 	{
-		private var _url:String;
+		private var _request:ILoadRequest;
 		protected var _isLoader:Boolean = false;
 		
 		//解析类型
@@ -28,23 +29,18 @@ package org.web.sdk.load.loads
 			return URLLoaderDataFormat.TEXT;
 		}
 		
-		public function get url():String
-		{
-			return _url;
-		}
-		
 		public function getRequest():ILoadRequest
 		{
-			return null;
+			return _request;
 		}
 		
 		public function download(request:ILoadRequest):void
 		{
-			_url = request.url;
+			_isLoader = true;
+			_request = request;
 			eventListener();
 			this.dataFormat = getFormat();
-			this._isLoader = true;
-			this.load(new URLRequest(request.url));
+			this.load(new URLRequest(request.loadUrl));
 		}
 		
 		protected function eventListener():void
@@ -102,7 +98,7 @@ package org.web.sdk.load.loads
 		
 		protected function invoke(type:String, data:Object = null):void
 		{
-			CheckLoader.dispatchs(_url, type, data);
+			CheckLoader.dispatchs(getRequest().url, type, data);
 		}
 		//ends
 	}

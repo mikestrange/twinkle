@@ -71,11 +71,10 @@ package org.web.sdk.load
 				var type:Number =  parseInt(request.type);
 				if (isNaN(type)) type = LoadSetup.getUrlType(url);
 				var loader:ILoader = LoadSetup.createLoader(type);
-				//如果自身没有设置全局路径，那么就补全
+				Log.log().debug("##开始下载:", request.loadUrl);
 				_loadMap[url] = loader;
 				loader.download(request);
 				_currentIndex++;
-				Log.log().debug("##开始加载:", url);
 			}
 			startLoad();
 		}
