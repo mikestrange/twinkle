@@ -147,7 +147,6 @@
     <class>com.greensock.plugins.TweenPlugin</class>
     <class>com.greensock.plugins.VisiblePlugin</class>
     <class>com.greensock.plugins.VolumePlugin</class>
-    <class>game.consts.CmdDefined</class>
     <class>game.ui.RangeMotion</class>
     <class>game.ui.type.ActionType</class>
     <class>org.web.sdk.AppWork</class>
@@ -173,14 +172,33 @@
     <class>org.web.sdk.display.core.SpriteTool</class>
     <class>org.web.sdk.display.core.SwitcherSprite</class>
     <class>org.web.sdk.display.core.TextEditor</class>
+    <class>org.web.sdk.display.core.com.Chooser</class>
+    <class>org.web.sdk.display.core.com.interfaces.IElement</class>
+    <class>org.web.sdk.display.core.com.interfaces.ITouch</class>
+    <class>org.web.sdk.display.core.com.item.Cell</class>
+    <class>org.web.sdk.display.core.com.scroll.ScrollSprite</class>
+    <class>org.web.sdk.display.core.com.test.TouchTest</class>
+    <class>org.web.sdk.display.core.stock.Alert</class>
+    <class>org.web.sdk.display.core.stock.BaseButton</class>
+    <class>org.web.sdk.display.core.stock.GamePanel</class>
+    <class>org.web.sdk.display.core.utils.ScaleRect</class>
+    <class>org.web.sdk.display.core.utils.ScaleSprite</class>
     <class>org.web.sdk.display.effect.DisplayEffects</class>
     <class>org.web.sdk.display.engine.AtomicEngine</class>
     <class>org.web.sdk.display.engine.IEffect</class>
     <class>org.web.sdk.display.engine.IStepper</class>
     <class>org.web.sdk.display.engine.Steper</class>
-    <class>org.web.sdk.display.game.Alert</class>
-    <class>org.web.sdk.display.game.BaseButton</class>
-    <class>org.web.sdk.display.game.GamePanel</class>
+    <class>org.web.sdk.display.form.RayObject</class>
+    <class>org.web.sdk.display.form.Texture</class>
+    <class>org.web.sdk.display.form.TextureAtlas</class>
+    <class>org.web.sdk.display.form.infos.TextureInfo</class>
+    <class>org.web.sdk.display.form.interfaces.IRender</class>
+    <class>org.web.sdk.display.form.lib.AssetManager</class>
+    <class>org.web.sdk.display.form.lib.ClassRender</class>
+    <class>org.web.sdk.display.form.lib.FrameRender</class>
+    <class>org.web.sdk.display.form.lib.MediaRender</class>
+    <class>org.web.sdk.display.form.lib.ResRender</class>
+    <class>org.web.sdk.display.form.utils.TextureUtils</class>
     <class>org.web.sdk.display.game.astar.Astar</class>
     <class>org.web.sdk.display.game.astar.Grid</class>
     <class>org.web.sdk.display.game.astar.Node</class>
@@ -188,13 +206,12 @@
     <class>org.web.sdk.display.game.debug.GridLine</class>
     <class>org.web.sdk.display.game.geom.Aspect</class>
     <class>org.web.sdk.display.game.geom.FormatUtils</class>
+    <class>org.web.sdk.display.game.interfaces.IRoleSprite</class>
     <class>org.web.sdk.display.game.map.LandSprite</class>
     <class>org.web.sdk.display.game.map.MapCamera</class>
     <class>org.web.sdk.display.game.map.MapDatum</class>
     <class>org.web.sdk.display.game.map.MapItem</class>
     <class>org.web.sdk.display.game.map.MapPath</class>
-    <class>org.web.sdk.display.game.utils.ScaleRect</class>
-    <class>org.web.sdk.display.game.utils.ScaleSprite</class>
     <class>org.web.sdk.display.interfaces.IBaseScene</class>
     <class>org.web.sdk.display.interfaces.IDirector</class>
     <class>org.web.sdk.display.mouse.MouseDisplay</class>
@@ -256,7 +273,7 @@
     <class>org.web.sdk.load.loads.ImgLoader</class>
     <class>org.web.sdk.load.loads.SwfLoader</class>
     <class>org.web.sdk.load.loads.TextLoader</class>
-    <class>org.web.sdk.load.utils.LoadResolve</class>
+    <class>org.web.sdk.load.utils.ByteUtils</class>
     <class>org.web.sdk.log.Log</class>
     <class>org.web.sdk.log.LogData</class>
     <class>org.web.sdk.net.CmdManager</class>

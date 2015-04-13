@@ -1,15 +1,19 @@
-package org.web.sdk.display.atlas 
+package org.web.sdk.display.form.atlas 
 {
     import flash.geom.Rectangle;
     import flash.utils.Dictionary;
-
+	import org.web.sdk.display.form.infos.TextureInfo;
+	//一个资源片段
     public class TextureAtlas
     {
+		//截取之后是否释放原材质，释放吧
 		private static const NONE:int = 0;
         private static var sNames:Vector.<String> = new <String>[];
         
-		//-----
+		//-----因为1个xml对应一个动画组合
 		private var mTextureInfos:Dictionary;
+		//获取swf名称，直接去下载
+		private var titleName:String = "";	
 		
         public function TextureAtlas(atlasXml:XML = null)
         {
@@ -17,6 +21,8 @@ package org.web.sdk.display.atlas
             if (atlasXml) parseAtlasXml(atlasXml);
         }
         
+		//因为以后的每一帧都是相对于第一帧的偏移
+		//y = first.frameY-current.frameY | x = first.frameX-current.frameX 
         protected function parseAtlasXml(atlasXml:XML):void
         {
             const scale:Number = 1;
@@ -32,7 +38,7 @@ package org.web.sdk.display.atlas
                 var frameY:Number      = parseFloat(subTexture.attribute("frameY")) / scale;
                 var frameWidth:Number  = parseFloat(subTexture.attribute("frameWidth")) / scale;
                 var frameHeight:Number = parseFloat(subTexture.attribute("frameHeight")) / scale;
-                var rotated:Boolean    = parseBool(subTexture.attribute("rotated"));
+                var rotated:Boolean    = parseBool(subTexture.attribute("rotated"));	//是否重复利用
                 
                 var region:Rectangle = new Rectangle(x, y, width, height);
 				var frame:Rectangle = null;
@@ -46,7 +52,7 @@ package org.web.sdk.display.atlas
         }
         
         //取一个资源
-        public function getTexture(name:String):Object
+        public function getInfo(name:String):TextureInfo
         {
             var info:TextureInfo = mTextureInfos[name];
             if (info == null) return null;
@@ -54,12 +60,12 @@ package org.web.sdk.display.atlas
         }
         
 		//取一个资源集合
-        public function getTextures(prefix:String = ""):Vector.<Object>
+        public function getInfos(prefix:String = ""):Vector.<TextureInfo>
         {
-           var result:Vector.<Object>  = new <Object>[];
+           var result:Vector.<TextureInfo>  = new <TextureInfo>[];
             for each (var name:String in getNames(prefix, sNames))
 			{
-                result.push(getTexture(name)); 
+                result.push(getInfo(name)); 
 			}
             sNames.length = NONE;
             return result;
@@ -108,28 +114,19 @@ package org.web.sdk.display.atlas
         {
             if (mTextureInfos[name]) delete mTextureInfos[name];
         }
-        
+		
+		public function dispose():void
+		{
+			
+		}
+		
         // utility methods
         private static function parseBool(value:String):Boolean
         {
             return value.toLowerCase() == "true";
         }
+		
 		//ends
     }
 }
 
-import flash.geom.Rectangle;
-
-class TextureInfo
-{
-    public var region:Rectangle;
-    public var frame:Rectangle;
-    public var rotated:Boolean;
-    
-    public function TextureInfo(region:Rectangle, frame:Rectangle, rotated:Boolean)
-    {
-        this.region = region;
-        this.frame = frame;
-        this.rotated = rotated;       
-    }
-}
