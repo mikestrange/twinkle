@@ -95,12 +95,6 @@ package
 			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
 			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
 			//
-			
-			return;
-			var ray:RayDisplayer = new RayDisplayer;
-			ray.setLiberty("lines1", null, RayDisplayer.BIT_TAG);
-			this.addDisplay(ray);
-			return;
 			var downA:Function = function(...rest):void
 			{
 				

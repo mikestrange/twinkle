@@ -1,8 +1,9 @@
 package org.web.sdk.display.form 
 {
 	import flash.events.Event;
+	import org.web.sdk.display.form.ActionMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
-	import org.web.sdk.display.form.lib.FrameRender;
+	import org.web.sdk.display.form.lib.AnimationRender;
 	import org.web.sdk.display.form.lib.MediaRender;
 	import org.web.sdk.display.form.lib.ClassRender;
 	import org.web.sdk.interfaces.IDisplay;
@@ -19,7 +20,7 @@ package org.web.sdk.display.form
 	/**
 	 * 速度更快的显示对象，基于bitmapdata
 	 */
-	public class RayObject extends Bitmap implements IRender , IDisplay
+	public class RayObject extends Bitmap implements IRender
 	{
 		//
 		public static const BIT_TAG:int = 0;
@@ -43,57 +44,62 @@ package org.web.sdk.display.form
 		public function RayObject(res:ResRender = null) 
 		{
 			super(null, AUTO, true);
-			if(res) setRender(res);
+			if(res) getBufferRender(res);
 		}
 		
-		/* INTERFACE org.web.sdk.interfaces.IAcceptor */
+		/* INTERFACE org.web.sdk.interfaces.IRender */
 		public function dispose():void 
 		{
+			cleanRender();
 			if (_res) {
 				_res.relieve();
 				this._res = null;
 			}
-			this.bitmapData = null;
 		}
 		
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
-		public function setRender(res:ResRender, data:Object = null):void 
+		final public function getBufferRender(res:ResRender, action:ActionMethod = null):void
 		{
 			if (_res == res) {
-				flush(data);
+				updateBuffer(action);
 			}else {
 				if (_res) _res.relieve();
 				_res = res;
-				if (null == _res) return;
-				renderBuffer(_res.setPowerfulRender(data));
+				if (_res) {
+					_res.additional();
+					_res.setPowerfulRender(this, action);
+				}
 			}
 		}
 		
 		//刷新显示
-		public function flush(data:Object = null):void
+		public function updateBuffer(action:ActionMethod = null):void
 		{
-			if (_res) {
-				renderBuffer(_res.createUpdate(data));
-			}
+			if (_res) _res.setPowerfulRender(this, action);
 		}
 		
 		//获取必要的资源，子类重新就可以了
-		protected function renderBuffer(assets:Texture):void
+		public function setTexture(texture:Texture):void
 		{
-			this.bitmapData = assets.getImage();
+			this.bitmapData = texture.getImage();
 			this.smoothing = true;
 		}
 		
+		public function cleanRender():void
+		{
+			if(this.bitmapData) this.bitmapData = null;
+		}
+		
 		//根据名称渲染材质,自由构造
-		public function setLiberty(txName:String, tag:int = -1, data:Object = null):Boolean
+		public function setLiberty(txName:String, tag:int = -1, data:ActionMethod = null):Boolean
 		{
 			if (null == txName || txName == "") throw Error("材质名称不允许为空");
 			if (ResRender.asset.has(txName)) {
-				this.setRender(ResRender.asset.getTexture(txName), data);
+				this.getBufferRender(ResRender.asset.getTexture(txName), data);
 				return true;
 			}else {
 				var asset:ResRender = factoryTexture(txName, tag);
-				if (asset) this.setRender(asset, data);
+				if (asset) this.getBufferRender(asset, data);
 				return asset != null;
 			}
 			return false;
@@ -105,7 +111,7 @@ package org.web.sdk.display.form
 			switch(tag)
 			{
 				case BIT_TAG: 		return new ClassRender(txname);
-				case BUTTON_TAG: 	return new FrameRender(txname);
+				case BUTTON_TAG: 	return new AnimationRender(txname);
 				case MOVIE_TAG: 	return new MediaRender(txname);
 			}
 			return null;

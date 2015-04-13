@@ -1,5 +1,7 @@
 package org.web.sdk.display.form.lib 
 {
+	import org.web.sdk.display.form.ActionMethod;
+	import org.web.sdk.display.form.interfaces.IRender;
 	import org.web.sdk.display.form.Texture;
 	/*
 	 * 资源渲染器
@@ -68,26 +70,18 @@ package org.web.sdk.display.form.lib
 		}
 		
 		//通过它去渲染，强制渲染[会增加一个引用]
-		public function setPowerfulRender(data:Object = null):Texture
+		public function setPowerfulRender(render:IRender, data:ActionMethod = null):void
 		{
-			addHold();	
-			return createUpdate(data);
+			
 		}
 		
 		//增加一个引用
-		public function addHold():void
+		public function additional():void
 		{
 			if (isHamper()) {
 				_quote++;
 				asset.register(this);
 			}
-		}
-		
-		public function shiftHold():void
-		{
-			//如果没有被注入，你调用这个必定被删除
-			_quote--;
-			if (!_lock && _quote <= NONE) this.dispose();
 		}
 		
 		public function get length():int
@@ -99,18 +93,11 @@ package org.web.sdk.display.form.lib
 		public function relieve():void
 		{
 			if (isHamper()) {
-				shiftHold();
+				_quote--;
+				if (!_lock && _quote <= NONE) this.dispose();
 			}else {
 				if (!_lock) dispose();
 			}
-		}
-		
-		//子类复写就可以了  如果不把引用的对象传过来，那么就非常单一的回应
-		//虽然可以不传，但是为了更好的扩展，必须传
-		//这里只用于刷新
-		public function createUpdate(data:Object):Texture
-		{
-			return null;
 		}
 		
 		//ends
