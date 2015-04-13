@@ -12,8 +12,8 @@ package org.web.sdk.display.form.core
 	{
 		private var _index:int = 1;		
 		private var _hearttime:int = 100;		
-		private var _current:int = 0;			//当前帧	
-		private var _totals:int = 1;			//总帧
+		private var _current:int = 0;			//当前帧
+		private var _action:String;
 		//添加一个粒子控制器
 		
 		public function RayAnimation(res:ResRender = null)
@@ -32,11 +32,17 @@ package org.web.sdk.display.form.core
 			setRunning();
 		}
 		
-		public function play(index:int = 1):void
+		public function play(index:int = 1, action:String = null):void
 		{
+			_action = action;
 			restore();
 			position = index;
 			setRunning(true);
+		}
+		
+		public function getAction():String
+		{
+			return _action;
 		}
 		
 		public function isstop():Boolean
@@ -60,24 +66,12 @@ package org.web.sdk.display.form.core
 			if (index < 1) index = _totals;
 			if (index > _totals) index = 1;
 			this._index = index;
-			//
-			handlerFrame();
-		}
-		
-		//自身处理一个帧函数
-		protected function handlerFrame():void
-		{
-			
+			flash( { action:_action, frame:_index } );
 		}
 		
 		public function get position():int
 		{
 			return _index;
-		}
-		
-		public function get totals():int
-		{
-			return _totals;
 		}
 		
 		public function set frameRate(value:int):void
