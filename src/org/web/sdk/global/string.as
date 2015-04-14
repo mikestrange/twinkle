@@ -87,12 +87,15 @@ package org.web.sdk.global
         }
 		
 		
-		//字节替换
+		//替换字符
+		public static const MAT:String = "%t";
+		
 		public static function format(str:String, ...rests):String
 		{
 			if (rests.length) {
-				for (var i:int = 0; i < rests.length; i++) {
-					str = str.replace("%t", rests[i]);
+				for (var i:int = 0; i < rests.length; i++)
+				{
+					str = str.replace(MAT, rests[i]);
 				}
 			}
 			return str;

@@ -1,6 +1,7 @@
 package org.web.sdk.display.game.geom 
 {
 	import flash.geom.Point;
+	import org.web.sdk.global.maths;
 	/*
 	 * 根据角色返回方向
 	 * */
@@ -47,6 +48,7 @@ package org.web.sdk.display.game.geom
 		//直接根据角度取
 		public static function getIndexByAngle(angle:Number):int
 		{
+			angle = maths.roundAngle(angle);
 			switch(true)
 			{
 				case UP.inThis(angle): 			return UP.type;

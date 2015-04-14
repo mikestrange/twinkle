@@ -71,8 +71,8 @@ package org.web.sdk.display.form.lib
 					res = addRender(name, createAction(data));
 				}
 			}
-			//重新调用自身渲染
-			render.getBufferRender(res, data);
+			//不能调用render去渲染，那样会去问题
+			if (res) res.setPowerfulRender(render, data);
 		}
 		
 		//子类覆盖可以扩充不同的建立

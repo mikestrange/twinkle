@@ -47,18 +47,18 @@ package org.web.sdk.display.form
 			return _action;
 		}
 		
-		public function setAction(name:String):void
+		public function setAction(acName:String):void
 		{
-			_action = name;
+			_action = acName;
 			_currentFrame = LIM;
 			restore();
 			//刷新缓存
 			updateBuffer(getMethod());
 		}
 		
-		public function isAction(name:String):Boolean
+		public function isAction(acName:String):Boolean
 		{
-			return 	_action == name;
+			return 	_action == acName;
 		}
 		
 		public function isstop():Boolean
@@ -112,11 +112,7 @@ package org.web.sdk.display.form
 			}else if (target is Vector.<Texture>) {
 				_vectors = target as Vector.<Texture>;
 			}else if (target is Array) {
-				_vectors = new Vector.<Texture>;
-				var arr:Array = target as Array;
-				for (var i:int = 0; i < arr.length; i++) {
-					_vectors.push(arr[i]);
-				}
+				_vectors = Vector.<Texture>(target);
 			}else {
 				_vectors = null;
 			}
