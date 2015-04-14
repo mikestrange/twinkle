@@ -81,9 +81,9 @@ package org.web.sdk.display.form
 			nextFrame();
 		}
 		
-		public function setPosition(index:int = -1):void
+		public function setPosition(index:int):void
 		{
-			if (index > 0) _currentFrame = index;
+			_currentFrame = index;
 			if (_vectors && _vectors.length) {
 				if (_currentFrame < LIM) _currentFrame = _vectors.length;
 				if (_currentFrame > _vectors.length) _currentFrame = LIM;
@@ -121,7 +121,7 @@ package org.web.sdk.display.form
 				_vectors = null;
 			}
 			//重新取的时候会刷新
-			setPosition();
+			setPosition(_currentFrame);
 		}
 		
 		protected function getMethod():AttainMethod

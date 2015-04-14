@@ -76,8 +76,7 @@ package org.web.sdk.display.form
 		{
 			this.bitmapData = texture.getImage();
 			this.smoothing = true;
-			//这里设置偏移量
-			//this.moveTo(texture.x, texture.y);
+			texture.checkTrim(this);
 		}
 		
 		public function cleanRender():void

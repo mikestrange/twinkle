@@ -53,7 +53,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			AppWork.utilization(new Director(this), 3000, 2000);
-			//AppWork.lookEms(true);
+			AppWork.lookEms(true);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -88,15 +88,14 @@ package
 		private function startGame():void
 		{
 			trace("--------res load over,start game---------");
-			//登陆模块
-			MouseDisplay.show();
-			MouseDisplay.setDown(RayObject.quick("MouseClick"));
-			MouseDisplay.setRelease(RayObject.quick("MouseNormal"));
 			//
-			action = RayAnimation.quick("beaten_1%t.png");
-			action.play();
-			action.setAlign("center");
-			this.addDisplay(action);
+			
+				action = RayAnimation.quick("beaten_1%t.png");
+				action.play();
+				action.setAlign("center");
+				this.addDisplay(action);
+				action.moveTo(Math.random() * AppWork.stageWidth, Math.random() * AppWork.stageHeight);
+			
 			//
 			var downA:Function = function(...rest):void
 			{
@@ -104,7 +103,7 @@ package
 			}
 			
 			KeyManager.keyListener(Keyboard.A, "entera", downA);
-			return;
+			
 			camera = new MapCamera;
 			
 			var loader:DownLoader = new DownLoader;

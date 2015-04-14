@@ -1,6 +1,7 @@
 package org.web.sdk.display.form 
 {
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	/**
 	 * ...
@@ -67,6 +68,11 @@ package org.web.sdk.display.form
 			return _frame.height;
 		}
 		
+		//调整位置
+		public function checkTrim(dis:DisplayObject):void
+		{
+			//dis.transform.matrix.translate(10, 10);
+		}
 		//ends
 	}
 
