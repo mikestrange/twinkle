@@ -81,7 +81,7 @@ package
 				}
 			}
 			loader.start();
-			//SoundManager.playUrl("asset/bg.mp3");
+			SoundManager.playUrl("asset/bg.mp3");
 		}
 		
 		private var camera:MapCamera;
@@ -91,14 +91,8 @@ package
 		{
 			trace("--------res load over,start game---------");
 			//
-			for (var i:int = 0; i < 2000; i++ ) {
-				action = RayAnimation.formatSenior("beaten");
-				action.play(1, "run_2%t.png");
-				action.setAlign("center");
-				this.addDisplay(action);
-				action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
-			}
-			this.setRunning(true);
+			
+			
 			//return;
 			camera = new MapCamera;
 			
@@ -106,10 +100,20 @@ package
 			loader.completeHandler = function(e:LoadEvent):void
 			{
 				camera.setMap(new LandSprite(MapDatum.create(e.xml)));
-				camera.getView().addDisplay(action);
+				//camera.getView().addDisplay(action);
 				camera.updateBuffer();
 				camera.getView().addEventListener(MouseEvent.CLICK, onClick);
 				addDisplay(camera.getView(), 0);
+				//
+				for (var i:int = 0; i < 100; i++ ) {
+					action = RayAnimation.formatSenior("beaten");
+					action.frameRate = 150
+					action.play(1, "stand_4%t.png");
+					action.setAlign("center");
+					camera.getView().addDisplay(action);
+					action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
+				}
+				setRunning(true);
 			}
 			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
@@ -150,35 +154,41 @@ package
 		}
 		
 		private var fast:Boolean = false;
+		private var currentTime:int;
 		override protected function runEnter(e:Event = null):void 
 		{
-			var time:int = getTimer();
-			if (this.numChildren < 2) return;
+			var roots:Sprite = camera.getView() as Sprite;
+			if (roots.numChildren < 2) return;
+			if (getTimer() - currentTime < 200) return;
+			currentTime = getTimer();
 			var list:Array = [];
 			var i:int = 0;
 			var dis:DisplayObject;
-			for (i = 0; i < this.numChildren; i++) {
-				dis = this.getChildAt(i);
-				dis.y = dis.y | 0;
+			for (i = 0; i < roots.numChildren; i++) {
+				dis = roots.getChildAt(i);
 				list[i] = dis;
 			}
+			var time:int = getTimer();
 			list.sortOn("y", Array.NUMERIC);
 			fast = !fast;
+			const double:int = list.length / 2;
 			if (fast) {
-				for (i = 0; i < list.length/2; i++) {
+				for (i = 0; i < double; i++) {
 					dis = list[i];
-					if (this.getChildIndex(dis) == i) continue;
-					this.setChildIndex(dis, i);
+					if (roots.getChildIndex(dis) == i) continue;
+					roots.setChildIndex(dis, i);
 				}
+				trace("yyyyyyy渲染时间：", getTimer() - time);
 			}else {
-				for (i = list.length/2; i < list.length; i++) {
+				for (i = double; i < list.length; i++) {
 					dis = list[i];
-					if (this.getChildIndex(dis) == i) continue;
-					this.setChildIndex(dis, i);
+					if (roots.getChildIndex(dis) == i) continue;
+					roots.setChildIndex(dis, i);
 				}
+				trace("cccccc渲染时间：", getTimer() - time);
 			}
 			
-			trace("渲染时间：", getTimer() - time);
+			
 		}
 		//ends
 	}
