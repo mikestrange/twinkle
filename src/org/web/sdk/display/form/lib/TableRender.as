@@ -60,6 +60,7 @@ package org.web.sdk.display.form.lib
 		{
 			if (null == data) return;
 			const name:String = data.getName();
+			if (name == null) return;
 			var res:ResRender = null;
 			if (_texMap) res = _texMap[name];
 			//不存在的时候自己创建

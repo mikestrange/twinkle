@@ -1,5 +1,6 @@
 package org.web.sdk.display.form 
 {
+	import flash.display.BitmapData;
 	import flash.events.Event;
 	import org.web.sdk.display.form.type.RayType;
 	import org.web.sdk.interfaces.IDisplay;
@@ -308,6 +309,18 @@ package org.web.sdk.display.form
 		{
 			const ray:RayObject = new RayObject;
 			ray.seekByName(className, RayType.CLASS_TAG);
+			return ray;
+		}
+		
+		public static function format(wide:int, high:int, color:uint = 0):RayObject
+		{
+			const names:String = "bit:w" + wide + "h" + high + "c" + color;
+			const ray:RayObject = new RayObject;
+			//默认情况不会创建
+			if (!ray.seekByName(names)) 
+			{
+				ray.getBufferRender(new ClassRender(names, new Texture(new BitmapData(wide, high, true, color))));
+			}
 			return ray;
 		}
 		

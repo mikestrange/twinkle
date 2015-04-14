@@ -53,7 +53,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			AppWork.utilization(new Director(this), 3000, 2000);
-			AppWork.lookEms(true);
+			//AppWork.lookEms(true);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -89,12 +89,11 @@ package
 		{
 			trace("--------res load over,start game---------");
 			//
-			
-				action = RayAnimation.quick("beaten_1%t.png");
-				action.play();
-				action.setAlign("center");
-				this.addDisplay(action);
-				action.moveTo(Math.random() * AppWork.stageWidth, Math.random() * AppWork.stageHeight);
+			action = RayAnimation.formatSenior("beaten");
+			action.play(1, "run_2%t.png");
+			action.setAlign("center");
+			this.addDisplay(action);
+			action.moveTo(Math.random() * AppWork.stageWidth, Math.random() * AppWork.stageHeight);
 			
 			//
 			var downA:Function = function(...rest):void

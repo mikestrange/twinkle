@@ -3,7 +3,7 @@ package org.web.sdk.display.form
 	/**
 	 * ...
 	 * @author Main
-	 * 传输方法
+	 * 传输方法,填写一个域
 	 */
 	public class AttainMethod 
 	{

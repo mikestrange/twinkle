@@ -164,6 +164,13 @@ package org.web.sdk.display.form
 			return ray;
 		}
 		
+		//动作，非动画
+		public static function formatSenior(format:String):RayAnimation
+		{
+			const ray:RayAnimation = new RayAnimation();
+			ray.seekByName(format, RayType.ACTION_TAG, ray.getMethod());
+			return ray;
+		}
 		//ends
 	}
 
