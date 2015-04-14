@@ -65,21 +65,25 @@ package org.web.sdk.display.form.lib
 			if (_texMap) res = _texMap[name];
 			//不存在的时候自己创建
 			if (res == null) {
-				res = addRender(name, createAction(data));
+				if (asset.hasRes(name)) {
+					res = addRender(name, asset.getResource(name));
+				}else {
+					res = addRender(name, createAction(data));
+				}
 			}
 			//重新调用自身渲染
 			render.getBufferRender(res, data);
 		}
 		
-		//根据动作名称建立数据, 传入了类名称，子类继承建立
+		//子类覆盖可以扩充不同的建立
 		protected function createAction(action:AttainMethod):ResRender
 		{
 			const name:String = action.getName();
-			if (asset.hasRes(name)) return asset.getResource(name);
 			switch(action.getType())
 			{
 				case RayType.CLASS:	return new ClassRender(name);
 				case RayType.LIST:	return new VectorRender(name);
+				case RayType.MAP:	return new TableRender(name);
 			}
 			return null;
 		}

@@ -8,6 +8,8 @@ package org.web.sdk.display.form.atlas
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import org.web.sdk.display.form.rule.RuleFactory;
+	import org.web.sdk.display.form.Texture;
 
 	public class TextureInfo
 	{
@@ -31,6 +33,12 @@ package org.web.sdk.display.form.atlas
 		public function getY(firsty:int):int
 		{
 			return firsty - frame.y;
+		}
+		
+		//这里通过资源的swf获得
+		public function getTexture(name:String, url:String):Texture
+		{
+			return new Texture(RuleFactory.getTexture(name, url), frame.x, frame.y);
 		}
 		
 		//切割原图

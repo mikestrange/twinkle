@@ -8,6 +8,7 @@ package org.web.sdk.display.form.type
 	{
 		public static const CLASS:int = 0;
 		public static const LIST:int = 1;
+		public static const MAP:int = 3;
 		//建立时候
 		public static const CLASS_TAG:int = 0;
 		public static const VECTOR_TAG:int = 1;

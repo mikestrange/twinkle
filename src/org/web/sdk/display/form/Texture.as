@@ -14,16 +14,19 @@ package org.web.sdk.display.form
 		//
 		private var _bit:BitmapData;
 		//x和y在帧动画中起作用
-		private var _frame:Rectangle;
+		private var _framex:int;
+		private var _framey:int;
+		private var _frameWidth:int;
+		private var _frameHeight:int;
 		//
 		private var _scalex:Number = 1;
 		private var _scaley:Number = 1;
 		
-		public function Texture(bit:BitmapData, frame:Rectangle = null)
+		public function Texture(bit:BitmapData, x:int = 0, y:int = 0, w:int = 0, h:int = 0)
 		{
 			this._bit = bit;
-			this._frame = frame == null ? new Rectangle() : frame;
-			this.setSize(width, height);
+			this.setPosition(x, y);
+			this.setSize(w, h);
 		}
 		
 		public function dispose():void
@@ -37,19 +40,19 @@ package org.web.sdk.display.form
 		
 		public function setSize(width:int = 0, height:int = 0):void
 		{
-			_frame.width = _bit.width;
-			_frame.height = _bit.height;
-			if (width != NONE) _frame.width = width;
-			if (height != NONE) _frame.height = height;
+			_frameWidth = _bit.width;
+			_frameHeight = _bit.height;
+			if (width != NONE) _frameWidth = width;
+			if (height != NONE) _frameHeight = height;
 			//scale
-			_scalex = _frame.width / _bit.width;
-			_scaley = _frame.height / _bit.height;
+			_scalex = _frameWidth / _bit.width;
+			_scaley = _frameHeight / _bit.height;
 		}
 		
 		public function setPosition(x:int = 0, y:int = 0):void
 		{
-			_frame.x = x;
-			_frame.y = y;
+			_framex = x;
+			_framey = y;
 		}
 		
 		public function getImage():BitmapData
@@ -59,22 +62,22 @@ package org.web.sdk.display.form
 		
 		public function get x():int
 		{
-			return _frame.x;
+			return _framex;
 		}
 		
 		public function get y():int
 		{
-			return _frame.y;
+			return _framey;
 		}
 		
 		public function get width():int
 		{
-			return _frame.width;
+			return _frameWidth;
 		}
 		
 		public function get height():int
 		{
-			return _frame.height;
+			return _frameHeight;
 		}
 		
 		//调整注册点，这里需要固定在内部

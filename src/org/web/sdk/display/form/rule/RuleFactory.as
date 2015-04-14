@@ -13,10 +13,12 @@ package org.web.sdk.display.form.rule
 	 * */
 	public class RuleFactory 
 	{
+		private static const FROM_LENG:int = 4;
+		
 		//原始素材
-		public static function getTexture(className:String):Texture
+		public static function getTexture(className:String, url:String = null):Texture
 		{
-			var item:* = AppWork.getAsset(className, null);
+			var item:* = AppWork.getAsset(className, url);
 			if (item == null) return null;
 			if (item is DisplayObject) item = DrawUtils.draw(item as DisplayObject);
 			//throw Error("不知道是什么类型:"+className);
@@ -31,7 +33,7 @@ package org.web.sdk.display.form.rule
 			var tex:Texture;
 			while (++index)
 			{
-				tex = getTexture(string.format(formName, string.formatNumber(index, 4)));
+				tex = getTexture(string.format(formName, string.formatNumber(index, FROM_LENG)));
 				if (tex == null) break;
 				list.push(tex);
 			}
