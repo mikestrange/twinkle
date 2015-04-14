@@ -1,18 +1,17 @@
 package 
 {
 	import com.greensock.*;
-	import game.ui.RangeMotion;
-	import game.ui.type.ActionType;
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.admin.WinManager;
-	import org.web.sdk.display.asset.*;
 	import org.web.sdk.display.core.*;
 	import org.web.sdk.display.core.com.Chooser;
 	import org.web.sdk.display.core.com.interfaces.IElement;
 	import org.web.sdk.display.core.com.interfaces.ITouch;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
 	import org.web.sdk.display.core.com.test.TouchTest;
-	import org.web.sdk.display.core.stock.BaseButton;
+	import org.web.sdk.display.form.core.RayButton;
+	import org.web.sdk.display.form.RayAnimation;
+	import org.web.sdk.display.form.RayObject;
 	import org.web.sdk.display.game.map.MapCamera;
 	import org.web.sdk.display.game.map.MapDatum;
 	import org.web.sdk.display.game.map.LandSprite;
@@ -54,7 +53,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			AppWork.utilization(new Director(this), 3000, 2000);
-			AppWork.lookEms(true);
+			//AppWork.lookEms(true);
 			this.setLimit(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -83,26 +82,29 @@ package
 			//SoundManager.playUrl("asset/bg.mp3");
 		}
 		
-		private var action:RangeMotion;
 		private var camera:MapCamera;
+		private var action:RayAnimation;
 		
 		private function startGame():void
 		{
 			trace("--------res load over,start game---------");
 			//登陆模块
-			
 			MouseDisplay.show();
-			MouseDisplay.setDown(RayDisplayer.quick("MouseClick"));
-			MouseDisplay.setRelease(RayDisplayer.quick("MouseNormal"));
+			MouseDisplay.setDown(RayObject.quick("MouseClick"));
+			MouseDisplay.setRelease(RayObject.quick("MouseNormal"));
+			//
+			action = RayAnimation.quick("beaten_1%t.png");
+			action.play();
+			action.setAlign("center");
+			this.addDisplay(action);
 			//
 			var downA:Function = function(...rest):void
 			{
 				
 			}
+			
 			KeyManager.keyListener(Keyboard.A, "entera", downA);
-			//return;
-			action = new RangeMotion(0, ActionType.STAND, 4);
-			action.doAction(ActionType.RUN, 4);
+			return;
 			camera = new MapCamera;
 			
 			var loader:DownLoader = new DownLoader;
@@ -133,7 +135,6 @@ package
 			//取鼠标点击的位置
 			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
 			TweenLite.to(action, .2, { x:pos.x, y:pos.y } );
-			//action.moveTo(pos.x, pos.y);
 			var time:int = getTimer();
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();

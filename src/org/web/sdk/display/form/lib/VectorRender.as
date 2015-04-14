@@ -1,7 +1,8 @@
 package org.web.sdk.display.form.lib 
 {
-	import org.web.sdk.display.form.ActionMethod;
+	import org.web.sdk.display.form.AttainMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
+	import org.web.sdk.display.form.rule.RuleFactory;
 	import org.web.sdk.display.form.Texture;
 	
 	/**
@@ -9,11 +10,11 @@ package org.web.sdk.display.form.lib
 	 * @author Mike email:542540443@qq.com
 	 * 绑定资源，增加其引用，防止其他地方释放
 	 */
-	public class AnimationRender extends ResRender
+	public class VectorRender extends ResRender
 	{
 		private var _lists:Vector.<Texture>;
 		
-		public function AnimationRender(resName:String, vector:Vector.<Texture> = null, $lock:Boolean = false) 
+		public function VectorRender(resName:String, vector:Vector.<Texture> = null, $lock:Boolean = false) 
 		{
 			if (vector) _lists = vector;
 			super(resName, $lock);
@@ -30,16 +31,11 @@ package org.web.sdk.display.form.lib
 			}
 		}
 		
-		override public function setPowerfulRender(render:IRender, data:ActionMethod = null):void 
+		override public function setPowerfulRender(render:IRender, data:AttainMethod = null):void 
 		{
-			if (null == _lists) _lists = createVector();
-			//传入材质链
+			if (null == _lists) _lists = RuleFactory.fromVector(getResName());
+			//传入材质链，不做渲染
 			if (data) data.actionHandler(_lists);
-		}
-		
-		protected function createVector():Vector.<Texture>
-		{
-			return null;
 		}
 		
 		//ends

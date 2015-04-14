@@ -4,10 +4,11 @@ package org.web.sdk.display.core.utils
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.asset.BaseRender;
-	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.form.lib.ClassRender;
+	import org.web.sdk.display.form.lib.ResRender;
+	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.form.Texture;
 	/*
 	 * 一个非常快速的九宫格的
 	 * */
@@ -138,7 +139,7 @@ package org.web.sdk.display.core.utils
 		}
 		
 		//取结果,释放当前
-		public function getResult(name:String = null):RayDisplayer
+		public function getResult(name:String = null):RayObject
 		{
 			var bitdata:BitmapData = new BitmapData(currWide, currHeig, true, 0);
 			bitdata.lock();
@@ -154,7 +155,7 @@ package org.web.sdk.display.core.utils
 				}
 				rectVector = null;
 			}
-			return new RayDisplayer(new BaseRender(name, bitdata));
+			return new RayObject(new ClassRender(name, new Texture(bitdata)));
 		}
 		
 		private function dispose():void
@@ -168,28 +169,28 @@ package org.web.sdk.display.core.utils
 		//全局
 		private static var scale:ScaleSprite = new ScaleSprite;
 		//创建单体材质的九宫格的几种方式 
-		public static function byPointX(name:String, pox:int, pow:int):RayDisplayer
+		public static function byPointX(name:String, pox:int, pow:int):RayObject
 		{
 			const libName:String = name + ":" + "pox_" + pox + "_pow_" + pow;
-			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
+			if (ResRender.asset.hasRes(libName)) return new RayObject(ResRender.asset.getResource(libName));
 			scale.setRes(AppWork.getAsset(name) as BitmapData);
 			scale.setPointX(pox, pow);
 			return scale.getResult(libName);	
 		}
 		
-		public static function byPointY(name:String, poy:int, poh:int):RayDisplayer
+		public static function byPointY(name:String, poy:int, poh:int):RayObject
 		{
 			const libName:String = name + ":" + "poy_" + poy + "_poh_" + poh;
-			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
+			if (ResRender.asset.hasRes(libName)) return new RayObject(ResRender.asset.getResource(libName));
 			scale.setRes(AppWork.getAsset(name) as BitmapData);
 			scale.setPointY(poy, poh);
 			return scale.getResult(libName);
 		}
 		
-		public static function byPoint(name:String, pox:int, poy:int, pow:int, poh:int):RayDisplayer
+		public static function byPoint(name:String, pox:int, poy:int, pow:int, poh:int):RayObject
 		{
 			const libName:String = name + ":pox_" + pox + "_poy_" + poy + "_pow_" + pow + "_poh_" + poh;
-			if (LibRender.hasTexture(libName)) return new RayDisplayer(LibRender.getTexture(libName));
+			if (ResRender.asset.hasRes(libName)) return new RayObject(ResRender.asset.getResource(libName));
 			scale.setRes(AppWork.getAsset(name) as BitmapData);
 			scale.setPoint(pox, poy, pow, poh);
 			return scale.getResult(libName);

@@ -88,9 +88,14 @@ package org.web.sdk.global
 		
 		
 		//字节替换
-		public static function format(replace:String, ...rests):String
+		public static function format(str:String, ...rests):String
 		{
-			return null;
+			if (rests.length) {
+				for (var i:int = 0; i < rests.length; i++) {
+					str = str.replace("%t", rests[i]);
+				}
+			}
+			return str;
 		}
 		
 		//解析url  注意如果单一的本地路径就可能path是不存在的

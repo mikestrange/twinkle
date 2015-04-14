@@ -1,4 +1,4 @@
-package org.web.sdk.display.form.infos 
+package org.web.sdk.display.form.atlas 
 {
 	/**
 	 * ...

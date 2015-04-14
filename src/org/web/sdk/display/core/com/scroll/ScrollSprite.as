@@ -11,7 +11,6 @@ package org.web.sdk.display.core.com.scroll
 	import org.web.sdk.display.core.com.item.Cell;
 	import org.web.sdk.global.UintHash;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.core.RayDisplayer;
 	import org.web.sdk.interfaces.IBaseSprite;
 	
 	/**

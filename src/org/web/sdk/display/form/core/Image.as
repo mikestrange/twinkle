@@ -1,12 +1,12 @@
-package org.web.sdk.display.core 
+package org.web.sdk.display.form.core 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
-	import org.web.sdk.display.asset.LibRender;
-	import org.web.sdk.display.core.RayDisplayer;
-	import org.web.sdk.display.asset.BaseRender;
-	import org.web.sdk.interfaces.IAcceptor;
+	import org.web.sdk.display.form.interfaces.IRender;
+	import org.web.sdk.display.form.lib.ClassRender;
+	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.form.Texture;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.AppWork;
@@ -14,7 +14,7 @@ package org.web.sdk.display.core
 	 * 动态贴图基类,释放完成就可以重新利用
 	 * 动态下载
 	 * */
-	public class BufferImage extends RayDisplayer
+	public class Image extends RayObject
 	{
 		private var _url:String;
 		//自身分配一个下载器
@@ -22,7 +22,7 @@ package org.web.sdk.display.core
 		private var _wide:Number;
 		private var _heig:Number;
 		
-		public function BufferImage(url:String = null)
+		public function Image(url:String = null)
 		{
 			if(url) resource = url;
 		}
@@ -44,7 +44,7 @@ package org.web.sdk.display.core
 		public function set resource(value:String):void
 		{
 			_url = value;
-			if (_url && !setLiberty(_url))
+			if (_url && !seekByName(_url))
 			{
 				//因为忽略了过程，所以complete就必定是结束
 				if (null == _loader) {
@@ -59,15 +59,15 @@ package org.web.sdk.display.core
 		protected function complete(event:LoadEvent):void
 		{
 			//成功的话就会直接设置
-			if (!event.isError && !setLiberty(event.url))
+			if (!event.isError && !seekByName(event.url))
 			{
-				setTexture(new BaseRender(event.url, event.bitmapdata));
+				getBufferRender(new ClassRender(event.url, new Texture(event.bitmapdata)));
 			}
 		}
 		
-		override protected function renderBuffer(assets:*):void 
+		override public function setTexture(texture:Texture):void 
 		{
-			super.renderBuffer(assets);
+			super.setTexture(texture);
 			if (!isNaN(_wide)) this.width = _wide;
 			if (!isNaN(_heig)) this.height = _heig;
 		}
@@ -81,9 +81,9 @@ package org.web.sdk.display.core
 			super.dispose();
 		}
 		
-		override public function clone():IAcceptor 
+		override public function clone():IRender 
 		{
-			return new BufferImage(_url);
+			return new Image(_url);
 		}
 		//ends
 	}

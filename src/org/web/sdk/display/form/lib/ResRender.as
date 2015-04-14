@@ -1,6 +1,6 @@
 package org.web.sdk.display.form.lib 
 {
-	import org.web.sdk.display.form.ActionMethod;
+	import org.web.sdk.display.form.AttainMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
 	import org.web.sdk.display.form.Texture;
 	/*
@@ -70,7 +70,7 @@ package org.web.sdk.display.form.lib
 		}
 		
 		//通过它去渲染，强制渲染[会增加一个引用]
-		public function setPowerfulRender(render:IRender, data:ActionMethod = null):void
+		public function setPowerfulRender(render:IRender, data:AttainMethod = null):void
 		{
 			
 		}
@@ -84,11 +84,6 @@ package org.web.sdk.display.form.lib
 			}
 		}
 		
-		public function get length():int
-		{
-			return _quote;
-		}
-		
 		//解除,如果没有保存在内存，如果是弱引用那么背解除后直接释放
 		public function relieve():void
 		{
@@ -100,6 +95,10 @@ package org.web.sdk.display.form.lib
 			}
 		}
 		
+		public function get length():int
+		{
+			return _quote;
+		}
 		//ends
 	}
 

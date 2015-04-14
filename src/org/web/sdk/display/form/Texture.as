@@ -14,9 +14,10 @@ package org.web.sdk.display.form
 		//x和y在帧动画中起作用
 		private var _frame:Rectangle;
 		
-		public function Texture(bit:BitmapData, width:int = 0, height:int = 0)
+		public function Texture(bit:BitmapData, frame:Rectangle = null)
 		{
 			this._bit = bit;
+			this._frame = frame == null ? new Rectangle() : frame;
 			this.setSize(width, height);
 		}
 		

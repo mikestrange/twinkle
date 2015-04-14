@@ -1,19 +1,20 @@
 package org.web.sdk.display.form.lib 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.display.form.ActionMethod;
+	import org.web.sdk.display.form.AttainMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
 	import org.web.sdk.display.form.Texture;
+	import org.web.sdk.display.form.type.RayType;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
-	 * 传入名称和动作,对应动作名或者动作列表都可以,
+	 * 多媒体，可以动态建立也可以初始化的时候建立
 	 */
-	public class MediaRender extends ResRender
+	public class TableRender extends ResRender
 	{ 
 		private var _texMap:Dictionary;
 		
-		public function MediaRender(resName:String, $lock:Boolean = false) 
+		public function TableRender(resName:String, $lock:Boolean = false) 
 		{
 			super(resName, $lock);
 		}
@@ -55,25 +56,30 @@ package org.web.sdk.display.form.lib
 		}
 		
 		//传过来的是动作名称和当前帧{action:run,frame:0}
-		override public function setPowerfulRender(render:IRender, data:ActionMethod = null):void 
+		override public function setPowerfulRender(render:IRender, data:AttainMethod = null):void 
 		{
 			if (null == data) return;
 			const name:String = data.getName();
 			var res:ResRender = null;
-			if (_texMap) res = _texMap.getValue(name);
+			if (_texMap) res = _texMap[name];
 			//不存在的时候自己创建
 			if (res == null) {
 				res = addRender(name, createAction(data));
 			}
-			//可以是单材质，也可以是动作链 
-			if (res) {
-				res.setPowerfulRender(render, data);
-			}
+			//重新调用自身渲染
+			render.getBufferRender(res, data);
 		}
 		
-		//根据动作名称建立数据
-		protected function createAction(action:ActionMethod):ResRender
+		//根据动作名称建立数据, 传入了类名称，子类继承建立
+		protected function createAction(action:AttainMethod):ResRender
 		{
+			const name:String = action.getName();
+			if (asset.hasRes(name)) return asset.getResource(name);
+			switch(action.getType())
+			{
+				case RayType.CLASS:	return new ClassRender(name);
+				case RayType.LIST:	return new VectorRender(name);
+			}
 			return null;
 		}
 		

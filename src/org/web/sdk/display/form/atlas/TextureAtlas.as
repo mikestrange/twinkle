@@ -2,7 +2,6 @@ package org.web.sdk.display.form.atlas
 {
     import flash.geom.Rectangle;
     import flash.utils.Dictionary;
-	import org.web.sdk.display.form.infos.TextureInfo;
 	//一个资源片段
     public class TextureAtlas
     {

@@ -1,39 +1,42 @@
-package org.web.sdk.display.asset 
+package org.web.sdk.display.form.rule 
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.form.Texture;
 	import org.web.sdk.display.utils.DrawUtils;
 	import flash.utils.getDefinitionByName;
-	
-	public class AssetFactory 
+	import org.web.sdk.global.string;
+	/*
+	 * 规则生成工厂
+	 * */
+	public class RuleFactory 
 	{
 		//原始素材
-		public static function getTexture(className:String):BitmapData
+		public static function getTexture(className:String):Texture
 		{
 			var item:* = AppWork.getAsset(className, null);
-			if(item is BitmapData) return item as BitmapData;
-			if (item is DisplayObject) return DrawUtils.draw(item as DisplayObject);
+			if (item == null) return null;
+			if (item is DisplayObject) item = DrawUtils.draw(item as DisplayObject);
 			//throw Error("不知道是什么类型:"+className);
-			return null;
+			return new Texture(item as BitmapData);
 		}
 		
 		//根据一个泛型类，注入替换字符,不会被存入
-		public static function fromVector(className:String, form:String, last:int = -1, url:String = null):Vector.<BitmapData>
+		public static function fromVector(formName:String, url:String = null):Vector.<Texture>
 		{
-			var vector:Vector.<BitmapData> = new Vector.<BitmapData>;
-			var index:int = 1;	//0开始
-			var name:String;
-			var bitdata:BitmapData;
-			while (true) {
-				name = className.replace(form, index);
-				bitdata = AppWork.getAsset(name, url) as BitmapData;
-				if (null == bitdata) break;
-				vector.push(bitdata);
-				if (++index > last && last != -1) break;
+			var index:int = 0;
+			var list:Vector.<Texture> = new Vector.<Texture>;
+			var tex:Texture;
+			while (++index)
+			{
+				tex = getTexture(string.format(formName, string.formatNumber(index, 4)));
+				if (tex == null) break;
+				list.push(tex);
 			}
-			return vector;
+			if (list.length == 0) return null;
+			return list;
 		}
 		
 		/*

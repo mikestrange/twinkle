@@ -3,8 +3,9 @@ package org.web.sdk.display.utils
 	import flash.geom.*;
 	import flash.display.*;
 	import flash.filters.GlowFilter;
-	import org.web.sdk.display.asset.BaseRender;
 	import org.web.sdk.display.core.TextEditor;
+	import org.web.sdk.display.form.lib.ClassRender;
+	import org.web.sdk.display.form.Texture;
 	/*
 	 * 回执
 	 * */
@@ -21,12 +22,12 @@ package org.web.sdk.display.utils
 		
 		//文本转换
 		private static const text:TextEditor = new TextEditor;
-		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):BaseRender
+		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):ClassRender
 		{
 			text.finality();
 			text.filters = [new GlowFilter(0, 1, 2, 2, 5, 2)];
 			text.addText(name, false, color, -1, font);
-			return new BaseRender(name, draw(text));
+			return new ClassRender(name, new Texture(draw(text)));
 		}
 		
 		//ends

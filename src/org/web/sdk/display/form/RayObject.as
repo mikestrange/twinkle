@@ -1,12 +1,13 @@
 package org.web.sdk.display.form 
 {
 	import flash.events.Event;
-	import org.web.sdk.display.form.ActionMethod;
-	import org.web.sdk.display.form.interfaces.IRender;
-	import org.web.sdk.display.form.lib.AnimationRender;
-	import org.web.sdk.display.form.lib.MediaRender;
-	import org.web.sdk.display.form.lib.ClassRender;
+	import org.web.sdk.display.form.type.RayType;
 	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.display.form.AttainMethod;
+	import org.web.sdk.display.form.interfaces.IRender;
+	import org.web.sdk.display.form.lib.VectorRender;
+	import org.web.sdk.display.form.lib.TableRender;
+	import org.web.sdk.display.form.lib.ClassRender;
 	import org.web.sdk.display.form.lib.ResRender;
 	import org.web.sdk.interfaces.IBaseSprite;
 	import org.web.sdk.display.utils.AlignType;
@@ -14,21 +15,13 @@ package org.web.sdk.display.form
 	import org.web.sdk.AppWork;
 	import flash.geom.Point;
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import org.web.sdk.interfaces.IAcceptor;
 	/**
 	 * 速度更快的显示对象，基于bitmapdata
 	 */
 	public class RayObject extends Bitmap implements IRender
 	{
-		//
-		public static const BIT_TAG:int = 0;
-		public static const BUTTON_TAG:int = 1;
-		public static const MOVIE_TAG:int = 2;
-		public static const MOTION_TAG:int = 3;
-		//格式
-		public static const AUTO:String = 'auto';	//所有Bitmap的默认方式
+		public static const AUTO:String = "auto";
 		//属性
 		private var _limitWidth:Number;
 		private var _limitHeight:Number;
@@ -41,9 +34,9 @@ package org.web.sdk.display.form
 		//渲染器
 		private var _res:ResRender;
 		
-		public function RayObject(res:ResRender = null) 
+		public function RayObject(res:ResRender = null, pixelSnapping:String = "auto", smoothing:Boolean = true) 
 		{
-			super(null, AUTO, true);
+			super(null, pixelSnapping, smoothing);
 			if(res) getBufferRender(res);
 		}
 		
@@ -58,7 +51,7 @@ package org.web.sdk.display.form
 		}
 		
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
-		final public function getBufferRender(res:ResRender, action:ActionMethod = null):void
+		public function getBufferRender(res:ResRender, action:AttainMethod = null):void
 		{
 			if (_res == res) {
 				updateBuffer(action);
@@ -73,7 +66,7 @@ package org.web.sdk.display.form
 		}
 		
 		//刷新显示
-		public function updateBuffer(action:ActionMethod = null):void
+		public function updateBuffer(action:AttainMethod = null):void
 		{
 			if (_res) _res.setPowerfulRender(this, action);
 		}
@@ -83,6 +76,8 @@ package org.web.sdk.display.form
 		{
 			this.bitmapData = texture.getImage();
 			this.smoothing = true;
+			//这里设置偏移量
+			//this.moveTo(texture.x, texture.y);
 		}
 		
 		public function cleanRender():void
@@ -90,17 +85,18 @@ package org.web.sdk.display.form
 			if(this.bitmapData) this.bitmapData = null;
 		}
 		
-		//根据名称渲染材质,自由构造
-		public function setLiberty(txName:String, tag:int = -1, data:ActionMethod = null):Boolean
+		//寻找名称并且渲染
+		public function seekByName(txName:String, tag:int = -1, data:AttainMethod = null):Boolean
 		{
 			if (null == txName || txName == "") throw Error("材质名称不允许为空");
-			if (ResRender.asset.has(txName)) {
-				this.getBufferRender(ResRender.asset.getTexture(txName), data);
+			if (ResRender.asset.hasRes(txName)) {
+				this.getBufferRender(ResRender.asset.getResource(txName), data);
 				return true;
-			}else {
-				var asset:ResRender = factoryTexture(txName, tag);
-				if (asset) this.getBufferRender(asset, data);
-				return asset != null;
+			}
+			const asset:ResRender = factoryTexture(txName, tag);
+			if (asset) {
+				this.getBufferRender(asset, data);
+				return true;
 			}
 			return false;
 		}
@@ -110,21 +106,26 @@ package org.web.sdk.display.form
 		{
 			switch(tag)
 			{
-				case BIT_TAG: 		return new ClassRender(txname);
-				case BUTTON_TAG: 	return new AnimationRender(txname);
-				case MOVIE_TAG: 	return new MediaRender(txname);
+				case RayType.CLASS_TAG: 	return new ClassRender(txname);
+				case RayType.VECTOR_TAG: 	return new VectorRender(txname);
+				case RayType.ACTION_TAG: 	return new TableRender(txname);
 			}
 			return null;
 		}
 		
 		public function clone():IRender 
 		{
-			return new RayObject(_res);
+			return new RayObject(getResource());
 		}
 		
-		final public function getRes():ResRender
+		final public function getResource():ResRender
 		{
 			return _res;
+		}
+		
+		public function isRender():Boolean
+		{
+			return _res != null;
 		}
 		
 		/* INTERFACE org.web.sdk.interfaces.IDisplayObject */
@@ -301,6 +302,14 @@ package org.web.sdk.display.form
 		public function finality(value:Boolean = true):void
 		{
 			if (value) dispose();
+		}
+		
+		//static 
+		public static function quick(className:String):RayObject
+		{
+			const ray:RayObject = new RayObject;
+			ray.seekByName(className, RayType.CLASS_TAG);
+			return ray;
 		}
 		
 		//ends

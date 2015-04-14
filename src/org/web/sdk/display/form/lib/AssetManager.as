@@ -25,7 +25,7 @@ package org.web.sdk.display.form.lib
 		{
 			if (texture == null) throw Error("无效材质");
 			const name:String = texture.getResName();
-			var tx:ResRender = getTexture(name);
+			var tx:ResRender = getResource(name);
 			if (tx == null) {
 				Log.log(this).debug("注册资源:", name, texture);
 				_protoKeys.put(name, texture);
@@ -35,19 +35,19 @@ package org.web.sdk.display.form.lib
 		}
 		
 		//释放一个纹理
-		public function remove(libName:String):void 
+		public function remove(resName:String):void 
 		{
-			_protoKeys.remove(libName);
-			Log.log(this).debug("释放资源:", libName);
+			_protoKeys.remove(resName);
+			Log.log(this).debug("释放资源:", resName);
 		}
 		
 		//是否存在这张照片
-		public function has(libName:String):Boolean
+		public function hasRes(resName:String):Boolean
 		{
-			return _protoKeys.isKey(libName);
+			return _protoKeys.isKey(resName);
 		}
 		
-		public function getTexture(name:String):ResRender
+		public function getResource(name:String):ResRender
 		{
 			return _protoKeys.getValue(name);
 		}
@@ -73,7 +73,7 @@ package org.web.sdk.display.form.lib
 			var tx:ResRender;
 			for (var i:int = 0; i < vector.length; i++)
 			{
-				chat += "libName=" + vector[i].getResName() + ",len=" + vector[i].length + "\n";
+				chat += "resName=" + vector[i].getResName() + ",len=" + vector[i].length + "\n";
 			}
 			chat += "->总共:" + vector.length + "]";
 			return chat;

@@ -2,40 +2,43 @@ package org.web.sdk.display.form
 {
 	import flash.events.Event;
 	import flash.utils.getTimer;
-	import org.web.sdk.display.form.ActionMethod;
+	import org.web.sdk.display.form.AttainMethod;
 	import org.web.sdk.display.form.lib.ResRender;
 	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.form.type.RayType;
 	/*
 	 * 更快速度的MovieClip
-	 * 动画，在封装的资源下，我们不太知道动画多少帧
+	 * 动画，初始化的时候应该设置一个动作库
 	 * */
 	public class RayAnimation extends RayObject 
 	{
 		private static const LIM:int = 1;
 		//
-		private var _currentFrame:int = 1;		
+		private var _currentFrame:int = 0;		
 		private var _hearttime:int = 100;		
-		private var _current:int = 0;			//当前帧
+		private var _currentTime:int = 0;			//当前帧
 		private var _action:String;
 		private var _vectors:Vector.<Texture>;
 		//添加一个粒子控制器
 		
 		public function restore():void
 		{
-			_current = getTimer();
+			_currentTime = getTimer();
 		}
 		
-		public function stop(index:int = LIM):void
+		public function stop(frame:int = LIM):void
 		{
-			setPosition(index);
+			setPosition(frame);
 			setRunning();
 		}
 		
-		public function play(index:int = LIM, action:String = null):void
+		public function play(frame:int = LIM, action:String = null):void
 		{
 			_action = action;
+			_currentFrame = frame;
 			restore();
-			setPosition(index);
+			//这里只是获取缓存的一个材质
+			updateBuffer(getMethod());
 			setRunning(true);
 		}
 		
@@ -47,8 +50,15 @@ package org.web.sdk.display.form
 		public function setAction(name:String):void
 		{
 			_action = name;
+			_currentFrame = LIM;
 			restore();
-			setPosition(LIM);
+			//刷新缓存
+			updateBuffer(getMethod());
+		}
+		
+		public function isAction(name:String):Boolean
+		{
+			return 	_action == name;
 		}
 		
 		public function isstop():Boolean
@@ -59,16 +69,21 @@ package org.web.sdk.display.form
 		//循环渲染
 		override protected function runEnter(e:Event = null):void 
 		{
-			if (getTimer() - _current >= _hearttime)
-			{
-				restore();
-				nextFrame();
+			if (getTimer() - _currentTime >= _hearttime) {
+				frameRender();
 			}
 		}
 		
-		public function setPosition(index:int):void
+		//真正执行
+		override public function frameRender(float:int = 0):void 
 		{
-			_currentFrame = index;
+			restore();
+			nextFrame();
+		}
+		
+		public function setPosition(index:int = -1):void
+		{
+			if (index > 0) _currentFrame = index;
 			if (_vectors && _vectors.length) {
 				if (_currentFrame < LIM) _currentFrame = _vectors.length;
 				if (_currentFrame > _vectors.length) _currentFrame = LIM;
@@ -78,25 +93,40 @@ package org.web.sdk.display.form
 			}
 		}
 		
-		//动作可以初始化  //updateBuffer(getExchange());
 		public function nextFrame():void
 		{
-			setPosition(_currentFrame++);
+			setPosition(++_currentFrame);
 		}
 		
 		public function prevFrame():void
 		{
-			setPosition(_currentFrame--);
+			setPosition(--_currentFrame);
 		}
 		
-		protected function setTextures(target:Vector.<Texture>):void
+		//无论是单材质还是多材质都可以
+		public function setTextures(target:*):void
 		{
-			_vectors = target;
+			if (target is Texture) {
+				_vectors = new Vector.<Texture>;
+				_vectors.push(target);
+			}else if (target is Vector.<Texture>) {
+				_vectors = target as Vector.<Texture>;
+			}else if (target is Array) {
+				_vectors = new Vector.<Texture>;
+				var arr:Array = target as Array;
+				for (var i:int = 0; i < arr.length; i++) {
+					_vectors.push(arr[i]);
+				}
+			}else {
+				_vectors = null;
+			}
+			//重新取的时候会刷新
+			setPosition();
 		}
 		
-		protected function getActionMethod():ActionMethod
+		protected function getMethod():AttainMethod
 		{
-			return new ActionMethod(_action, setTextures);
+			return new AttainMethod(RayType.LIST, _action, setTextures);
 		}
 		
 		public function get currentFrame():int
@@ -125,6 +155,15 @@ package org.web.sdk.display.form
 			this.stop();
 			super.dispose();
 		}
+		
+		// static 这里建立单一的材质链
+		public static function quick(format:String):RayAnimation
+		{
+			const ray:RayAnimation = new RayAnimation();
+			ray.seekByName(format, RayType.VECTOR_TAG, ray.getMethod());
+			return ray;
+		}
+		
 		//ends
 	}
 

@@ -3,8 +3,9 @@ package org.web.sdk.display.form.lib
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.form.ActionMethod;
+	import org.web.sdk.display.form.AttainMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
+	import org.web.sdk.display.form.rule.RuleFactory;
 	import org.web.sdk.display.form.Texture;
 	
 	/**
@@ -22,9 +23,10 @@ package org.web.sdk.display.form.lib
 			super(resName, $lock);
 		}
 		
-		override public function setPowerfulRender(render:IRender, data:ActionMethod = null):void 
+		override public function setPowerfulRender(render:IRender, data:AttainMethod = null):void 
 		{
-			if (_texture == null) _texture = new Texture(AppWork.getAsset(getResName()) as BitmapData);
+			if (_texture == null) _texture = RuleFactory.getTexture(getResName());
+			if (data) data.actionHandler(_texture);
 			render.setTexture(_texture);
 		}
 		//ends
