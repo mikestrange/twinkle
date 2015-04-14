@@ -1,12 +1,10 @@
 一个2D的SDK，为快速构造2D提供接口！
 
-display:	扩展了actionscript的display 提供接口IDisplayObject
+display:	      扩展了actionscript的display 提供接口IDisplay
 
-gpu:		一个易扩展易添加的GPU渲染，基于Bitmapdata
+display/form:		一个易扩展易添加的GPU渲染，基于Bitmapdata
 
-handler:	事件派发器
-
-lang:		语言包
+lang:		语言包可以解析ini
 
 load:		一个队列下载
 
@@ -18,7 +16,7 @@ pool:		对象池
 
 sound:		管理游戏一切声音
 
-system:		游戏主要框架
+frame：tvmc游戏框架
 
 tool:		游戏的一些工具
 
