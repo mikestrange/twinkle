@@ -17,7 +17,9 @@ package
 	import org.web.sdk.display.game.map.MapDatum;
 	import org.web.sdk.display.game.map.LandSprite;
 	import org.web.sdk.display.game.map.MapPath;
+	import org.web.sdk.display.game.role.RoleComponent;
 	import org.web.sdk.display.mouse.MouseDisplay;
+	import org.web.sdk.display.utils.SortSprite;
 	import org.web.sdk.global.DateTimer;
 	import org.web.sdk.global.maths;
 	import org.web.sdk.global.string;
@@ -77,7 +79,11 @@ package
 				{
 					var url:String = xml.res[0].ui[i].@url;
 					var names:String = xml.res[0].ui[i].@name;
-					if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
+					if (names == "common") {
+						if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
+					}else {
+						if (url && url != "") swfLoader.load(url, null, "" + DateTimer.getDateTime());
+					}
 				}
 			}
 			loader.start();
@@ -85,14 +91,11 @@ package
 		}
 		
 		private var camera:MapCamera;
-		private var action:RayAnimation;
+		private var action:RoleComponent;
 		
 		private function startGame():void
 		{
 			trace("--------res load over,start game---------");
-			//
-			
-			
 			//return;
 			camera = new MapCamera;
 			
@@ -105,10 +108,10 @@ package
 				camera.getView().addEventListener(MouseEvent.CLICK, onClick);
 				addDisplay(camera.getView(), 0);
 				//
-				for (var i:int = 0; i < 100; i++ ) {
-					action = RayAnimation.formatSenior("beaten");
+				for (var i:int = 0; i < 20; i++ ) {
+					action = new RoleComponent("beaten");
 					action.frameRate = 150
-					action.play(1, "stand_4%t.png");
+					action.setState("stand", 3);
 					camera.getView().addDisplay(action);
 					action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
 				}
@@ -120,6 +123,7 @@ package
 			//AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
+			this.visible = false;
 		}
 		
 		override protected function onResize(e:Event = null):void 
@@ -128,66 +132,29 @@ package
 			camera.updateBuffer();
 		}
 		
-		private var type:int;
-		
 		private function onClick(e:MouseEvent):void
 		{
 			//取鼠标点击的位置
 			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
 			TweenLite.to(action, 2, { x:pos.x, y:pos.y,onComplete:stopMove } );
-			var time:int = getTimer();
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
-			type = FormatUtils.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y));
-			var chat:String = string.format("run_%t%t.png", type);
-			//trace(chat)
-			if (chat != action.getAction()) action.setAction(chat);
-			//
-			trace("地图渲染时间：", getTimer()-time);
+			//跑动
+			action.setState("run", FormatUtils.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)));
 		}
 		
 		private function stopMove():void
 		{
-			var chat:String = string.format("stand_%t%t.png", type);
-			if (chat != action.getAction()) action.setAction(chat);
+			action.setState("stand", action.point);
 		}
 		
-		private var fast:Boolean = false;
 		private var currentTime:int;
-		override protected function runEnter(e:Event = null):void 
+		
+		override protected function runEnter(event:Event = null):void 
 		{
-			var roots:Sprite = camera.getView() as Sprite;
-			if (roots.numChildren < 2) return;
 			if (getTimer() - currentTime < 200) return;
 			currentTime = getTimer();
-			var list:Array = [];
-			var i:int = 0;
-			var dis:DisplayObject;
-			for (i = 0; i < roots.numChildren; i++) {
-				dis = roots.getChildAt(i);
-				list[i] = dis;
-			}
-			var time:int = getTimer();
-			list.sortOn("y", Array.NUMERIC);
-			fast = !fast;
-			const double:int = list.length / 2;
-			if (fast) {
-				for (i = 0; i < double; i++) {
-					dis = list[i];
-					if (roots.getChildIndex(dis) == i) continue;
-					roots.setChildIndex(dis, i);
-				}
-				trace("yyyyyyy渲染时间：", getTimer() - time);
-			}else {
-				for (i = double; i < list.length; i++) {
-					dis = list[i];
-					if (roots.getChildIndex(dis) == i) continue;
-					roots.setChildIndex(dis, i);
-				}
-				trace("cccccc渲染时间：", getTimer() - time);
-			}
-			
-			
+			SortSprite.sort(camera.getView());
 		}
 		//ends
 	}

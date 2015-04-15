@@ -71,6 +71,11 @@ package org.web.sdk.load
 			}
 		}
 		
+		public function isName(name:String):Boolean
+		{
+			return url.lastIndexOf(name) != -1;
+		}
+		
 		//Loader域
 		public function getDomain():AppDomain
 		{

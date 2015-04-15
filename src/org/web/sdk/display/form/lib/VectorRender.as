@@ -14,10 +14,10 @@ package org.web.sdk.display.form.lib
 	{
 		private var _lists:Vector.<Texture>;
 		
-		public function VectorRender(resName:String, vector:Vector.<Texture> = null, $lock:Boolean = false) 
+		public function VectorRender(resName:String, vector:Vector.<Texture> = null)
 		{
 			if (vector) _lists = vector;
-			super(resName, $lock);
+			super(resName, false);
 		}
 		
 		override public function dispose():void 
@@ -33,7 +33,9 @@ package org.web.sdk.display.form.lib
 		
 		override public function setPowerfulRender(render:IRender, data:AttainMethod = null):void 
 		{
-			if (null == _lists) _lists = RuleFactory.fromVector(getResName());
+			if (null == _lists) {
+				_lists = render.supplyHandler(this) as Vector.<Texture>;
+			}
 			//传入材质链，不做渲染
 			if (data) data.actionHandler(_lists);
 		}

@@ -18,6 +18,8 @@ package org.web.sdk.display.form.interfaces
 		function getResource():ResRender;
 		function cleanRender():void;
 		function isRender():Boolean;
+		//资源中没有生成的时候会调用
+		function supplyHandler(res:ResRender):Object;
 		//end
 	}
 	

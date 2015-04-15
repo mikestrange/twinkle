@@ -260,12 +260,12 @@ package org.web.sdk.display.core
 			}
 		}
 		
-		protected function runEnter(e:Event = null):void
+		protected function runEnter(event:Event = null):void
 		{
 			
 		}
 		
-		protected function onResize(e:Event = null):void
+		protected function onResize(event:Event = null):void
 		{
 			
 		}
@@ -282,20 +282,6 @@ package org.web.sdk.display.core
 			this.clearFilters();
 			SpriteTool.wipeout(this, value);
 		}
-		
-		//protected 什么时候刷新自己看着办
-		/*
-		protected function _updateDisplay():void
-		{
-			const prevx:int = this.x - _offsetx;
-			const prevy:int = this.y - _offsety;
-			const offset:Point = AlignType.selfObtainReposition(this, _align, _offsetx * scaleX, _offsety * scaleY);
-			const endx:int = this.x + offset.x;
-			const endy:int = this.y + offset.y;
-			if (endx != prevx) this.x = endx;
-			if (endy != prevy) this.y = endy;
-		}*/
-		
 		//end
 	}
 

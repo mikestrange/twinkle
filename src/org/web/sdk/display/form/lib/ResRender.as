@@ -64,7 +64,7 @@ package org.web.sdk.display.form.lib
 			if (isHamper()) asset.remove(_resName);
 		}
 		
-		internal function setName(value:String):void
+		protected function setName(value:String):void
 		{
 			this._resName = value;
 		}

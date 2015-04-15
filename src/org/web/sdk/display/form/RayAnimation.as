@@ -5,6 +5,7 @@ package org.web.sdk.display.form
 	import org.web.sdk.display.form.AttainMethod;
 	import org.web.sdk.display.form.lib.ResRender;
 	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.form.rule.RuleFactory;
 	import org.web.sdk.display.form.type.RayType;
 	/*
 	 * 更快速度的MovieClip
@@ -17,7 +18,7 @@ package org.web.sdk.display.form
 		private var _currentFrame:int = 0;		
 		private var _hearttime:int = 100;		
 		private var _currentTime:int = 0;			//当前帧
-		private var _action:String;
+		private var _action:String = null;
 		private var _vectors:Vector.<Texture>;
 		//添加一个粒子控制器
 		
@@ -49,11 +50,7 @@ package org.web.sdk.display.form
 		
 		public function setAction(acName:String):void
 		{
-			_action = acName;
-			_currentFrame = LIM;
-			restore();
-			//刷新缓存
-			updateBuffer(getMethod());
+			play(LIM, acName);
 		}
 		
 		public function isAction(acName:String):Boolean
@@ -120,9 +117,16 @@ package org.web.sdk.display.form
 			setPosition(_currentFrame);
 		}
 		
+		//这里固化一种模式
 		protected function getMethod():AttainMethod
 		{
-			return new AttainMethod(RayType.LIST, _action, setTextures);
+			return new AttainMethod(RayType.LIST, getAction(), setTextures);
+		}
+		
+		//默认取本域,一个队列
+		override public function supplyHandler(res:ResRender):Object
+		{
+			return RuleFactory.fromVector(getAction());
 		}
 		
 		public function get currentFrame():int

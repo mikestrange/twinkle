@@ -6,8 +6,8 @@ package org.web.sdk
 	import flash.events.*;
 	import org.web.sdk.context.*;
 	import org.web.sdk.display.engine.*;
-	import org.web.sdk.display.interfaces.IDirector;
 	import org.web.sdk.global.tool.Sleep;
+	import org.web.sdk.interfaces.IDirector;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.*;

@@ -2,9 +2,9 @@ package org.web.sdk.display
 {
 	import flash.display.DisplayObjectContainer;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.interfaces.IBaseScene;
-	import org.web.sdk.display.interfaces.IDirector;
+	import org.web.sdk.interfaces.IBaseScene;
 	import org.web.sdk.interfaces.IBaseSprite;
+	import org.web.sdk.interfaces.IDirector;
 	
 	public class Director implements IDirector
 	{

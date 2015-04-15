@@ -1,4 +1,4 @@
-package org.web.sdk.display.interfaces 
+package org.web.sdk.interfaces 
 {
 	import flash.display.Sprite;
 	import org.web.sdk.interfaces.IBaseSprite;

@@ -3,8 +3,7 @@ package org.web.sdk.display
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.interfaces.IBaseScene;
-	import org.web.sdk.display.interfaces.IDirector;
+	import org.web.sdk.interfaces.IBaseScene;
 	import org.web.sdk.interfaces.IBaseSprite;
 	
 	public class BaseScene extends BaseSprite implements IBaseScene 

@@ -1,4 +1,4 @@
-package org.web.sdk.display.interfaces 
+package org.web.sdk.interfaces 
 {
 	import org.web.sdk.interfaces.IBaseSprite;
 		

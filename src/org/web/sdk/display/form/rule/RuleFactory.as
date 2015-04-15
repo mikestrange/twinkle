@@ -33,7 +33,7 @@ package org.web.sdk.display.form.rule
 			var tex:Texture;
 			while (++index)
 			{
-				tex = getTexture(string.format(formName, string.formatNumber(index, FROM_LENG)));
+				tex = getTexture(string.format(formName, string.formatNumber(index, FROM_LENG)), url);
 				if (tex == null) break;
 				list.push(tex);
 			}

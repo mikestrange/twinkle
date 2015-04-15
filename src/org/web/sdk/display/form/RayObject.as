@@ -2,6 +2,7 @@ package org.web.sdk.display.form
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import org.web.sdk.display.form.rule.RuleFactory;
 	import org.web.sdk.display.form.type.RayType;
 	import org.web.sdk.interfaces.IDisplay;
 	import org.web.sdk.display.form.AttainMethod;
@@ -63,6 +64,12 @@ package org.web.sdk.display.form
 			}
 		}
 		
+		//默认取单材质
+		public function supplyHandler(res:ResRender):Object
+		{
+			return RuleFactory.getTexture(res.getResName());
+		}
+		
 		//刷新显示
 		public function updateBuffer(action:AttainMethod = null):void
 		{
@@ -72,9 +79,11 @@ package org.web.sdk.display.form
 		//获取必要的资源，子类重新就可以了
 		public function setTexture(texture:Texture):void
 		{
-			this.bitmapData = texture.getImage();
-			this.smoothing = true;
-			texture.checkTrim(this);
+			if (texture) {
+				this.bitmapData = texture.getImage();
+				this.smoothing = true;
+			}
+			//texture.checkTrim(this);
 		}
 		
 		public function cleanRender():void
@@ -269,7 +278,6 @@ package org.web.sdk.display.form
 		{
 			
 		}
-		
 		
 		//static 
 		public static function quick(className:String):RayObject

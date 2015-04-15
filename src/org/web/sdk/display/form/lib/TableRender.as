@@ -9,14 +9,17 @@ package org.web.sdk.display.form.lib
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 * 多媒体，可以动态建立也可以初始化的时候建立
+	 * 他不会因为域名而改变，因为他只是一个数据表，真正的资源在Vector和Class中
 	 */
 	public class TableRender extends ResRender
 	{ 
 		private var _texMap:Dictionary;
+		private var _isshare:Boolean;
 		
-		public function TableRender(resName:String, $lock:Boolean = false) 
+		public function TableRender(resName:String, share:Boolean = false) 
 		{
-			super(resName, $lock);
+			_isshare = share;
+			super(resName, false);
 		}
 		
 		//如果多个动作中引用了,会存在问题
@@ -58,32 +61,29 @@ package org.web.sdk.display.form.lib
 		//传过来的是动作名称和当前帧{action:run,frame:0}
 		override public function setPowerfulRender(render:IRender, data:AttainMethod = null):void 
 		{
-			if (null == data) return;
-			const name:String = data.getName();
-			if (name == null) return;
-			var res:ResRender = null;
-			if (_texMap) res = _texMap[name];
+			if (null == data || data.getFile() == null) return;
+			const file:String = data.getFile();
+			//名称已经被改变
+			var res:ResRender = asset.getResource(file);
 			//不存在的时候自己创建
-			if (res == null) {
-				if (asset.hasRes(name)) {
-					res = addRender(name, asset.getResource(name));
-				}else {
-					res = addRender(name, createAction(data));
-				}
+			if (res == null) res = createRender(file, data);
+			//资源重载
+			if (res) {
+				//资源保存的话，那么就不频繁new
+				if (_isshare) addRender(file, res);
+				//资源渲染
+				res.setPowerfulRender(render, data);
 			}
-			//不能调用render去渲染，那样会去问题
-			if (res) res.setPowerfulRender(render, data);
 		}
 		
-		//子类覆盖可以扩充不同的建立
-		protected function createAction(action:AttainMethod):ResRender
+		//数据表中自己建立容器
+		protected function createRender(name:String, data:AttainMethod):ResRender
 		{
-			const name:String = action.getName();
-			switch(action.getType())
+			switch(data.getType())
 			{
-				case RayType.CLASS:	return new ClassRender(name);
-				case RayType.LIST:	return new VectorRender(name);
-				case RayType.MAP:	return new TableRender(name);
+				case RayType.CLASS: 	return new ClassRender(name);
+				case RayType.LIST: 		return new VectorRender(name);
+				case RayType.MAP: 		return new TableRender(name);
 			}
 			return null;
 		}
