@@ -1,10 +1,9 @@
 package org.web.sdk.display.game.role 
 {
+	import org.web.sdk.display.form.lib.AttainMethod;
 	import org.web.sdk.display.form.lib.ResRender;
-	import org.web.sdk.display.form.lib.VectorRender;
 	import org.web.sdk.display.form.RayAnimation;
 	import org.web.sdk.display.form.rule.RuleFactory;
-	import org.web.sdk.display.form.type.RayType;
 	import org.web.sdk.global.string;
 	
 	/**
@@ -21,8 +20,7 @@ package org.web.sdk.display.game.role
 		//一个需要的swf素材路径
 		public function RoleComponent(namespaces:String)
 		{
-			_namespaces = namespaces;
-			this.seekByName(_namespaces, RayType.ACTION_TAG, this.getMethod());
+			_namespaces = "http://127.0.0.1/game/asset/ui/001_player.swf"; //namespaces;
 		}
 		
 		public function setState(state:String, points:int = 0, value:Boolean = false):void
@@ -35,13 +33,8 @@ package org.web.sdk.display.game.role
 			setAction(action);
 		}
 		
-		override public function supplyHandler(res:ResRender):Object 
-		{
-			return RuleFactory.fromVector(getAction(), getNamespaces());
-		}
-		
 		//命名空间
-		public function getNamespaces():String
+		override protected function getNamespace():String 
 		{
 			return _namespaces;
 		}

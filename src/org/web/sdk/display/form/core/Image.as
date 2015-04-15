@@ -4,7 +4,7 @@ package org.web.sdk.display.form.core
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import org.web.sdk.display.form.interfaces.IRender;
-	import org.web.sdk.display.form.lib.ClassRender;
+	import org.web.sdk.display.form.lib.BaseRender;
 	import org.web.sdk.display.form.RayObject;
 	import org.web.sdk.display.form.Texture;
 	import org.web.sdk.load.DownLoader;
@@ -44,7 +44,7 @@ package org.web.sdk.display.form.core
 		public function set resource(value:String):void
 		{
 			_url = value;
-			if (_url && !seekByName(_url))
+			if (_url && !setResource(_url))
 			{
 				//因为忽略了过程，所以complete就必定是结束
 				if (null == _loader) {
@@ -59,9 +59,9 @@ package org.web.sdk.display.form.core
 		protected function complete(event:LoadEvent):void
 		{
 			//成功的话就会直接设置
-			if (!event.isError && !seekByName(event.url))
+			if (!event.isError && !setResource(event.url))
 			{
-				getBufferRender(new ClassRender(event.url, new Texture(event.bitmapdata)));
+				setBufferRender(new BaseRender(event.url, new Texture(event.bitmapdata)));
 			}
 		}
 		

@@ -2,11 +2,11 @@ package org.web.sdk.display.form
 {
 	import flash.events.Event;
 	import flash.utils.getTimer;
-	import org.web.sdk.display.form.AttainMethod;
+	import org.web.sdk.display.form.lib.AttainMethod;
+	import org.web.sdk.display.form.lib.BaseRender;
 	import org.web.sdk.display.form.lib.ResRender;
 	import org.web.sdk.display.form.RayObject;
 	import org.web.sdk.display.form.rule.RuleFactory;
-	import org.web.sdk.display.form.type.RayType;
 	/*
 	 * 更快速度的MovieClip
 	 * 动画，初始化的时候应该设置一个动作库
@@ -38,9 +38,18 @@ package org.web.sdk.display.form
 			_action = action;
 			_currentFrame = frame;
 			restore();
-			//这里只是获取缓存的一个材质
-			updateBuffer(getMethod());
+			setCompulsory(getFormat(), getNamespace());
 			setRunning(true);
+		}
+		
+		protected function getNamespace():String
+		{
+			return null;
+		}
+		
+		protected function getFormat():String
+		{
+			return _action;
 		}
 		
 		public function getAction():String
@@ -66,7 +75,8 @@ package org.web.sdk.display.form
 		//循环渲染
 		override protected function runEnter(e:Event = null):void 
 		{
-			if (getTimer() - _currentTime >= _hearttime) {
+			if (getTimer() - _currentTime >= _hearttime)
+			{
 				frameRender();
 			}
 		}
@@ -101,32 +111,19 @@ package org.web.sdk.display.form
 		}
 		
 		//无论是单材质还是多材质都可以
-		public function setTextures(target:*):void
+		override public function retakeTarget(data:Object):void 
 		{
-			if (target is Texture) {
-				_vectors = new Vector.<Texture>;
-				_vectors.push(target);
-			}else if (target is Vector.<Texture>) {
-				_vectors = target as Vector.<Texture>;
-			}else if (target is Array) {
-				_vectors = Vector.<Texture>(target);
-			}else {
-				_vectors = null;
-			}
+			if (data is Vector.<Texture>) _vectors = data as Vector.<Texture>;
+			else _vectors = null;
 			//重新取的时候会刷新
 			setPosition(_currentFrame);
 		}
 		
-		//这里固化一种模式
-		protected function getMethod():AttainMethod
+		override protected function getNewRender(data:AttainMethod):ResRender 
 		{
-			return new AttainMethod(RayType.LIST, getAction(), setTextures);
-		}
-		
-		//默认取本域,一个队列
-		override public function supplyHandler(res:ResRender):Object
-		{
-			return RuleFactory.fromVector(getAction());
+			const ls:Vector.<Texture> = RuleFactory.fromVector(data.getFormat(), data.getNamespace());
+			if (null == ls) return null;
+			return new BaseRender(data.getResName(), ls);
 		}
 		
 		public function get currentFrame():int
@@ -154,22 +151,6 @@ package org.web.sdk.display.form
 		{
 			this.stop();
 			super.dispose();
-		}
-		
-		// static 这里建立单一的材质链
-		public static function quick(format:String):RayAnimation
-		{
-			const ray:RayAnimation = new RayAnimation();
-			ray.seekByName(format, RayType.VECTOR_TAG, ray.getMethod());
-			return ray;
-		}
-		
-		//动作，非动画
-		public static function formatSenior(format:String):RayAnimation
-		{
-			const ray:RayAnimation = new RayAnimation();
-			ray.seekByName(format, RayType.ACTION_TAG, ray.getMethod());
-			return ray;
 		}
 		//ends
 	}

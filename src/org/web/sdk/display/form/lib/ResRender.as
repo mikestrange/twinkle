@@ -1,6 +1,6 @@
 package org.web.sdk.display.form.lib 
 {
-	import org.web.sdk.display.form.AttainMethod;
+	import org.web.sdk.display.form.lib.AttainMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
 	import org.web.sdk.display.form.Texture;
 	/*
@@ -70,13 +70,13 @@ package org.web.sdk.display.form.lib
 		}
 		
 		//通过它去渲染，强制渲染[会增加一个引用]
-		public function setPowerfulRender(render:IRender, data:AttainMethod = null):void
+		public function setting(render:IRender, data:AttainMethod = null):void
 		{
-			
+			this.additional();
 		}
 		
 		//增加一个引用
-		public function additional():void
+		protected function additional():void
 		{
 			if (isHamper()) {
 				_quote++;

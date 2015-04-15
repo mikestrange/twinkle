@@ -2,7 +2,7 @@ package org.web.sdk.display.form.interfaces
 {
 	import org.web.sdk.interfaces.IDisplay;
 	import org.web.sdk.display.form.lib.*;
-	import org.web.sdk.display.form.AttainMethod;
+	import org.web.sdk.display.form.lib.AttainMethod;
 	import org.web.sdk.display.form.Texture; 
 	/**
 	 * ...
@@ -10,16 +10,14 @@ package org.web.sdk.display.form.interfaces
 	 */
 	public interface IRender extends IDisplay
 	{
-		function seekByName(txName:String, tag:int = -1, data:AttainMethod = null):Boolean;
-		function getBufferRender(res:ResRender, action:AttainMethod = null):void;
-		function updateBuffer(action:AttainMethod = null):void;
-		function setTexture(texture:Texture):void;
-		function clone():IRender;
+		//我们不公开外部自定义
+		function setBufferRender(res:ResRender, data:AttainMethod = null):void;
+		function setCompulsory(format:String, namespaces:String = null, type:int = 0):void;
+		function setResource(resName:String):Boolean;
+		function retakeTarget(data:Object):void;
 		function getResource():ResRender;
-		function cleanRender():void;
 		function isRender():Boolean;
-		//资源中没有生成的时候会调用
-		function supplyHandler(res:ResRender):Object;
+		function clone():IRender;
 		//end
 	}
 	

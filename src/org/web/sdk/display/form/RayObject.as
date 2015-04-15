@@ -2,14 +2,11 @@ package org.web.sdk.display.form
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import org.web.sdk.display.form.lib.BaseRender;
 	import org.web.sdk.display.form.rule.RuleFactory;
-	import org.web.sdk.display.form.type.RayType;
 	import org.web.sdk.interfaces.IDisplay;
-	import org.web.sdk.display.form.AttainMethod;
+	import org.web.sdk.display.form.lib.AttainMethod;
 	import org.web.sdk.display.form.interfaces.IRender;
-	import org.web.sdk.display.form.lib.VectorRender;
-	import org.web.sdk.display.form.lib.TableRender;
-	import org.web.sdk.display.form.lib.ClassRender;
 	import org.web.sdk.display.form.lib.ResRender;
 	import org.web.sdk.interfaces.IBaseSprite;
 	import org.web.sdk.display.utils.AlignType;
@@ -21,110 +18,87 @@ package org.web.sdk.display.form
 	/**
 	 * 速度更快的显示对象，基于bitmapdata
 	 */
-	public class RayObject extends Bitmap implements IRender
+	public class RayObject extends BaseSheet implements IRender
 	{
 		public static const AUTO:String = "auto";
-		//属性
-		private var _width:int;
-		private var _height:int;
-		private var _tag:uint;
-		private var _isresize:Boolean;
-		protected var _isrun:Boolean;
 		//渲染器
 		private var _res:ResRender;
 		
-		public function RayObject(res:ResRender = null, pixelSnapping:String = "auto", smoothing:Boolean = true) 
+		public function RayObject(res:ResRender = null) 
 		{
-			super(null, pixelSnapping, smoothing);
-			if(res) getBufferRender(res);
+			if(res) setBufferRender(res);
+		}
+		
+		//强制获取资源
+		protected function refreshRender(data:AttainMethod = null):void
+		{
+			if (isRender()) _res.setting(this);
+		}
+		
+		//不一定设置名称给他自己,上面会设置 ,默认是一个类名,你可以修改
+		protected function getNewRender(data:AttainMethod):ResRender
+		{
+			const tx:Texture = RuleFactory.getTexture(data.getFormat(), data.getNamespace());
+			if (tx) return new BaseRender(data.getResName(), tx);
+			return null;
 		}
 		
 		/* INTERFACE org.web.sdk.interfaces.IRender */
-		public function dispose():void 
+		override public function dispose():void 
 		{
-			cleanRender();
+			super.dispose();
 			if (_res) {
 				_res.relieve();
-				this._res = null;
+				_res = null;
 			}
 		}
 		
 		// 切换材质的时候，如果前一个是弱引用，那么就会被清理
-		public function getBufferRender(res:ResRender, action:AttainMethod = null):void
+		final public function setBufferRender(res:ResRender, data:AttainMethod = null):void
 		{
 			if (_res == res) {
-				updateBuffer(action);
+				refreshRender(data);
 			}else {
 				if (_res) _res.relieve();
 				_res = res;
-				if (_res) {
-					_res.additional();
-					_res.setPowerfulRender(this, action);
-				}
+				if (_res) _res.setting(this, data);
 			}
 		}
 		
-		//默认取单材质
-		public function supplyHandler(res:ResRender):Object
+		public function setResource(resName:String):Boolean
 		{
-			return RuleFactory.getTexture(res.getResName());
-		}
-		
-		//刷新显示
-		public function updateBuffer(action:AttainMethod = null):void
-		{
-			if (_res) _res.setPowerfulRender(this, action);
-		}
-		
-		//获取必要的资源，子类重新就可以了
-		public function setTexture(texture:Texture):void
-		{
-			if (texture) {
-				this.bitmapData = texture.getImage();
-				this.smoothing = true;
-			}
-			//texture.checkTrim(this);
-		}
-		
-		public function cleanRender():void
-		{
-			if(this.bitmapData) this.bitmapData = null;
-		}
-		
-		//寻找名称并且渲染
-		public function seekByName(txName:String, tag:int = -1, data:AttainMethod = null):Boolean
-		{
-			if (null == txName || txName == "") throw Error("材质名称不允许为空");
-			if (ResRender.asset.hasRes(txName)) {
-				this.getBufferRender(ResRender.asset.getResource(txName), data);
-				return true;
-			}
-			const asset:ResRender = factoryTexture(txName, tag);
-			if (asset) {
-				this.getBufferRender(asset, data);
+			if (ResRender.asset.hasRes(resName))
+			{
+				this.setBufferRender(ResRender.asset.getResource(resName));
 				return true;
 			}
 			return false;
 		}
 		
-		//不一定设置名称给他自己,上面会设置 ,默认是一个类名,你可以修改
-		protected function factoryTexture(txname:String, tag:int):ResRender
+		//强制,并且生成资源
+		public function setCompulsory(format:String, namespaces:String = null, type:int = 0):void
 		{
-			switch(tag)
-			{
-				case RayType.CLASS_TAG: 	return new ClassRender(txname);
-				case RayType.VECTOR_TAG: 	return new VectorRender(txname);
-				case RayType.ACTION_TAG: 	return new TableRender(txname);
+			const att:AttainMethod = new AttainMethod(format, namespaces, type);
+			if (ResRender.asset.hasRes(att.getResName())) {
+				setBufferRender(ResRender.asset.getResource(att.getResName()), att);
+			}else {
+				const asset:ResRender = getNewRender(att);
+				if (asset) setBufferRender(asset, att);
 			}
-			return null;
+		}
+		
+		//捕获到的资源
+		public function retakeTarget(data:Object):void
+		{
+			if (data is Texture) setTexture(data as Texture);
 		}
 		
 		public function clone():IRender 
 		{
-			return new RayObject(getResource());
+			return new RayObject(_res);
 		}
 		
-		final public function getResource():ResRender
+		public function getResource():ResRender
 		{
 			return _res;
 		}
@@ -134,171 +108,20 @@ package org.web.sdk.display.form
 			return _res != null;
 		}
 		
-		/* INTERFACE org.web.sdk.interfaces.IDisplayObject */
-		public function toGlobal(mx:Number = 0, my:Number = 0):Point
-		{
-			return this.localToGlobal(new Point(mx, my));
-		}
-		
-		public function toLocal(mx:Number = 0, my:Number = 0):Point
-		{
-			return this.globalToLocal(new Point(mx, my));
-		}
-		
-		public function moveTo(mx:Number = 0, my:Number = 0):void
-		{
-			if (this.x != mx) this.x = mx;
-			if (this.y != my) this.y = my;
-		}
-		
-		public function setDisplayIndex(floor:int = -1):void 
-		{
-			if (parent) {
-				if (parent.numChildren < 1) return;
-				if (floor < 0) {
-					parent.setChildIndex(this, parent.numChildren - 1);
-				}else {
-					if (floor > parent.numChildren - 1) floor = parent.numChildren - 1;
-					parent.setChildIndex(this, floor);
-				}
-			}
-		}
-		
-		public function setSize(wide:int, high:int):void
-		{
-			_width = wide;
-			_height = high;
-		}
-		
-		public function get sizeWidth():int
-		{
-			if (_width == 0) return width;
-			return _width;
-		}
-		
-		public function get sizeHeight():int
-		{
-			if (_height == 0) return height;
-			return _height;
-		}
-		
-		public function clearFilters():void 
-		{
-			if (filters.length) {
-				filters = [];
-				filters = null;
-			}
-		}
-		
-		public function addUnder(father:IBaseSprite, floor:int = -1):Boolean 
-		{
-			if (father) {
-				father.addDisplay(this, floor);
-				return true;
-			}
-			return false;
-		}
-		
-		public function frameRender(float:int = 0):void
-		{
-			
-		}
-		
-		public function getFather():IBaseSprite
-		{
-			return this.parent as IBaseSprite;
-		}
-		
-		public function isAdded():Boolean
-		{
-			return this.parent != null;
-		}
-		
-		public function removeFromFather(value:Boolean = false):void
-		{
-			if (parent) parent.removeChild(this);
-			if (value) this.finality();
-		}
-		
-		public function setTag(value:uint):void 
-		{
-			_tag = value;
-		}
-		
-		public function getTag():uint 
-		{
-			return _tag;
-		}
-		
-		public function setResize(value:Boolean = true):void
-		{
-			if (_isresize == value) return;
-			_isresize = value;
-			if (value) {
-				AppWork.addStageListener(Event.RESIZE, onResize);
-			}else {
-				AppWork.removeStageListener(Event.RESIZE, onResize);
-			}
-		}
-		
-		public function setRunning(value:Boolean = false):void
-		{
-			if (_isrun == value) return;
-			_isrun = value;
-			if (value) {
-				AppWork.addStageListener(Event.ENTER_FRAME, runEnter);
-			}else {
-				AppWork.removeStageListener(Event.ENTER_FRAME, runEnter);
-			}
-		}
-		
-		public function convertDisplay():DisplayObject
-		{
-			return this as DisplayObject;
-		}
-		
-		public function setScale(sx:Number = 1, sy:Number = 1):void
-		{
-			if (sx != scaleX) scaleX = sx;
-			if (sy != scaleY) scaleY = sy;
-		}
-		
-		public function finality(value:Boolean = true):void
-		{
-			if (value) dispose();
-		}
-		
-		//protected
-		protected function runEnter(e:Event = null):void
-		{
-			
-		}
-		
-		protected function onResize(e:Event = null):void
-		{
-			
-		}
-		
+		/*
 		//static 
-		public static function quick(className:String):RayObject
-		{
-			const ray:RayObject = new RayObject;
-			ray.seekByName(className, RayType.CLASS_TAG);
-			return ray;
-		}
-		
 		public static function format(wide:int, high:int, color:uint = 0):RayObject
 		{
 			const names:String = "bit:w" + wide + "h" + high + "c" + color;
 			const ray:RayObject = new RayObject;
 			//默认情况不会创建
-			if (!ray.seekByName(names)) 
+			if (!ray.setResource(names)) 
 			{
-				ray.getBufferRender(new ClassRender(names, new Texture(new BitmapData(wide, high, true, color))));
+				ray.setBufferRender(new BaseRender(names, new Texture(new BitmapData(wide, high, true, color))));
 			}
 			return ray;
 		}
-		
+		*/
 		//ends
 	}
 }

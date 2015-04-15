@@ -3,9 +3,8 @@ package org.web.sdk.display.form.core
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.form.AttainMethod;
+	import org.web.sdk.display.form.lib.AttainMethod;
 	import org.web.sdk.display.form.RayObject;
-	import org.web.sdk.display.form.type.RayType;
 	import org.web.sdk.display.utils.TouchState;
 	import org.web.sdk.global.string;
 	/*
@@ -32,7 +31,6 @@ package org.web.sdk.display.form.core
 		{
 			super.initialization();
 			_ray = new RayObject;
-			_ray.seekByName(_btnName, RayType.ACTION_TAG);
 			_ray.addUnder(this, 0);
 			this.buttonMode = true;
 			this.mouseChildren = false;	
@@ -98,8 +96,7 @@ package org.web.sdk.display.form.core
 			if (type == _currentType) return;
 			_currentType = type;
 			//通过解析获得class类
-			const className:String = string.format(_btnName, type);
-			_ray.updateBuffer(new AttainMethod(RayType.CLASS, className));
+			_ray.setCompulsory(string.format(_btnName, type));
 			//如果渲染之后材质没有，那么就设置为默认材质
 			if (!_ray.isRender()) setCurrent(TouchState.NARMAL);
 		}

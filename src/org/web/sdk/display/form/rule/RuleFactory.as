@@ -6,7 +6,6 @@ package org.web.sdk.display.form.rule
 	import org.web.sdk.AppWork;
 	import org.web.sdk.display.form.Texture;
 	import org.web.sdk.display.utils.DrawUtils;
-	import flash.utils.getDefinitionByName;
 	import org.web.sdk.global.string;
 	/*
 	 * 规则生成工厂

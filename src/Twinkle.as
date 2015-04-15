@@ -82,7 +82,7 @@ package
 					if (names == "common") {
 						if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
 					}else {
-						if (url && url != "") swfLoader.load(url, null, "" + DateTimer.getDateTime());
+						if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
 					}
 				}
 			}
@@ -119,11 +119,12 @@ package
 			}
 			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
-			//WinManager.show("test", new TestPanel);
-			//AlertManager.gets().push(new TestTips);
+			WinManager.show("test", new TestPanel);
+			AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
-			this.visible = false;
+			//this.visible = false;
+			
 		}
 		
 		override protected function onResize(e:Event = null):void 

@@ -5,7 +5,7 @@ package org.web.sdk.display.core.utils
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.form.lib.ClassRender;
+	import org.web.sdk.display.form.lib.BaseRender;
 	import org.web.sdk.display.form.lib.ResRender;
 	import org.web.sdk.display.form.RayObject;
 	import org.web.sdk.display.form.Texture;
@@ -155,7 +155,7 @@ package org.web.sdk.display.core.utils
 				}
 				rectVector = null;
 			}
-			return new RayObject(new ClassRender(name, new Texture(bitdata)));
+			return new RayObject(new BaseRender(name, new Texture(bitdata)));
 		}
 		
 		private function dispose():void
