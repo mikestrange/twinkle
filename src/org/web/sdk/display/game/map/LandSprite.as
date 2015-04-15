@@ -74,8 +74,7 @@ package org.web.sdk.display.game.map
 					_mapList[i][j] = new MapItem(mapId, j, i, titleWidth, titleHeight);
 				}
 			}
-			//限制宽高
-			setLimit(M_width, M_height);
+			//开放下载
 			openLoad = true;
 			//loadSmall();
 		}
@@ -87,7 +86,7 @@ package org.web.sdk.display.game.map
 				_smallMap.removeFromFather();
 			}
 			_smallMap = new Image;
-			_smallMap.setLimit(M_width, M_height);
+			_smallMap.setSize(M_width, M_height);
 			_smallMap.resource = smallUrl;
 			this.addDisplay(_smallMap, 0);
 		}

@@ -9,7 +9,6 @@ package
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.effect.DisplayEffects;
 	import org.web.sdk.display.form.RayObject;
-	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.interfaces.rest.IPanel;
 	
@@ -26,7 +25,7 @@ package
 			super.onEnter(name, data);
 			AppWork.director.getRoot().addDisplay(this);
 			//设置自身的宽高是很有必要的
-			setLimit(714, 600);
+			setSize(714, 600);
 			//延迟呈现
 			create_black();
 			//delayRender(50, create_black, create_btn, create_close);

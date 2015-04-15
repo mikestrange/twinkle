@@ -9,10 +9,10 @@ package org.web.sdk.interfaces
 		function lockMouse(childs:Boolean = true):void;
 		function unlockMouse(childs:Boolean = true):void;
 		function removeByName(childName:String):IDisplay;
-		function getChildrenByOper(value:int = 0):Vector.<IDisplay>;
+		function getChildren(tag:int = -1):Array;
 		function addDisplay(child:IDisplay, floor:int = -1):Boolean;
-		function getName():String;
 		function convertSprite():Sprite;
+		function getName():String;
 		//end
 	}
 	

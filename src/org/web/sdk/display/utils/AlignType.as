@@ -1,5 +1,9 @@
 package org.web.sdk.display.utils 
 {
+	import flash.display.DisplayObject;
+	import org.web.sdk.interfaces.IDisplay;
+	import flash.geom.Point;
+	
 	public class AlignType 
 	{
 		//---------------------对齐方式---------------------
@@ -14,55 +18,55 @@ package org.web.sdk.display.utils
 		public static const CENTER_BOTTOM:String = "center_bottom";		//中间底部
 		public static const CENTER_TOP:String = "center_top";			//中间顶部
 		
-		//返回的是一个偏移量
-		public static function obtainReposition(targetlimitWidth:Number, targetlimitHeight:Number, limitWidth:Number, limitHeight:Number, alignType:String):Swapper
+		/*
+		 * 局域对齐方式，返回计算位置的方法
+		 * */
+		public static function obtainReposition(alignType:String, target:DisplayObject, rectWidth:Number, rectHeight:Number):Swapper
 		{
-			const pos:Swapper = new Swapper;
 			switch(alignType)
 			{
-				case AlignType.LEFT:
-					break;
-				case AlignType.LEFT_CENTER:
-						pos.y = (limitHeight - targetlimitHeight) / 2;
-						pos.setTrend(1, 1);
-					break;
-				case AlignType.LEFT_BOTTOM:
-						pos.y = limitHeight - targetlimitHeight;
-						pos.setTrend(1, -1);
-					break;
-				case AlignType.RIGHT_CENTER:
-						pos.x = limitWidth - targetlimitWidth;
-						pos.y = (limitHeight - targetlimitHeight) / 2;
-						pos.setTrend(-1, 1);
-					break;
-				case AlignType.RIGHT:
-						pos.x = limitWidth - targetlimitWidth;
-						pos.setTrend(-1, 1);
-					break;
-				case AlignType.CENTER:
-						pos.x = (limitWidth - targetlimitWidth) / 2;
-						pos.y = (limitHeight - targetlimitHeight) / 2;
-						pos.setTrend(1, 1);
-					break;
-				case AlignType.RIGHT_BOTTOM:
-						pos.x = limitWidth - targetlimitWidth;
-						pos.y = limitHeight - targetlimitHeight;
-						pos.setTrend(-1, -1);
-					break;
-				case AlignType.CENTER_BOTTOM:
-						pos.x = (limitWidth - targetlimitWidth) / 2;
-						pos.y = limitHeight - targetlimitHeight;
-						pos.setTrend(1, -1);
-					break;
-				case AlignType.CENTER_TOP:
-						pos.x = (limitWidth - targetlimitWidth) / 2;
-						pos.setTrend(1, 1);
-					break;
+				case AlignType.LEFT:			return setSwapper(0, 0, 1, 1);
+				case AlignType.LEFT_CENTER:		return setSwapper(0, rectHeight - target.height >> 1, 1, 1);
+				case AlignType.LEFT_BOTTOM:		return setSwapper(0, rectHeight - target.height, 1, -1);
+				case AlignType.RIGHT_CENTER:	return setSwapper(rectWidth - target.width, rectHeight - target.height >> 1, -1, 1);
+				case AlignType.RIGHT:			return setSwapper(rectWidth - target.width, 0, -1, 1);
+				case AlignType.CENTER:			return setSwapper(rectWidth - target.width >> 1, rectHeight - target.height >> 1, 1, 1);
+				case AlignType.RIGHT_BOTTOM:	return setSwapper(rectWidth - target.width, rectHeight - target.height, -1, -1);
+				case AlignType.CENTER_BOTTOM:	return setSwapper(rectWidth - target.width >> 1,  rectHeight - target.height, 1, -1);
+				case AlignType.CENTER_TOP:		return setSwapper(rectWidth - target.width >> 1, 0, 1, 1);
 			}
-			return pos;
+			return setSwapper(0, 0, 1, 1);
 		}
 		
+		private static function setSwapper(x:int, y:int, tx:int, ty:int):Swapper
+		{
+			return new Swapper(x, y, tx, ty);
+		}
 		
+		/*
+		 * 自身对齐方式，返回偏移量
+		 * */
+		public static function selfObtainReposition(dis:DisplayObject, alignType:String, offx:int = 0, offy:int = 0):Point
+		{
+			switch(alignType)
+			{
+				case AlignType.LEFT:			return setPoint(offx, offy);
+				case AlignType.LEFT_CENTER:		return setPoint(offx, -(dis.height >> 1) + offy);
+				case AlignType.LEFT_BOTTOM:		return setPoint(offx, -dis.height + offy);
+				case AlignType.RIGHT_CENTER:	return setPoint(-dis.width + offx, -(dis.height >> 1) + offy);
+				case AlignType.RIGHT:			return setPoint(-dis.width + offx, offy);
+				case AlignType.RIGHT_BOTTOM:	return setPoint(-dis.width + offx, -dis.height + offy);
+				case AlignType.CENTER:			return setPoint(-(dis.width >> 1) + offx, -(dis.height >> 1) + offy);
+				case AlignType.CENTER_BOTTOM:	return setPoint(-(dis.width >> 1) + offx, -dis.height + offy);
+				case AlignType.CENTER_TOP:		return setPoint(-(dis.width >> 1) + offx, offy);
+			}
+			return setPoint(offx, offy);
+		}
+		
+		protected static function setPoint(mx:Number,my:Number):Point
+		{
+			return new Point(mx, my);
+		}
 		//end
 	}
 

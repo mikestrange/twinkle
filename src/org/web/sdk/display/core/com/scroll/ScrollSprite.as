@@ -55,9 +55,9 @@ package org.web.sdk.display.core.com.scroll
 		private var _mask:Shape;
 		
 		//设置区域
-		override public function setLimit(wide:Number = 0, heig:Number = 0):void 
+		override public function setSize(wide:int, high:int):void 
 		{
-			super.setLimit(wide, heig);
+			super.setSize(wide, high);
 			//建立遮罩
 			if (_mask == null) {
 				_mask = new Shape;
@@ -65,7 +65,7 @@ package org.web.sdk.display.core.com.scroll
 			}
 			_mask.graphics.clear();
 			_mask.graphics.beginFill(0,.3);
-			_mask.graphics.drawRect(0, 0, wide, heig);
+			_mask.graphics.drawRect(0, 0, wide, high);
 			_mask.graphics.endFill();
 			getLoader().mask = _mask;
 		}
@@ -125,8 +125,8 @@ package org.web.sdk.display.core.com.scroll
 		{
 			//底部回弹
 			if (_isEnd ) {
-				if (_totalSize - limitHeight > NONE) {
-					tweenLite(limitHeight - _totalSize, TWEEN_TIME, setRunning);
+				if (_totalSize - sizeHeight > NONE) {
+					tweenLite(sizeHeight - _totalSize, TWEEN_TIME, setRunning);
 				}else {
 					tweenLite(NONE, TWEEN_TIME, setRunning);
 				}
@@ -179,8 +179,8 @@ package org.web.sdk.display.core.com.scroll
 			_beforY = locationY;
 			_totalSize = 0;
 			var beginHigh:Number = 0;
-			var showHigh:Number = this.limitHeight;
-			if (locationY < NONE) showHigh = this.limitHeight + locationY;
+			var showHigh:Number = this.sizeHeight;
+			if (locationY < NONE) showHigh = this.sizeHeight + locationY;
 			//trace("当前限定高度：", showHigh);
 			var item:IElement;
 			_length = _lengApply();
@@ -203,7 +203,7 @@ package org.web.sdk.display.core.com.scroll
 			//重绘显示区域
 			refresh();
 			//判断是否最底端
-			_isEnd = (i == _length) && (_totalSize - limitHeight <= Math.abs(getPositionY()));
+			_isEnd = (i == _length) && (_totalSize - sizeHeight <= Math.abs(getPositionY()));
 		}
 		
 		private function refresh():void

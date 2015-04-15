@@ -56,7 +56,7 @@ package
 			//
 			AppWork.utilization(new Director(this), 3000, 2000);
 			AppWork.lookEms(true);
-			this.setLimit(stage.stageWidth, stage.stageHeight);		
+			this.setSize(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
 			swfLoader.completeHandler = function(event:LoadEvent):void
@@ -109,7 +109,6 @@ package
 					action = RayAnimation.formatSenior("beaten");
 					action.frameRate = 150
 					action.play(1, "stand_4%t.png");
-					action.setAlign("center");
 					camera.getView().addDisplay(action);
 					action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
 				}

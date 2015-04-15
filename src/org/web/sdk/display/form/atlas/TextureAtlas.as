@@ -21,7 +21,7 @@ package org.web.sdk.display.form.atlas
         }
         
 		//因为以后的每一帧都是相对于第一帧的偏移
-		//y = first.frameY-current.frameY | x = first.frameX-current.frameX 
+		//应该把元件放到x>0,y>0的位置，然后取绝对值或者负数就得到了帧位置
         protected function parseAtlasXml(atlasXml:XML):void
         {
             const scale:Number = 1;

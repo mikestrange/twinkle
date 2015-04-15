@@ -87,7 +87,7 @@ package org.web.sdk.display.game.map
 		public function LimitX(x:int):void
 		{
 			const min:int = 0;
-			const max:int = _root.limitWidth - AppWork.winWidth;
+			const max:int = _root.sizeWidth - AppWork.winWidth;
 			_lookx = x - (AppWork.winWidth >> 1);
 			if (_lookx <= min) _lookx = min;
 			if (_lookx >= max) _lookx = max;
@@ -97,7 +97,7 @@ package org.web.sdk.display.game.map
 		{
 			_looky = y - (AppWork.winHeight >> 1);
 			const min:int = 0;
-			const max:int = _root.limitHeight - AppWork.winHeight;
+			const max:int = _root.sizeHeight - AppWork.winHeight;
 			//
 			if (_looky <= min) _looky = min;
 			if (_looky >= max) _looky = max;

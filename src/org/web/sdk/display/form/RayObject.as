@@ -24,12 +24,9 @@ package org.web.sdk.display.form
 	{
 		public static const AUTO:String = "auto";
 		//属性
-		private var _limitWidth:Number;
-		private var _limitHeight:Number;
-		private var _limitStamp:int;
-		private var _offsetx:Number = 0;
-		private var _offsety:Number = 0;
-		private var _align:String = null;
+		private var _width:int;
+		private var _height:int;
+		private var _tag:uint;
 		private var _isresize:Boolean;
 		protected var _isrun:Boolean;
 		//渲染器
@@ -141,8 +138,8 @@ package org.web.sdk.display.form
 		
 		public function moveTo(mx:Number = 0, my:Number = 0):void
 		{
-			if (mx != x) this.x = mx;
-			if (my != y) this.y = my;
+			if (this.x != mx) this.x = mx;
+			if (this.y != my) this.y = my;
 		}
 		
 		public function setDisplayIndex(floor:int = -1):void 
@@ -158,13 +155,22 @@ package org.web.sdk.display.form
 			}
 		}
 		
-		public function reportFromFather(father:IBaseSprite):void 
+		public function setSize(wide:int, high:int):void
 		{
-			if (_align == null) return;
-			const swap:Swapper = AlignType.obtainReposition(limitWidth, limitHeight, 
-			father.limitWidth, father.limitHeight, _align);
-			this.x = swap.trimPositionX(_offsetx);
-			this.y = swap.trimPositionY(_offsety);
+			_width = wide;
+			_height = high;
+		}
+		
+		public function get sizeWidth():int
+		{
+			if (_width == 0) return width;
+			return _width;
+		}
+		
+		public function get sizeHeight():int
+		{
+			if (_height == 0) return height;
+			return _height;
 		}
 		
 		public function clearFilters():void 
@@ -205,55 +211,14 @@ package org.web.sdk.display.form
 			if (value) this.finality();
 		}
 		
-		public function setLimit(wide:Number = 0, heig:Number = 0):void 
+		public function setTag(value:uint):void 
 		{
-			_limitWidth = wide;
-			_limitHeight = heig;
+			_tag = value;
 		}
 		
-		public function get limitWidth():Number 
+		public function getTag():uint 
 		{
-			if (isNaN(_limitWidth)) return this.width; 
-			return _limitWidth;
-		}
-		
-		public function get limitHeight():Number 
-		{
-			if (isNaN(_limitHeight)) return this.height; 
-			return _limitHeight;
-		}
-		
-		public function setAlign(align:String, offx:Number = 0, offy:Number = 0):void
-		{
-			_align = align;
-			_offsetx = offx;
-			_offsety = offy;
-			if(isAdded()) reportFromFather(getFather());
-		}
-		
-		public function get alignType():String 
-		{
-			return _align;
-		}
-		
-		public function get offsetx():Number 
-		{
-			return _offsetx;
-		}
-		
-		public function get offsety():Number 
-		{
-			return _offsety;
-		}
-		
-		public function setOper(value:int):void 
-		{
-			_limitStamp = value;
-		}
-		
-		public function getOper():int 
-		{
-			return _limitStamp;
+			return _tag;
 		}
 		
 		public function setResize(value:Boolean = true):void
@@ -278,16 +243,6 @@ package org.web.sdk.display.form
 			}
 		}
 		
-		protected function runEnter(e:Event = null):void
-		{
-			
-		}
-		
-		protected function onResize(e:Event = null):void
-		{
-			
-		}
-		
 		public function convertDisplay():DisplayObject
 		{
 			return this as DisplayObject;
@@ -303,6 +258,18 @@ package org.web.sdk.display.form
 		{
 			if (value) dispose();
 		}
+		
+		//protected
+		protected function runEnter(e:Event = null):void
+		{
+			
+		}
+		
+		protected function onResize(e:Event = null):void
+		{
+			
+		}
+		
 		
 		//static 
 		public static function quick(className:String):RayObject

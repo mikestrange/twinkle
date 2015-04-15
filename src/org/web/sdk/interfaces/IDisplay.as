@@ -78,12 +78,8 @@ package org.web.sdk.interfaces
 		//清理滤镜
 		function clearFilters():void;
 		//定义操作值
-		function getOper():int;
-		function setOper(value:int):void;
-		//限制尺寸
-		function setLimit(wide:Number = 0, heig:Number = 0):void;
-		function get limitWidth():Number;
-		function get limitHeight():Number;
+		function getTag():uint;
+		function setTag(value:uint):void;
 		//父类操作
 		function getFather():IBaseSprite;
 		function removeFromFather(value:Boolean = false):void;
@@ -92,21 +88,24 @@ package org.web.sdk.interfaces
 		function moveTo(mx:Number = 0, my:Number = 0):void;
 		//添加
 		function addUnder(father:IBaseSprite, floor:int = -1):Boolean;
-		function reportFromFather(father:IBaseSprite):void;
 		//校正位置
-		function setAlign(alignType:String, offx:Number = 0, offy:Number = 0):void
-		function get offsetx():Number;
-		function get offsety():Number;
-		//帧渲染
+		//function setAlign(alignType:String, offx:Number = 0, offy:Number = 0):void
+		//function get offsetx():Number;
+		//function get offsety():Number;
+		//设置尺寸
+		function setSize(wide:int, high:int):void;
+		function get sizeWidth():int;
+		function get sizeHeight():int;
+		//外部调用时候 [帧渲染]
 		function frameRender(float:int = 0):void;
 		//和原始大小相比,增加或者减少
-		function setScale(sx:Number = 1, sy:Number = 1):void;	
-		//舞台大小改变的时候调整
-		function setResize(value:Boolean = true):void;
+		function setScale(sx:Number = 1, sy:Number = 1):void;
 		//把自己转换
 		function convertDisplay():DisplayObject;
 		//帧事件
 		function setRunning(value:Boolean = false):void;
+		//舞台大小改变的时候调整
+		function setResize(value:Boolean = true):void;
 		//ends
 	}
 	

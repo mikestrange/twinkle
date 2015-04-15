@@ -7,20 +7,12 @@ package org.web.sdk.display.utils
 		private var _tx:Number = 1;
 		private var _ty:Number = 1;
 		
-		public function Swapper(x:Number = 0, y:Number = 0) 
+		public function Swapper(x:Number = 0, y:Number = 0, tx:int = 1, ty:int = 1) 
 		{
 			_x = x;
 			_y = y;
-		}
-		
-		public function set x(value:Number):void
-		{
-			_x = value;
-		}
-		
-		public function set y(value:Number):void
-		{
-			_y = value;
+			_tx = tx;
+			_ty = ty;
 		}
 		
 		public function get x():Number
@@ -33,22 +25,16 @@ package org.web.sdk.display.utils
 			return _y;
 		}
 		
-		public function setTrend(x:Number = 1, y:Number = 1):void
-		{
-			_tx = x;
-			_ty = y;
-		}
-		
 		//最终转换 x
-		public function trimPositionX(x:Number):Number
+		public function trimx(offx:Number):Number
 		{
-			return _x + x * _tx;
+			return _x + offx * _tx;
 		}
 		
 		//最终转换 y
-		public function trimPositionY(y:Number):Number
+		public function trimy(offy:Number):Number
 		{
-			return _y + y * _ty;
+			return _y + offy * _ty;
 		}
 		//end
 	}

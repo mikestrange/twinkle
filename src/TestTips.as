@@ -7,7 +7,6 @@ package
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.effect.DisplayEffects;
 	import org.web.sdk.display.form.RayObject;
-	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.frame.core.ClientServer;
 	import org.web.sdk.global.tool.Ticker;
 	import org.web.sdk.interfaces.rest.IAlert;

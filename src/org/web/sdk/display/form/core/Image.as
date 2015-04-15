@@ -33,11 +33,11 @@ package org.web.sdk.display.form.core
 		}
 		
 		//最后的尺寸
-		override public function setLimit(wide:Number = 0, heig:Number = 0):void 
+		override public function setSize(wide:int, high:int):void 
 		{
-			super.setLimit(wide, heig);
+			super.setSize(wide, high);
 			this._wide = wide;
-			this._heig = heig;
+			this._heig = high;
 		}
 		
 		//没有释放不能重新设置

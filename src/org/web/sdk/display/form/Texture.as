@@ -14,45 +14,52 @@ package org.web.sdk.display.form
 		//
 		private var _bit:BitmapData;
 		//x和y在帧动画中起作用
-		private var _framex:int;
-		private var _framey:int;
-		private var _frameWidth:int;
-		private var _frameHeight:int;
+		private var _framex:Number;
+		private var _framey:Number;
+		private var _frameWidth:Number;
+		private var _frameHeight:Number;
 		//
-		private var _scalex:Number = 1;
-		private var _scaley:Number = 1;
+		private var _width:Number;
+		private var _height:Number;
+		//
+		private var _scalex:Number;
+		private var _scaley:Number;
 		
-		public function Texture(bit:BitmapData, x:int = 0, y:int = 0, w:int = 0, h:int = 0)
+		public function Texture(bit:BitmapData, sizew:Object = null, sizeh:Object = null)
 		{
 			this._bit = bit;
-			this.setPosition(x, y);
-			this.setSize(w, h);
+			this.setSize(parseFloat(String(sizew)), parseFloat(String(sizeh)));
 		}
 		
 		public function dispose():void
 		{
-			if (_bit && _bit.width > 0 && _bit.height > 0) 
+			if (_bit && _bit.width > NONE && _bit.height > NONE) 
 			{
 				_bit.dispose();
 				_bit = null;
 			}
 		}
 		
-		public function setSize(width:int = 0, height:int = 0):void
+		//尺寸
+		public function setSize(width:Number, height:Number):void
 		{
-			_frameWidth = _bit.width;
-			_frameHeight = _bit.height;
-			if (width != NONE) _frameWidth = width;
-			if (height != NONE) _frameHeight = height;
-			//scale
-			_scalex = _frameWidth / _bit.width;
-			_scaley = _frameHeight / _bit.height;
+			if (!isNaN(width)) {
+				_width = width;
+				_scalex = _width / _bit.width;
+			}
+			if (!isNaN(height)) {
+				_height = height;
+				_scaley = _height / _bit.height;
+			}
 		}
 		
-		public function setPosition(x:int = 0, y:int = 0):void
+		//帧的信息
+		public function setFrameInfo(x:Number, y:Number, w:Number, h:Number):void
 		{
-			_framex = x;
-			_framey = y;
+			if (!isNaN(x)) _framex = x;
+			if (!isNaN(y)) _framey = y;
+			if (!isNaN(w)) _frameWidth = w;
+			if (!isNaN(h)) _frameHeight = h;
 		}
 		
 		public function getImage():BitmapData
@@ -60,30 +67,20 @@ package org.web.sdk.display.form
 			return _bit;
 		}
 		
-		public function get x():int
+		public function get scaleX():int
 		{
-			return _framex;
+			return _scalex;
 		}
 		
-		public function get y():int
+		public function get scaleY():int
 		{
-			return _framey;
+			return _scaley;
 		}
 		
-		public function get width():int
-		{
-			return _frameWidth;
-		}
-		
-		public function get height():int
-		{
-			return _frameHeight;
-		}
-		
-		//调整注册点，这里需要固定在内部
+		//初始的时候可以调整位置
 		public function checkTrim(dis:DisplayObject):void
 		{
-			//dis.transform.matrix = new Matrix(_scalex, 0, 0, _scaley, _frame.x, _frame.y);
+			
 		}
 		//ends
 	}

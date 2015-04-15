@@ -14,12 +14,10 @@ package org.web.sdk.display.core
 	 * */
 	public class BaseSprite extends Sprite implements IBaseSprite
 	{
-		private var _limitWidth:Number;
-		private var _limitHeight:Number;
-		private var _limitStamp:int;
-		private var _offsetx:Number = 0;
-		private var _offsety:Number = 0;
-		private var _align:String = null;
+		private var _tag:int;
+		private var _width:int;
+		private var _height:int;
+		//状态
 		protected var _isresize:Boolean;
 		protected var _isrun:Boolean;
 		//防止事件问题 , adobe写的东西确实有问题
@@ -79,14 +77,22 @@ package org.web.sdk.display.core
 			return this.name;
 		}
 		
-		public function getChildrenByOper(value:int = 0):Vector.<IDisplay>
+		//取所有孩子
+		public function getChildren(tag:int = -1):Array
 		{
 			if (isEmpty()) return null;
-			const list:Vector.<IDisplay> = new Vector.<IDisplay>;
-			var sun:IDisplay;
+			const list:Array = new Array;
+			var dis:DisplayObject;
 			for (var i:int = 0; i < numChildren; i++) {
-				sun = this.getChildAt(i) as IDisplay;
-				if (sun.getOper() == value) list.push(sun);
+				dis = this.getChildAt(i);
+				if (tag >= 0 && dis is IDisplay)
+				{
+					if (IDisplay(dis).getTag() == tag) {
+						list.push(dis);
+					}
+				}else {
+					list.push(dis);
+				}
 			}
 			return list;
 		}
@@ -124,7 +130,6 @@ package org.web.sdk.display.core
 					if (floor > numChildren - 1) floor = numChildren - 1;
 					super.addChildAt(child as DisplayObject, floor);
 				}
-				child.reportFromFather(this);
 				return true;
 			}
 			return false;
@@ -142,12 +147,6 @@ package org.web.sdk.display.core
 			return this.globalToLocal(new Point(mx, my));
 		}
 		
-		public function moveTo(mx:Number = 0, my:Number = 0):void
-		{
-			if (mx != x) this.x = mx;
-			if (my != y) this.y = my;
-		}
-		
 		public function setDisplayIndex(floor:int = -1):void 
 		{
 			if (parent) {
@@ -159,15 +158,6 @@ package org.web.sdk.display.core
 					parent.setChildIndex(this, floor);
 				}
 			}
-		}
-		
-		public function reportFromFather(father:IBaseSprite):void 
-		{
-			if (_align == null) return;
-			const swap:Swapper = AlignType.obtainReposition(limitWidth, limitHeight, 
-			father.limitWidth, father.limitHeight, _align);
-			this.x = swap.trimPositionX(_offsetx);
-			this.y = swap.trimPositionY(_offsety);
 		}
 		
 		public function clearFilters():void 
@@ -192,6 +182,24 @@ package org.web.sdk.display.core
 			
 		}
 		
+		public function setSize(wide:int, high:int):void
+		{
+			_width = wide;
+			_height = high;
+		}
+		
+		public function get sizeWidth():int
+		{
+			if (_width == 0) return width;
+			return _width;
+		}
+		
+		public function get sizeHeight():int
+		{
+			if (_height == 0) return height;
+			return _height;
+		}
+		
 		public function getFather():IBaseSprite
 		{
 			return this.parent as IBaseSprite;
@@ -208,30 +216,10 @@ package org.web.sdk.display.core
 			if (value) finality();
 		}
 		
-		public function setLimit(wide:Number = 0, heig:Number = 0):void 
+		public function moveTo(mx:Number = 0, my:Number = 0):void
 		{
-			_limitWidth = wide;
-			_limitHeight = heig;
-		}
-		
-		public function get limitWidth():Number 
-		{
-			if (isNaN(_limitWidth)) return this.width; 
-			return _limitWidth;
-		}
-		
-		public function get limitHeight():Number 
-		{
-			if (isNaN(_limitHeight)) return this.height; 
-			return _limitHeight;
-		}
-		
-		public function setAlign(align:String, offx:Number = 0, offy:Number = 0):void
-		{
-			_align = align;
-			_offsetx = offx;
-			_offsety = offy;
-			if(isAdded()) reportFromFather(getFather());
+			if (this.x != mx) this.x = mx;
+			if (this.y != my) this.y = my;
 		}
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
@@ -240,29 +228,14 @@ package org.web.sdk.display.core
 			if (sy != scaleY) scaleY = sy;
 		}
 		
-		public function get alignType():String 
+		public function setTag(value:uint):void 
 		{
-			return _align;
+			_tag = value;
 		}
 		
-		public function get offsetx():Number 
+		public function getTag():uint 
 		{
-			return _offsetx;
-		}
-		
-		public function get offsety():Number 
-		{
-			return _offsety;
-		}
-		
-		public function setOper(value:int):void 
-		{
-			_limitStamp = value;
-		}
-		
-		public function getOper():int 
-		{
-			return _limitStamp;
+			return _tag;
 		}
 		
 		public function setResize(value:Boolean = true):void
@@ -310,16 +283,19 @@ package org.web.sdk.display.core
 			SpriteTool.wipeout(this, value);
 		}
 		
-		//设置子类的对齐格式   static
-		public static function setDisplayAlign(dis:DisplayObject, align:String, offx:Number = 0, offy:Number = 0):void
+		//protected 什么时候刷新自己看着办
+		/*
+		protected function _updateDisplay():void
 		{
-			if (null == dis) return;
-			if (!dis.parent) return;
-			var father:IBaseSprite = dis.parent as IBaseSprite;
-			const swap:Swapper = AlignType.obtainReposition(dis.width, dis.height, father.limitWidth, father.limitHeight, align);
-			dis.x = swap.trimPositionX(offx);
-			dis.y = swap.trimPositionY(offy);
-		}
+			const prevx:int = this.x - _offsetx;
+			const prevy:int = this.y - _offsety;
+			const offset:Point = AlignType.selfObtainReposition(this, _align, _offsetx * scaleX, _offsety * scaleY);
+			const endx:int = this.x + offset.x;
+			const endy:int = this.y + offset.y;
+			if (endx != prevx) this.x = endx;
+			if (endy != prevy) this.y = endy;
+		}*/
+		
 		//end
 	}
 

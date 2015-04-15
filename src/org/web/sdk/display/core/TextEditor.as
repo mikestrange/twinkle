@@ -22,12 +22,10 @@ package org.web.sdk.display.core
 		public static const NONE : String = "none";
 		
 		// 基础
-		private var _limitWidth:Number;
-		private var _limitHeight:Number;
-		private var _limitStamp:int;
-		private var _offsetx:Number = 0;
-		private var _offsety:Number = 0;
-		private var _align:String = null;
+		private var _width:int;
+		private var _height:int;
+		private var _tag:uint;
+		//操作
 		private var _isresize:Boolean;
 		private var _isrun:Boolean;
 		//文本特有
@@ -129,12 +127,6 @@ package org.web.sdk.display.core
 			return this.globalToLocal(new Point(mx, my));
 		}
 		
-		public function moveTo(mx:Number = 0, my:Number = 0):void
-		{
-			if (mx != x) this.x = mx;
-			if (my != y) this.y = my;
-		}
-		
 		public function setDisplayIndex(floor:int = -1):void 
 		{
 			if (parent) {
@@ -146,15 +138,6 @@ package org.web.sdk.display.core
 					parent.setChildIndex(this, floor);
 				}
 			}
-		}
-		
-		public function reportFromFather(father:IBaseSprite):void 
-		{
-			if (_align == null) return;
-			const swap:Swapper = AlignType.obtainReposition(limitWidth, limitHeight, 
-			father.limitWidth, father.limitHeight, _align);
-			this.x = swap.trimPositionX(_offsetx);
-			this.y = swap.trimPositionY(_offsety);
 		}
 		
 		public function clearFilters():void 
@@ -195,61 +178,44 @@ package org.web.sdk.display.core
 			if (value) this.finality();
 		}
 		
-		public function setLimit(wide:Number = 0, heig:Number = 0):void 
+		public function setTag(value:uint):void 
 		{
-			_limitWidth = wide;
-			_limitHeight = heig;
+			_tag = value;
 		}
 		
-		public function get limitWidth():Number 
+		public function getTag():uint 
 		{
-			if (isNaN(_limitWidth) || _limitWidth == 0) return this.width; 
-			return _limitWidth;
+			return _tag;
 		}
 		
-		public function get limitHeight():Number 
+		public function setSize(wide:int, high:int):void
 		{
-			if (isNaN(_limitHeight) || _limitHeight == 0) return this.height; 
-			return _limitHeight;
+			_width = wide;
+			_height = high;
 		}
 		
-		public function setAlign(align:String, offx:Number = 0, offy:Number = 0):void
+		public function get sizeWidth():int
 		{
-			_align = align;
-			_offsetx = offx;
-			_offsety = offy;
-			if(isAdded()) reportFromFather(getFather());
+			if (_width == 0) return width;
+			return _width;
 		}
 		
-		public function get alignType():String 
+		public function get sizeHeight():int
 		{
-			return _align;
+			if (_height == 0) return height;
+			return _height;
 		}
 		
-		public function get offsetx():Number 
+		public function moveTo(mx:Number = 0, my:Number = 0):void
 		{
-			return _offsetx;
-		}
-		
-		public function get offsety():Number 
-		{
-			return _offsety;
-		}
-		
-		public function setOper(value:int):void 
-		{
-			_limitStamp = value;
-		}
-		
-		public function getOper():int 
-		{
-			return _limitStamp;
+			if (mx != x) this.x = mx;
+			if (my != y) this.y = my;
 		}
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
 		{
-			if (sx != scaleX) scaleX = sx;
-			if (sy != scaleY) scaleY = sy;
+			if (sx != scaleX) this.scaleX = sx;
+			if (sy != scaleY) this.scaleY = sy;
 		}
 		
 		public function setResize(value:Boolean = true):void
@@ -274,16 +240,6 @@ package org.web.sdk.display.core
 			}
 		}
 		
-		protected function runEnter(e:Event = null):void
-		{
-			
-		}
-		
-		protected function onResize(e:Event = null):void
-		{
-			
-		}
-		
 		public function convertDisplay():DisplayObject
 		{
 			return this as DisplayObject;
@@ -293,6 +249,16 @@ package org.web.sdk.display.core
 		{
 			clearFilters();
 			setEmpty();
+		}
+		
+		protected function runEnter(e:Event = null):void
+		{
+			
+		}
+		
+		protected function onResize(e:Event = null):void
+		{
+			
 		}
 		
 		//快速建立
