@@ -3,15 +3,17 @@ package
 	import com.greensock.*;
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.admin.WinManager;
+	import org.web.sdk.display.base.AppDirector;
+	import org.web.sdk.display.base.BaseScene;
 	import org.web.sdk.display.core.*;
 	import org.web.sdk.display.core.com.Chooser;
 	import org.web.sdk.display.core.com.interfaces.IElement;
 	import org.web.sdk.display.core.com.interfaces.ITouch;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
 	import org.web.sdk.display.core.com.test.TouchTest;
-	import org.web.sdk.display.form.core.RayButton;
-	import org.web.sdk.display.form.RayAnimation;
-	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.paddy.base.RayButton;
+	import org.web.sdk.display.paddy.RayAnimation;
+	import org.web.sdk.display.paddy.RayObject;
 	import org.web.sdk.display.game.geom.FormatUtils;
 	import org.web.sdk.display.game.map.MapCamera;
 	import org.web.sdk.display.game.map.MapDatum;
@@ -57,8 +59,9 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			//
-			AppWork.utilization(new Director(this), 3000, 2000);
+			AppWork.utilization(this.stage, 3000, 2000);
 			AppWork.lookEms(true);
+			AppDirector.gets().setContainer(this);
 			this.setSize(stage.stageWidth, stage.stageHeight);		
 			//加载配置
 			var swfLoader:DownLoader = new DownLoader;
@@ -87,8 +90,13 @@ package
 					}
 				}
 			}
-			loader.start();
-			SoundManager.playUrl("asset/bg.mp3");
+			//loader.start();
+			//SoundManager.playUrl("asset/bg.mp3");
+			//测试场景
+			AppDirector.gets().sceneHandler = function(sceneName:String):IBaseScene
+			{
+				return new BaseScene;	
+			}
 		}
 		
 		private var camera:MapCamera;
@@ -122,7 +130,7 @@ package
 		{
 			camera.setMap(new LandSprite(MapDatum.create(event.xml)));
 			//
-			for (var i:int = 0; i < 2000; i++ ) {
+			for (var i:int = 0; i < 200; i++ ) {
 				action = new RoleComponent("beaten");
 				action.frameRate = 200
 				action.setState("stand", 3);

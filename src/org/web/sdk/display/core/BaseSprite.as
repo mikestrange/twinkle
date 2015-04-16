@@ -218,14 +218,14 @@ package org.web.sdk.display.core
 		
 		public function moveTo(mx:Number = 0, my:Number = 0):void
 		{
-			if (this.x != mx) this.x = mx;
-			if (this.y != my) this.y = my;
+			if (!isNaN(mx) && this.x != mx) this.x = mx;
+			if (!isNaN(my) && this.y != my) this.y = my;
 		}
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
 		{
-			if (sx != scaleX) scaleX = sx;
-			if (sy != scaleY) scaleY = sy;
+			if (!isNaN(sx) && sx != scaleX) scaleX = sx;
+			if (!isNaN(sy) && sy != scaleY) scaleY = sy;
 		}
 		
 		public function setTag(value:uint):void 

@@ -5,10 +5,10 @@ package org.web.sdk.display.core.utils
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.form.lib.BaseRender;
-	import org.web.sdk.display.form.lib.ResRender;
-	import org.web.sdk.display.form.RayObject;
-	import org.web.sdk.display.form.Texture;
+	import org.web.sdk.display.paddy.covert.TexturePacker;
+	import org.web.sdk.display.paddy.covert.SmartRender;
+	import org.web.sdk.display.paddy.RayObject;
+	import org.web.sdk.display.paddy.Texture;
 	/*
 	 * 一个非常快速的九宫格的
 	 * */
@@ -155,7 +155,7 @@ package org.web.sdk.display.core.utils
 				}
 				rectVector = null;
 			}
-			return new RayObject(new BaseRender(name, new Texture(bitdata)));
+			return new RayObject(new TexturePacker(name, new Texture(bitdata)));
 		}
 		
 		private function dispose():void
@@ -172,7 +172,7 @@ package org.web.sdk.display.core.utils
 		public static function byPointX(name:String, pox:int, pow:int):RayObject
 		{
 			const libName:String = name + ":" + "pox_" + pox + "_pow_" + pow;
-			if (ResRender.asset.hasRes(libName)) return new RayObject(ResRender.asset.getResource(libName));
+			if (SmartRender.asset.hasRes(libName)) return new RayObject(SmartRender.asset.getResource(libName));
 			scale.setRes(AppWork.getAsset(name) as BitmapData);
 			scale.setPointX(pox, pow);
 			return scale.getResult(libName);	
@@ -181,7 +181,7 @@ package org.web.sdk.display.core.utils
 		public static function byPointY(name:String, poy:int, poh:int):RayObject
 		{
 			const libName:String = name + ":" + "poy_" + poy + "_poh_" + poh;
-			if (ResRender.asset.hasRes(libName)) return new RayObject(ResRender.asset.getResource(libName));
+			if (SmartRender.asset.hasRes(libName)) return new RayObject(SmartRender.asset.getResource(libName));
 			scale.setRes(AppWork.getAsset(name) as BitmapData);
 			scale.setPointY(poy, poh);
 			return scale.getResult(libName);
@@ -190,7 +190,7 @@ package org.web.sdk.display.core.utils
 		public static function byPoint(name:String, pox:int, poy:int, pow:int, poh:int):RayObject
 		{
 			const libName:String = name + ":pox_" + pox + "_poy_" + poy + "_pow_" + pow + "_poh_" + poh;
-			if (ResRender.asset.hasRes(libName)) return new RayObject(ResRender.asset.getResource(libName));
+			if (SmartRender.asset.hasRes(libName)) return new RayObject(SmartRender.asset.getResource(libName));
 			scale.setRes(AppWork.getAsset(name) as BitmapData);
 			scale.setPoint(pox, poy, pow, poh);
 			return scale.getResult(libName);

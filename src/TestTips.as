@@ -2,15 +2,16 @@ package
 {
 	import org.web.sdk.admin.AlertManager;
 	import org.web.sdk.AppWork;
+	import org.web.sdk.display.base.AppDirector;
 	import org.web.sdk.display.core.com.interfaces.IElement;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
-	import org.web.sdk.display.core.stock.Alert;
+	import org.web.sdk.display.base.Alert;
 	import org.web.sdk.display.core.TextEditor;
 	import org.web.sdk.display.core.utils.ScaleSprite;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.effect.DisplayEffects;
-	import org.web.sdk.display.form.core.RayButton;
-	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.paddy.base.RayButton;
+	import org.web.sdk.display.paddy.RayObject;
 	import org.web.sdk.frame.core.ClientServer;
 	import org.web.sdk.global.tool.Ticker;
 	import org.web.sdk.interfaces.rest.IAlert;
@@ -26,7 +27,7 @@ package
 		override public function show(type:int, data:Object):void 
 		{
 			super.show(type, data);
-			AppWork.director.getRoot().addDisplay(this);
+			AppDirector.gets().root.addDisplay(this);
 			create_bg();
 			create_close();
 			create_scroll();

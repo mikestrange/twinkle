@@ -9,7 +9,7 @@ package org.web.sdk.display.core.com.scroll
 	import org.web.sdk.AppWork;
 	import org.web.sdk.display.core.com.interfaces.IElement;
 	import org.web.sdk.display.core.com.item.Cell;
-	import org.web.sdk.global.UintHash;
+	import org.web.sdk.global.MapInteger;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.interfaces.IBaseSprite;
 	
@@ -50,7 +50,7 @@ package org.web.sdk.display.core.com.scroll
 		private var _spaceApply:Function;
 		private var _lengApply:Function;
 		//
-		private var _itemMap:UintHash;
+		private var _itemMap:MapInteger;
 		private var _loader:IBaseSprite;
 		private var _mask:Shape;
 		
@@ -234,7 +234,7 @@ package org.web.sdk.display.core.com.scroll
 		
 		private function putItem(floor:int, item:IElement):IElement
 		{
-			if (null == _itemMap) _itemMap = new UintHash;
+			if (null == _itemMap) _itemMap = new MapInteger;
 			item.setFloor(floor);
 			_itemMap.put(floor, item);
 			return item;

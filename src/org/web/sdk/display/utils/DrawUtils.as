@@ -4,9 +4,9 @@ package org.web.sdk.display.utils
 	import flash.display.*;
 	import flash.filters.GlowFilter;
 	import org.web.sdk.display.core.TextEditor;
-	import org.web.sdk.display.form.lib.BaseRender;
-	import org.web.sdk.display.form.lib.ResRender;
-	import org.web.sdk.display.form.Texture;
+	import org.web.sdk.display.paddy.covert.TexturePacker;
+	import org.web.sdk.display.paddy.covert.SmartRender;
+	import org.web.sdk.display.paddy.Texture;
 	/*
 	 * 回执
 	 * */
@@ -23,12 +23,12 @@ package org.web.sdk.display.utils
 		
 		//文本转换
 		private static const text:TextEditor = new TextEditor;
-		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):ResRender
+		public static function drawEditor(name:String, color:uint = 0xff0000, font:String = "大宋"):SmartRender
 		{
 			text.finality();
 			text.filters = [new GlowFilter(0, 1, 2, 2, 5, 2)];
 			text.addText(name, false, color, -1, font);
-			return new BaseRender(name, new Texture(draw(text)));
+			return new TexturePacker(name, new Texture(draw(text)));
 		}
 		
 		//ends

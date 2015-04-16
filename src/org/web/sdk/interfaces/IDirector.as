@@ -4,14 +4,19 @@ package org.web.sdk.interfaces
 		
 	public interface IDirector 
 	{
-		function goto(scene:IBaseScene):void;
-		function quit(scene:IBaseScene):void;
-		function black():Boolean;
-		function get current():IBaseScene;
+		//进入场景
+		function enterScene(name:String):void;	
+		//关闭
+		function closeScene(scene:IBaseScene):void;	
+		//回退到上个场景
+		function skipPrev():Boolean;	
+		function skipNext():Boolean;
 		//是否
 		function isNote(scene:IBaseScene):Boolean;
-		//---
-		function getRoot():IBaseSprite;
+		function set sceneHandler(value:Function):void;
+		function get current():IBaseScene;
+		function get root():IBaseSprite;
+		function setContainer(root:IBaseSprite):void;
 		//end
 	}
 	

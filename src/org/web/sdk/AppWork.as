@@ -7,7 +7,6 @@ package org.web.sdk
 	import org.web.sdk.context.*;
 	import org.web.sdk.display.engine.*;
 	import org.web.sdk.global.tool.Sleep;
-	import org.web.sdk.interfaces.IDirector;
 	import org.web.sdk.keyset.*;
 	import org.web.sdk.load.loads.*;
 	import org.web.sdk.log.*;
@@ -23,19 +22,11 @@ package org.web.sdk
 		public static const RIGHT_MOUSE_DOWN:String = "rightMouseDown";
 		//
 		private static var $system:SystemScope;
-		
 		private static var _stage:Stage;
-		private static var _director:IDirector;
 		//舞台
 		public static function get stage():Stage
 		{
 			return _stage;
-		}
-		
-		//导演
-		public static function get director():IDirector
-		{
-			return _director;
 		}
 		
 		public static function addStageListener(type:String, called:Function):void
@@ -49,13 +40,10 @@ package org.web.sdk
 		}
 		
 		//启动  是否启动成功  初始化窗口
-		public static function utilization(director:IDirector, width:Number = 0, height:Number = 0, sleep:Boolean = false, 
+		public static function utilization(stage:Stage, width:Number = 0, height:Number = 0, sleep:Boolean = false, 
 		engine:Boolean = true, keyset:Boolean = true):void
 		{
-			if (null == _director) {
-				_stage = director.getRoot().stage;
-				_director = director;
-			}
+			if(null==_stage) _stage = stage;
 			if (null == $system) $system = new SystemScope(width, height);
 			setKeyboard(keyset);
 			setEngine(engine);

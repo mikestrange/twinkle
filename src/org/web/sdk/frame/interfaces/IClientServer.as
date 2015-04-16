@@ -1,6 +1,6 @@
 package org.web.sdk.frame.interfaces 
 {
-	import org.web.sdk.fot.interfaces.IApplicationListener;
+	import org.web.sdk.frame.made.interfaces.IApplicationListener;
 	/**
 	 * 客服中心，他只对数据表和逻辑中心感兴趣
 	 */

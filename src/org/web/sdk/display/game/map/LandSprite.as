@@ -1,16 +1,11 @@
 package org.web.sdk.display.game.map 
 {
-	
-	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.geom.Matrix;
 	import flash.utils.Dictionary;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.form.core.Image;
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.display.core.BaseSprite;
+	import org.web.sdk.display.paddy.base.Image;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com

@@ -1,9 +1,8 @@
 package org.web.sdk.display.game.role 
 {
-	import org.web.sdk.display.form.lib.AttainMethod;
-	import org.web.sdk.display.form.lib.ResRender;
-	import org.web.sdk.display.form.RayAnimation;
-	import org.web.sdk.display.form.rule.RuleFactory;
+	import org.web.sdk.display.paddy.covert.FormatMethod;
+	import org.web.sdk.display.paddy.covert.SmartRender;
+	import org.web.sdk.display.paddy.RayAnimation;
 	import org.web.sdk.global.string;
 	
 	/**

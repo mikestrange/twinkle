@@ -3,12 +3,13 @@ package
 	import com.greensock.TweenLite;
 	import org.web.sdk.admin.WinManager;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.display.core.stock.GamePanel;
+	import org.web.sdk.display.base.AppDirector;
+	import org.web.sdk.display.base.GamePanel;
 	import org.web.sdk.display.core.TextEditor;
 	import org.web.sdk.display.core.utils.ScaleSprite;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.display.effect.DisplayEffects;
-	import org.web.sdk.display.form.RayObject;
+	import org.web.sdk.display.paddy.RayObject;
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.interfaces.rest.IPanel;
 	
@@ -23,7 +24,7 @@ package
 		override public function onEnter(name:String, data:Object):void 
 		{
 			super.onEnter(name, data);
-			AppWork.director.getRoot().addDisplay(this);
+			AppDirector.gets().root.addDisplay(this);
 			//设置自身的宽高是很有必要的
 			setSize(714, 600);
 			//延迟呈现

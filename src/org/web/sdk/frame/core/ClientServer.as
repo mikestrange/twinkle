@@ -1,8 +1,8 @@
 package org.web.sdk.frame.core 
 {
 	import flash.utils.Dictionary;
-	import org.web.sdk.fot.core.SimpleListener;
-	import org.web.sdk.fot.interfaces.IApplicationListener;
+	import org.web.sdk.frame.made.core.SimpleListener;
+	import org.web.sdk.frame.made.interfaces.IApplicationListener;
 	import org.web.sdk.frame.interfaces.IClientServer;
 	import org.web.sdk.frame.interfaces.IDataTable;
 	import org.web.sdk.frame.interfaces.IController;

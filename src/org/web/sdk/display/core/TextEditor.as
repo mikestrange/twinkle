@@ -208,14 +208,14 @@ package org.web.sdk.display.core
 		
 		public function moveTo(mx:Number = 0, my:Number = 0):void
 		{
-			if (mx != x) this.x = mx;
-			if (my != y) this.y = my;
+			if (!isNaN(mx) && this.x != mx) this.x = mx;
+			if (!isNaN(my) && this.y != my) this.y = my;
 		}
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
 		{
-			if (sx != scaleX) this.scaleX = sx;
-			if (sy != scaleY) this.scaleY = sy;
+			if (!isNaN(sx) && sx != scaleX) scaleX = sx;
+			if (!isNaN(sy) && sy != scaleY) scaleY = sy;
 		}
 		
 		public function setResize(value:Boolean = true):void
