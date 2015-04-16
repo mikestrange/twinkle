@@ -26,8 +26,7 @@ package org.web.sdk.display.core.stock
 		
 		public function hide():void 
 		{
-			this.removeFromFather();
-			this.finality();
+			this.removeFromFather(true);
 		}
 		
 		final public function removeFromAdmin():void 

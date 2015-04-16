@@ -20,7 +20,7 @@ package org.web.sdk.display.game.role
 		//一个需要的swf素材路径
 		public function RoleComponent(namespaces:String)
 		{
-			_namespaces = "http://127.0.0.1/game/asset/ui/001_player.swf"; //namespaces;
+			_namespaces = namespaces;
 		}
 		
 		public function setState(state:String, points:int = 0, value:Boolean = false):void
@@ -29,14 +29,14 @@ package org.web.sdk.display.game.role
 			const action:String = string.format(state + "_%t%t.png", points);
 			if (action == getAction() && !value) return;
 			_state = state;
-			_point = point;
+			_point = points;
 			setAction(action);
 		}
 		
 		//命名空间
 		override protected function getNamespace():String 
 		{
-			return _namespaces;
+			return "http://127.0.0.1/game/asset/ui/001_player.swf";
 		}
 		
 		public function get point():int
@@ -48,8 +48,6 @@ package org.web.sdk.display.game.role
 		{
 			return _state;
 		}
-		
-		//
 		
 		//ends
 	}

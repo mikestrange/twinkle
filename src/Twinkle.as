@@ -52,6 +52,7 @@ package
 	{
 		override protected function showEvent():void
 		{
+			Log.setprint("org.web.sdk.display")
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -82,7 +83,7 @@ package
 					if (names == "common") {
 						if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
 					}else {
-						if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
+						if (url && url != "") swfLoader.load(url, null, "" + DateTimer.getDateTime());
 					}
 				}
 			}
@@ -100,31 +101,34 @@ package
 			camera = new MapCamera;
 			
 			var loader:DownLoader = new DownLoader;
-			loader.completeHandler = function(e:LoadEvent):void
-			{
-				camera.setMap(new LandSprite(MapDatum.create(e.xml)));
-				//camera.getView().addDisplay(action);
-				camera.updateBuffer();
-				camera.getView().addEventListener(MouseEvent.CLICK, onClick);
-				addDisplay(camera.getView(), 0);
-				//
-				for (var i:int = 0; i < 20; i++ ) {
-					action = new RoleComponent("beaten");
-					action.frameRate = 150
-					action.setState("stand", 3);
-					camera.getView().addDisplay(action);
-					action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
-				}
-				setRunning(true);
-			}
+			loader.completeHandler = mapComplete;
 			loader.load(MapPath.getMapConfig(3003));
 			loader.start();
-			WinManager.show("test", new TestPanel);
-			AlertManager.gets().push(new TestTips);
+			//WinManager.show("test", new TestPanel);
+			//AlertManager.gets().push(new TestTips);
 			//---
 			setResize();
-			//this.visible = false;
+		}
+		
+		private function mapComplete(event:LoadEvent):void
+		{
+			camera.setMap(new LandSprite(MapDatum.create(event.xml)));
+			//
+			for (var i:int = 0; i < 20; i++ ) {
+				action = new RoleComponent("beaten");
+				action.frameRate = 150
+				action.setState("stand", 3);
+				camera.getView().addDisplay(action);
+				action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
+			}
 			
+			camera.updateBuffer();
+			camera.getView().addEventListener(MouseEvent.CLICK, onClick);
+			addDisplay(camera.getView(), 0);
+			//
+			setRunning(true);
+			//
+			AlertManager.gets().push(new TestTips);
 		}
 		
 		override protected function onResize(e:Event = null):void 

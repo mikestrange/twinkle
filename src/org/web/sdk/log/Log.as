@@ -28,7 +28,7 @@ package org.web.sdk.log
 		public static const HTML:String = 'html';
 		public static const TEXT:String = 'text';
 		//这里可以用正则
-		private static var print_name:String = null;
+		private static var print_name:* = null;
 		
 		//[log object]
 		private var className:String;
@@ -63,12 +63,14 @@ package org.web.sdk.log
 			if (print_name == null) {
 				bool = true;
 			}else {
-				if (print_name == this.className) bool = true;
+				if (this.className.search(print_name) != -1) bool = true;
 			}
 			if (bool) {
 				trace(chat);
 				//是否保存日子，直接文本保存
-				if (SHARE_LOG) addLog(new LogData(value, chat, DateTimer.getDateTime()));
+				if (SHARE_LOG) {
+					addLog(new LogData(value, chat, DateTimer.getDateTime()));
+				}
 			}
 		}
 		
@@ -128,7 +130,8 @@ package org.web.sdk.log
             return _log;
 		}
 		
-		public static function setprint(value:String = null):void
+		//匹配日志
+		public static function setprint(value:* = null):void
 		{
 			print_name = value;
 		}

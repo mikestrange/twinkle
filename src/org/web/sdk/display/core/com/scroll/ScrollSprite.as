@@ -67,7 +67,7 @@ package org.web.sdk.display.core.com.scroll
 			_mask.graphics.beginFill(0,.3);
 			_mask.graphics.drawRect(0, 0, wide, high);
 			_mask.graphics.endFill();
-			getLoader().mask = _mask;
+			//getLoader().mask = _mask;
 		}
 		
 		private function getLoader():IBaseSprite
@@ -189,8 +189,6 @@ package org.web.sdk.display.core.com.scroll
 				const currHigh:Number = _spaceApply(i);
 				_totalSize += currHigh;
 				if (locationY > _totalSize) continue;
-				if (beginHigh > showHigh) break;
-				beginHigh += currHigh;
 				item = getItem(i);
 				if (null == item)
 				{
@@ -199,6 +197,8 @@ package org.web.sdk.display.core.com.scroll
 					getLoader().addDisplay(item);
 				}
 				item.setOpen(true);
+				if (beginHigh > showHigh) break;
+				beginHigh += currHigh;
 			}
 			//重绘显示区域
 			refresh();
