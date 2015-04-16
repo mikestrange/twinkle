@@ -49,6 +49,41 @@ package org.web.sdk.display.game.role
 			return _state;
 		}
 		
+		override public function frameRender(float:int = 0):void 
+		{
+			super.frameRender(float);
+			doEnter();
+		}
+		
+		//test
+		private const GTY:Number = 1.2;
+		private var vel:Number = 0;
+		private var jumpSpeed:Number = 0;
+		private const speed:int = 100;
+		private const NULL:int = 0;
+		private var currentY:Number = 0;
+		
+		public function jump():void
+		{
+			if (jumpSpeed > NULL) return;
+			currentY = this.y;
+			jumpSpeed = 80;
+		}
+		
+		private function doEnter():void
+		{
+			if (jumpSpeed == NULL) return;
+			vel += speed / 10;
+			vel *= GTY;
+			var endy:Number = this.y + vel - jumpSpeed;
+			if (endy >= currentY) {
+				this.y = currentY;
+				vel = NULL;
+				jumpSpeed = NULL;
+			}else {
+				this.y = endy;
+			}
+		}
 		//ends
 	}
 

@@ -17,6 +17,7 @@ package org.web.sdk.display.utils
 			list.sortOn("y", Array.NUMERIC);
 			var dis:DisplayObject;
 			var sprite:Sprite = roots.convertSprite();
+			var totals:int = 0;
 			//这种排序简单，效率也行，后期可以通过4叉提高效率
 			for (var floor:int  = 0; floor < list.length; floor++) 
 			{
@@ -24,8 +25,10 @@ package org.web.sdk.display.utils
 				if (sprite.getChildIndex(dis) != floor) 
 				{
 					sprite.setChildIndex(dis, floor);
+					totals++;
 				}
 			}
+			//trace("每次渲染交互次数：", totals);
 		}
 		
 		//ends

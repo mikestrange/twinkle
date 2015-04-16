@@ -100,9 +100,17 @@ package
 			//return;
 			camera = new MapCamera;
 			
+			function downEnter(...rest):void
+			{
+				action.jump();
+			}
+			
+			
+			KeyManager.keyListener(Keyboard.SPACE, "jo", downEnter);
+			
 			var loader:DownLoader = new DownLoader;
 			loader.completeHandler = mapComplete;
-			loader.load(MapPath.getMapConfig(3003));
+			loader.load(MapPath.getMapConfig(3002));
 			loader.start();
 			//WinManager.show("test", new TestPanel);
 			//AlertManager.gets().push(new TestTips);
@@ -114,12 +122,12 @@ package
 		{
 			camera.setMap(new LandSprite(MapDatum.create(event.xml)));
 			//
-			for (var i:int = 0; i < 20; i++ ) {
+			for (var i:int = 0; i < 2000; i++ ) {
 				action = new RoleComponent("beaten");
-				action.frameRate = 150
+				action.frameRate = 200
 				action.setState("stand", 3);
 				camera.getView().addDisplay(action);
-				action.moveTo(maths.random(0, AppWork.stageWidth), maths.random(0, AppWork.stageHeight));
+				action.moveTo(maths.random(0, 1000+AppWork.stageWidth), maths.random(0, 1000+AppWork.stageHeight));
 			}
 			
 			camera.updateBuffer();

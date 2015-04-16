@@ -67,7 +67,7 @@ package org.web.sdk.display.core.com.scroll
 			_mask.graphics.beginFill(0,.3);
 			_mask.graphics.drawRect(0, 0, wide, high);
 			_mask.graphics.endFill();
-			//getLoader().mask = _mask;
+			getLoader().mask = _mask;
 		}
 		
 		private function getLoader():IBaseSprite

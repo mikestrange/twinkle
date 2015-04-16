@@ -42,6 +42,7 @@ package org.web.sdk.display.form
 			setRunning(true);
 		}
 		
+		//这两个决定取值
 		protected function getNamespace():String
 		{
 			return null;

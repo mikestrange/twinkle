@@ -72,10 +72,11 @@ package org.web.sdk.sound.core
 			_soundchannel.addEventListener(Event.SOUND_COMPLETE, soundComplete, false, 0, true);
 		}
 		
-		private function soundComplete(e:Event):void
+		private function soundComplete(event:Event):void
 		{
 			if (_long) play(0);
 			if (_type == SoundManager._ACTION_) SoundManager.closeByName(_type, _name);
+			this.dispatchEvent(event);
 		}
 		
 		public function stop():void 
