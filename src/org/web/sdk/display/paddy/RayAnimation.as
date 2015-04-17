@@ -39,7 +39,7 @@ package org.web.sdk.display.paddy
 			_currentFrame = frame;
 			restore();
 			setCompulsory(getFormat(), getNamespace());
-			setRunning(true);
+			this.setRunning(true);
 		}
 		
 		//这两个决定取值

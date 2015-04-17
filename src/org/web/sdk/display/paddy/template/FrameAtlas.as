@@ -1,22 +1,25 @@
 package org.web.sdk.display.paddy.template 
 {
+	import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.utils.Dictionary;
-	//一个资源片段
-    public class TextureAtlas
+	/*
+	 * 这里只获取一个动作的行为偏移法则
+	 * */
+    public class FrameAtlas
     {
 		//截取之后是否释放原材质，释放吧
 		private static const NONE:int = 0;
-        private static var sNames:Vector.<String> = new <String>[];
+        private static var bufferNames:Vector.<String> = new <String>[];
         
 		//-----因为1个xml对应一个动画组合
-		private var mTextureInfos:Dictionary;
+		private var frameInfo:Dictionary;
 		//获取swf名称，直接去下载
 		private var titleName:String = "";	
 		
-        public function TextureAtlas(atlasXml:XML = null)
+        public function FrameAtlas(atlasXml:XML = null)
         {
-            mTextureInfos = new Dictionary();
+            frameInfo = new Dictionary();
             if (atlasXml) parseAtlasXml(atlasXml);
         }
         
@@ -25,7 +28,7 @@ package org.web.sdk.display.paddy.template
         protected function parseAtlasXml(atlasXml:XML):void
         {
             const scale:Number = 1;
-            
+            //解析straling xml文件
             for each (var subTexture:XML in atlasXml.SubTexture)
             {
                 var name:String        = subTexture.attribute("name");
@@ -37,45 +40,43 @@ package org.web.sdk.display.paddy.template
                 var frameY:Number      = parseFloat(subTexture.attribute("frameY")) / scale;
                 var frameWidth:Number  = parseFloat(subTexture.attribute("frameWidth")) / scale;
                 var frameHeight:Number = parseFloat(subTexture.attribute("frameHeight")) / scale;
-                var rotated:Boolean    = parseBool(subTexture.attribute("rotated"));	//是否重复利用
-                
-                var region:Rectangle = new Rectangle(x, y, width, height);
+                var rotated:Boolean    = parseBool(subTexture.attribute("rotated"));
+                //裁剪范围
+                const region:Rectangle = new Rectangle(x, y, width, height);
+				//帧位置
 				var frame:Rectangle = null;
-				if (frameWidth > NONE && frameHeight > NONE) 
+				if (!isNaN(frameWidth) && frameWidth > NONE && !isNaN(frameHeight) && frameHeight > NONE)
 				{
 					frame = new Rectangle(frameX, frameY, frameWidth, frameHeight);
 				}
-				//信息添加
-                addRegion(name, region, frame, rotated);
+				//保存帧信息
+				if (!isNaN(frameX) && !isNaN(frameY)) frameInfo[name] = new Point(frameX, frameY);
             }
         }
         
-        //取一个资源
-        public function getInfo(name:String):TextureInfo
+        //取一个信息
+        public function getInfo(name:String):Point
         {
-            var info:TextureInfo = mTextureInfos[name];
-            if (info == null) return null;
-			return info;
+            return frameInfo[name];
         }
         
-		//取一个资源集合
-        public function getInfos(prefix:String = ""):Vector.<TextureInfo>
+		//取一个资源信息集合
+        public function getInfos(prefix:String = ""):Vector.<Point>
         {
-           var result:Vector.<TextureInfo>  = new <TextureInfo>[];
-            for each (var name:String in getNames(prefix, sNames))
+           var result:Vector.<Point>  = new <Point>[];
+            for each (var name:String in getNames(prefix, bufferNames))
 			{
                 result.push(getInfo(name)); 
 			}
-            sNames.length = NONE;
+            bufferNames.length = NONE;
             return result;
         }
         
-        /** Returns all texture names that start with a certain string, sorted alphabetically. */
         public function getNames(prefix:String = "", result:Vector.<String> = null):Vector.<String>
         {
             if (result == null) result = new <String>[];
-            
-            for (var name:String in mTextureInfos)
+            //
+            for (var name:String in frameInfo)
 			{
                 if (name.indexOf(prefix) == NONE)
 				{
@@ -86,39 +87,6 @@ package org.web.sdk.display.paddy.template
             return result;
         }
         
-        public function getRegion(name:String):Rectangle
-        {
-            var info:TextureInfo = mTextureInfos[name];
-            return info ? info.region : null;
-        }
-		
-        public function getFrame(name:String):Rectangle
-        {
-            var info:TextureInfo = mTextureInfos[name];
-            return info ? info.frame : null;
-        }
-        
-        public function getRotation(name:String):Boolean
-        {
-            var info:TextureInfo = mTextureInfos[name];
-            return info ? info.rotated : false;
-        }
-		
-        public function addRegion(name:String, region:Rectangle, frame:Rectangle = null, rotated:Boolean = false):void
-        {
-            mTextureInfos[name] = new TextureInfo(region, frame, rotated);
-        }
-        
-        public function removeRegion(name:String):void
-        {
-            if (mTextureInfos[name]) delete mTextureInfos[name];
-        }
-		
-		public function dispose():void
-		{
-			
-		}
-		
         // utility methods
         private static function parseBool(value:String):Boolean
         {

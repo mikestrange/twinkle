@@ -19,7 +19,7 @@ package
 	import org.web.sdk.display.game.map.MapDatum;
 	import org.web.sdk.display.game.map.LandSprite;
 	import org.web.sdk.display.game.map.MapPath;
-	import org.web.sdk.display.game.role.RoleComponent;
+	import org.web.sdk.display.game.role.RolePart;
 	import org.web.sdk.display.mouse.MouseDisplay;
 	import org.web.sdk.display.utils.SortSprite;
 	import org.web.sdk.global.DateTimer;
@@ -90,7 +90,7 @@ package
 					}
 				}
 			}
-			//loader.start();
+			loader.start();
 			//SoundManager.playUrl("asset/bg.mp3");
 			//测试场景
 			AppDirector.gets().sceneHandler = function(sceneName:String):IBaseScene
@@ -100,7 +100,7 @@ package
 		}
 		
 		private var camera:MapCamera;
-		private var action:RoleComponent;
+		private var action:RolePart;
 		
 		private function startGame():void
 		{
@@ -110,9 +110,8 @@ package
 			
 			function downEnter(...rest):void
 			{
-				action.jump();
+				
 			}
-			
 			
 			KeyManager.keyListener(Keyboard.SPACE, "jo", downEnter);
 			
@@ -131,7 +130,7 @@ package
 			camera.setMap(new LandSprite(MapDatum.create(event.xml)));
 			//
 			for (var i:int = 0; i < 200; i++ ) {
-				action = new RoleComponent("beaten");
+				action = new RolePart("beaten");
 				action.frameRate = 200
 				action.setState("stand", 3);
 				camera.getView().addDisplay(action);

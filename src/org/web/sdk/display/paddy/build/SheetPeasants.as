@@ -12,6 +12,7 @@ package org.web.sdk.display.paddy.build
 	 * */
 	public class SheetPeasants 
 	{
+		//动画是有 0001 开始，替换了4位字符
 		private static const FROM_LENG:int = 4;
 		
 		//原始素材
