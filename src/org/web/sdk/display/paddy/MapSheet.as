@@ -9,13 +9,13 @@ package org.web.sdk.display.paddy
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 	import org.web.sdk.interfaces.IBaseSprite;
 	/**
 	 * ...
 	 * @author Main
 	 */
-	public class MapSheet extends Bitmap implements IDisplay 
+	public class MapSheet extends Bitmap implements IDisplayObject 
 	{
 		//属性
 		private var _width:int;
@@ -31,6 +31,8 @@ package org.web.sdk.display.paddy
 		
 		public function dispose():void 
 		{
+			setRunning();
+			setResize(false);
 			this.bitmapData = null;
 		}
 		

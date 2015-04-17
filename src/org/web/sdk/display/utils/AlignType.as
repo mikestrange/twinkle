@@ -1,7 +1,7 @@
 package org.web.sdk.display.utils 
 {
 	import flash.display.DisplayObject;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 	import flash.geom.Point;
 	
 	public class AlignType 

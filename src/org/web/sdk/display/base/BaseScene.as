@@ -5,7 +5,7 @@ package org.web.sdk.display.base
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.interfaces.IBaseScene;
 	import org.web.sdk.interfaces.IBaseSprite;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 	
 	public class BaseScene extends BaseSprite implements IBaseScene 
 	{
@@ -73,7 +73,7 @@ package org.web.sdk.display.base
 			_dicLayer[layerName] = layer;
 		}
 		
-		public function addToLayer(display:IDisplay, layerName:String = null, floor:int = -1):void 
+		public function addToLayer(display:IDisplayObject, layerName:String = null, floor:int = -1):void 
 		{
 			var layer:IBaseSprite = getLayer(layerName);
 			if (layer) {

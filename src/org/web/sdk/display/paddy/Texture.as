@@ -2,7 +2,7 @@ package org.web.sdk.display.paddy
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com

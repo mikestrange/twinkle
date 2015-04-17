@@ -39,9 +39,7 @@ package org.web.sdk.admin
 		{
 			for (var i:int = list.length - 1; i >= 0; i--) 
 			{
-				if (list[i].type == type) {
-					handler(list[i]);
-				}
+				if (list[i].type == type) handler(list[i]);
 			}
 		}
 		

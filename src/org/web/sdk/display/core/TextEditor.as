@@ -8,9 +8,9 @@ package org.web.sdk.display.core
 	import org.web.sdk.display.utils.Swapper;
 	import org.web.sdk.AppWork;
 	import org.web.sdk.interfaces.IBaseSprite;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 
-	public class TextEditor extends TextField implements IDisplay 
+	public class TextEditor extends TextField implements IDisplayObject 
 	{
 		private static const DEF_FORMAT:TextFormat = new TextFormat;
 		//换行
@@ -25,9 +25,6 @@ package org.web.sdk.display.core
 		private var _width:int;
 		private var _height:int;
 		private var _tag:uint;
-		//操作
-		private var _isresize:Boolean;
-		private var _isrun:Boolean;
 		//文本特有
 		private var format:TextFormat;
 		
@@ -220,24 +217,10 @@ package org.web.sdk.display.core
 		
 		public function setResize(value:Boolean = true):void
 		{
-			if (_isresize == value) return;
-			_isresize = value;
-			if (value) {
-				AppWork.addStageListener(Event.RESIZE, onResize);
-			}else {
-				AppWork.removeStageListener(Event.RESIZE, onResize);
-			}
 		}
 		
 		public function setRunning(value:Boolean = false):void
 		{
-			if (_isrun == value) return;
-			_isrun = value;
-			if (value) {
-				AppWork.addStageListener(Event.ENTER_FRAME, runEnter);
-			}else {
-				AppWork.removeStageListener(Event.ENTER_FRAME, runEnter);
-			}
 		}
 		
 		public function convertDisplay():DisplayObject
@@ -249,16 +232,6 @@ package org.web.sdk.display.core
 		{
 			clearFilters();
 			setEmpty();
-		}
-		
-		protected function runEnter(e:Event = null):void
-		{
-			
-		}
-		
-		protected function onResize(e:Event = null):void
-		{
-			
 		}
 		
 		//快速建立

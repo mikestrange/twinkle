@@ -17,7 +17,7 @@ package org.web.sdk.interfaces
 		function updateResize():void;
 		//快速建立
 		function createLayer(layerName:String):void;
-		function addToLayer(display:IDisplay, layerName:String = null, floor:int = -1):void;
+		function addToLayer(display:IDisplayObject, layerName:String = null, floor:int = -1):void;
 		//
 		function getBaseSprite():IBaseSprite;
 		//end

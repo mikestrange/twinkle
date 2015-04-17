@@ -1,32 +1,44 @@
 package org.web.sdk.display.base 
 {
-	import org.web.sdk.admin.WinManager;
+	import org.web.sdk.admin.PopupManager;
 	import org.web.sdk.display.core.BaseSprite;
 	import org.web.sdk.global.tool.Ticker;
-	import org.web.sdk.interfaces.rest.IPanel;
+	import org.web.sdk.interfaces.rest.IWindow;
 	
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 * 窗口
 	 */
-	public class GamePanel extends BaseSprite implements IPanel 
+	public class GamePanel extends BaseSprite implements IWindow 
 	{
-		private var _name:String;
-		
 		/* INTERFACE org.web.sdk.interfaces.rest.IPanel */
-		public function getPanelName():String
+		public function getDefineName():String
 		{
-			return _name;
+			return null;
 		}
 		
-		public function onEnter(name:String, data:Object):void
+		public function show(data:Object = null):void
 		{
-			_name = name;
+			
+		}
+		
+		public function update(data:Object):void 
+		{
+			
+		}
+		
+		//这里注入true
+		public function closed():void 
+		{
+			//全局调用会已经删掉了
+			PopupManager.remove(getDefineName());
+			Ticker.kill(delayHandler, true);
+			removeFromFather(true);
 		}
 		
 		//提供一个延迟渲染
-		public function delayRender(delay:int, ...rests):void
+		protected function delayRender(delay:int, ...rests):void
 		{
 			for (var i:int = 0; i < rests.length; i++) 
 			{
@@ -37,25 +49,6 @@ package org.web.sdk.display.base
 		private function delayHandler(handler:Function):void
 		{
 			if(handler is Function) handler();
-		}
-		
-		//自身不调用
-		public function onExit(value:Boolean = true):void 
-		{
-			Ticker.kill(delayHandler, true);
-			this.removeFromFather();
-			this.finality();
-		}
-		
-		public function update(data:Object):void 
-		{
-			
-		}
-		
-		//内存中删除后，然后从舞台移除对象
-		final public function removeFromAdmin():void 
-		{
-			WinManager.exit(_name, false);
 		}
 		
 		//end

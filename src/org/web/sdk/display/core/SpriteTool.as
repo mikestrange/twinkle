@@ -20,7 +20,7 @@ package org.web.sdk.display.core
 			var item:DisplayObject;
 			while (dis.numChildren) {
 				item = dis.removeChildAt(0);
-				if (item is IDisplay) IDisplay(item).finality(value);
+				if (item is IDisplayObject) IDisplayObject(item).finality(value);
 				else if (item is Sprite) wipeout(Sprite(item));
 				//
 				if (item is MovieClip) MovieClip(item).stop();

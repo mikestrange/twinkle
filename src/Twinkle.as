@@ -2,7 +2,7 @@ package
 {
 	import com.greensock.*;
 	import org.web.sdk.admin.AlertManager;
-	import org.web.sdk.admin.WinManager;
+	import org.web.sdk.admin.PopupManager;
 	import org.web.sdk.display.base.AppDirector;
 	import org.web.sdk.display.base.BaseScene;
 	import org.web.sdk.display.core.*;
@@ -109,20 +109,21 @@ package
 			trace("--------res load over,start game---------");
 			//return;
 			camera = new MapCamera;
-			
+			PopupManager.show(new TestPanel);
+			//AlertManager.gets().push(new TestTips);
 			function downEnter(...rest):void
 			{
 				
 			}
 			
 			KeyManager.keyListener(Keyboard.SPACE, "jo", downEnter);
-			
+			return;
 			var loader:DownLoader = new DownLoader;
 			loader.completeHandler = mapComplete;
 			loader.load(MapPath.getMapConfig(3002));
 			loader.start();
-			//WinManager.show("test", new TestPanel);
-			//AlertManager.gets().push(new TestTips);
+			
+			
 			//---
 			setResize();
 		}
@@ -144,8 +145,6 @@ package
 			addDisplay(camera.getView(), 0);
 			//
 			setRunning(true);
-			//
-			AlertManager.gets().push(new TestTips);
 		}
 		
 		override protected function onResize(e:Event = null):void 

@@ -4,14 +4,14 @@ package org.web.sdk.display.mouse
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 	/*
 	 * 切换鼠标状态，一个简单的，根据需求再调整
 	 * */
 	public class MouseDisplay 
 	{
-		private static var downSprite:IDisplay;
-		private static var upSprite:IDisplay;
+		private static var downSprite:IDisplayObject;
+		private static var upSprite:IDisplayObject;
 		private static var isDown:Boolean;
 		private static var isshow:Boolean = false;
 		
@@ -70,7 +70,7 @@ package org.web.sdk.display.mouse
 			onMove(event);
 		}
 		
-		public static function setDown(display:IDisplay):void
+		public static function setDown(display:IDisplayObject):void
 		{
 			if (downSprite) downSprite.removeFromFather(true);
 			downSprite = display;
@@ -80,7 +80,7 @@ package org.web.sdk.display.mouse
 			onMove();
 		}
 		
-		public static function setRelease(display:IDisplay):void
+		public static function setRelease(display:IDisplayObject):void
 		{
 			if (upSprite) upSprite.removeFromFather(true);
 			upSprite = display;

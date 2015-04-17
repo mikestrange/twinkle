@@ -2,7 +2,7 @@ package org.web.sdk.display.effect
 {
 	import com.greensock.TweenLite;
 	import org.web.sdk.AppWork;
-	import org.web.sdk.interfaces.IDisplay;
+	import org.web.sdk.interfaces.IDisplayObject;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
@@ -13,7 +13,7 @@ package org.web.sdk.display.effect
 		private static const LIM:int = 1;
 		
 		//扩散效果，释放效果的时候，隐藏会可见
-		public static function pervasion(target:IDisplay, scale:Number = .8, time:Number = .1, complete:Function = null):void
+		public static function pervasion(target:IDisplayObject, scale:Number = .8, time:Number = .1, complete:Function = null):void
 		{
 			//屏幕中间
 			var endx:int = AppWork.stageWidth - target.sizeWidth >> 1;
@@ -29,7 +29,7 @@ package org.web.sdk.display.effect
 		}
 		
 		//就当前关闭
-		public static function shutting(target:IDisplay, scale:Number = .8, time:Number = .1, complete:Function = null):void
+		public static function shutting(target:IDisplayObject, scale:Number = .8, time:Number = .1, complete:Function = null):void
 		{
 			//拉伸裁剪尺寸
 			var cut_wide:int = target.sizeWidth * ((LIM - scale) / 2);
@@ -42,7 +42,7 @@ package org.web.sdk.display.effect
 		}
 			
 		//飞向屏幕中间
-		public static function flyfrom(target:IDisplay, startx:int = 0, starty:int = 0, scale:Number = .2, time:Number = .2, complete:Function = null):void
+		public static function flyfrom(target:IDisplayObject, startx:int = 0, starty:int = 0, scale:Number = .2, time:Number = .2, complete:Function = null):void
 		{
 			//飞向屏幕中间
 			var endx:int = AppWork.stageWidth - target.sizeWidth >> 1;
