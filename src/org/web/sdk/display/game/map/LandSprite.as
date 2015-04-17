@@ -5,7 +5,7 @@ package org.web.sdk.display.game.map
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	import org.web.sdk.display.core.BaseSprite;
-	import org.web.sdk.display.paddy.base.Image;
+	import org.web.sdk.display.paddy.base.RemoteImage;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
@@ -36,7 +36,7 @@ package org.web.sdk.display.game.map
 		//打开地图下载
 		public var openLoad:Boolean = false;
 		//缩略地图，也可以是小地图
-		private var _smallMap:Image;
+		private var _smallMap:RemoteImage;
 		//地图的层
 		private var _mapRoot:BaseSprite;
 		
@@ -80,7 +80,7 @@ package org.web.sdk.display.game.map
 				_smallMap.finality();
 				_smallMap.removeFromFather();
 			}
-			_smallMap = new Image;
+			_smallMap = new RemoteImage;
 			_smallMap.setSize(M_width, M_height);
 			_smallMap.resource = smallUrl;
 			this.addDisplay(_smallMap, 0);

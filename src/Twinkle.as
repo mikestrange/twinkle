@@ -14,7 +14,7 @@ package
 	import org.web.sdk.display.paddy.base.RayButton;
 	import org.web.sdk.display.paddy.RayAnimation;
 	import org.web.sdk.display.paddy.RayObject;
-	import org.web.sdk.display.game.geom.FormatUtils;
+	import org.web.sdk.display.game.geom.TaxReckon;
 	import org.web.sdk.display.game.map.MapCamera;
 	import org.web.sdk.display.game.map.MapDatum;
 	import org.web.sdk.display.game.map.LandSprite;
@@ -54,7 +54,7 @@ package
 	{
 		override protected function showEvent():void
 		{
-			Log.setprint("org.web.sdk.display")
+			Log.setprint("/org.web.sdk.display")
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -91,12 +91,14 @@ package
 				}
 			}
 			loader.start();
-			//SoundManager.playUrl("asset/bg.mp3");
+			
 			//测试场景
 			AppDirector.gets().sceneHandler = function(sceneName:String):IBaseScene
 			{
 				return new BaseScene;	
 			}
+			//
+			//SoundManager.playUrl("asset/bg.mp3");
 		}
 		
 		private var camera:MapCamera;
@@ -156,11 +158,14 @@ package
 		{
 			//取鼠标点击的位置
 			var pos:Point = camera.getView().toLocal(stage.mouseX, stage.mouseY);
+			TweenLite.killTweensOf(action);
 			TweenLite.to(action, 2, { x:pos.x, y:pos.y,onComplete:stopMove } );
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
 			//跑动
-			action.setState("run", FormatUtils.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)));
+			trace(action.x, action.y, pos.x, pos.y)
+			trace("方向：",TaxReckon.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)))
+			action.setState("run", TaxReckon.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)));
 		}
 		
 		private function stopMove():void

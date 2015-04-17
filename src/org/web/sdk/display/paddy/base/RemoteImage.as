@@ -7,10 +7,9 @@ package org.web.sdk.display.paddy.base
 	import org.web.sdk.load.DownLoader;
 	import org.web.sdk.load.LoadEvent;
 	/*
-	 * 动态贴图基类,释放完成就可以重新利用
-	 * 动态下载
+	 * 远程图片下载
 	 * */
-	public class Image extends RayObject
+	public class RemoteImage extends RayObject
 	{
 		private var _url:String;
 		//自身分配一个下载器
@@ -18,7 +17,7 @@ package org.web.sdk.display.paddy.base
 		private var _wide:Number;
 		private var _heig:Number;
 		
-		public function Image(url:String = null)
+		public function RemoteImage(url:String = null)
 		{
 			if(url) resource = url;
 		}
@@ -78,7 +77,7 @@ package org.web.sdk.display.paddy.base
 		
 		override public function clone():IRender 
 		{
-			return new Image(_url);
+			return new RemoteImage(_url);
 		}
 		//ends
 	}
