@@ -64,23 +64,17 @@ package org.web.sdk.load
 		}
 		
 		//保存到域
-		public function shareDomain():void
+		public function shareDomain(value:Object = null):void
 		{
 			if (data is Loader) {
-				AppWork.appDomains.share(url, getDomain());
+				if (null == _domain) _domain = new AppDomain(loader, value); 
+				AppWork.appDomains.share(url, _domain);
 			}
 		}
 		
 		public function isName(name:String):Boolean
 		{
 			return url.lastIndexOf(name) != -1;
-		}
-		
-		//Loader域
-		public function getDomain():AppDomain
-		{
-			if (null == _domain) _domain = new AppDomain(data); 
-			return _domain;
 		}
 		
 		//end

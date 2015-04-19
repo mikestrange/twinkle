@@ -12,9 +12,11 @@ package org.web.sdk.context
 	public class AppDomain
 	{
 		private var applicationDomain:ApplicationDomain;
-			
-		public function AppDomain(checkFile:*)
+		private var portable_data:Object;
+		
+		public function AppDomain(checkFile:*, data:Object = null)
 		{
+			portable_data = data;
 			if (checkFile is Loader) {
 				applicationDomain = Loader(checkFile).contentLoaderInfo.applicationDomain;
 			}else if (checkFile is ApplicationDomain) {
@@ -23,6 +25,11 @@ package org.web.sdk.context
 				//throw Error("不存在的域解析，请提醒修改源代码！");
 				Log.log(this).error("域名类型错误：", checkFile);
 			}
+		}
+		
+		public function getPortable():Object
+		{
+			return portable_data;
 		}
 		
 		public function hasDefinition(name:String):Boolean

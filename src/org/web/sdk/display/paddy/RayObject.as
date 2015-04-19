@@ -5,6 +5,7 @@ package org.web.sdk.display.paddy
 	import org.web.sdk.display.paddy.covert.FormatMethod;
 	import org.web.sdk.display.paddy.covert.SmartRender;
 	import org.web.sdk.display.paddy.covert.TexturePacker;
+	import org.web.sdk.interfaces.IDisplayObject;
 	/**
 	 * 速度更快的显示对象，基于bitmapdata
 	 */
@@ -28,8 +29,8 @@ package org.web.sdk.display.paddy
 		//不一定设置名称给他自己,上面会设置 ,默认是一个类名,你可以修改
 		protected function getNewRender(data:FormatMethod):SmartRender
 		{
-			const tx:Texture = SheetPeasants.getTexture(data.getFormat(), data.getNamespace());
-			if (tx) return new TexturePacker(data.getResName(), tx);
+			const tx:Texture = SheetPeasants.getTexture(data.format, data.namespaces);
+			if (tx) return new TexturePacker(data.resource, tx);
 			return null;
 		}
 		
@@ -69,8 +70,8 @@ package org.web.sdk.display.paddy
 		public function setCompulsory(format:String, namespaces:String = null, type:int = 0):void
 		{
 			const att:FormatMethod = new FormatMethod(format, namespaces, type);
-			if (SmartRender.asset.hasRes(att.getResName())) {
-				setBufferRender(SmartRender.asset.getResource(att.getResName()), att);
+			if (SmartRender.asset.hasRes(att.resource)) {
+				setBufferRender(SmartRender.asset.getResource(att.resource), att);
 			}else {
 				const asset:SmartRender = getNewRender(att);
 				if (asset) setBufferRender(asset, att);

@@ -25,18 +25,18 @@ package org.web.sdk.display.paddy.covert
 			return _type;
 		}
 		
-		public function getNamespace():String
+		public function get namespaces():String
 		{
 			return _namespaces;
 		}
 		
 		//完整路径，我们不根据材质名称去获取，这里只是作为一个标志
-		public function getFormat():String
+		public function get format():String
 		{
 			return _format;
 		}
 		
-		public function getResName():String
+		public function get resource():String
 		{
 			if (_namespaces == null) return _format;
 			return _namespaces + "@" + _format;

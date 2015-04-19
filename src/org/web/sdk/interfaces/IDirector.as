@@ -13,7 +13,7 @@ package org.web.sdk.interfaces
 		function skipNext():Boolean;
 		//是否
 		function isNote(scene:IBaseScene):Boolean;
-		function set sceneHandler(value:Function):void;
+		function set getSceneHandler(value:Function):void;
 		function get current():IBaseScene;
 		function get root():IBaseSprite;
 		function setContainer(root:IBaseSprite):void;

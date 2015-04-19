@@ -88,10 +88,6 @@ package org.web.sdk.interfaces
 		function moveTo(mx:Number = 0, my:Number = 0):void;
 		//添加
 		function addUnder(father:IBaseSprite, floor:int = -1):Boolean;
-		//校正位置
-		//function setAlign(alignType:String, offx:Number = 0, offy:Number = 0):void
-		//function get offsetx():Number;
-		//function get offsety():Number;
 		//设置尺寸
 		function setSize(wide:int, high:int):void;
 		function get sizeWidth():int;

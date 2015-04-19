@@ -41,6 +41,22 @@ package org.web.sdk.display.paddy.build
 			return list;
 		}
 		
+		
+		public static function fromList(formName:String, url:String = null):Vector.<Texture>
+		{
+			var index:int = 0;
+			var list:Vector.<Texture> = new Vector.<Texture>;
+			var tex:Texture;
+			while (++index)
+			{
+				tex = getTexture(string.format(formName, index), url);
+				if (tex == null) break;
+				list.push(tex);
+			}
+			if (list.length == 0) return null;
+			return list;
+		}
+		
 		/*
 		//直接生成资源
 		public static function by_class(className:String):LibRender

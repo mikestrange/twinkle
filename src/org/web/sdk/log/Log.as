@@ -60,7 +60,7 @@ package org.web.sdk.log
             for (var i:int = 0; i < args.length; i++) chat += args[i] + " ";
 			//输出
 			var bool:Boolean = false;
-			if (print_name == null) {
+			if (print_name == null || print_name == "*") {
 				bool = true;
 			}else {
 				if (this.className.search(print_name) != -1) bool = true;
@@ -131,7 +131,7 @@ package org.web.sdk.log
 		}
 		
 		//匹配日志
-		public static function setprint(value:* = null):void
+		public static function allow(value:* = null):void
 		{
 			print_name = value;
 		}

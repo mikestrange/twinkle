@@ -11,6 +11,7 @@ package
 	import org.web.sdk.display.core.com.interfaces.ITouch;
 	import org.web.sdk.display.core.com.scroll.ScrollSprite;
 	import org.web.sdk.display.core.com.test.TouchTest;
+	import org.web.sdk.display.game.ssh.LoadEffect;
 	import org.web.sdk.display.paddy.base.RayButton;
 	import org.web.sdk.display.paddy.RayAnimation;
 	import org.web.sdk.display.paddy.RayObject;
@@ -54,7 +55,7 @@ package
 	{
 		override protected function showEvent():void
 		{
-			Log.setprint("/org.web.sdk.display")
+			Log.allow("-")
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -93,7 +94,7 @@ package
 			loader.start();
 			
 			//测试场景
-			AppDirector.gets().sceneHandler = function(sceneName:String):IBaseScene
+			AppDirector.gets().getSceneHandler = function(sceneName:String):IBaseScene
 			{
 				return new BaseScene;	
 			}
@@ -109,21 +110,16 @@ package
 			trace("--------res load over,start game---------");
 			//return;
 			camera = new MapCamera;
-			PopupManager.show(new TestPanel);
-			//AlertManager.gets().push(new TestTips);
+			PopupManager.showRegister(new TestPanel);
+			//
 			function downEnter(...rest):void
 			{
 				
 			}
-			
 			KeyManager.keyListener(Keyboard.SPACE, "jo", downEnter);
-			return;
-			var loader:DownLoader = new DownLoader;
-			loader.completeHandler = mapComplete;
+			var loader:DownLoader = new DownLoader(mapComplete);
 			loader.load(MapPath.getMapConfig(3002));
 			loader.start();
-			
-			
 			//---
 			setResize();
 		}
@@ -134,10 +130,10 @@ package
 			//
 			for (var i:int = 0; i < 200; i++ ) {
 				action = new RolePart("beaten");
-				action.frameRate = 200
+				action.frameRate = 100
 				action.setState("stand", 3);
 				camera.getView().addDisplay(action);
-				action.moveTo(maths.random(0, 1000+AppWork.stageWidth), maths.random(0, 1000+AppWork.stageHeight));
+				action.moveTo(maths.random(0, 1000 + AppWork.stageWidth), maths.random(0, 1000 + AppWork.stageHeight));
 			}
 			
 			camera.updateBuffer();
@@ -162,9 +158,11 @@ package
 			camera.lookTo(pos.x, pos.y);
 			camera.updateBuffer();
 			//跑动
-			trace(action.x, action.y, pos.x, pos.y)
-			trace("方向：",TaxReckon.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)))
 			action.setState("run", TaxReckon.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)));
+			//
+			var eff:LoadEffect = new LoadEffect("952700");
+			eff.moveTo(stage.mouseX, stage.mouseY);
+			this.addDisplay(eff);
 		}
 		
 		private function stopMove():void

@@ -31,13 +31,17 @@ package org.web.sdk.display.base
 		//这里注入true
 		public function closed():void 
 		{
-			//全局调用会已经删掉了
-			PopupManager.remove(getDefineName());
-			Ticker.kill(delayHandler, true);
+			this.unRegister();
 			removeFromFather(true);
 		}
 		
-		//提供一个延迟渲染
+		//close 中允许做其他操作
+		final protected function unRegister():void
+		{
+			PopupManager.unRegister(this);
+		}
+		
+		/*
 		protected function delayRender(delay:int, ...rests):void
 		{
 			for (var i:int = 0; i < rests.length; i++) 
@@ -50,7 +54,7 @@ package org.web.sdk.display.base
 		{
 			if(handler is Function) handler();
 		}
-		
+		*/
 		//end
 	}
 

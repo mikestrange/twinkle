@@ -25,12 +25,12 @@ package org.web.sdk.display.base
 		
 		public function setContainer(root:IBaseSprite):void
 		{
-			if (_root) throw Error("不允许多次设置");
+			closeScene(_current);
 			_root = root;
 		}
 		
 		//回调一个场景的方法
-		public function set sceneHandler(value:Function):void
+		public function set getSceneHandler(value:Function):void
 		{
 			_apply = value;
 		}
@@ -58,7 +58,7 @@ package org.web.sdk.display.base
 		public function enterScene(name:String):void
 		{
 			if (_apply is Function) {
-				gotoCurrent(_apply(name) as IBaseScene);
+				setCurrentScene(_apply(name) as IBaseScene);
 			}
 		}
 		
@@ -77,18 +77,18 @@ package org.web.sdk.display.base
 		//回溯，不会设置当前的上级，不破坏但却层级
 		public function skipPrev():Boolean
 		{
-			if (_current) return gotoCurrent(_current.prevScene);
+			if (_current) return setCurrentScene(_current.prevScene);
 			return false;
 		}
 		
 		public function skipNext():Boolean
 		{
-			if (_current) return gotoCurrent(_current.nextScene);
+			if (_current) return setCurrentScene(_current.nextScene);
 			return false;
 		}
 		
 		//隐藏函数
-		protected function gotoCurrent(current:IBaseScene):Boolean
+		protected function setCurrentScene(current:IBaseScene):Boolean
 		{
 			if (current == null || current == _current) return false;
 			if (_current)

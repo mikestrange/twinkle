@@ -9,15 +9,25 @@ package org.web.sdk.display.paddy
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import org.web.sdk.display.utils.AlignType;
+	import org.web.sdk.interfaces.IAlign;
 	import org.web.sdk.interfaces.IDisplayObject;
 	import org.web.sdk.interfaces.IBaseSprite;
 	/**
 	 * ...
 	 * @author Main
 	 */
-	public class MapSheet extends Bitmap implements IDisplayObject 
+	public class MapSheet extends Bitmap implements IDisplayObject ,IAlign
 	{
 		//属性
+		private var _x:Number = 0;
+		private var _y:Number = 0;
+		private var _offsetx:Number = 0;
+		private var _offsety:Number = 0;
+		private var _finalx:Number = 0;
+		private var _finaly:Number = 0;
+		private var _align:String;
+		//
 		private var _width:int;
 		private var _height:int;
 		private var _tag:uint;
@@ -163,19 +173,82 @@ package org.web.sdk.display.paddy
 		
 		public function moveTo(mx:Number = 0, my:Number = 0):void
 		{
-			if (!isNaN(mx) && this.x != mx) this.x = mx;
-			if (!isNaN(my) && this.y != my) this.y = my;
+			this.x = mx;
+			this.y = my;
 		}
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
 		{
 			if (!isNaN(sx) && sx != scaleX) scaleX = sx;
 			if (!isNaN(sy) && sy != scaleY) scaleY = sy;
+			_updateAlign();
 		}
 		
 		public function finality(value:Boolean = true):void
 		{
 			if (value) dispose();
+		}
+		
+		public function setAlignOffset(offx:Number = 0, offy:Number = 0, alignType:String = null):void
+		{
+			_align = alignType;
+			_offsetx = offx;
+			_offsety = offy;
+			_updateAlign();
+		}
+		
+		public function get offsetx():Number
+		{
+			return _offsetx;
+		}
+		
+		public function get offsety():Number
+		{
+			return _offsety;
+		}
+		
+		public function get alignType():String
+		{
+			return _align;
+		}
+		
+		//override
+		override public function get x():Number 
+		{
+			return _x;
+		}
+		
+		override public function set x(value:Number):void 
+		{
+			if (isNaN(value) || _x == value) return;
+			_x = value;
+			super.x = _x + _finalx;
+		}
+		
+		override public function get y():Number 
+		{
+			return _y;
+		}
+		
+		override public function set y(value:Number):void 
+		{
+			if (isNaN(value) || _y == value) return;
+			_y = value;
+			super.y = _y + _finaly;
+		}
+		
+		protected function _updateAlign():void
+		{
+			_finalx = offsetx;
+			_finaly = offsety;
+			if (_align) {
+				const point:Point = AlignType.getSelfAlign(this, _align, offsetx, offsety);
+				_finalx = point.x;
+				_finaly = point.y;
+			}
+			_finalx *= this.scaleX;
+			_finaly *= this.scaleY;
+			this.moveTo(this.x, this.y);
 		}
 		
 		//protected

@@ -1,87 +1,102 @@
 package org.web.sdk.admin 
 {
-	import org.web.sdk.display.base.AppDirector;
-	import org.web.sdk.global.HashMap;
+	import flash.utils.Dictionary;
 	import org.web.sdk.interfaces.rest.IWindow;
 	/**
 	 * ...
 	 * @author Mike email:542540443@qq.com
 	 * 界面管理
 	 */
-	final public class PopupManager extends HashMap 
+	final public class PopupManager
 	{
-		private static var _ins:PopupManager;
-		
-		private var nameList:Vector.<String>;
-		private var winMap:HashMap;
-		
-		private static function gets():PopupManager
-		{
-			if (null == _ins) _ins = new PopupManager;
-			return _ins;
-		}
-		
-		public function PopupManager()
-		{
-			//winMap = new HashMap;
-			//nameList = new Vector.<String>;
-		}
+		private static var winList:Vector.<String> = new Vector.<String>;
+		private static var winMap:Dictionary = new Dictionary;
 		
 		//是否显示
-		public static function has(name:String):Boolean
+		public static function hasWindows(name:String):Boolean
 		{
-			return gets().isKey(name);
+			return winMap[name] != undefined;
 		}
 		
-		//不初始化
-		public static function show(target:IWindow, data:Object = null):void
+		//显示并且注册
+		public static function showRegister(target:IWindow, data:Object = null):void
 		{
 			const name:String = target.getDefineName();
+			//同名关闭
 			close(name);
-			gets().put(name, target);
-			trace("#显示窗口:", name);
+			//注册
+			winList.push(name);
+			winMap[name] = target;
+			//show
 			target.show(data);
 		}
 		
-		//最后一个参数，是否直接移除
-		public static function close(name:String):void
+		//这里可以在任何地方调用
+		public static function close(name:String = null):IWindow
 		{
-			var win:IWindow = gets().remove(name);
-			if (win) {
-				trace("#关闭窗口:", name);
-				win.closed();
-			}
+			if (!hasWindows(name)) return null;
+			var win:IWindow = getWindows(name);
+			deletes(name);
+			win.closed();
+			return win;
 		}
 		
-		//这里只是移除，删除后就变成了游离窗口
-		public static function remove(name:String):IWindow
+		public static function closeCurrent():IWindow
 		{
-			return gets().remove(name);
+			if (winList.length) {
+				return close(winList[winList.length - 1]);
+			}
+			return null;
+		}
+		
+		//这个由窗口内部调用
+		public static function unRegister(target:IWindow):void
+		{
+			const name:String = target.getDefineName();
+			if (!hasWindows(name)) return;
+			deletes(name);
 		}
 		
 		//刷新视图，不存在就不刷新
 		public static function update(name:String, data:Object = null):void
 		{
-			var win:IWindow = gets().getValue(name);
-			if (win) {
-				trace("#刷新窗口", name);
-				win.update(data);
-			}
+			if (!hasWindows(name)) return;
+			getWindows(name).update(data);
+		}
+		
+		//---必定存在
+		private static function deletes(name:String):void
+		{
+			delete winMap[name];
+			const index:int = winList.indexOf(name);
+			if (index != -1) winList.splice(index, 1);
 		}
 		
 		//清理所有
-		public static function clean():void
+		public static function cleanPopups():void
 		{
 			trace("#关闭所有窗口");
-			gets().eachKey(close);
+			for each(var win:IWindow in winMap)
+			{
+				win.closed();
+			}
 		}
 		
-		//批量执行
-		public static function eachfor(handler:Function):void
+		protected static function getWindows(name:String):IWindow
 		{
-			gets().eachValue(handler);
+			return winMap[name];
 		}
 		
+		public static function toString():void
+		{
+			trace("-----------popup start---------------")
+			trace("--------win list:", winList);
+			trace("----->maps:\n")
+			for (var key:String in winMap) {
+				trace("->key=", key, ", value = ", winMap[key]);
+			}
+			trace("----------end------------")
+		}
 		//
 	}
 

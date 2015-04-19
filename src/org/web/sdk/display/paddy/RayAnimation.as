@@ -13,7 +13,7 @@ package org.web.sdk.display.paddy
 	 * */
 	public class RayAnimation extends RayObject 
 	{
-		private static const LIM:int = 1;
+		protected static const LIM:int = 1;
 		//
 		private var _currentFrame:int = 0;		
 		private var _hearttime:int = 100;		
@@ -38,19 +38,8 @@ package org.web.sdk.display.paddy
 			_action = action;
 			_currentFrame = frame;
 			restore();
-			setCompulsory(getFormat(), getNamespace());
 			this.setRunning(true);
-		}
-		
-		//这两个决定取值
-		protected function getNamespace():String
-		{
-			return null;
-		}
-		
-		protected function getFormat():String
-		{
-			return _action;
+			//setCompulsory(getFormat(), getNamespace());
 		}
 		
 		public function getAction():String
@@ -120,12 +109,13 @@ package org.web.sdk.display.paddy
 			setPosition(_currentFrame);
 		}
 		
+		/*
 		override protected function getNewRender(data:FormatMethod):SmartRender 
 		{
 			const vectors:Vector.<Texture> = SheetPeasants.fromVector(data.getFormat(), data.getNamespace());
 			if (null == vectors) return null;
 			return new TexturePacker(data.getResName(), vectors);
-		}
+		}*/
 		
 		public function get currentFrame():int
 		{

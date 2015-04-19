@@ -1,9 +1,12 @@
 package org.web.sdk.display.game.role 
 {
+	import org.web.sdk.display.paddy.build.SheetPeasants;
 	import org.web.sdk.display.paddy.covert.FormatMethod;
 	import org.web.sdk.display.paddy.covert.SmartRender;
+	import org.web.sdk.display.paddy.covert.TexturePacker;
 	import org.web.sdk.display.paddy.RayAnimation;
 	import org.web.sdk.display.paddy.Texture;
+	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.global.string;
 	
 	/**
@@ -21,6 +24,7 @@ package org.web.sdk.display.game.role
 		public function RolePart(namespaces:String)
 		{
 			_namespaces = namespaces;
+			//this.setAlignOffset(0, 0, AlignType.CENTER_BOTTOM);
 		}
 		
 		//设置状态，可以牵制刷新
@@ -34,8 +38,21 @@ package org.web.sdk.display.game.role
 			setAction(action);
 		}
 		
+		override public function play(frame:int = LIM, action:String = null):void 
+		{
+			super.play(frame, action);
+			this.setCompulsory(getAction(), getNamespace());
+		}
+		
+		override protected function getNewRender(data:FormatMethod):SmartRender 
+		{
+			const vectors:Vector.<Texture> = SheetPeasants.fromVector(data.format, data.namespaces);
+			if (null == vectors) return null;
+			return new TexturePacker(data.resource, vectors);
+		}
+		
 		//命名空间
-		override protected function getNamespace():String 
+		protected function getNamespace():String 
 		{
 			return "http://127.0.0.1/game/asset/ui/001_player.swf";
 		}
@@ -50,6 +67,12 @@ package org.web.sdk.display.game.role
 			return _state;
 		}
 		
+		
+		override public function setTexture(texture:Texture):void 
+		{
+			super.setTexture(texture);
+			//this._updateAlign();
+		}
 		//ends
 	}
 

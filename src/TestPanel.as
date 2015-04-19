@@ -1,6 +1,7 @@
 package  
 {
 	import com.greensock.TweenLite;
+	import org.web.sdk.admin.PopupManager;
 	import org.web.sdk.AppWork;
 	import org.web.sdk.display.base.AppDirector;
 	import org.web.sdk.display.base.GamePanel;
@@ -37,7 +38,6 @@ package
 			create_black();
 			create_close();
 			create_scroll();
-			//delayRender(50, create_black, create_btn, create_close);
 			//添加到显示  算出一个偏移就可以了
 			DisplayEffects.pervasion(this);
 		}
@@ -46,7 +46,7 @@ package
 			var close:RayButton = new RayButton("b_close_%t")
 			close.touchHandler = function(event:Object):void
 			{
-				closed();
+				DisplayEffects.shutting(this.getFather(), .8, .1, closed);
 			}
 			this.addDisplay(close);
 		}
@@ -92,11 +92,6 @@ package
 			cell.addDisplay(ray);
 			TextEditor.quick(index.toString(), cell, 20, 0xffff00);
 			return cell;
-		}
-		
-		private function hidetween(event:Object):void 
-		{
-			DisplayEffects.shutting(this, .8, .1, closed);	
 		}
 		
 		//ends
