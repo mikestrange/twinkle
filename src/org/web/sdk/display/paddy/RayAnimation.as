@@ -27,6 +27,12 @@ package org.web.sdk.display.paddy
 			_currentTime = getTimer();
 		}
 		
+		public function setTextures(data:Vector.<Texture>):void
+		{
+			_vectors = data;
+			setPosition(_currentFrame);
+		}
+		
 		public function stop(frame:int = LIM):void
 		{
 			setPosition(frame);
@@ -39,7 +45,6 @@ package org.web.sdk.display.paddy
 			_currentFrame = frame;
 			restore();
 			this.setRunning(true);
-			//setCompulsory(getFormat(), getNamespace());
 		}
 		
 		public function getAction():String
@@ -103,19 +108,8 @@ package org.web.sdk.display.paddy
 		//无论是单材质还是多材质都可以
 		override public function retakeTarget(data:Object):void 
 		{
-			if (data is Vector.<Texture>) _vectors = data as Vector.<Texture>;
-			else _vectors = null;
-			//重新取的时候会刷新
-			setPosition(_currentFrame);
+			setTextures(data as Vector.<Texture>);
 		}
-		
-		/*
-		override protected function getNewRender(data:FormatMethod):SmartRender 
-		{
-			const vectors:Vector.<Texture> = SheetPeasants.fromVector(data.getFormat(), data.getNamespace());
-			if (null == vectors) return null;
-			return new TexturePacker(data.getResName(), vectors);
-		}*/
 		
 		public function get currentFrame():int
 		{
@@ -143,6 +137,14 @@ package org.web.sdk.display.paddy
 			this.stop();
 			super.dispose();
 		}
+		
+		/*
+		override protected function getNewRender(data:FormatMethod):SmartRender 
+		{
+			const vectors:Vector.<Texture> = SheetPeasants.fromVector(data.getFormat(), data.getNamespace());
+			if (null == vectors) return null;
+			return new TexturePacker(data.getResName(), vectors);
+		}*/
 		//ends
 	}
 

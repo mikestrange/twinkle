@@ -49,21 +49,21 @@ package org.web.sdk.display.utils
 		/*
 		 * 自身对齐方式，返回偏移量
 		 * */
-		public static function getSelfAlign(dis:DisplayObject, alignType:String, offx:int = 0, offy:int = 0):Point
+		public static function getSelfAlign(dis:DisplayObject, alignType:String):Point
 		{
 			switch(alignType)
 			{
-				case AlignType.LEFT:			return setPoint(offx, offy);
-				case AlignType.LEFT_CENTER:		return setPoint(offx, -(dis.height >> LIM) + offy);
-				case AlignType.LEFT_BOTTOM:		return setPoint(offx, -dis.height + offy);
-				case AlignType.RIGHT_CENTER:	return setPoint(-dis.width + offx, -(dis.height >> LIM) + offy);
-				case AlignType.RIGHT:			return setPoint(-dis.width + offx, offy);
-				case AlignType.RIGHT_BOTTOM:	return setPoint(-dis.width + offx, -dis.height + offy);
-				case AlignType.CENTER:			return setPoint(-(dis.width >> LIM) + offx, -(dis.height >> LIM) + offy);
-				case AlignType.CENTER_BOTTOM:	return setPoint(-(dis.width >> LIM) + offx, -dis.height + offy);
-				case AlignType.CENTER_TOP:		return setPoint(-(dis.width >> LIM) + offx, offy);
+				case AlignType.LEFT:			return setPoint(NONE,NONE);
+				case AlignType.LEFT_CENTER:		return setPoint(NONE, -(dis.height >> LIM));
+				case AlignType.LEFT_BOTTOM:		return setPoint(NONE, -dis.height);
+				case AlignType.RIGHT_CENTER:	return setPoint(-dis.width, -(dis.height >> LIM));
+				case AlignType.RIGHT:			return setPoint(-dis.width, NONE);
+				case AlignType.RIGHT_BOTTOM:	return setPoint(-dis.width, -dis.height);
+				case AlignType.CENTER:			return setPoint(-(dis.width >> LIM), -(dis.height >> LIM));
+				case AlignType.CENTER_BOTTOM:	return setPoint(-(dis.width >> LIM), -dis.height);
+				case AlignType.CENTER_TOP:		return setPoint(-(dis.width >> LIM), NONE);
 			}
-			return setPoint(offx, offy);
+			return setPoint(NONE, NONE);
 		}
 		
 		protected static function setPoint(mx:Number,my:Number):Point

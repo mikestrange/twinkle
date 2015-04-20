@@ -17,22 +17,15 @@ package org.web.sdk.display.paddy.base
 		private var _wide:Number;
 		private var _heig:Number;
 		
-		public function RemoteImage(url:String = null)
+		public function RemoteImage(url:String = null, wide:int = 0, heig:int = 0)
 		{
-			if(url) resource = url;
+			if (url) resource = url;
+			this.setSize(wide, heig);
 		}
 		
 		public function get resource():String
 		{
 			return _url;
-		}
-		
-		//最后的尺寸
-		override public function setSize(wide:int, high:int):void 
-		{
-			super.setSize(wide, high);
-			this._wide = wide;
-			this._heig = high;
 		}
 		
 		//没有释放不能重新设置
@@ -63,7 +56,7 @@ package org.web.sdk.display.paddy.base
 		override public function setTexture(texture:Texture):void 
 		{
 			super.setTexture(texture);
-			setScale(_wide / this.width, _heig / this.height);
+			setScale(this.sizeWidth / this.width, this.sizeHeight / this.height);
 		}
 		
 		override public function dispose():void 

@@ -1,6 +1,7 @@
 package org.web.sdk.display.paddy 
 {
 	import flash.events.Event;
+	import flash.geom.Matrix;
 	import org.web.sdk.AppWork;
 	import flash.geom.Point;
 	import flash.geom.Transform;
@@ -10,6 +11,7 @@ package org.web.sdk.display.paddy
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import org.web.sdk.display.utils.AlignType;
+	import org.web.sdk.global.maths;
 	import org.web.sdk.interfaces.IAlign;
 	import org.web.sdk.interfaces.IDisplayObject;
 	import org.web.sdk.interfaces.IBaseSprite;
@@ -19,14 +21,15 @@ package org.web.sdk.display.paddy
 	 */
 	public class MapSheet extends Bitmap implements IDisplayObject ,IAlign
 	{
+		private static const LIM:int = 1;
 		//属性
 		private var _x:Number = 0;
 		private var _y:Number = 0;
 		private var _offsetx:Number = 0;
 		private var _offsety:Number = 0;
-		private var _finalx:Number = 0;
-		private var _finaly:Number = 0;
+		private var _finalPoint:Point = new Point;
 		private var _align:String;
+		private var _rototion:Number = 0;
 		//
 		private var _width:int;
 		private var _height:int;
@@ -51,6 +54,7 @@ package org.web.sdk.display.paddy
 		{
 			this.bitmapData = texture.getImage();
 			this.smoothing = true;
+			this._updateAlign();
 			//texture.checkTrim(this);
 		}
 		
@@ -179,9 +183,8 @@ package org.web.sdk.display.paddy
 		
 		public function setScale(sx:Number = 1, sy:Number = 1):void
 		{
-			if (!isNaN(sx) && sx != scaleX) scaleX = sx;
-			if (!isNaN(sy) && sy != scaleY) scaleY = sy;
-			_updateAlign();
+			this.scaleX = sx;
+			this.scaleY = sy;
 		}
 		
 		public function finality(value:Boolean = true):void
@@ -189,7 +192,7 @@ package org.web.sdk.display.paddy
 			if (value) dispose();
 		}
 		
-		public function setAlignOffset(offx:Number = 0, offy:Number = 0, alignType:String = null):void
+		public function setAlignOffset(alignType:String = null, offx:Number = 0, offy:Number = 0):void
 		{
 			_align = alignType;
 			_offsetx = offx;
@@ -220,9 +223,10 @@ package org.web.sdk.display.paddy
 		
 		override public function set x(value:Number):void 
 		{
-			if (isNaN(value) || _x == value) return;
+			if (isNaN(value)) return;
 			_x = value;
-			super.x = _x + _finalx;
+			if (_x + _finalPoint.x == super.x) return;
+			super.x = _x + _finalPoint.x;
 		}
 		
 		override public function get y():Number 
@@ -232,25 +236,55 @@ package org.web.sdk.display.paddy
 		
 		override public function set y(value:Number):void 
 		{
-			if (isNaN(value) || _y == value) return;
+			if (isNaN(value)) return;
 			_y = value;
-			super.y = _y + _finaly;
+			if (_y + _finalPoint.y == super.y) return;
+			super.y = _y + _finalPoint.y;
 		}
 		
+		//这里不计算缩放的偏移，固定偏移,校正的会计算缩放
 		protected function _updateAlign():void
 		{
-			_finalx = offsetx;
-			_finaly = offsety;
 			if (_align) {
-				const point:Point = AlignType.getSelfAlign(this, _align, offsetx, offsety);
-				_finalx = point.x;
-				_finaly = point.y;
+				_finalPoint = AlignType.getSelfAlign(this, _align);
+				_finalPoint.offset(offsetx, offsety);
+			}else {
+				_finalPoint = new Point(offsetx, offsety);
 			}
-			_finalx *= this.scaleX;
-			_finaly *= this.scaleY;
-			this.moveTo(this.x, this.y);
+			this.x = _x;
+			this.y = _y;
 		}
 		
+		//
+		override public function set scaleX(value:Number):void 
+		{
+			if (isNaN(value) || value == this.scaleX) return;
+			super.scaleX = value;
+			_updateAlign();
+		}
+		
+		override public function set scaleY(value:Number):void 
+		{
+			if (isNaN(value) || value == this.scaleY) return;
+			super.scaleY = value;
+			_updateAlign();
+		}
+		
+		//注册点旋转方式
+		public function set offsetRotation(value:Number):void
+		{
+			const offset_matrix:Matrix = this.transform.matrix;
+			offset_matrix.translate( -_x, -_y);
+			offset_matrix.rotate((value - offsetRotation) * Math.PI / 180);
+			offset_matrix.translate(_x, _y);
+			this.transform.matrix = offset_matrix;
+			trace(this.x, this.y, this._finalPoint);
+		}
+		
+		public function get offsetRotation():Number
+		{
+			return this.rotation;
+		}
 		//protected
 		protected function runEnter(e:Event = null):void
 		{

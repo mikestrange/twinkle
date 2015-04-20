@@ -22,6 +22,7 @@ package
 	import org.web.sdk.display.game.map.MapPath;
 	import org.web.sdk.display.game.role.RolePart;
 	import org.web.sdk.display.mouse.MouseDisplay;
+	import org.web.sdk.display.utils.AlignType;
 	import org.web.sdk.display.utils.SortSprite;
 	import org.web.sdk.global.DateTimer;
 	import org.web.sdk.global.maths;
@@ -61,7 +62,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			//
 			AppWork.utilization(this.stage, 3000, 2000);
-			AppWork.lookEms(true);
+			//AppWork.lookEms(true);
 			AppDirector.gets().setContainer(this);
 			this.setSize(stage.stageWidth, stage.stageHeight);		
 			//加载配置
@@ -91,7 +92,7 @@ package
 					}
 				}
 			}
-			loader.start();
+			//loader.start();
 			
 			//测试场景
 			AppDirector.gets().getSceneHandler = function(sceneName:String):IBaseScene
@@ -100,8 +101,15 @@ package
 			}
 			//
 			//SoundManager.playUrl("asset/bg.mp3");
+			rays = RayObject.format(100, 100);
+			rays.moveTo(100,100)
+			rays.setAlignOffset(AlignType.RIGHT);
+			
+			this.addDisplay(rays);
+			this.setRunning(true)
 		}
 		
+		private var rays:RayObject;
 		private var camera:MapCamera;
 		private var action:RolePart;
 		
@@ -161,8 +169,8 @@ package
 			action.setState("run", TaxReckon.getIndexByAngle(maths.atanAngle(action.x, action.y, pos.x, pos.y)));
 			//
 			var eff:LoadEffect = new LoadEffect("952700");
-			eff.moveTo(stage.mouseX, stage.mouseY);
-			this.addDisplay(eff);
+			eff.moveTo(pos.x, pos.y);
+			camera.getView().addDisplay(eff);
 		}
 		
 		private function stopMove():void
@@ -171,12 +179,15 @@ package
 		}
 		
 		private var currentTime:int;
+		private var _indx:int
 		
 		override protected function runEnter(event:Event = null):void 
 		{
+			rays.offsetRotation+=20;
 			if (getTimer() - currentTime < 200) return;
 			currentTime = getTimer();
-			SortSprite.sort(camera.getView());
+			if (camera) SortSprite.sort(camera.getView());
+			
 		}
 		//ends
 	}

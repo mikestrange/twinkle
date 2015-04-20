@@ -27,7 +27,7 @@ package org.web.sdk.display.game.ssh
 		public function LoadEffect(effName:String)
 		{
 			_effName = effName;
-			this.setAlignOffset(0, 0, AlignType.CENTER_BOTTOM);
+			this.setAlignOffset(AlignType.CENTER_BOTTOM);
 			load();
 		}
 		
@@ -61,7 +61,7 @@ package org.web.sdk.display.game.ssh
 		protected function startFrom(time:int = 0):void
 		{
 			this.setCompulsory("a%t", getUrl());
-			play(Math.ceil(time / frameRate));
+			this.play(Math.ceil(time / frameRate));
 		}
 		
 		override protected function getNewRender(data:FormatMethod):SmartRender 
@@ -88,11 +88,6 @@ package org.web.sdk.display.game.ssh
 			super.dispose();
 		}
 		
-		override public function setTexture(texture:Texture):void 
-		{
-			super.setTexture(texture);
-			this._updateAlign();
-		}
 		//ends
 		//end
 	}

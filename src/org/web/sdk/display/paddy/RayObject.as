@@ -1,5 +1,6 @@
 package org.web.sdk.display.paddy 
 {
+	import flash.display.BitmapData;
 	import org.web.sdk.display.paddy.interfaces.IRender;
 	import org.web.sdk.display.paddy.build.SheetPeasants;
 	import org.web.sdk.display.paddy.covert.FormatMethod;
@@ -99,20 +100,19 @@ package org.web.sdk.display.paddy
 			return _res != null;
 		}
 		
-		/*
 		//static 
-		public static function format(wide:int, high:int, color:uint = 0):RayObject
+		public static function format(wide:int, high:int, color:uint = 0xffff0000):RayObject
 		{
 			const names:String = "bit:w" + wide + "h" + high + "c" + color;
 			const ray:RayObject = new RayObject;
 			//默认情况不会创建
 			if (!ray.setResource(names)) 
 			{
-				ray.setBufferRender(new BaseRender(names, new Texture(new BitmapData(wide, high, true, color))));
+				ray.setBufferRender(new TexturePacker(names, new Texture(new BitmapData(wide, high, true, color))));
 			}
 			return ray;
 		}
-		*/
+		
 		//ends
 	}
 }
