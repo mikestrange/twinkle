@@ -1,13 +1,11 @@
 package org.web.sdk.display.engine 
 {
-	import flash.events.IEventDispatcher;
-	import org.web.sdk.display.engine.IStepper;
 	import flash.utils.getTimer;
-	import org.web.sdk.beyond_challenge;
+	import flash.events.IEventDispatcher;
+	
 	import org.web.sdk.AppWork;
 	import org.web.sdk.log.Log;
-	
-	use namespace beyond_challenge
+	import org.web.sdk.display.engine.IStepper;
 	/**
 	 * @author 原动力，一切动力来源[引擎]
 	 */
@@ -17,12 +15,12 @@ package org.web.sdk.display.engine
 		public static const NAN:int = -1;
 		public static const ENTER_FRAME:String = 'enterFrame';
 		//
-		beyond_challenge static var _root:IEventDispatcher = null;
-		beyond_challenge static var _isplay:Boolean = false;
-		beyond_challenge static var _isopen:Boolean = false;
-		beyond_challenge static var _pauseTime:int;
+		private static var _root:IEventDispatcher = null;
+		private static var _isplay:Boolean = false;
+		private static var _isopen:Boolean = false;
+		private static var _pauseTime:int;
 		//
-		beyond_challenge static var stepVector:Vector.<IStepper>;
+		private static var stepVector:Vector.<IStepper>;
 		
 		public function AtomicEngine() { throw Error('no do'); }
 		

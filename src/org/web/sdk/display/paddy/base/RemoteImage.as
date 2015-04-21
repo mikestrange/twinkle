@@ -56,7 +56,8 @@ package org.web.sdk.display.paddy.base
 		override public function setTexture(texture:Texture):void 
 		{
 			super.setTexture(texture);
-			setScale(this.sizeWidth / this.width, this.sizeHeight / this.height);
+			scaleX = this.sizeWidth / this.width;
+			scaleY = this.sizeHeight / this.height;
 		}
 		
 		override public function dispose():void 

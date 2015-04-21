@@ -8,12 +8,14 @@ package org.web.sdk.load
 		private var _url:String;
 		private var _version:String;
 		private var _context:*;
+		private var _priority:int;
 		
-		public function LoadRequest(url:String, version:String = null, context:*= undefined) 
+		public function LoadRequest(url:String, version:String = null, context:*= undefined, priority:int = 0) 
 		{
 			_url = url;
 			_version = version;
 			_context = context;
+			_priority = priority;
 		}
 		
 		/* INTERFACE org.web.sdk.loader.interfaces.ILoadRequest */
@@ -35,6 +37,11 @@ package org.web.sdk.load
 		public function get url():String
 		{
 			return _url;
+		}
+		
+		public function get priority():int
+		{
+			return _priority;
 		}
 		
 		//loader url

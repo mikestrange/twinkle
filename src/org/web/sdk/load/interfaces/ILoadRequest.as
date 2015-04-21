@@ -8,6 +8,7 @@ package org.web.sdk.load.interfaces
 		function get version():String;
 		function get loadUrl():String;
 		function get context():*;
+		function get priority():int;
 		//end
 	}
 	

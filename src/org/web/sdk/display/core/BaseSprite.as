@@ -222,10 +222,10 @@ package org.web.sdk.display.core
 			if (!isNaN(my) && this.y != my) this.y = my;
 		}
 		
-		public function setScale(sx:Number = 1, sy:Number = 1):void
+		public function setRatio(ratio:Number = 1):void
 		{
-			if (!isNaN(sx) && sx != scaleX) scaleX = sx;
-			if (!isNaN(sy) && sy != scaleY) scaleY = sy;
+			if (isNaN(ratio)) return;
+			scaleY = scaleX = ratio;
 		}
 		
 		public function setTag(value:uint):void 

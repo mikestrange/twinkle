@@ -181,10 +181,10 @@ package org.web.sdk.display.paddy
 			this.y = my;
 		}
 		
-		public function setScale(sx:Number = 1, sy:Number = 1):void
+		public function setRatio(ratio:Number = 1):void
 		{
-			this.scaleX = sx;
-			this.scaleY = sy;
+			if (isNaN(ratio)) return;
+			scaleY = scaleX = ratio;
 		}
 		
 		public function finality(value:Boolean = true):void
@@ -255,21 +255,6 @@ package org.web.sdk.display.paddy
 			this.y = _y;
 		}
 		
-		//
-		override public function set scaleX(value:Number):void 
-		{
-			if (isNaN(value) || value == this.scaleX) return;
-			super.scaleX = value;
-			_updateAlign();
-		}
-		
-		override public function set scaleY(value:Number):void 
-		{
-			if (isNaN(value) || value == this.scaleY) return;
-			super.scaleY = value;
-			_updateAlign();
-		}
-		
 		//注册点旋转方式
 		public function set offsetRotation(value:Number):void
 		{
@@ -278,13 +263,43 @@ package org.web.sdk.display.paddy
 			offset_matrix.rotate((value - offsetRotation) * Math.PI / 180);
 			offset_matrix.translate(_x, _y);
 			this.transform.matrix = offset_matrix;
-			trace(this.x, this.y, this._finalPoint);
 		}
 		
 		public function get offsetRotation():Number
 		{
 			return this.rotation;
 		}
+		
+		public function set offsetScalex(value:Number):void
+		{
+			if (isNaN(value)) return;
+			const offset_matrix:Matrix = this.transform.matrix;
+			offset_matrix.translate(-_x, -_y);
+			offset_matrix.scale(value / offsetScalex, offsetScaley);
+			offset_matrix.translate(_x, _y);
+			this.transform.matrix = offset_matrix;
+		}
+		
+		public function get offsetScalex():Number
+		{
+			return scaleX;
+		}
+		
+		public function set offsetScaley(value:Number):void 
+		{
+			if (isNaN(value)) return;
+			const offset_matrix:Matrix = this.transform.matrix;
+			offset_matrix.translate(-_x, -_y);
+			offset_matrix.scale(offsetScalex, value / offsetScaley);
+			offset_matrix.translate(_x, _y);
+			this.transform.matrix = offset_matrix;
+		}
+		
+		public function get offsetScaley():Number
+		{
+			return scaleY;
+		}
+		
 		//protected
 		protected function runEnter(e:Event = null):void
 		{

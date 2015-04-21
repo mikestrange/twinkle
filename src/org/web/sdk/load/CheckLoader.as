@@ -19,7 +19,7 @@ package org.web.sdk.load
 		/*
 		 * 缓冲列表
 		 * */
-		private static var _urls:Vector.<ILoadRequest> = new Vector.<ILoadRequest>;
+		private static var _urls:Array = new Array;
 		/*
 		 * 快速缓冲区
 		 * */
@@ -38,7 +38,7 @@ package org.web.sdk.load
 		private static var _isset:Boolean = false;		
 		
 		//同一个URL只会保存一个
-		internal static function putStack(request:ILoadRequest, loader:DownLoader, prior:Boolean = false):void
+		internal static function putStack(request:ILoadRequest, loader:DownLoader):void
 		{
 			//设置默认
 			if (!_isset) {
@@ -46,17 +46,20 @@ package org.web.sdk.load
 				LoadSetup.setDefault();
 			}
 			var url:String = request.url;	
-			var list:Vector.<DownLoader> = _preMap[url];
-			if (list == null) {
-				list = new Vector.<DownLoader>;
-				_preMap[url] = list;
-				if (prior) {
-					_urls.unshift(request);
-				}else {
-					_urls.push(request);
-				}
+			var vector:Vector.<DownLoader> = _preMap[url];
+			if (vector == null) {
+				vector = new Vector.<DownLoader>;
+				_preMap[url] = vector;
+				_urls.push(request);
+				//目前不进行排序
 			}
-			list.push(loader);
+			vector.push(loader);
+		}
+		
+		//手动排序
+		public static function loadSort():void
+		{
+			_urls.sortOn("priority", Array.DESCENDING | Array.NUMERIC);
 		}
 		
 		internal static function startLoad():void
@@ -153,9 +156,8 @@ package org.web.sdk.load
 		public static function cleanAll():void
 		{
 			Log.log().debug("##清理下载器");
-			if (_urls.length) {
-				_urls = new Vector.<ILoadRequest>;
-			}
+			if (_urls.length) _urls = new Array;// new Vector.<ILoadRequest>;
+			//
 			var key:String = null;
 			//清理所有下载管理
 			var list:Vector.<DownLoader> = null;

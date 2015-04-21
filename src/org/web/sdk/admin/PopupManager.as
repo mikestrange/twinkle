@@ -19,7 +19,7 @@ package org.web.sdk.admin
 		}
 		
 		//显示并且注册
-		public static function showRegister(target:IWindow, data:Object = null):void
+		public static function showRegister(target:IWindow, data:Object = null):IWindow
 		{
 			const name:String = target.getDefineName();
 			//同名关闭
@@ -29,10 +29,12 @@ package org.web.sdk.admin
 			winMap[name] = target;
 			//show
 			target.show(data);
+			//返回当前
+			return target;
 		}
 		
 		//这里可以在任何地方调用
-		public static function close(name:String = null):IWindow
+		public static function close(name:String):IWindow
 		{
 			if (!hasWindows(name)) return null;
 			var win:IWindow = getWindows(name);
@@ -76,10 +78,11 @@ package org.web.sdk.admin
 		public static function cleanPopups():void
 		{
 			trace("#关闭所有窗口");
-			for each(var win:IWindow in winMap)
-			{
-				win.closed();
-			}
+			var Iterator:Vector.<IWindow> = new Vector.<IWindow>;
+			var win:IWindow = null;
+			for each(win in winMap) Iterator.push(win);
+			//迭代
+			for each(win in Iterator) win.closed();
 		}
 		
 		protected static function getWindows(name:String):IWindow

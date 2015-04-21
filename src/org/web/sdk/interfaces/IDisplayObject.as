@@ -95,7 +95,7 @@ package org.web.sdk.interfaces
 		//外部调用时候 [帧渲染]
 		function frameRender(float:int = 0):void;
 		//和原始大小相比,增加或者减少
-		function setScale(sx:Number = 1, sy:Number = 1):void;
+		function setRatio(ratio:Number = 1):void;
 		//把自己转换
 		function convertDisplay():DisplayObject;
 		//帧事件

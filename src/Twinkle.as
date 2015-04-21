@@ -95,11 +95,9 @@ package
 			{
 				return new BaseScene;	
 			}
-			//
 			//SoundManager.playUrl("asset/bg.mp3");
 		}
 		
-		private var rays:RayObject;
 		private var camera:MapCamera;
 		private var action:RolePart;
 		

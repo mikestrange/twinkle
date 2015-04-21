@@ -54,14 +54,14 @@ package org.web.sdk.display.utils
 			switch(alignType)
 			{
 				case AlignType.LEFT:			return setPoint(NONE,NONE);
-				case AlignType.LEFT_CENTER:		return setPoint(NONE, -(dis.height >> LIM));
+				case AlignType.LEFT_CENTER:		return setPoint(NONE, -dis.height >> LIM);
 				case AlignType.LEFT_BOTTOM:		return setPoint(NONE, -dis.height);
-				case AlignType.RIGHT_CENTER:	return setPoint(-dis.width, -(dis.height >> LIM));
+				case AlignType.RIGHT_CENTER:	return setPoint(-dis.width, -dis.height >> LIM);
 				case AlignType.RIGHT:			return setPoint(-dis.width, NONE);
 				case AlignType.RIGHT_BOTTOM:	return setPoint(-dis.width, -dis.height);
-				case AlignType.CENTER:			return setPoint(-(dis.width >> LIM), -(dis.height >> LIM));
-				case AlignType.CENTER_BOTTOM:	return setPoint(-(dis.width >> LIM), -dis.height);
-				case AlignType.CENTER_TOP:		return setPoint(-(dis.width >> LIM), NONE);
+				case AlignType.CENTER:			return setPoint(-dis.width >> LIM, -dis.height >> LIM);
+				case AlignType.CENTER_BOTTOM:	return setPoint(-dis.width >> LIM, -dis.height);
+				case AlignType.CENTER_TOP:		return setPoint(-dis.width >> LIM, NONE);
 			}
 			return setPoint(NONE, NONE);
 		}

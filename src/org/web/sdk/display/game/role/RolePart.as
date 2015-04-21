@@ -49,7 +49,7 @@ package org.web.sdk.display.game.role
 				this.setCompulsory(action, getUrl());
 			}else {
 				_loader = new DownLoader(onComplete);
-				_loader.load(getUrl(), null, "" + DateTimer.getDateTime(), true);
+				_loader.load(getUrl(), null, "" + DateTimer.getDateTime());
 				_loader.start();
 			}
 			super.play(frame, action);

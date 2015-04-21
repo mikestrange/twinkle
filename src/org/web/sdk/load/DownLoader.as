@@ -24,21 +24,21 @@ package org.web.sdk.load
 		}
 		
 		//固定下载
-		public function load(url:String, context:*= undefined, version:String = null, prior:Boolean = false):ILoadRequest
+		public function load(url:String, context:*= undefined, version:String = null, priority:int = 0):ILoadRequest
 		{
-			var request:ILoadRequest = new LoadRequest(url, version, context);
-			loadRequest(request, prior);
+			var request:ILoadRequest = new LoadRequest(url, version, context, priority);
+			loadRequest(request);
 			return request;
 		}
 		
 		//一个下载器不重复添加同名下载，控制版本和请求地址是不一样的
-		public function loadRequest(request:ILoadRequest, prior:Boolean = false):ILoadRequest
+		public function loadRequest(request:ILoadRequest):ILoadRequest
 		{
 			if (isHave(request.url)) return request;
 			if (null == _loadMap) _loadMap = new Dictionary;
 			_loadMap[request.url] = request;
 			++_length;
-			CheckLoader.putStack(request, this, prior);
+			CheckLoader.putStack(request, this);
 			return request;
 		}
 		
@@ -117,27 +117,6 @@ package org.web.sdk.load
 			_length = NONE;
 			_apply = null;
 			_complete = null;
-		}
-		
-		//---------------static-----------------
-		//统一资源可以使用，省略了下载计时
-		public static function loads(urls:Array, prior:Boolean = false, context:*= undefined, version:String = null):DownLoader
-		{
-			var loader:DownLoader = new DownLoader();
-			var url:String;
-			var i:int = 0;
-			if (prior) {
-				for (i = urls.length - 1; i >=0 ; i--) {
-					url = urls[i];
-					loader.loadRequest(new LoadRequest(url, version, context), true);
-				}
-			}else {
-				for (i = 0; i < urls.length; i++) {
-					url = urls[i];
-					loader.loadRequest(new LoadRequest(url, version, context), false);
-				}
-			}
-			return loader;
 		}
 		//
 	}

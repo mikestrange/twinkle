@@ -23,7 +23,7 @@ package org.web.sdk.display.effect
 			var endheig:int = target.sizeHeight * ((LIM - scale) / 2);
 			//初始设置
 			target.moveTo(endx + endwide, endy + endheig);
-			target.setScale(scale, scale);
+			target.setRatio(scale);
 			//扩散
 			TweenLite.to(target, time, { alpha:LIM, x:endx, y:endy, scaleX:LIM, scaleY:LIM, onComplete:complete } );
 		}
@@ -49,7 +49,7 @@ package org.web.sdk.display.effect
 			var endy:int = AppWork.stageHeight - target.sizeHeight >> 1;
 			//初始设置
 			target.moveTo(startx, starty);
-			target.setScale(scale, scale);
+			target.setRatio(scale);
 			//扩散
 			TweenLite.to(target, time, { alpha:LIM, x:endx, y:endy, scaleX:LIM, scaleY:LIM, onComplete:complete } );
 		}
