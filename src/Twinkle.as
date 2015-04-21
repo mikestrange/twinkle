@@ -56,7 +56,7 @@ package
 	{
 		override protected function showEvent():void
 		{
-			Log.allow("-")
+			Log.allow("*")
 			//启动模块
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
@@ -85,14 +85,10 @@ package
 				{
 					var url:String = xml.res[0].ui[i].@url;
 					var names:String = xml.res[0].ui[i].@name;
-					if (names == "common") {
-						if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
-					}else {
-						if (url && url != "") swfLoader.load(url, null, "" + DateTimer.getDateTime());
-					}
+					if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
 				}
 			}
-			//loader.start();
+			loader.start();
 			
 			//测试场景
 			AppDirector.gets().getSceneHandler = function(sceneName:String):IBaseScene
@@ -101,12 +97,6 @@ package
 			}
 			//
 			//SoundManager.playUrl("asset/bg.mp3");
-			rays = RayObject.format(100, 100);
-			rays.moveTo(100,100)
-			rays.setAlignOffset(AlignType.RIGHT);
-			
-			this.addDisplay(rays);
-			this.setRunning(true)
 		}
 		
 		private var rays:RayObject;
@@ -179,11 +169,9 @@ package
 		}
 		
 		private var currentTime:int;
-		private var _indx:int
 		
 		override protected function runEnter(event:Event = null):void 
 		{
-			rays.offsetRotation+=20;
 			if (getTimer() - currentTime < 200) return;
 			currentTime = getTimer();
 			if (camera) SortSprite.sort(camera.getView());

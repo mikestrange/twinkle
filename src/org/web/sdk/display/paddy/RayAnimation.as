@@ -30,12 +30,12 @@ package org.web.sdk.display.paddy
 		public function setTextures(data:Vector.<Texture>):void
 		{
 			_vectors = data;
-			setPosition(_currentFrame);
+			setCurrentFrame(_currentFrame);
 		}
 		
 		public function stop(frame:int = LIM):void
 		{
-			setPosition(frame);
+			setCurrentFrame(frame);
 			setRunning();
 		}
 		
@@ -83,7 +83,7 @@ package org.web.sdk.display.paddy
 			nextFrame();
 		}
 		
-		public function setPosition(index:int):void
+		public function setCurrentFrame(index:int):void
 		{
 			_currentFrame = index;
 			if (_vectors && _vectors.length) {
@@ -97,12 +97,12 @@ package org.web.sdk.display.paddy
 		
 		public function nextFrame():void
 		{
-			setPosition(++_currentFrame);
+			setCurrentFrame(++_currentFrame);
 		}
 		
 		public function prevFrame():void
 		{
-			setPosition(--_currentFrame);
+			setCurrentFrame(--_currentFrame);
 		}
 		
 		//无论是单材质还是多材质都可以
