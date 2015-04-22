@@ -29,7 +29,6 @@ package org.web.sdk.display.game.role
 		public function RolePart(namespaces:String)
 		{
 			_namespaces = namespaces;
-			this.setAlignOffset(AlignType.CENTER_BOTTOM);
 		}
 		
 		//设置状态，可以牵制刷新
@@ -45,6 +44,7 @@ package org.web.sdk.display.game.role
 		
 		override public function play(frame:int = LIM, action:String = null):void 
 		{
+			super.play(frame, action);
 			if (AppWork.appDomains.has(getUrl())) {
 				this.setCompulsory(action, getUrl());
 			}else {
@@ -52,7 +52,6 @@ package org.web.sdk.display.game.role
 				_loader.load(getUrl(), null, "" + DateTimer.getDateTime());
 				_loader.start();
 			}
-			super.play(frame, action);
 		}
 		
 		private function onComplete(event:LoadEvent):void

@@ -27,7 +27,6 @@ package org.web.sdk.display.game.ssh
 		public function LoadEffect(effName:String)
 		{
 			_effName = effName;
-			this.setAlignOffset(AlignType.CENTER_BOTTOM);
 			load();
 		}
 		

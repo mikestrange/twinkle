@@ -88,7 +88,7 @@ package
 					if (url && url != "") swfLoader.load(url, AppWork.context, "" + DateTimer.getDateTime());
 				}
 			}
-			loader.start();
+			//loader.start();
 			
 			//测试场景
 			AppDirector.gets().getSceneHandler = function(sceneName:String):IBaseScene
@@ -96,6 +96,14 @@ package
 				return new BaseScene;	
 			}
 			//SoundManager.playUrl("asset/bg.mp3");
+			var ray:RayObject = RayObject.format(100, 100, 0xff00ff00);
+			ray.moveTo(100, 100);
+			this.addDisplay(ray);
+			var timeline:TimelineLite = new TimelineLite;
+			timeline.append(new TweenLite(ray, 1, { x:200, y:200 } ));
+			timeline.append(new TweenLite(ray, 1, { x:300, y:400 } ));
+			timeline.append(new TweenMax(ray, 1, { tint:0xFF0000 } ) );
+			timeline.clear();
 		}
 		
 		private var camera:MapCamera;
