@@ -19,7 +19,7 @@ package org.web.sdk.display.paddy
 	 * ...
 	 * @author Main
 	 */
-	public class MapSheet extends Bitmap implements IDisplayObject ,IAlign
+	public class MapSheet extends Bitmap implements IDisplayObject
 	{
 		private static const LIM:int = 1;
 		//属性
@@ -54,7 +54,6 @@ package org.web.sdk.display.paddy
 		{
 			this.bitmapData = texture.getImage();
 			this.smoothing = true;
-			this._updateAlign();
 			//texture.checkTrim(this);
 		}
 		
@@ -192,6 +191,22 @@ package org.web.sdk.display.paddy
 			if (value) dispose();
 		}
 		
+		//protected
+		protected function runEnter(e:Event = null):void
+		{
+			
+		}
+		
+		protected function onResize(e:Event = null):void
+		{
+			
+		}
+		
+		//ends
+	}
+
+}
+/*
 		public function setAlignOffset(alignType:String = null, offx:Number = 0, offy:Number = 0):void
 		{
 			_align = alignType;
@@ -299,19 +314,4 @@ package org.web.sdk.display.paddy
 		{
 			return scaleY;
 		}
-		
-		//protected
-		protected function runEnter(e:Event = null):void
-		{
-			
-		}
-		
-		protected function onResize(e:Event = null):void
-		{
-			
-		}
-		
-		//ends
-	}
-
-}
+*/		
