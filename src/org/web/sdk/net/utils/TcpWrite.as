@@ -3,23 +3,23 @@ package org.web.sdk.net.utils
 	import flash.utils.ByteArray;
 	import flash.utils.IDataOutput;
 	
-	public class FtpWrite 
+	public class TcpWrite 
 	{
 		public static const BYTE:int = 2;
 		public static const ZORE:int = 0;
 		public static const TRUE:int = 1;
 		
 		//快速建立
-		public static function create(output:IDataOutput = null):FtpWrite
+		public static function create(output:IDataOutput = null):TcpWrite
 		{
-			return new FtpWrite(output);
+			return new TcpWrite(output);
 		}
 		
 		//写入流
 		private var Output:IDataOutput;
 		private var leng:uint = 0;
 		
-		public function FtpWrite(output:IDataOutput = null)
+		public function TcpWrite(output:IDataOutput = null)
 		{
 			if (output == null) output = new ByteArray;
 			Output = output;
@@ -85,7 +85,7 @@ package org.web.sdk.net.utils
 			const must:Boolean = value < 0;
 			if (must) value = -(value+1);
 			const len:int = 64;
-			var chat:String = FtpRead.coinLeng(value, len);
+			var chat:String = TcpRead.coinLeng(value, len);
 			if (must) {
 				chat = chat.replace(/1/g, '2');
 				chat = chat.replace(/0/g, '1');

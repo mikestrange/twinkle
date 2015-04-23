@@ -9,7 +9,7 @@ package org.web.sdk.net.socket
 	import org.web.sdk.net.RespondEvented;
 	import org.web.sdk.net.interfaces.IAssigned;
 	import org.web.sdk.net.interfaces.INetwork;
-	import org.web.sdk.net.utils.FtpRead;
+	import org.web.sdk.net.utils.TcpRead;
 
 	
 	public class AssignedTransfer implements IAssigned 
@@ -70,7 +70,7 @@ package org.web.sdk.net.socket
 			var cmd:uint = byte.readUnsignedInt();
 			var type:int = byte.readUnsignedShort();
 			//派发命令事务
-			CmdManager.respond(new RespondEvented(cmd, socket as INetwork, new FtpRead(createByteArray(byte))));
+			CmdManager.respond(new RespondEvented(cmd, socket as INetwork, new TcpRead(createByteArray(byte))));
 		}
 		
 		//把长度包分装

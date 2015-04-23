@@ -4,21 +4,21 @@ package org.web.sdk.net.utils
 	import flash.utils.Endian;
 	import flash.utils.IDataInput;
 
-	public class FtpRead
+	public class TcpRead
 	{
 		public static const BYTE:int = 2;
 		public static const ZORE:int = 0;
 		public static const TRUE:int = 1;
 		
-		public static function create(input:IDataInput = null):FtpRead
+		public static function create(input:IDataInput = null):TcpRead
 		{
-			return new FtpRead(input);
+			return new TcpRead(input);
 		}
 		
 		//object
 		private var Input:IDataInput;
 		
-		public function FtpRead(input:IDataInput)
+		public function TcpRead(input:IDataInput)
 		{
 			if (null == input) input = new ByteArray;
 			Input = input;
