@@ -192,12 +192,12 @@ package org.web.sdk.display.paddy
 		}
 		
 		//protected
-		protected function runEnter(e:Event = null):void
+		protected function runEnter(event:Event = null):void
 		{
 			
 		}
 		
-		protected function onResize(e:Event = null):void
+		protected function onResize(event:Event = null):void
 		{
 			
 		}

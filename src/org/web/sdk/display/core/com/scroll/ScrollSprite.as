@@ -126,19 +126,25 @@ package org.web.sdk.display.core.com.scroll
 			//底部回弹
 			if (_isEnd ) {
 				if (_totalSize - sizeHeight > NONE) {
-					tweenLite(sizeHeight - _totalSize, TWEEN_TIME, setRunning);
+					tweenLite(sizeHeight - _totalSize, TWEEN_TIME, ripsawOver);
 				}else {
-					tweenLite(NONE, TWEEN_TIME, setRunning);
+					tweenLite(NONE, TWEEN_TIME, ripsawOver);
 				}
 			}
 			//顶部回弹
-			if (getPositionY() > NONE) tweenLite(NONE, TWEEN_TIME, setRunning);
+			if (getPositionY() > NONE) tweenLite(NONE, TWEEN_TIME, ripsawOver);
 		}
 		
 		private function tweenOver():void
 		{
 			this.setRunning();
 			renderTrim();
+		}
+		
+		private function ripsawOver():void
+		{
+			this.setRunning();
+			this.updateScroll(true);
 		}
 		
 		private function tweenLite(endy:Number, time:int = TWEEN_TIME, complete:Function = null):void

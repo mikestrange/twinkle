@@ -3,10 +3,6 @@ package org.web.sdk.display.paddy
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	import org.web.sdk.display.paddy.RayObject;
-	import org.web.sdk.display.paddy.covert.FormatMethod;
-	import org.web.sdk.display.paddy.covert.TexturePacker;
-	import org.web.sdk.display.paddy.covert.SmartRender;
-	import org.web.sdk.display.paddy.build.SheetPeasants;
 	/*
 	 * 更快速度的MovieClip
 	 * 动画，初始化的时候应该设置一个动作库
