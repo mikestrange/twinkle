@@ -2,7 +2,7 @@ package org.web.sdk.net
 {
 	import org.web.sdk.net.interfaces.INetwork;
 	/*
-	 * 一个数据包，包含了发送者，这里作为中转，处理过后直接派发命令,这里必须是全局的一种发送，不必设定一个Message
+	 * 网络事件
 	 * */
 	public class RespondEvented
 	{

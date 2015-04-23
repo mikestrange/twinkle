@@ -137,6 +137,7 @@ package org.web.sdk.net.web
 		public function remove(url:String):void
 		{
 			if (lineList.length == _ZERO_) return;
+			//当前不会被删除和关闭
 			for (var i:int = lineList.length - 1; i > _ZERO_; i--) {
 				if (lineList[i].url == url) {
 					lineList.splice(i, 1);
@@ -151,14 +152,10 @@ package org.web.sdk.net.web
 			Log.log(this).debug("请求数据 url:", url);
 			var request:URLRequest = new URLRequest(url);
 			//request.data = data;
-			request.method = endian;
+			request.method = URLRequestMethod.GET;
 			return request;
 		}
 		
-		public function get endian():String 
-		{
-			return URLRequestMethod.GET;
-		}
 		//ends
 	}
 

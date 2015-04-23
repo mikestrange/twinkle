@@ -70,7 +70,7 @@ package org.web.sdk.net.socket
 			var cmd:uint = byte.readUnsignedInt();
 			var type:int = byte.readUnsignedShort();
 			//派发命令事务
-			CmdManager.respond(new RespondEvented(cmd, socket as INetwork, new TcpRead(createByteArray(byte))));
+			CmdManager.respondHandler(new RespondEvented(cmd, socket as INetwork, new TcpRead(createByteArray(byte))));
 		}
 		
 		//把长度包分装

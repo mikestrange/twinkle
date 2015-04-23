@@ -23,14 +23,14 @@ package org.web.sdk.net
 		}
 		
 		//处理socket事务
-		public static function respond(event:RespondEvented):void
+		public static function respondHandler(event:RespondEvented):void
 		{
-			var Handler:Class = modules.getValue(event.cmd);
-			if (Handler) {
-				var result:INetHandler = new Handler;
+			var HandClass:Class = modules.getValue(event.cmd);
+			if (HandClass) {
+				var result:INetHandler = new HandClass;
 				result.netHandler(event);
 			}else {
-				Log.log().debug("无法解析的命令：", event.cmd);
+				Log.log().debug("#无法解析的命令：", event.cmd);
 			}
 		}
 		//ends

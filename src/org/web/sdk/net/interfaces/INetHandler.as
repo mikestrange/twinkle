@@ -5,7 +5,7 @@ package org.web.sdk.net.interfaces
 	public interface INetHandler 
 	{
 		function netHandler(event:RespondEvented):void;		//返回是否处理
-		function action():void;								//记过值
+		function action():void;								//处理动作
 		//ends
 	}
 	
