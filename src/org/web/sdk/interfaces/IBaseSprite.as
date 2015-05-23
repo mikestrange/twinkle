@@ -5,7 +5,7 @@ package org.web.sdk.interfaces
 	public interface IBaseSprite extends IDisplayObject
 	{
 		function isEmpty():Boolean;
-		function clearChildren():void;
+		function removeAllChildrens():void;
 		function lockMouse(childs:Boolean = true):void;
 		function unlockMouse(childs:Boolean = true):void;
 		function removeByName(childName:String):IDisplayObject;

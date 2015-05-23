@@ -12,6 +12,7 @@ package org.web.sdk.display.core
 		public static const RECT:Rectangle = new Rectangle;
 		public static const COLOR_TRANS_FORM:ColorTransform = new ColorTransform;
 		public static const MATRIX:Matrix = new Matrix;
+		public static const NONE:int = 0
 		
 		//释放元素子集
 		public static function wipeout(dis:DisplayObjectContainer, value:Boolean = true):void
@@ -34,7 +35,7 @@ package org.web.sdk.display.core
 		}
 		
 		//初始化一个dis   
-		public static function initNaturo(dis:DisplayObject):DisplayObject
+		public static function initDisplay(dis:DisplayObject):DisplayObject
 		{
 			if (dis is MovieClip) MovieClip(dis).gotoAndStop(1);
 			dis.visible = true;
@@ -53,7 +54,7 @@ package org.web.sdk.display.core
 		//释放位图
 		public static function dispose(bit:BitmapData):void
 		{
-			if (bit && bit.width + bit.height > 0) bit.dispose();
+			if (bit && bit.width + bit.height > NONE) bit.dispose();
 		}
 		
 		//强制回收

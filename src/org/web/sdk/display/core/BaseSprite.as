@@ -116,7 +116,7 @@ package org.web.sdk.display.core
 			return child as IDisplayObject;
 		}
 		
-		public function clearChildren():void 
+		public function removeAllChildrens():void 
 		{
 			while (this.numChildren) removeChildAt(0);
 		}
