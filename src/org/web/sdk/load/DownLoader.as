@@ -38,19 +38,19 @@ package org.web.sdk.load
 			if (null == _loadMap) _loadMap = new Dictionary;
 			_loadMap[request.url] = request;
 			++_length;
-			CheckLoader.putStack(request, this);
+			LoadFormation.putStack(request, this);
 			return request;
 		}
 		
 		//开始下载
 		public function start():void
 		{
-			CheckLoader.startLoad();
+			LoadFormation.startLoad();
 		}
 		
 		public function maxLength(value:int = 1):void
 		{
-			CheckLoader.maxLength = value;
+			LoadFormation.maxLength = value;
 		}
 		
 		//回调
@@ -101,7 +101,7 @@ package org.web.sdk.load
 				--_length;
 				delete _loadMap[url];
 				if (_length == NONE) _loadMap = null;
-				CheckLoader.removeLoader(url, this);
+				LoadFormation.removeLoader(url, this);
 			}
 		}
 		

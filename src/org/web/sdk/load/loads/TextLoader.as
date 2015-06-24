@@ -7,7 +7,7 @@ package org.web.sdk.load.loads
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import org.web.sdk.load.CheckLoader;
+	import org.web.sdk.load.LoadFormation;
 	import org.web.sdk.load.interfaces.ILoader;
 	import org.web.sdk.load.interfaces.ILoadRequest;
 	import org.web.sdk.load.LoadEvent;
@@ -98,7 +98,7 @@ package org.web.sdk.load.loads
 		
 		protected function invoke(type:String, data:Object = null):void
 		{
-			CheckLoader.dispatchs(getRequest().url, type, data);
+			LoadFormation.dispatchs(getRequest().url, type, data);
 		}
 		//ends
 	}
